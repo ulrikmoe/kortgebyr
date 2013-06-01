@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="" />
+	<title></title>
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' type='text/css'>
+	<script>var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-33869674-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
+	
+	<style>
+
+	body, div, p, h2, h3, ul, li { margin: 0; padding: 0 }
+
+	html {font-size:62.5%}	
+	
+	body {
+		width: 990px;
+		margin: auto;
+		font-size: 1.2rem;
+		font-family: 'Open Sans', sans-serif;
+	}
+	
+	
+	hr {
+	    border: 0;
+	    height: 1px;
+	    background: #333;
+	    background: -webkit-linear-gradient(left, #fff, #555 50%, #fff 100%);
+	    background: -moz-linear-gradient(left, #fff, #555 50%, #fff 100%);
+	    background: -ms-linear-gradient(left, #fff, #555 50%, #fff 100%);
+	    background: -o-linear-gradient(left, #fff, #555 50%, #fff 100%);
+	    background: linear-gradient(left, #fff, #555 50%, #fff 100%);
+    }
+	
+	#bar {
+	
+		padding-left: 4rem;
+		height: 7.2rem;
+		background: #222;
+		border-bottom: 1px solid #333;
+		
+	}
+	
+	#bar h1 {
+		float: left;
+		color: #fff
+	}
+	
+	
+	#bar ul li {
+		color: #fff;
+		list-style: none;
+		font-size: 1.6rem;
+		font-weight: bold;
+		float: left;
+		text-align: center;
+		margin-top: 2.7rem;
+		margin-right: 2rem;
+		cursor: pointer;
+	}
+	
+	#bar ul li a {
+		color: #fff;
+		text-decoration: none;
+		display: block;
+		padding-top: 1.2rem;
+		height: 3.4rem;
+		min-width: 16rem;
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+	
+	#bar ul #selected a {
+		color: #333;
+	}
+	
+	#bar ul #selected {
+		background: #fff;
+		cursor: default;
+	}
+	
+	</style>
+	
+</head>
+<body>
+
+<div id="bar">
+	<h1>Kortgebyr</h1>
+	<ul>
+		<li id="selected"><a href="http://kortgebyr.dk">e-handel</a></li>
+		<li><a href="http://kortgebyr.dk/fysisk/">fysisk handel</a></li>
+	</ul>
+</div>
+
+
+<h3>Dankort-aftale</h3>
+<div class="infotext">
+	Visa/Dankortet er danskernes foretrukne betalingsmiddel på
+	internettet. Det står samlet for 82 % af betalingerne med
+	betalingskort. Det kræver dansk CVR-nummer at indgå en
+	Dankort-aftale. Uden en dankort-aftale vil alle Visa/Dankort
+	fungere som Visa-kort med dertilhørende gebyrer. NETS har
+	monopol på Dankortet og gebyrer/satser kan derfor <u>ikke</u>
+	forhandles.
+</div>
+
+<hr />
+
+<div class="info">
+    <h3>Indløsningsaftaler</h3>
+    <div class="infotext">
+        For at din virksomhed kan modtage Visa og MasterCard er det
+        nødvendigt at indgå en indløsningsaftale med en indløser/bank.
+        <br><br>
+        Sæt hak ved de kort din webshop ønsker at modtage, ud fra de
+        indløsere i ønsker at modtage dem gennem.
+    </div>
+</div>
+
+
+<hr />
+
+
+<div class="info">
+            <h3>Betalingsgateway</h3>
+            <div class="infotext">
+                For at kunne bruge dine indløsningsaftaler skal du indgå en
+                aftale med en dansk betalingsgateway.<br>
+                <br>
+                Bemærk at der kan forekomme yderligere gebyrer og dyrere
+                abonnementer ved valg af andre indløsere end NETS/Teller.
+                <div id="controls">
+                    <h4>Specielle betalingsformer</h4>
+                    <input type="checkbox" id="3dsecure" onchange="update_graph();"><label for="3dsecure">Udenlandske kort (3-D Secure)</label><br>
+                    <input type="checkbox" id="dknet" onchange="update_graph();"><label for="dknet">Danske Netbetaling</label><br>
+                    <input type="checkbox" id="nordeanet" onchange="update_graph();"><label for="nordeanet">Nordea e-betaling</label><br>
+            
+                    <h4>Tekniske muligheder</h4>
+                    <input type="checkbox" id="recurring" onchange="update_graph();"><label for="recurring">Abonnementsbetalinger</label><br>&nbsp;&nbsp;∟
+                    <select id="numrecurring" onchange="document.getElementById('recurring').checked = true; update_graph();">
+                        <option value="100">0-100 abonnementer</option>
+                        <option value="1000">101-1000 abonnementer</option>
+                        <option value="10000">1001-10000 abonnementer</option>
+                        <option value="100000">over 10000 abonnementer</option>
+                    </select>
+                    <br>
+                    <input type="checkbox" id="api" onchange="update_graph();"><label for="api">API adgang</label><br>
+                    <input type="checkbox" id="currency" onchange="update_graph();"><label for="currency">Multi valuta</label><br>
+                    <input type="checkbox" id="antifraud" onchange="update_graph();"><label for="antifraud">Svindelkontrol</label><br>
+                    <input type="checkbox" id="sms" onchange="update_graph();"><label for="sms">SMS ved betaling</label><br>
+                    <input type="checkbox" id="splitpay" onchange="update_graph();"><label for="splitpay">Delbetalinger</label>
+                </div>
+            </div>
+        </div>
+
+
+</body>
+</html>
