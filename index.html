@@ -3,10 +3,26 @@
 	<meta charset="utf-8">
 	<meta name="description" content="" />
 	<title>Kortgebyr - betaling på internettet</title>
-	<script type="text/javascript" src="//use.typekit.net/gas3tnb.js"></script>
-	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script>var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-33869674-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
+
+
+	<link href="css/footable-0.1.css" rel="stylesheet" type="text/css" />
+	<link href="css/footable.sortable-0.1.css" rel="stylesheet" type="text/css" />
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+	<script src="js/footable.js" type="text/javascript"></script>
+	<script src="js/footable.sortable.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('table').footable();
+		});
+	</script>
+
+
+
+
+
+
 
 	<style>
 
@@ -20,8 +36,9 @@
 	}
 
 	.container {
-		font-family: "proxima-nova",sans-serif;
-		width: 900px;
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		font-weight: 300;
+		max-width: 980px;
 		padding: 1.5em 0 0;
 		margin: auto;
 		position: relative;
@@ -55,7 +72,6 @@
 
 	article {
 
-		width: 50%
 
 	}
 
@@ -75,70 +91,16 @@
 
 	<article>
 		<h2>Betaling på internettet</h2>
-		Visa/Dankortet er danskernes foretrukne betalingsmiddel på
-		internettet. Det står samlet for 82 % af betalingerne med
-		betalingskort. Det kræver dansk CVR-nummer at indgå en
-		Dankort-aftale. Uden en dankort-aftale vil alle Visa/Dankort
-		fungere som Visa-kort med dertilhørende gebyrer. NETS har
-		monopol på Dankortet og gebyrer/satser kan derfor <u>ikke</u>
-		forhandles.
+
+		Lorem ipsum
+
+
+
 	</article>
 
+	<section>
 
-	<section id="svg">
 
-		<script type="text/javascript">
-
-			//Width and height
-			var w = 960;
-			var h = 100;
-			var barPadding = 1;
-
-			var dataset = [ 1, 1.5, 2, 2, 3, 3, 3, 4, 5, 7,
-							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
-
-			//Create SVG element
-			var svg = d3.select("#svg")
-						.append("svg")
-						.attr("width", w)
-						.attr("height", h);
-
-			svg.selectAll("rect")
-			   .data(dataset)
-			   .enter()
-			   .append("rect")
-			   .attr("x", function(d, i) {
-			   		return i * (w / dataset.length);
-			   })
-			   .attr("y", function(d) {
-			   		return h - (d * 4);
-			   })
-			   .attr("width", w / dataset.length - barPadding)
-			   .attr("height", function(d) {
-			   		return d * 4;
-			   })
-			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
-			   });
-
-			svg.selectAll("text")
-			   .data(dataset)
-			   .enter()
-			   .append("text")
-			   .text(function(d) {
-			   		return d;
-			   })
-			   .attr("x", function(d, i) {
-			   		return i * (w / dataset.length) + 5;
-			   })
-			   .attr("y", function(d) {
-			   		return h - (d * 4) + 15;
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "white");
-
-		</script>
 
 	</section>
 
@@ -148,37 +110,71 @@
 
 
 	<article>
-		<h2>Dankort-aftale</h2>
-		Visa/Dankortet er danskernes foretrukne betalingsmiddel på
-		internettet. Det står samlet for 82 % af betalingerne med
-		betalingskort. Det kræver dansk CVR-nummer at indgå en
-		Dankort-aftale. Uden en dankort-aftale vil alle Visa/Dankort
-		fungere som Visa-kort med dertilhørende gebyrer. NETS har
-		monopol på Dankortet og gebyrer/satser kan derfor <u>ikke</u>
-		forhandles.
+		<h2>Betalingsgateways</h2>
+
+
+		<table class="footable">
+			<thead>
+				<tr>
+					<th data-class="expand">
+						<span>Navn</span>
+					</th>
+
+					<th data-hide="phone" data-type="numeric">
+						<span>Oprettelse</span>
+					</th>
+
+					<th data-hide="phone,tablet">
+						Job Title
+					</th>
+
+					<th data-hide="phone,tablet" data-type="numeric">
+						DOB
+					</th>
+
+					<th data-type="numeric" data-sort-initial="true">
+						Samlet pr. måned
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>Quickpay</td>
+					<td>Traffic Court Referee</td>
+					<td data-value="78025368997">22 Jun 1972</td>
+					<td data-value="3"></td>
+					<td data-value="3"></td>
+				</tr>
+
+				<tr>
+					<td>ePay</td>
+					<td>Nicley</td>
+					<td>Meat Packager</td>
+					<td data-value="-100297281571">28 Oct 1966</td>
+					<td data-value="1"></td>
+				</tr>
+
+				<tr>
+					<td>DIBS</td>
+					<td>Woldt</td>
+					<td></td>
+					<td data-value="370961043292">3 Oct 1981</td>
+					<td data-value="2"></td>
+				</tr>
+
+      </tbody>
+</table>
+
+
+
+
+
+
+
 	</article>
 
-	<hr />
 
-	<article>
-    	<h2>Indløsningsaftaler</h2>
-        For at din virksomhed kan modtage Visa og MasterCard er det
-        nødvendigt at indgå en indløsningsaftale med en indløser/bank.
-        <br><br>
-        Sæt hak ved de kort din webshop ønsker at modtage, ud fra de
-        indløsere i ønsker at modtage dem gennem.
-	</article>
-
-	<hr />
-
-    <article>
-	    <h2>Betalingsgateway</h2>
-	    For at kunne bruge dine indløsningsaftaler skal du indgå en
-	    aftale med en dansk betalingsgateway.<br>
-	    <br>
-	    Bemærk at der kan forekomme yderligere gebyrer og dyrere
-	    abonnementer ved valg af andre indløsere end NETS/Teller.
-    </article>
 
 </div>
 </body>
