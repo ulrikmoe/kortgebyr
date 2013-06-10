@@ -7,21 +7,140 @@
 
 
 	<link href="css/footable-0.1.css" rel="stylesheet" type="text/css" />
-	<link href="css/footable.sortable-0.1.css" rel="stylesheet" type="text/css" />
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script>
 	<script src="js/footable.js" type="text/javascript"></script>
-	<script src="js/footable.sortable.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
 			$('table').footable();
 		});
 	</script>
+	
+	
+	<script>
+		
+		
+	var transactions, value;
+	
+	// [paypal, ewire light, ewire business, skrill]
+	var komplet_monthly = [0, 0, 99.58, 148.75];
+	var komplet_fixedFees = [2.6, 1.1, 0.7, 1.86];
+	var komplet_percentages = [0.024, 0.0245, 0.0245, 0.019];
 
 
+	function button() {
+			
+		transactions = document.getElementById("transactions").value;
+		value = document.getElementById("value").value;
+		
+		calc();
+	}
+	
+	
+	function calc() {
+
+		/*
+		
+		Her udregner jeg oms. for at finde paypal-gebyret.
+		
+		0-20k:  2,60 kr. + 3,4 %
+		20,01k-80k:  2,60 kr. + 2,9 %
+		80,01k-400k:  2,60 kr. + 2,7 %
+		400,01k-800k:  2,60 kr. + 2,4 %
+		> 800k:  2,60 kr. + 1,9 %
+		
+		
+		Skrill/Moneybookers
+		0-18.640:  1,86 kr (€0.25) + 2,9%
+		18.641-186.400:  1,86 kr + 2,5%
+		186.401-372.809:  1,86 kr + 2,1%
+		>372.809: 1,86 kr + 1,9%
+		*/
 
 
+		var oms = transactions * value;
 
+		if (oms < 20000 ){
+			komplet_percentages[0] = 0.034;
+		}
+		
+		else if (oms < 80000)
+		{
+			komplet_percentages[0] = 0.029;
+		}
+		
+		else if (oms < 400000)
+		{
+			komplet_percentages[0] = 0.027;
+		}
+		
+		else if (oms < 800000)
+		{
+			komplet_percentages[0] = 0.024;
+		}
+		
+		else if (oms > 800000)
+		{
+			komplet_percentages[0] = 0.019;
+		}
+		
+
+
+		komplet();
+
+	}
+	
+	
+	function komplet() {
+		
+		
+		for (var i=0; i<komplet_fixedFees.length; i++)
+		{
+
+
+			/*
+			
+				Her udregner jeg "Samlet pr. måned".
+			*/
+
+			var total = komplet_monthly[i] + ( komplet_fixedFees[i] * transactions ) + ( komplet_percentages[i] * transactions * value );
+			
+			total = Math.round(total * 100) / 100;
+						
+			document.getElementById("komplet_total_"+i).innerHTML = total;
+			
+			
+			
+			/*
+			
+				Her indsætter jeg mdr. gebyr og trans. gebyr
+			
+			*/
+			
+			
+			
+			document.getElementById("komplet_monthly_"+i).innerHTML = komplet_monthly[i];
+			
+			document.getElementById("komplet_fees_"+i).innerHTML = komplet_fixedFees[i] + " kr. + " + komplet_percentages[i]*100 + "%";
+			
+			
+
+		}
+		
+		
+		
+	}
+	
+	
+	function gateways() {
+		
+		
+	}
+	
+	
+	window.onload = button;
+	
+	</script>
 
 
 	<style>
@@ -38,11 +157,11 @@
 	.container {
 		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 		font-weight: 300;
-		max-width: 980px;
+		max-width: 1010px;
 		padding: 1.5em 0 0;
 		margin: auto;
 		position: relative;
-		line-height: 22px;
+		line-height: 23px;
 		font-size: 16px;
 		margin-top: 10px;
 		color: #666;
@@ -52,55 +171,48 @@
 	hr {
 	    border: 0;
 	    height: 1px;
-	    background: #333;
-	    margin: 30px 0;
-	    background: -webkit-linear-gradient(left, #fff, #ccc 50%, #fff 100%);
-	    background: -moz-linear-gradient(left, #fff, #ccc 50%, #fff 100%);
-	    background: -ms-linear-gradient(left, #fff, #ccc 50%, #fff 100%);
-	    background: -o-linear-gradient(left, #fff, #ccc 50%, #fff 100%);
-	    background: linear-gradient(left, #fff, #ccc 50%, #fff 100%);
+	    background: #ddd;
+	    margin: 40px 0 10px;
     }
 
 
 	h2 {
 
 		font-size: 2em;
-		line-height: 2em;
+		line-height: 2.5em;
 		color: #333
 
 	}
-
-	article {
-
-
+	
+	.half {
+		
+		display: inline-block;
+		width: 50%;
+		vertical-align: top;
+		
 	}
-
-
-
 
 	</style>
 
 </head>
 <body>
 
-
-<a href="https://github.com/ulrikmoe"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
-
-
 <div class="container">
 
-	<article>
+	<article class="half">
 		<h2>Betaling på internettet</h2>
 
-		Lorem ipsum
+		For at modtage betaling i en webshop eller e-business kan du enten vælge en komplet betalingsløsning eller en betalingsgateway hvor du selv står for at forhandle indløsningsaftalen på plads.
 
 
 
-	</article>
+	</article><section class="half">
 
-	<section>
-
-
+		<div style="float:right; width:390px; height:120px; margin:33px 0 0 0; background:#efefef; border:1px solid #ccc">
+		
+			<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
+			<label>Transaktioner: <input type="text" id="transactions" value="1000"></label><br />
+			<button onclick="button()">Udregn</button>
 
 	</section>
 
@@ -110,26 +222,29 @@
 
 
 	<article>
-		<h2>Betalingsgateways</h2>
-
+		<h2>Komplet betalingsløsning</h2>
 
 		<table class="footable">
 			<thead>
 				<tr>
-					<th data-class="expand">
+					<th>
 						<span>Navn</span>
 					</th>
 
-					<th data-hide="phone" data-type="numeric">
+					<th data-type="numeric">
 						<span>Oprettelse</span>
 					</th>
 
-					<th data-hide="phone,tablet">
-						Job Title
+					<th data-type="numeric">
+						Mdr. gebyr
+					</th>
+					
+					<th data-type="numeric">
+						Binding
 					</th>
 
-					<th data-hide="phone,tablet" data-type="numeric">
-						DOB
+					<th data-type="numeric">
+						Transaktionsgebyr
 					</th>
 
 					<th data-type="numeric" data-sort-initial="true">
@@ -140,29 +255,214 @@
 
 			<tbody>
 				<tr>
-					<td>Quickpay</td>
-					<td>Traffic Court Referee</td>
-					<td data-value="78025368997">22 Jun 1972</td>
-					<td data-value="3"></td>
-					<td data-value="3"></td>
+					<td><a href="http://paypal.com"><img src="logo/paypal.png" /></a></td>
+					<td>Gratis</td>
+					<td id="komplet_monthly_0"></td>
+					<td data-value="3">Ingen</td>
+					<td id="komplet_fees_0"></td>
+					<td id="komplet_total_0"></td>
 				</tr>
 
 				<tr>
-					<td>ePay</td>
-					<td>Nicley</td>
-					<td>Meat Packager</td>
-					<td data-value="-100297281571">28 Oct 1966</td>
-					<td data-value="1"></td>
+					<td><a href="http://ewire.dk"><img src="logo/ewire.png" /></a></td>					
+					<td>395,00</td>
+					<td id="komplet_monthly_1"></td>
+					<td data-value="3">Ingen</td>
+					<td id="komplet_fees_1"></td>
+					<td id="komplet_total_1"></td>
+				</tr>
+				
+				<tr>
+					<td><a href="http://ewire.dk"><img src="logo/ewire.png" /></a></td>					
+					<td>1195,00</td>
+					<td id="komplet_monthly_2"></td>
+					<td data-value="3">12 mdr.</td>
+					<td id="komplet_fees_2"></td>
+					<td id="komplet_total_2"></td>
+				</tr>
+				
+				<tr>
+					<td><a href="http://skrill.com"><img src="logo/skrill.png" /></a></td>					
+					<td>Gratis</td>
+					<td id="komplet_monthly_3"></td>
+					<td data-value="3">Ingen</td>
+					<td id="komplet_fees_3"></td>
+					<td id="komplet_total_3"></td>
 				</tr>
 
+
+      </tbody>
+</table>
+
+
+
+	</article>
+
+	<hr />
+
+	<article>
+		<h2>Betalingsgateway + indløsningsaftale(r)</h2>
+
+
+		<table class="footable">
+			<thead>
 				<tr>
-					<td>DIBS</td>
-					<td>Woldt</td>
+					<th>
+						<span>Gateway</span>
+					</th>
+
+					<th data-type="numeric">
+						<span>Oprettelse</span>
+					</th>
+
+					<th data-type="numeric">
+						Mdr. gebyr
+					</th>
+
+					<th data-type="numeric">
+						Transaktionsgebyr
+					</th>
+
+					<th data-type="numeric" data-sort-initial="true">
+						Samlet pr. måned
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td><a href="http://quickpay.dk"><img src="logo/quickpay.png" /></a></td>
+					<td>Gratis</td>
+					<td>150,00</td>
+					<td data-value="3">0,5 kr. -> 0,1 kr.</td>
 					<td></td>
-					<td data-value="370961043292">3 Oct 1981</td>
-					<td data-value="2"></td>
 				</tr>
 
+				<tr>
+					<td><a href="http://epay.dk"><img src="logo/epay.png" /></a></td>					
+					<td>999,00</td>
+					<td>299,00</td>
+					<td data-value="3">0,30 kr.</td>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td><a href="http://dibs.dk"><img src="logo/dibs.png" /></a></td>					
+					<td>Gratis</td>
+					<td>249,00</td>
+					<td data-value="3">1,5 kr.</td>
+					<td></td>
+				</tr>
+				
+				<tr>
+					<td><a href="https://www.terminalshop.dk/Netaxept/"><img src="logo/nets.png" /></a></td>
+					<td>3000,00</td>
+					<td>500,00</td>
+					<td data-value="3">1,00 kr.</td>
+					<td></td>
+				</tr>
+				
+								<tr>
+					<td><a href="https://www.terminalshop.dk/Netaxept/"><img src="logo/nets.png" /></a></td>
+					<td>7500,00</td>
+					<td>700,00</td>
+					<td data-value="3">0,70 kr.</td>
+					<td></td>
+				</tr>
+				
+				<tr>
+					<td><a href="http://www.dandomain.dk/produkter/betalingssystem.html"><img src="logo/dandomain.png" /></a></td>					
+					<td>298,00</td>
+					<td>198,00</td>
+					<td data-value="3">Ingen</td>
+					<td></td>
+				</tr>
+
+      </tbody>
+</table>
+
+</article>
+
+
+<hr />
+
+
+
+<h2>Indløsningsaftale</h2>
+
+<article>
+
+
+		<table class="footable">
+			<thead>
+				<tr>
+					<th>
+						<span>Navn</span>
+					</th>
+
+					<th data-type="numeric">
+						<span>Oprettelse</span>
+					</th>
+
+					<th data-type="numeric">
+						Mdr. gebyr
+					</th>
+
+					<th data-type="numeric">
+						Transaktionsgebyr
+					</th>
+
+					<th data-type="numeric" data-sort-initial="true">
+						Samlet pr. måned
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td><a href="http://nets.eu"><img src="logo/nets.png" /></a></td>
+					<td>250,00</td>
+					<td>83,33</td>
+					<td data-value="3">1,45 kr. + 0,10 %</td>
+					<td>150,00</td>
+				</tr>
+
+				<tr>
+					<td><a href="http://www.euroline.se/"><img src="logo/seb.png" /></a></td>					
+					<td>Gratis</td>
+					<td>Intet</td>
+					<td data-value="3">~1,8 %</td>
+					<td>0,00</td>
+				</tr>
+
+				<tr>
+					<td><a href="http://swebank.se"><img src="logo/swebank.png" /></a></td>					
+					<td>1.900</td>
+					<td>200,00</td>
+					<td data-value="3">~1,8 %</td>
+					<td></td>
+				</tr>
+				
+				
+				<tr>
+					<td><a href="http://teller.com"><img src="logo/teller.png" /></a></td>					
+					<td>1.000</td>
+					<td>100 kr.</td>
+					<td data-value="3">1,50 %</td>
+					<td></td>
+				</tr>
+							
+			
+				<tr>
+					<td><a href="http://valitor.dk"><img src="logo/valitor.png" /></a></td>					
+					<td>Gratis</td>
+					<td>Intet</td>
+					<td data-value="3">~2,0 %</td>
+					<td data-value="3"></td>
+				</tr>
+				
+				
+				
       </tbody>
 </table>
 
@@ -170,9 +470,13 @@
 
 
 
+</article>
 
 
-	</article>
+
+
+<hr />
+
 
 
 
