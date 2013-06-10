@@ -3,25 +3,15 @@
 	<meta charset="utf-8">
 	<meta name="description" content="" />
 	<title>Kortgebyr - betaling på internettet</title>
-	<script>var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-33869674-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
-
 
 	<link href="css/footable-0.1.css" rel="stylesheet" type="text/css" />
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script>
-	<script src="js/footable.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		$(function() {
-			$('table').footable();
-		});
-	</script>
-	
-	
+
 	<script>
-		
-		
+
+
 	var transactions, value;
-	
+
 	// [paypal, ewire light, ewire business, skrill]
 	var komplet_monthly = [0, 0, 99.58, 148.75];
 	var komplet_fixedFees = [2.6, 1.1, 0.7, 1.86];
@@ -29,27 +19,27 @@
 
 
 	function button() {
-			
+
 		transactions = document.getElementById("transactions").value;
 		value = document.getElementById("value").value;
-		
+
 		calc();
 	}
-	
-	
+
+
 	function calc() {
 
 		/*
-		
+
 		Her udregner jeg oms. for at finde paypal-gebyret.
-		
+
 		0-20k:  2,60 kr. + 3,4 %
 		20,01k-80k:  2,60 kr. + 2,9 %
 		80,01k-400k:  2,60 kr. + 2,7 %
 		400,01k-800k:  2,60 kr. + 2,4 %
 		> 800k:  2,60 kr. + 1,9 %
-		
-		
+
+
 		Skrill/Moneybookers
 		0-18.640:  1,86 kr (€0.25) + 2,9%
 		18.641-186.400:  1,86 kr + 2,5%
@@ -63,83 +53,83 @@
 		if (oms < 20000 ){
 			komplet_percentages[0] = 0.034;
 		}
-		
+
 		else if (oms < 80000)
 		{
 			komplet_percentages[0] = 0.029;
 		}
-		
+
 		else if (oms < 400000)
 		{
 			komplet_percentages[0] = 0.027;
 		}
-		
+
 		else if (oms < 800000)
 		{
 			komplet_percentages[0] = 0.024;
 		}
-		
+
 		else if (oms > 800000)
 		{
 			komplet_percentages[0] = 0.019;
 		}
-		
+
 
 
 		komplet();
 
 	}
-	
-	
+
+
 	function komplet() {
-		
-		
+
+
 		for (var i=0; i<komplet_fixedFees.length; i++)
 		{
 
 
 			/*
-			
+
 				Her udregner jeg "Samlet pr. måned".
 			*/
 
 			var total = komplet_monthly[i] + ( komplet_fixedFees[i] * transactions ) + ( komplet_percentages[i] * transactions * value );
-			
+
 			total = Math.round(total * 100) / 100;
-						
+
 			document.getElementById("komplet_total_"+i).innerHTML = total;
-			
-			
-			
+
+
+
 			/*
-			
+
 				Her indsætter jeg mdr. gebyr og trans. gebyr
-			
+
 			*/
-			
-			
-			
+
+
+
 			document.getElementById("komplet_monthly_"+i).innerHTML = komplet_monthly[i];
-			
-			document.getElementById("komplet_fees_"+i).innerHTML = komplet_fixedFees[i] + " kr. + " + komplet_percentages[i]*100 + "%";
-			
-			
+
+			document.getElementById("komplet_fees_"+i).innerHTML = komplet_fixedFees[i] + " kr. + " + (komplet_percentages[i]*100).toFixed(2) + "%";
+
+
 
 		}
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 	function gateways() {
-		
-		
+
+
 	}
-	
-	
+
+
 	window.onload = button;
-	
+
 	</script>
 
 
@@ -183,13 +173,13 @@
 		color: #333
 
 	}
-	
+
 	.half {
-		
+
 		display: inline-block;
 		width: 50%;
 		vertical-align: top;
-		
+
 	}
 
 	</style>
@@ -209,7 +199,7 @@
 	</article><section class="half">
 
 		<div style="float:right; width:390px; height:120px; margin:33px 0 0 0; background:#efefef; border:1px solid #ccc">
-		
+
 			<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
 			<label>Transaktioner: <input type="text" id="transactions" value="1000"></label><br />
 			<button onclick="button()">Udregn</button>
@@ -238,10 +228,6 @@
 					<th data-type="numeric">
 						Mdr. gebyr
 					</th>
-					
-					<th data-type="numeric">
-						Binding
-					</th>
 
 					<th data-type="numeric">
 						Transaktionsgebyr
@@ -258,34 +244,30 @@
 					<td><a href="http://paypal.com"><img src="logo/paypal.png" /></a></td>
 					<td>Gratis</td>
 					<td id="komplet_monthly_0"></td>
-					<td data-value="3">Ingen</td>
 					<td id="komplet_fees_0"></td>
 					<td id="komplet_total_0"></td>
 				</tr>
 
 				<tr>
-					<td><a href="http://ewire.dk"><img src="logo/ewire.png" /></a></td>					
+					<td><a href="http://ewire.dk"><img src="logo/ewire.png" /></a></td>
 					<td>395,00</td>
 					<td id="komplet_monthly_1"></td>
-					<td data-value="3">Ingen</td>
 					<td id="komplet_fees_1"></td>
 					<td id="komplet_total_1"></td>
 				</tr>
-				
+
 				<tr>
-					<td><a href="http://ewire.dk"><img src="logo/ewire.png" /></a></td>					
+					<td><a href="http://ewire.dk"><img src="logo/ewire.png" /></a></td>
 					<td>1195,00</td>
 					<td id="komplet_monthly_2"></td>
-					<td data-value="3">12 mdr.</td>
 					<td id="komplet_fees_2"></td>
 					<td id="komplet_total_2"></td>
 				</tr>
-				
+
 				<tr>
-					<td><a href="http://skrill.com"><img src="logo/skrill.png" /></a></td>					
+					<td><a href="http://skrill.com"><img src="logo/skrill.png" /></a></td>
 					<td>Gratis</td>
 					<td id="komplet_monthly_3"></td>
-					<td data-value="3">Ingen</td>
 					<td id="komplet_fees_3"></td>
 					<td id="komplet_total_3"></td>
 				</tr>
@@ -339,7 +321,7 @@
 				</tr>
 
 				<tr>
-					<td><a href="http://epay.dk"><img src="logo/epay.png" /></a></td>					
+					<td><a href="http://epay.dk"><img src="logo/epay.png" /></a></td>
 					<td>999,00</td>
 					<td>299,00</td>
 					<td data-value="3">0,30 kr.</td>
@@ -347,13 +329,13 @@
 				</tr>
 
 				<tr>
-					<td><a href="http://dibs.dk"><img src="logo/dibs.png" /></a></td>					
+					<td><a href="http://dibs.dk"><img src="logo/dibs.png" /></a></td>
 					<td>Gratis</td>
 					<td>249,00</td>
 					<td data-value="3">1,5 kr.</td>
 					<td></td>
 				</tr>
-				
+
 				<tr>
 					<td><a href="https://www.terminalshop.dk/Netaxept/"><img src="logo/nets.png" /></a></td>
 					<td>3000,00</td>
@@ -361,7 +343,7 @@
 					<td data-value="3">1,00 kr.</td>
 					<td></td>
 				</tr>
-				
+
 								<tr>
 					<td><a href="https://www.terminalshop.dk/Netaxept/"><img src="logo/nets.png" /></a></td>
 					<td>7500,00</td>
@@ -369,9 +351,9 @@
 					<td data-value="3">0,70 kr.</td>
 					<td></td>
 				</tr>
-				
+
 				<tr>
-					<td><a href="http://www.dandomain.dk/produkter/betalingssystem.html"><img src="logo/dandomain.png" /></a></td>					
+					<td><a href="http://www.dandomain.dk/produkter/betalingssystem.html"><img src="logo/dandomain.png" /></a></td>
 					<td>298,00</td>
 					<td>198,00</td>
 					<td data-value="3">Ingen</td>
@@ -428,7 +410,7 @@
 				</tr>
 
 				<tr>
-					<td><a href="http://www.euroline.se/"><img src="logo/seb.png" /></a></td>					
+					<td><a href="http://www.euroline.se/"><img src="logo/seb.png" /></a></td>
 					<td>Gratis</td>
 					<td>Intet</td>
 					<td data-value="3">~1,8 %</td>
@@ -436,33 +418,33 @@
 				</tr>
 
 				<tr>
-					<td><a href="http://swebank.se"><img src="logo/swebank.png" /></a></td>					
+					<td><a href="http://swebank.se"><img src="logo/swebank.png" /></a></td>
 					<td>1.900</td>
 					<td>200,00</td>
 					<td data-value="3">~1,8 %</td>
 					<td></td>
 				</tr>
-				
-				
+
+
 				<tr>
-					<td><a href="http://teller.com"><img src="logo/teller.png" /></a></td>					
+					<td><a href="http://teller.com"><img src="logo/teller.png" /></a></td>
 					<td>1.000</td>
 					<td>100 kr.</td>
 					<td data-value="3">1,50 %</td>
 					<td></td>
 				</tr>
-							
-			
+
+
 				<tr>
-					<td><a href="http://valitor.dk"><img src="logo/valitor.png" /></a></td>					
+					<td><a href="http://valitor.dk"><img src="logo/valitor.png" /></a></td>
 					<td>Gratis</td>
 					<td>Intet</td>
 					<td data-value="3">~2,0 %</td>
 					<td data-value="3"></td>
 				</tr>
-				
-				
-				
+
+
+
       </tbody>
 </table>
 
@@ -481,5 +463,11 @@
 
 
 </div>
+
+
+<script>var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-33869674-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
+
+
+
 </body>
 </html>
