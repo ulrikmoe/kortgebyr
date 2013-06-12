@@ -128,8 +128,6 @@
 	}
 
 
-	window.onload = button;
-
 	</script>
 
 
@@ -189,22 +187,15 @@
 
 <div class="container">
 
-	<article class="half">
-		<h2>Betaling på internettet</h2>
+	<article>
 
-		For at modtage betaling i en webshop eller e-business kan du enten vælge en komplet betalingsløsning eller en betalingsgateway hvor du selv står for at forhandle indløsningsaftalen på plads.
-
-
-
-	</article><section class="half">
-
-		<div style="float:right; width:390px; height:120px; margin:33px 0 0 0; background:#efefef; border:1px solid #ccc">
+		<div style="margin:33px 0 0 0; background:#efefef; border:1px solid #ccc; padding: 20px">
 
 			<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
 			<label>Transaktioner: <input type="text" id="transactions" value="1000"></label><br />
 			<button onclick="button()">Udregn</button>
 
-	</section>
+	</article>
 
 	<hr />
 
@@ -285,7 +276,12 @@
 	<article>
 		<h2>Betalingsgateway + indløsningsaftale(r)</h2>
 
+		<div style="margin:0px 0 20px 0; background:#efefef; border:1px solid #ccc; padding: 20px">
 
+
+
+
+		</div>
 		<table class="footable">
 			<thead>
 				<tr>
@@ -370,102 +366,13 @@
 
 
 
-<h2>Indløsningsaftale</h2>
-
-<article>
-
-
-		<table class="footable">
-			<thead>
-				<tr>
-					<th>
-						<span>Navn</span>
-					</th>
-
-					<th data-type="numeric">
-						<span>Oprettelse</span>
-					</th>
-
-					<th data-type="numeric">
-						Mdr. gebyr
-					</th>
-
-					<th data-type="numeric">
-						Transaktionsgebyr
-					</th>
-
-					<th data-type="numeric" data-sort-initial="true">
-						Samlet pr. måned
-					</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<tr>
-					<td><a href="http://nets.eu"><img src="logo/nets.png" /></a></td>
-					<td>250,00</td>
-					<td>83,33</td>
-					<td data-value="3">1,45 kr. + 0,10 %</td>
-					<td>150,00</td>
-				</tr>
-
-				<tr>
-					<td><a href="http://www.euroline.se/"><img src="logo/seb.png" /></a></td>
-					<td>Gratis</td>
-					<td>Intet</td>
-					<td data-value="3">~1,8 %</td>
-					<td>0,00</td>
-				</tr>
-
-				<tr>
-					<td><a href="http://swebank.se"><img src="logo/swebank.png" /></a></td>
-					<td>1.900</td>
-					<td>200,00</td>
-					<td data-value="3">~1,8 %</td>
-					<td></td>
-				</tr>
-
-
-				<tr>
-					<td><a href="http://teller.com"><img src="logo/teller.png" /></a></td>
-					<td>1.000</td>
-					<td>100 kr.</td>
-					<td data-value="3">1,50 %</td>
-					<td></td>
-				</tr>
-
-
-				<tr>
-					<td><a href="http://valitor.dk"><img src="logo/valitor.png" /></a></td>
-					<td>Gratis</td>
-					<td>Intet</td>
-					<td data-value="3">~2,0 %</td>
-					<td data-value="3"></td>
-				</tr>
-
-
-
-      </tbody>
-</table>
-
-
-
-
-
-</article>
-
-
-
-
-<hr />
-
-
-
-
 </div>
 
 
-<script>var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-33869674-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
+<script>
+	button();
+
+var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-33869674-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
 
 
 
