@@ -12,42 +12,42 @@
 
 
 	<article>
-				
+
 		<a style="border-right: 1px solid #999; padding-right:12px; margin-right:10px" href="#">Amino tråd</a>
-		
+
 		<a href="mailto:ulrik.moe@gmail.com">kontakt</a>
-		
-		<p style="float:right; font-size:14px; color: #444">opdateret: 
-		
+
+		<p style="float:right; font-size:14px; color: #444">opdateret:
+
 			<script>
-			
+
 				var dato = new Date(document.lastModified);
-						
-				document.write( dato.getDate() + "/" + dato.getMonth() + " " + dato.getFullYear() );
-				
+
+				document.write( dato.toLocaleDateString() );
+
 			</script>
-		
+
 		</p>
-		
+
 
 		<div style="margin:14px 0 0 0; background:#efefef; border:1px solid #ccc; padding: 20px">
-		
-		
+
+
 			<div style="float:right; line-height:30px; width: 350px">
 
 				<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
-				<label>Transaktioner: <input type="text" id="transactions" value="1000"></label><br />
-				
-				<label>Dankort: <input type="checkbox" checked="" disabled="" name="dankort" value="1" /></label> <input type="text" disabled="" id="dankort" value="80">%<br />
-				<label>Visa/MasterCard: <input type="checkbox" checked="" disabled="" name="visamc" value="1" /></label><input type="text" disabled="" id="visamc" value="20">%<br />
-				
-				<label>Svindelkontrol: <input type="checkbox" checked="" disabled="" value="1" /></label><br />
+				<label>Transaktioner: <input type="text" id="transactions" value="250"></label><br />
 
-				
+				<label>Dankort: <input type="checkbox" disabled="" checked="" name="dankort" value="1" /></label>
+				<label>Visa/MasterCard: <input type="checkbox" checked="" name="visamc" value="1" /><br />
+
+				<label>Svindelkontrol: <input type="checkbox" disabled="" value="1" /></label><br />
+
+
 				<button onclick="init()">Udregn gebyrer</button>
-			
+
 			</div>
-			
+
 			<p style="clear:both"></p>
 
 	</article>
@@ -72,11 +72,11 @@
 					</th>
 
 					<th data-type="numeric">
-						Mdr. gebyr
+						Faste omk.
 					</th>
 
 					<th data-type="numeric">
-						Trans. gebyrer
+						Var. omk.
 					</th>
 
 					<th data-type="numeric" data-sort-initial="true">
@@ -90,21 +90,19 @@
 
 
 			</tbody>
-		
+
 		</table>
 
 
 
 	</article>
 
-	<hr />
-
 
 <script>
 window.onload = function () {
 
 	init();
-	
+
 }
 </script>
 
