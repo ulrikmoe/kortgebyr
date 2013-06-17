@@ -184,6 +184,18 @@ function init() {
 			variableTransactionFee: 0,
 			totalTransactionCosts: 0,
 			totalCosts: 0
+		},
+		{
+			name: "ScanPay",
+			logo: "scanpay.png",
+			komplet: false,
+			link: "scanpay.dk",
+			setupFee: 0,
+			monthlyFee: 0,
+			fixedTransactionFee: 0,
+			variableTransactionFee: 0,
+			totalTransactionCosts: 0,
+			totalCosts: 0
 		}
 
 
@@ -191,18 +203,20 @@ function init() {
 	];
 
 
-	nets_setupFee = 1000;
+	nets_setupFee = 250;
 	nets_monthlyFee = 83.33;
 	nets_fixedTransactionFee = 0.7;
 	nets_variableTransactionFee = 0;
-	nets_total = 0;
+	nets_totalTransactionCosts = 0;
+	nets_totalCosts = 0;
 
 
 	seb_setupFee = 0;
 	seb_monthlyFee = 0;
 	seb_fixedTransactionFees = 0;
 	seb_variableTransactionFees = 1.6;
-	seb_total = 0;
+	seb_totalTransactionCosts = 0;
+	seb_totalCosts = 0;
 
 
 	oms = transactions * value;
@@ -256,12 +270,12 @@ function calc() {
 	else { nets_fixedTransactionFee = 1.45; nets_percentages = 0.001 }
 
 
-	nets_total = 83.33 + 0.8 * ( transactions * nets_fixedTransactionFee + oms * nets_variableTransactionFee );
+	nets_totalTransactionCosts = 0.8 * ( transactions * nets_fixedTransactionFee + oms * nets_variableTransactionFee );
 
-	seb_total = 0.2 * oms * 0.016;
+	seb_totalTransactionCosts = 0.2 * oms * 0.0165;
 
 
-
+	seb_totalCosts = seb_totalTransactionCosts;
 
 
 	/*
@@ -284,6 +298,11 @@ function calc() {
 		}
 		else
 		{
+		
+		
+		//	PSP[i].setupFee += nets_setupFee;
+		//	PSP[i].monthlyFee += nets_monthlyFee;
+		
 
 			if ( i == 5 )
 			{
@@ -291,12 +310,12 @@ function calc() {
 				if ( transactions > 500 )
 				{
 
-					PSP[i].totalTransactionCosts = ( PSP[i].fixedTransactionFee * (transactions-500) ) + nets_total + seb_total;
+					PSP[i].totalTransactionCosts = ( PSP[i].fixedTransactionFee * (transactions-500) );
 
 				}
 				else {
 
-					PSP[i].totalTransactionCosts =  nets_total + seb_total;
+					PSP[i].totalTransactionCosts =  0;
 
 				}
 
@@ -304,17 +323,17 @@ function calc() {
 			}
 			else {
 
-				PSP[i].totalTransactionCosts = ( PSP[i].fixedTransactionFee * transactions ) + nets_total + seb_total;
-
+				PSP[i].totalTransactionCosts = ( PSP[i].fixedTransactionFee * transactions );
 			}
 
 
-			PSP[i].totalCosts =	PSP[i].monthlyFee + PSP[i].totalTransactionCosts;
+			nets_totalCosts = nets_totalTransactionCosts + nets_monthlyFee;
 
+
+			PSP[i].totalCosts =	PSP[i].monthlyFee + PSP[i].totalTransactionCosts + nets_totalCosts + seb_totalCosts;
 
 
 		}
-
 	}
 
 
@@ -352,6 +371,15 @@ function build() {
 		var cell5=row.insertCell(4);
 		var cell6=row.insertCell(5);
 		var cell7=row.insertCell(6);
+		
+		if ( PSP[i].komplet == true )
+		{
+			var monthly = PSP[i].monthlyFee;
+		}
+		else
+		{
+			var monthly = PSP[i].monthlyFee+nets_monthlyFee;
+		}
 
 
 		cell1.innerHTML = "<a style='font-size: 15px;' href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='30' src='logo/"+PSP[i].logo+"' /> "+PSP[i].name+"</a>";
@@ -359,11 +387,10 @@ function build() {
 		cell2.innerHTML = "<img src='http://www.jewlscph.com/_design/common/img/payment/card_dankort.gif' width='24'><img src='http://www.ehandel.se/bilder/kort-visa.gif' width='24'><img src='http://www.ehandel.se/bilder/kort-mc.gif' width='24'>";
 
 		cell3.innerHTML = "<img src='logo/netaxept.png' height=15 /><br /><img src='http://quickpay.dk/acquirers/euroline/gfx/euroline-logo.gif' height='13' />";
-		cell4.innerHTML = "<center>" + Math.round(PSP[i].setupFee) + " kr</center>";
-		cell5.innerHTML = "<center>" + Math.round(PSP[i].monthlyFee) + " kr</center>";
+		cell4.innerHTML = "<center>" + Math.round(PSP[i].setupFee+nets_setupFee) + " kr</center>";
+		cell5.innerHTML = "<center>" + Math.round(monthly) + " kr</center>";
 		cell6.innerHTML = "<center>" + Math.round(PSP[i].totalTransactionCosts) + " kr</center>";
-		cell7.innerHTML = "<center><b>" + Math.round(PSP[i].totalCosts) + " kr</b></center>";
-
+		cell7.innerHTML = "<center><b>" + Math.round(PSP[i].totalCosts) + " kr</b><a href='#' class='tooltip'>?<span>"+ PSP[i].name +":"+ (PSP[i].totalTransactionCosts+PSP[i].monthlyFee ) + "<br />Nets: "+ nets_totalCosts +"<br />SEB: "+ seb_totalCosts +"</span></a></center>";
 
 
 	}
