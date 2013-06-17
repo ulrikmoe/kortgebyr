@@ -40,8 +40,11 @@
 
 				<label>Dankort: <input type="checkbox" disabled="" checked="" name="dankort" value="1" /></label>
 				<label>Visa/MasterCard: <input type="checkbox" disabled="" checked="" name="visamc" value="1" /><br />
+				<label>eDankort: <input type="checkbox" disabled="" checked="" name="dankort" value="1" /></label>
+				<label>3D Secure: <input type="checkbox" disabled="" checked="" name="3d" value="1" /><br />
 
-				<label>Svindelkontrol: <input type="checkbox" disabled="" value="1" /></label><br />
+				<label>Svindelkontrol: <input type="checkbox" disabled="" value="0" /></label>
+				<label>Priskorrigering: <input type="checkbox" disabled="" value="0" /></label><br />
 
 
 				<button onclick="init()">Udregn gebyrer</button>
@@ -88,6 +91,10 @@
 
 					<th>
 						Samlet pr. mån.
+					</th>
+
+					<th>
+						Kortgebyr
 					</th>
 				</tr>
 			</thead>

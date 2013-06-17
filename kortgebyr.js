@@ -78,6 +78,18 @@ function init() {
 			totalCosts: 0
 		},
 		{
+			name: "ePay Pro",
+			logo: "epay.png",
+			komplet: false,
+			link: "epay.dk",
+			setupFee: 599,
+			monthlyFee: 199,
+			fixedTransactionFee: 0.25,
+			variableTransactionFee: 0,
+			totalTransactionCosts: 0,
+			totalCosts: 0
+		},
+		{
 			name: "DIBS Entrepreneur",
 			logo: "dibs.png",
 			komplet: false,
@@ -153,21 +165,9 @@ function init() {
 			name: "Dandomain",
 			logo: "dandomain.png",
 			komplet: false,
-			link: "dandomain.dk",
-			setupFee: 199,
-			monthlyFee: 149,
-			fixedTransactionFee: 0,
-			variableTransactionFee: 0,
-			totalTransactionCosts: 0,
-			totalCosts: 0
-		},
-		{
-			name: "FreePay",
-			logo: "freepay.png",
-			komplet: false,
-			link: "freepay.dk",
-			setupFee: 0,
-			monthlyFee: 349,
+			link: "dandomain.dk/produkter/betalingssystem.html",
+			setupFee: 397,
+			monthlyFee: 247,
 			fixedTransactionFee: 0,
 			variableTransactionFee: 0,
 			totalTransactionCosts: 0,
@@ -179,19 +179,7 @@ function init() {
 			komplet: false,
 			link: "wannafind.dk",
 			setupFee: 0,
-			monthlyFee: 149,
-			fixedTransactionFee: 0,
-			variableTransactionFee: 0,
-			totalTransactionCosts: 0,
-			totalCosts: 0
-		},
-		{
-			name: "ScanPay",
-			logo: "scanpay.png",
-			komplet: false,
-			link: "scanpay.dk",
-			setupFee: 0,
-			monthlyFee: 0,
+			monthlyFee: 198,
 			fixedTransactionFee: 0,
 			variableTransactionFee: 0,
 			totalTransactionCosts: 0,
@@ -298,11 +286,11 @@ function calc() {
 		}
 		else
 		{
-		
-		
+
+
 		//	PSP[i].setupFee += nets_setupFee;
 		//	PSP[i].monthlyFee += nets_monthlyFee;
-		
+
 
 			if ( i == 5 )
 			{
@@ -371,15 +359,22 @@ function build() {
 		var cell5=row.insertCell(4);
 		var cell6=row.insertCell(5);
 		var cell7=row.insertCell(6);
-		
+		var cell8=row.insertCell(7);
+
+
 		if ( PSP[i].komplet == true )
 		{
 			var monthly = PSP[i].monthlyFee;
+			var transactionsCosts = Math.round(PSP[i].totalTransactionCosts) ;
 		}
 		else
 		{
-			var monthly = PSP[i].monthlyFee+nets_monthlyFee;
+			var monthly = PSP[i].monthlyFee+nets_monthlyFee+seb_monthlyFee;
+			var transactionsCosts = Math.round(PSP[i].totalTransactionCosts+nets_totalTransactionCosts+seb_totalTransactionCosts) ;
+
 		}
+
+
 
 
 		cell1.innerHTML = "<a style='font-size: 15px;' href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='30' src='logo/"+PSP[i].logo+"' /> "+PSP[i].name+"</a>";
@@ -389,8 +384,10 @@ function build() {
 		cell3.innerHTML = "<img src='logo/netaxept.png' height=15 /><br /><img src='http://quickpay.dk/acquirers/euroline/gfx/euroline-logo.gif' height='13' />";
 		cell4.innerHTML = "<center>" + Math.round(PSP[i].setupFee+nets_setupFee) + " kr</center>";
 		cell5.innerHTML = "<center>" + Math.round(monthly) + " kr</center>";
-		cell6.innerHTML = "<center>" + Math.round(PSP[i].totalTransactionCosts) + " kr</center>";
+		cell6.innerHTML = "<center>" + transactionsCosts + " kr</center>";
 		cell7.innerHTML = "<center><b>" + Math.round(PSP[i].totalCosts) + " kr</b><a href='#' class='tooltip'>?<span>"+ PSP[i].name +":"+ (PSP[i].totalTransactionCosts+PSP[i].monthlyFee ) + "<br />Nets: "+ nets_totalCosts +"<br />SEB: "+ seb_totalCosts +"</span></a></center>";
+
+		cell8.innerHTML = "<b>"+(PSP[i].totalCosts/transactions).toFixed(2)+" kr</b>";
 
 
 	}
