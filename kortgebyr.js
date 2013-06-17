@@ -66,18 +66,6 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "ePay Light",
-			logo: "epay.png",
-			komplet: false,
-			link: "epay.dk",
-			setupFee: 399,
-			monthlyFee: 99,
-			fixedTransactionFee: 0.25,
-			variableTransactionFee: 0,
-			totalTransactionCosts: 0,
-			totalCosts: 0
-		},
-		{
 			name: "ePay Pro",
 			logo: "epay.png",
 			komplet: false,
@@ -376,7 +364,7 @@ function build() {
 		var cell5=row.insertCell(4);
 
 
-		cell1.innerHTML = "<img style='margin:3px 0 3px;' height='40' src='logo/"+PSP[i].logo+"' />"+PSP[i].name;
+		cell1.innerHTML = "<a href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='40' src='logo/"+PSP[i].logo+"' />"+PSP[i].name+"</a><br /><img src='http://www.jewlscph.com/_design/common/img/payment/card_dankort.gif' width='20'><img src='http://www.ehandel.se/bilder/kort-visa.gif' width='20'><img src='http://www.ehandel.se/bilder/kort-mc.gif' width='20'>";
 		cell2.innerHTML = Math.round(PSP[i].setupFee) + " kr";
 		cell3.innerHTML = Math.round(PSP[i].monthlyFee) + " kr";
 		cell4.innerHTML = Math.round(PSP[i].totalTransactionCosts) + " kr";
