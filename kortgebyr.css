@@ -115,6 +115,12 @@ font-size: 13px;
 color: #444;
 }
 
+.footable th {
+
+	text-align: center
+}
+
+
 
 
 .footable.breakpoint > tbody > tr.footable-row-detail {
@@ -133,7 +139,6 @@ cursor: pointer;
 border-left: 1px solid #ccc;
 border-top: 1px solid #ccc;
 padding: 10px;
-text-align: left;
 }
 
 .footable > tbody > tr > td.footable-cell-detail {

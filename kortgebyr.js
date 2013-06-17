@@ -66,18 +66,6 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "ePay Pro",
-			logo: "epay.png",
-			komplet: false,
-			link: "epay.dk",
-			setupFee: 599,
-			monthlyFee: 199,
-			fixedTransactionFee: 0.25,
-			variableTransactionFee: 0,
-			totalTransactionCosts: 0,
-			totalCosts: 0
-		},
-		{
 			name: "ePay Business",
 			logo: "epay.png",
 			komplet: false,
@@ -362,13 +350,19 @@ function build() {
 		var cell3=row.insertCell(2);
 		var cell4=row.insertCell(3);
 		var cell5=row.insertCell(4);
+		var cell6=row.insertCell(5);
+		var cell7=row.insertCell(6);
 
 
-		cell1.innerHTML = "<a href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='40' src='logo/"+PSP[i].logo+"' />"+PSP[i].name+"</a><br /><img src='http://www.jewlscph.com/_design/common/img/payment/card_dankort.gif' width='20'><img src='http://www.ehandel.se/bilder/kort-visa.gif' width='20'><img src='http://www.ehandel.se/bilder/kort-mc.gif' width='20'>";
-		cell2.innerHTML = Math.round(PSP[i].setupFee) + " kr";
-		cell3.innerHTML = Math.round(PSP[i].monthlyFee) + " kr";
-		cell4.innerHTML = Math.round(PSP[i].totalTransactionCosts) + " kr";
-		cell5.innerHTML = Math.round(PSP[i].totalCosts) + " kr";
+		cell1.innerHTML = "<a style='font-size: 15px;' href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='30' src='logo/"+PSP[i].logo+"' /> "+PSP[i].name+"</a>";
+
+		cell2.innerHTML = "<img src='http://www.jewlscph.com/_design/common/img/payment/card_dankort.gif' width='24'><img src='http://www.ehandel.se/bilder/kort-visa.gif' width='24'><img src='http://www.ehandel.se/bilder/kort-mc.gif' width='24'>";
+
+		cell3.innerHTML = "<img src='logo/netaxept.png' height=15 /><br /><img src='http://quickpay.dk/acquirers/euroline/gfx/euroline-logo.gif' height='13' />";
+		cell4.innerHTML = "<center>" + Math.round(PSP[i].setupFee) + " kr</center>";
+		cell5.innerHTML = "<center>" + Math.round(PSP[i].monthlyFee) + " kr</center>";
+		cell6.innerHTML = "<center>" + Math.round(PSP[i].totalTransactionCosts) + " kr</center>";
+		cell7.innerHTML = "<center><b>" + Math.round(PSP[i].totalCosts) + " kr</b></center>";
 
 
 
