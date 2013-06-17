@@ -4,196 +4,51 @@
 	<meta name="description" content="" />
 	<title>Kortgebyr - betaling på internettet</title>
 
-	<link href="css/footable-0.1.css" rel="stylesheet" type="text/css" />
-
-
-	<script>
-
-
-	var transactions, value;
-
-	// [paypal, ewire light, ewire business, skrill]
-	var komplet_monthly = [0, 0, 99.58, 148.75];
-	var komplet_fixedFees = [2.6, 1.1, 0.7, 1.86];
-	var komplet_percentages = [0.024, 0.0245, 0.0245, 0.019];
-
-
-	function button() {
-
-		transactions = document.getElementById("transactions").value;
-		value = document.getElementById("value").value;
-
-		calc();
-	}
-
-
-	function calc() {
-
-		/*
-
-		Her udregner jeg oms. for at finde paypal-gebyret.
-
-		0-20k:  2,60 kr. + 3,4 %
-		20,01k-80k:  2,60 kr. + 2,9 %
-		80,01k-400k:  2,60 kr. + 2,7 %
-		400,01k-800k:  2,60 kr. + 2,4 %
-		> 800k:  2,60 kr. + 1,9 %
-
-
-		Skrill/Moneybookers
-		0-18.640:  1,86 kr (€0.25) + 2,9%
-		18.641-186.400:  1,86 kr + 2,5%
-		186.401-372.809:  1,86 kr + 2,1%
-		>372.809: 1,86 kr + 1,9%
-		*/
-
-
-		var oms = transactions * value;
-
-		if (oms < 20000 ){
-			komplet_percentages[0] = 0.034;
-		}
-
-		else if (oms < 80000)
-		{
-			komplet_percentages[0] = 0.029;
-		}
-
-		else if (oms < 400000)
-		{
-			komplet_percentages[0] = 0.027;
-		}
-
-		else if (oms < 800000)
-		{
-			komplet_percentages[0] = 0.024;
-		}
-
-		else if (oms > 800000)
-		{
-			komplet_percentages[0] = 0.019;
-		}
-
-
-
-		komplet();
-
-	}
-
-
-	function komplet() {
-
-
-		for (var i=0; i<komplet_fixedFees.length; i++)
-		{
-
-
-			/*
-
-				Her udregner jeg "Samlet pr. måned".
-			*/
-
-			var total = komplet_monthly[i] + ( komplet_fixedFees[i] * transactions ) + ( komplet_percentages[i] * transactions * value );
-
-			total = Math.round(total * 100) / 100;
-
-			document.getElementById("komplet_total_"+i).innerHTML = total;
-
-
-
-			/*
-
-				Her indsætter jeg mdr. gebyr og trans. gebyr
-
-			*/
-
-
-
-			document.getElementById("komplet_monthly_"+i).innerHTML = komplet_monthly[i];
-
-			document.getElementById("komplet_fees_"+i).innerHTML = komplet_fixedFees[i] + " kr. + " + (komplet_percentages[i]*100).toFixed(2) + "%";
-
-
-
-		}
-
-
-
-	}
-
-
-	function gateways() {
-
-
-	}
-
-
-	</script>
-
-
-	<style>
-
-	body, div, p, header, h1 ,h2, h3, ul, li { margin: 0; padding: 0 }
-
-	html {
-
-		border-top: 3px solid #222;
-
-
-	}
-
-	.container {
-		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-		font-weight: 300;
-		max-width: 1010px;
-		padding: 1.5em 0 0;
-		margin: auto;
-		position: relative;
-		line-height: 23px;
-		font-size: 16px;
-		margin-top: 10px;
-		color: #666;
-		text-rendering: optimizeLegibility;
-	}
-
-	hr {
-	    border: 0;
-	    height: 1px;
-	    background: #ddd;
-	    margin: 40px 0 10px;
-    }
-
-
-	h2 {
-
-		font-size: 2em;
-		line-height: 2.5em;
-		color: #333
-
-	}
-
-	.half {
-
-		display: inline-block;
-		width: 50%;
-		vertical-align: top;
-
-	}
-
-	</style>
-
+	<script async="" type="text/javascript" src="kortgebyr.js"></script>
+	<link href="kortgebyr.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
-<div class="container">
+
 
 	<article>
+				
+		<a style="border-right: 1px solid #999; padding-right:12px; margin-right:10px" href="#">Amino tråd</a>
+		
+		<a href="mailto:ulrik.moe@gmail.com">kontakt</a>
+		
+		<p style="float:right; font-size:14px; color: #444">opdateret: 
+		
+			<script>
+			
+				var dato = new Date(document.lastModified);
+						
+				document.write( dato.getDate() + "/" + dato.getMonth() + " " + dato.getFullYear() );
+				
+			</script>
+		
+		</p>
+		
 
-		<div style="margin:33px 0 0 0; background:#efefef; border:1px solid #ccc; padding: 20px">
+		<div style="margin:14px 0 0 0; background:#efefef; border:1px solid #ccc; padding: 20px">
+		
+		
+			<div style="float:right; line-height:30px; width: 350px">
 
-			<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
-			<label>Transaktioner: <input type="text" id="transactions" value="1000"></label><br />
-			<button onclick="button()">Udregn</button>
+				<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
+				<label>Transaktioner: <input type="text" id="transactions" value="1000"></label><br />
+				
+				<label>Dankort: <input type="checkbox" checked="" disabled="" name="dankort" value="1" /></label> <input type="text" disabled="" id="dankort" value="80">%<br />
+				<label>Visa/MasterCard: <input type="checkbox" checked="" disabled="" name="visamc" value="1" /></label><input type="text" disabled="" id="visamc" value="20">%<br />
+				
+				<label>Svindelkontrol: <input type="checkbox" checked="" disabled="" value="1" /></label><br />
+
+				
+				<button onclick="init()">Udregn gebyrer</button>
+			
+			</div>
+			
+			<p style="clear:both"></p>
 
 	</article>
 
@@ -203,13 +58,13 @@
 
 
 	<article>
-		<h2>Komplet betalingsløsning</h2>
+		<h2>Betalingsløsninger og gateways</h2>
 
 		<table class="footable">
 			<thead>
 				<tr>
 					<th>
-						<span>Navn</span>
+						<span>Løsning</span>
 					</th>
 
 					<th data-type="numeric">
@@ -221,7 +76,7 @@
 					</th>
 
 					<th data-type="numeric">
-						Transaktionsgebyr
+						Trans. gebyrer
 					</th>
 
 					<th data-type="numeric" data-sort-initial="true">
@@ -230,151 +85,28 @@
 				</tr>
 			</thead>
 
-			<tbody>
-				<tr>
-					<td><a href="http://paypal.com"><img src="logo/paypal.png" /></a></td>
-					<td>Gratis</td>
-					<td id="komplet_monthly_0"></td>
-					<td id="komplet_fees_0"></td>
-					<td id="komplet_total_0"></td>
-				</tr>
-
-				<tr>
-					<td><a href="http://ewire.dk"><img src="logo/ewire.png" /></a></td>
-					<td>395,00</td>
-					<td id="komplet_monthly_1"></td>
-					<td id="komplet_fees_1"></td>
-					<td id="komplet_total_1"></td>
-				</tr>
-
-				<tr>
-					<td><a href="http://ewire.dk"><img src="logo/ewire.png" /></a></td>
-					<td>1195,00</td>
-					<td id="komplet_monthly_2"></td>
-					<td id="komplet_fees_2"></td>
-					<td id="komplet_total_2"></td>
-				</tr>
-
-				<tr>
-					<td><a href="http://skrill.com"><img src="logo/skrill.png" /></a></td>
-					<td>Gratis</td>
-					<td id="komplet_monthly_3"></td>
-					<td id="komplet_fees_3"></td>
-					<td id="komplet_total_3"></td>
-				</tr>
+			<tbody id="data">
 
 
-      </tbody>
-</table>
+
+			</tbody>
+		
+		</table>
 
 
 
 	</article>
 
 	<hr />
-
-	<article>
-		<h2>Betalingsgateway + indløsningsaftale(r)</h2>
-
-		<div style="margin:0px 0 20px 0; background:#efefef; border:1px solid #ccc; padding: 20px">
-
-
-
-
-		</div>
-		<table class="footable">
-			<thead>
-				<tr>
-					<th>
-						<span>Gateway</span>
-					</th>
-
-					<th data-type="numeric">
-						<span>Oprettelse</span>
-					</th>
-
-					<th data-type="numeric">
-						Mdr. gebyr
-					</th>
-
-					<th data-type="numeric">
-						Transaktionsgebyr
-					</th>
-
-					<th data-type="numeric" data-sort-initial="true">
-						Samlet pr. måned
-					</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<tr>
-					<td><a href="http://quickpay.dk"><img src="logo/quickpay.png" /></a></td>
-					<td>Gratis</td>
-					<td>150,00</td>
-					<td data-value="3">0,5 kr. -> 0,1 kr.</td>
-					<td></td>
-				</tr>
-
-				<tr>
-					<td><a href="http://epay.dk"><img src="logo/epay.png" /></a></td>
-					<td>999,00</td>
-					<td>299,00</td>
-					<td data-value="3">0,30 kr.</td>
-					<td></td>
-				</tr>
-
-				<tr>
-					<td><a href="http://dibs.dk"><img src="logo/dibs.png" /></a></td>
-					<td>Gratis</td>
-					<td>249,00</td>
-					<td data-value="3">1,5 kr.</td>
-					<td></td>
-				</tr>
-
-				<tr>
-					<td><a href="https://www.terminalshop.dk/Netaxept/"><img src="logo/nets.png" /></a></td>
-					<td>3000,00</td>
-					<td>500,00</td>
-					<td data-value="3">1,00 kr.</td>
-					<td></td>
-				</tr>
-
-								<tr>
-					<td><a href="https://www.terminalshop.dk/Netaxept/"><img src="logo/nets.png" /></a></td>
-					<td>7500,00</td>
-					<td>700,00</td>
-					<td data-value="3">0,70 kr.</td>
-					<td></td>
-				</tr>
-
-				<tr>
-					<td><a href="http://www.dandomain.dk/produkter/betalingssystem.html"><img src="logo/dandomain.png" /></a></td>
-					<td>298,00</td>
-					<td>198,00</td>
-					<td data-value="3">Ingen</td>
-					<td></td>
-				</tr>
-
-      </tbody>
-</table>
-
-</article>
-
-
-<hr />
-
-
-
-</div>
 
 
 <script>
-	button();
+window.onload = function () {
 
-var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-33869674-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
-
-
+	init();
+	
+}
+</script>
 
 </body>
 </html>
