@@ -38,13 +38,18 @@
 				<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
 				<label>Transaktioner: <input type="text" id="transactions" value="250"></label><br />
 
+				<label>Dankort-frekvens: <input type="text" id="dankort-frek" value="80"></label><br />
+
+
 				<label>Dankort: <input type="checkbox" disabled="" checked="" name="dankort" value="1" /></label>
 				<label>Visa/MasterCard: <input type="checkbox" disabled="" checked="" name="visamc" value="1" /><br />
-				<label>eDankort: <input type="checkbox" disabled="" checked="" name="dankort" value="1" /></label>
-				<label>3D Secure: <input type="checkbox" disabled="" checked="" name="3d" value="1" /><br />
+				<label>eDankort: <input type="checkbox" disabled="" checked="" name="edankort" value="1" /></label>
+				
+				<label>JCB, AMEX, UnionPay: <input type="checkbox" disabled="" name="jcb" value="1" /></label><br />
+
+				<label>3D Secure: <input type="checkbox" disabled="" checked="" name="3d" value="1" />
 
 				<label>Svindelkontrol: <input type="checkbox" disabled="" value="0" /></label>
-				<label>Priskorrigering: <input type="checkbox" disabled="" value="0" /></label><br />
 
 
 				<button onclick="init()">Udregn gebyrer</button>
@@ -83,10 +88,6 @@
 
 					<th>
 						Faste omk.
-					</th>
-
-					<th>
-						Var. omk.
 					</th>
 
 					<th>

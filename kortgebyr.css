@@ -100,6 +100,11 @@ filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 
 
 
+.kort {width: 100px; text-align: center; margin: auto}
+.kort img { margin: 0 3px}
+
+
+
 
 
 
@@ -115,12 +120,18 @@ font-size: 13px;
 color: #444;
 }
 
-.footable th {
+.footable th, .footable td {
 
 	text-align: center
 }
 
-
+.footable .first {
+	
+	text-align: left;
+	padding-left: 10px;
+	width: 210px
+	
+}
 
 
 .footable.breakpoint > tbody > tr.footable-row-detail {
@@ -136,9 +147,9 @@ cursor: pointer;
 }
 
 .footable > tbody > tr > td, .footable > thead > tr > th {
-border-left: 1px solid #ccc;
-border-top: 1px solid #ccc;
-padding: 10px;
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	padding: 10px 7px;
 }
 
 .footable > tbody > tr > td.footable-cell-detail {
