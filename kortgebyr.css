@@ -33,10 +33,11 @@ hr {
 h2 {
 
 	font-weight: 300;
-	font-size: 2em;
+	font-size: 2.3em;
 	line-height: 2.5em;
 	color: #333;
 	text-rendering: optimizeLegibility;
+	margin-bottom: 6px
 
 }
 
@@ -126,11 +127,11 @@ color: #444;
 }
 
 .footable .first {
-	
+
 	text-align: left;
-	padding-left: 10px;
-	width: 210px
-	
+	padding-left: 7px;
+	width: 120px
+
 }
 
 
@@ -149,7 +150,7 @@ cursor: pointer;
 .footable > tbody > tr > td, .footable > thead > tr > th {
 	border-left: 1px solid #ccc;
 	border-top: 1px solid #ccc;
-	padding: 10px 7px;
+	padding: 11px 7px 10px;
 }
 
 .footable > tbody > tr > td.footable-cell-detail {
@@ -229,10 +230,10 @@ padding: 10px;
 
 
 
- 
+
 a.tooltip {outline:none; }
 a.tooltip strong {line-height:30px;}
-a.tooltip:hover {text-decoration:none;} 
+a.tooltip:hover {text-decoration:none;}
 a.tooltip span {
     z-index:10;display:none; padding:14px 20px;
     margin-top:-30px; margin-left:-260px;
@@ -242,13 +243,13 @@ a.tooltip:hover span{
     display:inline; position:absolute; color:#111;
     border:1px solid #DCA; background:#fffAF0;}
 .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
-    
+
 a.tooltip span
 {
     border-radius:4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
-        
+
     -moz-box-shadow: 5px 5px 8px #CCC;
     -webkit-box-shadow: 5px 5px 8px #CCC;
     box-shadow: 5px 5px 8px #CCC;

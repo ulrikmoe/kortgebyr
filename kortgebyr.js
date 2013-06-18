@@ -3,6 +3,36 @@ function init() {
 	transactions = document.getElementById("transactions").value;
 	value = document.getElementById("value").value;
 
+
+	acquirer = [
+
+		{
+			name: "nets",
+			logo: "nets.png",
+			setupFee: 250,
+			monthlyFee: 83.33,
+			fixedTransactionFee: 0.7,
+			variableTransactionFee: 0,
+			totalTransactionCosts: 0,
+			totalCosts: 0
+		},
+		{
+			name: "SEB",
+			logo: "seb.png",
+			setupFee: 0,
+			monthlyFee: 0,
+			fixedTransactionFee: 0,
+			variableTransactionFee: 1.65,
+			totalTransactionCosts: 0,
+			totalCosts: 0
+		}
+
+	];
+
+
+
+
+
 	PSP = [
 
 		{
@@ -75,6 +105,19 @@ function init() {
 			logo: "epay.png",
 			komplet: false,
 			link: "epay.dk",
+			setupFee: 399,
+			monthlyFee: 99,
+			fixedTransactionFee: 0.25,
+			variableTransactionFee: 0,
+			freeTransactions: 500,
+			totalTransactionCosts: 0,
+			totalCosts: 0
+		},
+		{
+			name: "ePay Business",
+			logo: "epay.png",
+			komplet: false,
+			link: "epay.dk",
 			setupFee: 999,
 			monthlyFee: 299,
 			fixedTransactionFee: 0.25,
@@ -137,7 +180,7 @@ function init() {
 		},
 		{
 			name: "Netaxept start",
-			logo: "netaxept.png",
+			logo: "nets.png",
 			komplet: false,
 			link: "terminalshop.dk",
 			setupFee: 1000,
@@ -150,7 +193,7 @@ function init() {
 		},
 		{
 			name: "Netaxept plus",
-			logo: "netaxept.png",
+			logo: "nets.png",
 			komplet: false,
 			link: "terminalshop.dk",
 			setupFee: 3000,
@@ -163,7 +206,7 @@ function init() {
 		},
 		{
 			name: "Netaxept advanced",
-			logo: "netaxept.png",
+			logo: "nets.png",
 			komplet: false,
 			link: "terminalshop.dk",
 			setupFee: 7500,
@@ -309,7 +352,7 @@ function calc() {
 
 			if ( i == 5 )
 			{
-				
+
 			}
 			else
 			{
@@ -392,11 +435,14 @@ function build() {
 
 
 
-		cell1.innerHTML = "<div class=first><a target='_blank' style='font-size: 15px;' href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='26' src='logo/"+PSP[i].logo+"' /> "+PSP[i].name+"</a></div>";
+		cell1.innerHTML = "<div class=first><a target='_blank' style='font-size: 13px;' href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='32' src='logo/"+PSP[i].logo+"' /></a></div>";
+
+		// PSP[i].name
+
 
 		cell2.innerHTML = "<div class=kort><img src='http://www.jewlscph.com/_design/common/img/payment/card_dankort.gif' width='24'><img src='http://quickpay.dk/features/payment-methods/gfx/visa-xs.gif' width='26'><img src='http://quickpay.dk/features/payment-methods/gfx/mc-xs.gif' width='24'><img src='http://www.epay.dk/images/forside/betalingskort-kreditkort/maestro-kreditkort.gif' width='24' /><img src='http://www.ehandel.se/bilder/kort-diners.gif' width='24' /></div>";
 
-		cell3.innerHTML = "<img src='logo/netaxept.png' height=15 /><br /><img src='http://quickpay.dk/acquirers/euroline/gfx/euroline-logo.gif' height='13' />";
+		cell3.innerHTML = "<img src='logo/nets.png' height=15 /><br /><img src='http://quickpay.dk/acquirers/euroline/gfx/euroline-logo.gif' height='13' />";
 		cell4.innerHTML = Math.round(PSP[i].setupFee+nets_setupFee) + " kr";
 		cell5.innerHTML = Math.round(monthly) + " kr";
 
