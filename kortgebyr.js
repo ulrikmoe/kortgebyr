@@ -442,7 +442,7 @@ function build() {
 
 		cell2.innerHTML = "<div class=kort><img src='http://www.jewlscph.com/_design/common/img/payment/card_dankort.gif' width='24'><img src='http://quickpay.dk/features/payment-methods/gfx/visa-xs.gif' width='26'><img src='http://quickpay.dk/features/payment-methods/gfx/mc-xs.gif' width='24'><img src='http://www.epay.dk/images/forside/betalingskort-kreditkort/maestro-kreditkort.gif' width='24' /><img src='http://www.ehandel.se/bilder/kort-diners.gif' width='24' /></div>";
 
-		cell3.innerHTML = "<img src='logo/nets.png' height=15 /><br /><img src='http://quickpay.dk/acquirers/euroline/gfx/euroline-logo.gif' height='13' />";
+		cell3.innerHTML = "<img src='logo/nets.png' height=15 /><br /><img src='logo/euroline.png' height='15' />";
 		cell4.innerHTML = Math.round(PSP[i].setupFee+nets_setupFee) + " kr";
 		cell5.innerHTML = Math.round(monthly) + " kr";
 
