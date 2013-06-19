@@ -98,8 +98,11 @@ function init() {
 		{
 			name: "paypal",
 			logo: "paypal.png",
-			komplet: true,
 			link: "paypal.com",
+			gateway: false,
+			
+			acquirer: [0],
+			
 			setupFee: 0,
 			monthlyFee: 0,
 			fixedTransactionFee: 2.6,
@@ -111,7 +114,7 @@ function init() {
 		{
 			name: "ewire",
 			logo: "ewire.png",
-			komplet: true,
+			gateway: false,
 			link: "ewire.dk",
 			setupFee: 1195,
 			monthlyFee: 99.58,
@@ -124,7 +127,7 @@ function init() {
 		{
 			name: "ewire",
 			logo: "ewire.png",
-			komplet: true,
+			gateway: false,
 			link: "ewire.dk",
 			setupFee: 395,
 			monthlyFee: 0,
@@ -137,7 +140,7 @@ function init() {
 		{
 			name: "skrill",
 			logo: "skrill.png",
-			komplet: true,
+			gateway: false,
 			link: "skrill.com",
 			setupFee: 0,
 			monthlyFee: 148.75,
@@ -150,7 +153,7 @@ function init() {
 		{
 			name: "quickpay",
 			logo: "quickpay.png",
-			komplet: false,
+			gateway: true,
 			link: "quickpay.dk",
 			setupFee: 0,
 			monthlyFee: 150,
@@ -163,7 +166,7 @@ function init() {
 		{
 			name: "ePay Business",
 			logo: "epay.png",
-			komplet: false,
+			gateway: true,
 			link: "epay.dk",
 			setupFee: 399,
 			monthlyFee: 99,
@@ -176,7 +179,7 @@ function init() {
 		{
 			name: "ePay Business",
 			logo: "epay.png",
-			komplet: false,
+			gateway: true,
 			link: "epay.dk",
 			setupFee: 999,
 			monthlyFee: 299,
@@ -189,7 +192,7 @@ function init() {
 		{
 			name: "ePay Pro",
 			logo: "epay.png",
-			komplet: false,
+			gateway: true,
 			link: "epay.dk",
 			setupFee: 599,
 			monthlyFee: 199,
@@ -202,7 +205,7 @@ function init() {
 		{
 			name: "DIBS Entrepreneur",
 			logo: "dibs.png",
-			komplet: false,
+			gateway: true,
 			link: "dibs.dk",
 			setupFee: 0,
 			monthlyFee: 149,
@@ -215,7 +218,7 @@ function init() {
 	  	{
 			name: "DIBS Business",
 			logo: "dibs.png",
-			komplet: false,
+			gateway: true,
 			link: "dibs.dk",
 			setupFee: 0,
 			monthlyFee: 249,
@@ -228,7 +231,7 @@ function init() {
 		{
 			name: "DIBS Professional",
 			logo: "dibs.png",
-			komplet: false,
+			gateway: true,
 			link: "dibs.dk",
 			setupFee: 0,
 			monthlyFee: 249,
@@ -241,7 +244,7 @@ function init() {
 		{
 			name: "Netaxept start",
 			logo: "nets.png",
-			komplet: false,
+			gateway: true,
 			link: "terminalshop.dk",
 			setupFee: 1000,
 			monthlyFee: 180,
@@ -254,7 +257,7 @@ function init() {
 		{
 			name: "Netaxept plus",
 			logo: "nets.png",
-			komplet: false,
+			gateway: true,
 			link: "terminalshop.dk",
 			setupFee: 3000,
 			monthlyFee: 500,
@@ -267,7 +270,7 @@ function init() {
 		{
 			name: "Netaxept advanced",
 			logo: "nets.png",
-			komplet: false,
+			gateway: true,
 			link: "terminalshop.dk",
 			setupFee: 7500,
 			monthlyFee: 700,
@@ -280,7 +283,7 @@ function init() {
 		{
 			name: "Dandomain",
 			logo: "dandomain.png",
-			komplet: false,
+			gateway: true,
 			link: "dandomain.dk/produkter/betalingssystem.html",
 			setupFee: 397,
 			monthlyFee: 247,
@@ -293,7 +296,7 @@ function init() {
 		{
 			name: "Wannafind",
 			logo: "wannafind.png",
-			komplet: false,
+			gateway: true,
 			link: "wannafind.dk/betalingsgateway/",
 			setupFee: 0,
 			monthlyFee: 198,
@@ -392,7 +395,7 @@ function calc() {
 	{
 
 
-		if ( PSP[i].komplet == true )
+		if ( PSP[i].gateway == false )
 		{
 
 			// PSP[0].variableTransactionFee
@@ -480,15 +483,20 @@ function build() {
 		var cell8=row.insertCell(6);
 
 
-		if ( PSP[i].komplet == true )
+		if ( PSP[i].gateway == false )
 		{
 			var monthly = PSP[i].monthlyFee;
-			var transactionsCosts = Math.round(PSP[i].totalTransactionCosts) ;
+			var transactionsCosts = Math.round(PSP[i].totalTransactionCosts);
+			
+			var HTML_acquirer = "";
+			
 		}
 		else
 		{
 			var monthly = PSP[i].monthlyFee+nets_monthlyFee+seb_monthlyFee;
 			var transactionsCosts = Math.round(PSP[i].totalTransactionCosts+nets_totalTransactionCosts+seb_totalTransactionCosts) ;
+			
+			var HTML_acquirer = "<img src='logo/nets.png' height=15 /><br /><img src='logo/euroline.png' height='15' />";
 
 		}
 
@@ -496,13 +504,10 @@ function build() {
 
 
 		cell1.innerHTML = "<div class=first><a target='_blank' style='font-size: 13px;' href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='32' src='logo/"+PSP[i].logo+"' /></a></div>";
-
-		// PSP[i].name
-
-
+		
 		cell2.innerHTML = "<div class=kort><img src='http://www.jewlscph.com/_design/common/img/payment/card_dankort.gif' width='24'><img src='http://quickpay.dk/features/payment-methods/gfx/visa-xs.gif' width='26'><img src='http://quickpay.dk/features/payment-methods/gfx/mc-xs.gif' width='24'><img src='http://www.epay.dk/images/forside/betalingskort-kreditkort/maestro-kreditkort.gif' width='24' /><img src='http://www.ehandel.se/bilder/kort-diners.gif' width='24' /></div>";
 
-		cell3.innerHTML = "<img src='logo/nets.png' height=15 /><br /><img src='logo/euroline.png' height='15' />";
+		cell3.innerHTML = HTML_acquirer;
 		cell4.innerHTML = Math.round(PSP[i].setupFee+nets_setupFee) + " kr";
 		cell5.innerHTML = Math.round(monthly) + " kr";
 
