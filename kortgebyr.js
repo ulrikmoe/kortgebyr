@@ -4,11 +4,59 @@ function init() {
 	value = document.getElementById("value").value;
 
 
+	cards = [
+
+		{
+			name: "Dankort",
+			logo: "dankort.png"
+		},
+		{
+			name: "eDankort",
+			logo: "edankort.png"
+		},
+		{
+			name: "Visa",
+			logo: "visa.png"
+		},
+		{
+			name: "MasterCard",
+			logo: "mastercard.png"
+		},
+		{
+			name: "JCB",
+			logo: "jcb.png"
+		},
+		{
+			name: "UnionPay",
+			logo: "unionpay.png"
+		},
+		{
+			name: "Diners",
+			logo: "diners.png"
+		},
+		{
+			name: "American Express",
+			logo: "amex.png"
+		},
+		{
+			name: "Visa Electron",
+			logo: "visaelectron.png"
+		},
+
+
+	];
+
+
+
+
+
+
 	acquirer = [
 
 		{
 			name: "nets",
 			logo: "nets.png",
+			cards: [0,1],
 			setupFee: 250,
 			monthlyFee: 83.33,
 			fixedTransactionFee: 0.7,
@@ -19,6 +67,18 @@ function init() {
 		{
 			name: "SEB",
 			logo: "seb.png",
+			cards: [1,2,3,4,5,6],
+			setupFee: 0,
+			monthlyFee: 0,
+			fixedTransactionFee: 0,
+			variableTransactionFee: 1.65,
+			totalTransactionCosts: 0,
+			totalCosts: 0
+		},
+		{
+			name: "Teller",
+			logo: "teller.png",
+			cards: [1,2,3,4,5,6],
 			setupFee: 0,
 			monthlyFee: 0,
 			fixedTransactionFee: 0,
