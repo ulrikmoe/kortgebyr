@@ -22,13 +22,6 @@ body {
 
 }
 
-hr {
-    border: 0;
-    height: 1px;
-    background: #ddd;
-    margin: 40px 0 10px;
-}
-
 
 h2 {
 
@@ -37,7 +30,7 @@ h2 {
 	line-height: 2.5em;
 	color: #333;
 	text-rendering: optimizeLegibility;
-	margin-bottom: 6px
+	margin: 15px 0 6px
 
 }
 

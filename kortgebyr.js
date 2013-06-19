@@ -7,7 +7,7 @@ function init() {
 	cards = [
 
 		{
-			name: "Dankort",
+			name: "Dankort", // 0
 			logo: "dankort.png"
 		},
 		{
@@ -48,11 +48,11 @@ function init() {
 
 
 
-
-
-
 	acquirer = [
 
+		{
+			// fix cards: [0] == false ... strange bug
+		},
 		{
 			name: "nets",
 			logo: "nets.png",
@@ -91,18 +91,14 @@ function init() {
 
 
 
-
-
 	PSP = [
 
 		{
 			name: "paypal",
 			logo: "paypal.png",
 			link: "paypal.com",
-			gateway: false,
-			
-			acquirer: [0],
-			
+			acquirer: 0,
+			cards: [2,3,4,5],
 			setupFee: 0,
 			monthlyFee: 0,
 			fixedTransactionFee: 2.6,
@@ -114,8 +110,9 @@ function init() {
 		{
 			name: "ewire",
 			logo: "ewire.png",
-			gateway: false,
 			link: "ewire.dk",
+			acquirer: 0,
+			cards: [0,1,2,3,4,5],
 			setupFee: 1195,
 			monthlyFee: 99.58,
 			fixedTransactionFee: 0.7,
@@ -127,8 +124,9 @@ function init() {
 		{
 			name: "ewire",
 			logo: "ewire.png",
-			gateway: false,
 			link: "ewire.dk",
+			acquirer: 0,
+			cards: [0,1,2,3,4,5],
 			setupFee: 395,
 			monthlyFee: 0,
 			fixedTransactionFee: 1.1,
@@ -140,8 +138,9 @@ function init() {
 		{
 			name: "skrill",
 			logo: "skrill.png",
-			gateway: false,
 			link: "skrill.com",
+			acquirer: 0,
+			cards: [2,3,4,5],
 			setupFee: 0,
 			monthlyFee: 148.75,
 			fixedTransactionFee: 1.86,
@@ -153,8 +152,9 @@ function init() {
 		{
 			name: "quickpay",
 			logo: "quickpay.png",
-			gateway: true,
 			link: "quickpay.dk",
+			acquirer: [1,2],
+			cards: [0,1,2,3,4,5],
 			setupFee: 0,
 			monthlyFee: 150,
 			fixedTransactionFee: 0,
@@ -164,10 +164,11 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "ePay Business",
+			name: "ePay Light",
 			logo: "epay.png",
-			gateway: true,
 			link: "epay.dk",
+			acquirer: [1],
+			cards: [1],
 			setupFee: 399,
 			monthlyFee: 99,
 			fixedTransactionFee: 0.25,
@@ -179,8 +180,9 @@ function init() {
 		{
 			name: "ePay Business",
 			logo: "epay.png",
-			gateway: true,
 			link: "epay.dk",
+			acquirer: [1,2],
+			cards: [0,1,2,3,4,5],
 			setupFee: 999,
 			monthlyFee: 299,
 			fixedTransactionFee: 0.25,
@@ -192,8 +194,9 @@ function init() {
 		{
 			name: "ePay Pro",
 			logo: "epay.png",
-			gateway: true,
 			link: "epay.dk",
+			acquirer: [1,2],
+			cards: [0,1,2,3,4,5],
 			setupFee: 599,
 			monthlyFee: 199,
 			fixedTransactionFee: 0.25,
@@ -205,8 +208,9 @@ function init() {
 		{
 			name: "DIBS Entrepreneur",
 			logo: "dibs.png",
-			gateway: true,
 			link: "dibs.dk",
+			acquirer: [1],
+			cards: [0,1],
 			setupFee: 0,
 			monthlyFee: 149,
 			fixedTransactionFee: 3,
@@ -218,8 +222,9 @@ function init() {
 	  	{
 			name: "DIBS Business",
 			logo: "dibs.png",
-			gateway: true,
 			link: "dibs.dk",
+			acquirer: [1,2],
+			cards: [0,1,2,3,4,5],
 			setupFee: 0,
 			monthlyFee: 249,
 			fixedTransactionFee: 3,
@@ -231,8 +236,9 @@ function init() {
 		{
 			name: "DIBS Professional",
 			logo: "dibs.png",
-			gateway: true,
 			link: "dibs.dk",
+			acquirer: [1,2,3],
+			cards: [0,1,2,3,4,5],
 			setupFee: 0,
 			monthlyFee: 249,
 			fixedTransactionFee: 1.5,
@@ -244,8 +250,9 @@ function init() {
 		{
 			name: "Netaxept start",
 			logo: "nets.png",
-			gateway: true,
 			link: "terminalshop.dk",
+			acquirer: [1,3],
+			cards: [0,1,2,3,4,5],
 			setupFee: 1000,
 			monthlyFee: 180,
 			fixedTransactionFee: 1.5,
@@ -257,8 +264,9 @@ function init() {
 		{
 			name: "Netaxept plus",
 			logo: "nets.png",
-			gateway: true,
 			link: "terminalshop.dk",
+			acquirer: [1,3],
+			cards: [0,1,2,3,4,5],
 			setupFee: 3000,
 			monthlyFee: 500,
 			fixedTransactionFee: 1,
@@ -270,8 +278,9 @@ function init() {
 		{
 			name: "Netaxept advanced",
 			logo: "nets.png",
-			gateway: true,
 			link: "terminalshop.dk",
+			acquirer: [1,3],
+			cards: [0,1,2,3,4,5],
 			setupFee: 7500,
 			monthlyFee: 700,
 			fixedTransactionFee: 0.7,
@@ -283,8 +292,9 @@ function init() {
 		{
 			name: "Dandomain",
 			logo: "dandomain.png",
-			gateway: true,
 			link: "dandomain.dk/produkter/betalingssystem.html",
+			acquirer: [1,3],
+			cards: [0,1,2,3,4,5],
 			setupFee: 397,
 			monthlyFee: 247,
 			fixedTransactionFee: 0,
@@ -296,8 +306,9 @@ function init() {
 		{
 			name: "Wannafind",
 			logo: "wannafind.png",
-			gateway: true,
 			link: "wannafind.dk/betalingsgateway/",
+			acquirer: [1,2,3],
+			cards: [0,1,2,3,4,5],
 			setupFee: 0,
 			monthlyFee: 198,
 			fixedTransactionFee: 0,
@@ -312,22 +323,6 @@ function init() {
 	];
 
 
-	nets_setupFee = 250;
-	nets_monthlyFee = 83.33;
-	nets_fixedTransactionFee = 0.7;
-	nets_variableTransactionFee = 0;
-	nets_totalTransactionCosts = 0;
-	nets_totalCosts = 0;
-
-
-	seb_setupFee = 0;
-	seb_monthlyFee = 0;
-	seb_fixedTransactionFees = 0;
-	seb_variableTransactionFees = 1.6;
-	seb_totalTransactionCosts = 0;
-	seb_totalCosts = 0;
-
-
 	oms = transactions * value;
 
 	calc();
@@ -337,12 +332,18 @@ function init() {
 
 function calc() {
 
-	/*
+	// Init variables
 
+
+
+
+
+
+
+	/*
 	==========================================
 	P	A	Y	P	A	L
 	==========================================
-
 	*/
 
 	if (oms < 20000 ) { PSP[0].variableTransactionFee = 3.4; }
@@ -354,11 +355,9 @@ function calc() {
 
 
 	/*
-
 	==========================================
 	S	K	R	I	L	L
 	==========================================
-
 	*/
 
 
@@ -366,83 +365,98 @@ function calc() {
 
 
 	/*
-
 	==========================================
 	N	E	T	S
 	==========================================
-
 	*/
 
-	if ( value <= 50 ) { nets_fixedTransactionFee = 0.7; }
-	else if ( value <= 100 ) { nets_fixedTransactionFee = 1.1; }
-	else if ( value <= 500 ) { nets_fixedTransactionFee = 1.45; }
-	else { nets_fixedTransactionFee = 1.45; nets_percentages = 0.001 }
+	if ( value <= 50 ) { acquirer[1].fixedTransactionFee = 0.7; }
+	else if ( value <= 100 ) { acquirer[1].fixedTransactionFee = 1.1; }
+	else if ( value <= 500 ) { acquirer[1].fixedTransactionFee = 1.45; }
+	else { acquirer[1].fixedTransactionFee = 1.45; acquirer[1].variableTransactionFee = 0.001 }
 
 
-	nets_totalTransactionCosts = 0.8 * ( transactions * nets_fixedTransactionFee + oms * nets_variableTransactionFee );
+	acquirer[1].totalTransactionCosts = 0.8 * ( transactions * acquirer[1].fixedTransactionFee + oms * acquirer[1].variableTransactionFee );
 
-	seb_totalTransactionCosts = 0.2 * oms * 0.0165;
-
-
-	seb_totalCosts = seb_totalTransactionCosts;
 
 
 	/*
-		Her udregner jeg transaktionsgebyrer + total
+	==========================================
+	S	E	B
+	==========================================
 	*/
+
+	//console.log(acquirer[2].name);
+
+	acquirer[2].totalCosts = acquirer[2].totalTransactionCosts = 0.2 * oms * 0.0165;
+
+
+
+
+	/*
+	==========================================
+	T	E	L	L	E	R
+	==========================================
+	*/
+
+
+
+
+
+
+
+
+
+
+
 
 	for (var i=0; i<PSP.length; i++)
 	{
 
 
-		if ( PSP[i].gateway == false )
+		var cheapestAcquirer = 0;
+
+
+		if ( PSP[i].gateway == false ) // Paypal, ewire, Skrill
 		{
 
-			// PSP[0].variableTransactionFee
-
 			PSP[i].totalTransactionCosts = ( PSP[i].fixedTransactionFee * transactions ) + ( PSP[i].variableTransactionFee/100 * oms ) ;
-
-			PSP[i].totalCosts =	PSP[i].monthlyFee + PSP[i].totalTransactionCosts;
 
 		}
 		else
 		{
 
 
-		//	PSP[i].setupFee += nets_setupFee;
-		//	PSP[i].monthlyFee += nets_monthlyFee;
+			if ( transactions > PSP[i].freeTransactions ) {
 
-
-			if ( i == 5 )
-			{
-
-			}
-			else
-			{
-
-				if ( transactions > PSP[i].freeTransactions )
-				{
-
-					PSP[i].totalTransactionCosts = ( PSP[i].fixedTransactionFee * (transactions- PSP[i].freeTransactions ) );
-
-				}
-				else {
-
-					PSP[i].totalTransactionCosts =  0;
-
-				}
-
+					PSP[i].totalTransactionCosts = ( PSP[i].fixedTransactionFee * ( transactions- PSP[i].freeTransactions ) );
 
 			}
 
 
-			nets_totalCosts = nets_totalTransactionCosts + nets_monthlyFee;
+
+			/*
+
+				FIND BILLIGSTE INDLØSER FOR DENNE PSP
+
+			*/
 
 
-			PSP[i].totalCosts =	PSP[i].monthlyFee + PSP[i].totalTransactionCosts + nets_totalCosts + seb_totalCosts;
+			acquirer[1].totalCosts = acquirer[1].totalTransactionCosts + acquirer[1].monthlyFee;
+
+
+			cheapestAcquirer = acquirer[1].totalCosts + acquirer[2].totalCosts;
+
 
 
 		}
+
+
+
+		PSP[i].totalCosts =	PSP[i].monthlyFee + PSP[i].totalTransactionCosts + cheapestAcquirer;
+
+
+
 	}
 
 
@@ -482,38 +496,54 @@ function build() {
 		var cell7=row.insertCell(5);
 		var cell8=row.insertCell(6);
 
+		var HTML_acquirer = "";
 
-		if ( PSP[i].gateway == false )
+
+		if ( PSP[i].acquirer == 0 )
 		{
 			var monthly = PSP[i].monthlyFee;
 			var transactionsCosts = Math.round(PSP[i].totalTransactionCosts);
-			
-			var HTML_acquirer = "";
-			
 		}
 		else
 		{
-			var monthly = PSP[i].monthlyFee+nets_monthlyFee+seb_monthlyFee;
-			var transactionsCosts = Math.round(PSP[i].totalTransactionCosts+nets_totalTransactionCosts+seb_totalTransactionCosts) ;
-			
-			var HTML_acquirer = "<img src='logo/nets.png' height=15 /><br /><img src='logo/euroline.png' height='15' />";
+			var monthly = PSP[i].monthlyFee + acquirer[1].monthlyFee + acquirer[2].monthlyFee;
+			var transactionsCosts = Math.round(PSP[i].totalTransactionCosts + acquirer[1].totalTransactionCosts+ acquirer[2].totalTransactionCosts) ;
+
+			HTML_acquirer = "<img src='logo/nets.png' height='15'>";
+
+			for (var u=1; u<PSP[i].acquirer.length; u++)
+			{
+				HTML_acquirer += "<img src='logo/"+acquirer[PSP[i].acquirer[u]].name+".png' height=15 /><br />";
+			}
 
 		}
+
+
+		/*
+		HTML_cards = "";
+
+		for (var u=1; u<PSP[i].acquirer.length; u++)
+		{
+			HTML_acquirer += "<img src='logo/"+acquirer[PSP[i].acquirer[u]].name+".png' height=15 /><br />";
+		}
+		*/
+
+
 
 
 
 
 		cell1.innerHTML = "<div class=first><a target='_blank' style='font-size: 13px;' href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='32' src='logo/"+PSP[i].logo+"' /></a></div>";
-		
+
 		cell2.innerHTML = "<div class=kort><img src='http://www.jewlscph.com/_design/common/img/payment/card_dankort.gif' width='24'><img src='http://quickpay.dk/features/payment-methods/gfx/visa-xs.gif' width='26'><img src='http://quickpay.dk/features/payment-methods/gfx/mc-xs.gif' width='24'><img src='http://www.epay.dk/images/forside/betalingskort-kreditkort/maestro-kreditkort.gif' width='24' /><img src='http://www.ehandel.se/bilder/kort-diners.gif' width='24' /></div>";
 
 		cell3.innerHTML = HTML_acquirer;
-		cell4.innerHTML = Math.round(PSP[i].setupFee+nets_setupFee) + " kr";
+		cell4.innerHTML = Math.round(PSP[i].setupFee + acquirer[1].setupFee) + " kr";
 		cell5.innerHTML = Math.round(monthly) + " kr";
 
-		cell7.innerHTML = "<b>" + Math.round(PSP[i].totalCosts) + " kr</b><a href='#' class='tooltip'>?<span>"+ PSP[i].name +":"+ (PSP[i].totalTransactionCosts+PSP[i].monthlyFee ) + "<br />Nets: "+ nets_totalCosts +"<br />SEB: "+ seb_totalCosts +"</span></a>";
+		cell7.innerHTML = Math.round(PSP[i].totalCosts) + " kr<a href='#' class='tooltip'>?<span>"+ PSP[i].name +":"+ (PSP[i].totalTransactionCosts+PSP[i].monthlyFee ) + "<br />Nets: "+ acquirer[1].totalCosts +"<br />SEB: "+ acquirer[2].totalCosts +"</span></a>";
 
-		cell8.innerHTML = "<b>"+(PSP[i].totalCosts/transactions).toFixed(2)+" kr</b>";
+		cell8.innerHTML = (PSP[i].totalCosts/transactions).toFixed(2)+" kr";
 
 
 	}
