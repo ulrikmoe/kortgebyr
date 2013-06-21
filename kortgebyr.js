@@ -442,6 +442,12 @@ function calc() {
 			*/
 
 
+
+
+
+
+
+
 			acquirer[1].totalCosts = acquirer[1].totalTransactionCosts + acquirer[1].monthlyFee;
 
 
