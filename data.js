@@ -334,6 +334,7 @@ function init() {
 			totalTransactionCosts: 0,
 			totalCosts: 0
 		},
+		
 		{
 			name: "Netaxept plus",
 			logo: "nets.png",
