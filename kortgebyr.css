@@ -5,8 +5,14 @@ html {
 }
 
 a {
-	color: steelblue;
+	color: #36b;
 	text-decoration: none
+}
+
+.external {
+	
+	font-size: 12px
+	
 }
 
 body {
@@ -132,9 +138,6 @@ color: #444;
 background: #eee;
 }
 
-.footable > tbody > tr:hover {
-background: #fbf8e9;
-}
 
 .footable.breakpoint > tbody > tr:hover:not(.footable-row-detail) {
 cursor: pointer;
