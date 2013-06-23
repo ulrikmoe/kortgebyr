@@ -212,6 +212,7 @@ function build() {
 		var HTML_acquirer = "";
 		var HTML_cards = "";
 		
+		
 
 		if ( PSP[i].acquirer == undefined )
 		{
