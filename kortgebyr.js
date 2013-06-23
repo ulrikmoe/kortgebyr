@@ -213,6 +213,8 @@ function build() {
 		var HTML_cards = "";
 		
 		
+		
+		
 
 		if ( PSP[i].acquirer == undefined )
 		{
