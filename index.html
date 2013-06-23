@@ -12,8 +12,7 @@
 
 
 
-
-	<article>
+	<header>
 
 		<a style="border-right: 1px solid #999; padding-right:12px; margin-right:10px" href="#"><img src ="http://www.amino.dk/favicon.ico" style="float:left;margin:2px 5px 0 0" />Amino tråd</a>
 
@@ -21,7 +20,7 @@
 
 		<a href="mailto:ulrik.moe@gmail.com">Kontakt</a>
 
-		<p style="float:right; font-size:13px; color: #444">opdateret:
+		<p style="float:right; color: #444">opdateret:
 
 			<script>
 
@@ -29,35 +28,48 @@
 				var timezone = dato.getTimezoneOffset()*60;
 				var sekunder = timezone + Math.floor( ( Date.now() - dato ) / 1000); // minutter
 				var text = "";
-				
+
 				if (sekunder < 60) { text = sekunder + " sekunder"; }
 				else if ( sekunder < 7200 ) { text = Math.floor(sekunder/60) + " minutter"; }
 				else if ( sekunder < 86400 ) { text = Math.floor(sekunder/3600) + " timer"; }
 				else if ( sekunder < 172800 ) { text = Math.floor(sekunder/86400) + " dag"; }
 				else { text = Math.floor(sekunder/86400) + " dage"; }
-				
+
 				document.write( text + " siden");
-				
+
 			</script>
 
 		</p>
-		
+
+
+	</header>
+
+
+	<article style="position:relative">
+
+
+		<a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="github.png" alt="Fork me on GitHub"></a>
+
+
 
 
 		<div style="margin:14px 0 0 0; background:#efefef; border:1px solid #ccc; padding: 20px">
 
 
+
+
+
 			<div style="float:left">
 			<h2>Betalingsløsninger og gateways</h2>
-			
+
 			Kortgebyr er en side
-			
-			
-			
+
+
+
 			</div>
 
 
-			<div style="float:right; line-height:30px; width: 350px">
+			<div style="float:right; line-height:30px; width: 350px; position:relative">
 
 				<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
 				<label>Transaktioner: <input type="text" id="transactions" value="100"></label><br />
@@ -121,7 +133,7 @@
 					<th>
 						Kortgebyr
 					</th>
-					
+
 				</tr>
 			</thead>
 
