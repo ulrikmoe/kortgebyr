@@ -14,24 +14,45 @@
 
 	<article>
 
-		<a style="border-right: 1px solid #999; padding-right:12px; margin-right:10px" href="#">Amino tråd</a>
+		<a style="border-right: 1px solid #999; padding-right:12px; margin-right:10px" href="#"><img src ="http://www.amino.dk/favicon.ico" style="float:left;margin:2px 5px 0 0" />Amino tråd</a>
 
-		<a href="mailto:ulrik.moe@gmail.com">kontakt</a>
+		<a style="border-right: 1px solid #999; padding-right:12px; margin-right:10px" href="#">Spørgeskema</a>
 
-		<p style="float:right; font-size:14px; color: #444">opdateret:
+		<a href="mailto:ulrik.moe@gmail.com">Kontakt</a>
+
+		<p style="float:right; font-size:13px; color: #444">opdateret:
 
 			<script>
 
 				var dato = new Date(document.lastModified);
-
-				document.write( dato.toLocaleDateString() );
-
+				var timezone = dato.getTimezoneOffset()*60;
+				var sekunder = timezone + Math.floor( ( Date.now() - dato ) / 1000); // minutter
+				var text = "";
+				
+				if (sekunder < 60) { text = sekunder + " sekunder"; }
+				else if ( sekunder < 7200 ) { text = Math.floor(sekunder/60) + " minutter"; }
+				else if ( sekunder < 86400 ) { text = Math.floor(sekunder/3600) + " timer"; }
+				else if ( sekunder < 172800 ) { text = Math.floor(sekunder/86400) + " dag"; }
+				else { text = Math.floor(sekunder/86400) + " dage"; }
+				
+				document.write( text + " siden");
+				
 			</script>
 
 		</p>
 
 
 		<div style="margin:14px 0 0 0; background:#efefef; border:1px solid #ccc; padding: 20px">
+
+
+			<div style="float:left">
+			<h2>Betalingsløsninger og gateways</h2>
+			
+			Kortgebyr er en side
+			
+			
+			
+			</div>
 
 
 			<div style="float:right; line-height:30px; width: 350px">
@@ -49,7 +70,9 @@
 
 				<label>3D Secure: <input type="checkbox" disabled="" checked="" id="3d" /></label>
 
-				<label>Svindelkontrol: <input type="checkbox" disabled="" id="svindel" /></label>
+				<label>Svindelkontrol: <input type="checkbox" disabled="" id="svindel" /></label><br />
+
+				<label>Korriger priser for renteudgifter: <input type="checkbox" disabled="" id="priskorrigering" /></label><br />
 
 				<button onclick="init()">Udregn kortgebyr</button>
 
@@ -62,7 +85,10 @@
 
 
 	<article>
-		<h2>Betalingsløsninger og gateways</h2>
+
+
+		test
+
 
 		<table class="footable">
 			<thead>
@@ -93,6 +119,7 @@
 					<th>
 						Kortgebyr
 					</th>
+					
 				</tr>
 			</thead>
 

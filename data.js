@@ -4,6 +4,15 @@ function init() {
 	value = document.getElementById("value").value;
 	dankort = document.getElementById("dankort").checked;
 	visamc = document.getElementById("visamc").checked;
+	jcb = document.getElementById("jcb").checked; //jcb, amex, UnionPay
+	
+	
+	if (visamc == false && jcb == true)
+	{
+		document.getElementById("jcb").checked = false;
+		jcb = false;
+	}
+
 
 	dankortfrekvens = 80;
 
@@ -97,13 +106,24 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "SWE Bank", //3
+			name: "SWE Bank", // 3
 			logo: "swe.png",
 			cards: [2,3,4,5,6],
-			setupFee: 2000,
-			monthlyFee: 100,
+			setupFee: 1900,
+			monthlyFee: 0,
 			fixedTransactionFee: 0,
-			variableTransactionFee: 1.9,
+			variableTransactionFee: 1.7,
+			totalTransactionCosts: 0,
+			totalCosts: 0
+		},
+		{
+			name: "Handelsbanken", // 4
+			logo: "swe.png",
+			cards: [2,3,4,5,6],
+			setupFee: 1900,
+			monthlyFee: 0,
+			fixedTransactionFee: 0,
+			variableTransactionFee: 1.7,
 			totalTransactionCosts: 0,
 			totalCosts: 0
 		}
@@ -226,7 +246,7 @@ function init() {
 			link: "epay.dk",
 			acquirer: 1,
 			availableAcquirers: [1,2,3],
-			cards: [0,1,2,3,4,5,6],
+			cards: [0,1,2,3,4,5,6,7,8,9],
 			setupFee: 999,
 			monthlyFee: 299,
 			fixedTransactionFee: 0.25,
@@ -245,7 +265,7 @@ function init() {
 			link: "epay.dk",
 			acquirer: 2,
 			availableAcquirers: [2],
-			cards: [0,1,2,3,4,5],
+			cards: [0,1,2,3,4,5,6,7,8,9],
 			setupFee: 599,
 			monthlyFee: 199,
 			fixedTransactionFee: 0.25,
@@ -283,7 +303,7 @@ function init() {
 			link: "dibs.dk",
 			acquirer: 1,
 			availableAcquirers: [1,2,3],
-			cards: [0,1,2,3,4,5],
+			cards: [0,1,2,3,4,5,6,7,8,9],
 			setupFee: 0,
 			monthlyFee: 249,
 			fixedTransactionFee: 3,
@@ -302,7 +322,7 @@ function init() {
 			link: "dibs.dk",
 			acquirer: 1,
 			availableAcquirers: [1,2,3],
-			cards: [0,1,2,3,4,5],
+			cards: [0,1,2,3,4,5,6,7,8,9],
 			setupFee: 0,
 			monthlyFee: 249,
 			fixedTransactionFee: 1.5,
@@ -341,7 +361,7 @@ function init() {
 			link: "terminalshop.dk",
 			acquirer: 2,
 			availableAcquirers: [2],
-			cards: [0,1,2,3,4,5],
+			cards: [0,1,2,3,4,5,6,7,8,9],
 			setupFee: 3000,
 			monthlyFee: 500,
 			fixedTransactionFee: 1,
@@ -360,7 +380,7 @@ function init() {
 			link: "terminalshop.dk",
 			acquirer: 2,
 			availableAcquirers: [2],
-			cards: [0,1,2,3,4,5],
+			cards: [0,1,2,3,4,5,6,7,8,9],
 			setupFee: 7500,
 			monthlyFee: 700,
 			fixedTransactionFee: 0.7,
@@ -379,9 +399,9 @@ function init() {
 			link: "dandomain.dk/produkter/betalingssystem.html",
 			acquirer: 2,
 			availableAcquirers: [2],
-			cards: [0,1,2,3,4,5],
-			setupFee: 397,
-			monthlyFee: 247,
+			cards: [0,2,3,4,5],
+			setupFee: 298,
+			monthlyFee: 198,
 			fixedTransactionFee: 0,
 			variableTransactionFee: 0,
 			freeTransactions: 0,
@@ -401,6 +421,25 @@ function init() {
 			cards: [0,1,2,3,4,5],
 			setupFee: 0,
 			monthlyFee: 198,
+			fixedTransactionFee: 0,
+			variableTransactionFee: 0,
+			freeTransactions: 0,
+			transactionCosts: 0,
+			costs: 0,
+			totalSetupFee: 0,
+			totalMonthlyFee: 0,
+			totalTransactionCosts: 0,
+			totalCosts: 0
+		},
+		{
+			name: "ScanPay",
+			logo: "scanpay.png",
+			link: "wannafind.dk/betalingsgateway/",
+			acquirer: 1,
+			availableAcquirers: [1,2,3],
+			cards: [0,1,2,3,4,5],
+			setupFee: 0,
+			monthlyFee: 0,
 			fixedTransactionFee: 0,
 			variableTransactionFee: 0,
 			freeTransactions: 0,

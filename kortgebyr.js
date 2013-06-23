@@ -1,6 +1,5 @@
 
 
-
 function calc() {
 
 
@@ -103,7 +102,7 @@ function calc() {
 				
 				
 				
-				if ( n > 0 )
+				if ( ( n > 0 ) && (jcb === false) )
 				{
 					
 					 tmp = acquirer[n].totalCosts;
@@ -112,10 +111,15 @@ function calc() {
 					 {
 						 min = tmp;
 						 cheapestAcquirer = n;
-						 
 					 }
+				}
+				else if ( jcb === true )
+				{
+					
+					cheapestAcquirer = 2; // Teller
 					
 				}
+				
 	
 			});
 		
@@ -186,10 +190,9 @@ function build() {
 
 	for (var i=0; i<PSP.length; i++)
 	{
-	
-	
 			
 		// fjern dankort-only løsninger
+		
 		if ( ( visamc === true )  && ( PSP[i].availableAcquirers == 0 ) ) {
 				console.log(PSP[i].acquirer);
 
@@ -225,7 +228,13 @@ function build() {
 			if ( ( dankort === true ) && ( PSP[i].acquirer !== undefined ) )
 			{
 				HTML_acquirer = "<img src='logo/nets.png' width='55' /><br />";
-				HTML_cards += "<img src='cards/dankort.gif' width='24' /><img src='cards/edankort.png' width='24' />";
+				HTML_cards += "<img src='cards/dankort.gif' width='24' />";
+				
+				if (PSP[i].cards.indexOf(1) > -1)
+				{
+					HTML_cards += "<img src='cards/edankort.png' width='24' />";
+					
+				}
 			}
 			
 			if ( ( PSP[i].acquirer !== 0 ) && ( visamc === true ) )
@@ -233,9 +242,14 @@ function build() {
 				HTML_acquirer += "<img src='logo/"+ acquirer[PSP[i].acquirer].logo +"' width='55' />";
 				
 				
-				acquirer[PSP[i].acquirer].cards.forEach(function(n, i)
+				acquirer[PSP[i].acquirer].cards.forEach(function(n, x)
 				{
-					HTML_cards += "<img src='cards/"+cards[n].logo+"' width='24' />";
+				
+					if ( PSP[i].cards.indexOf(n) > -1)
+					{
+						HTML_cards += "<img src='cards/"+cards[n].logo+"' width='24' />";					
+					}
+					
 				});
 	
 			}
@@ -245,7 +259,7 @@ function build() {
 
 
 
-		cell1.innerHTML = "<div class=first><a target='_blank' style='font-size: 13px;' href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='32' src='logo/"+PSP[i].logo+"' /></a><br /><a class='external' href='http://"+PSP[i].link+"'>"+ PSP[i].name +"</a></div>";
+		cell1.innerHTML = "<div class=first><a target='_blank' href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='32' src='logo/"+PSP[i].logo+"' /><br />"+ PSP[i].name +"</a></div>";
 
 		cell2.innerHTML = "<div class=kort>"+ HTML_cards +"</div>";
 
