@@ -27,6 +27,28 @@ body {
 header {
 
 	font-size:13px;
+	color: #444
+
+}
+
+header p {
+
+	float:right;
+
+}
+
+header a {
+
+	border-right: 1px solid #999;
+	padding-right:12px;
+	margin-right:10px
+
+}
+
+header a img {
+
+	float:left;
+	margin:2px 5px 0 0
 
 }
 
@@ -40,10 +62,8 @@ h2 {
 	line-height: 2em;
 	color: #333;
 	text-rendering: optimizeLegibility;
-<<<<<<< HEAD
 	margin: 5px 0 6px
-=======
->>>>>>> a322da4ace706488237415e3c97a31c69f9d1e31
+
 }
 
 .half {
@@ -55,12 +75,12 @@ h2 {
 
 
 #box {
-	
+
 	padding: 10px 20px;
 	margin:14px 0 0 0;
 	background:#efefef;
 	border:1px solid #ccc;
-	
+
 }
 
 
@@ -112,12 +132,45 @@ button {
 }
 
 
+.psp {
+	text-align: left;
+	padding-left: 7px;
+	font-size: 12px
+}
+
+.psp p {
+	height: 32px;
+	width: 120px;
+	background: url(psp.png) no-repeat;
+	margin: 9px 0 2px;
+}
+
+
+.kort {
+	width: 100px;
+	text-align: center;
+	margin: auto
+}
+
+.kort img {
+	margin: 0 3px
+}
 
 
 
+.acquirer {
 
-.kort {width: 100px; text-align: center; margin: auto}
-.kort img { margin: 0 3px}
+	text-align: center
+}
+
+.acquirer p {
+
+	margin: 2px auto;
+	height: 16px;
+	width: 70px;
+	background: url(acquirer.png) no-repeat;
+
+}
 
 
 
@@ -141,14 +194,6 @@ color: #444;
 	text-align: center
 }
 
-.footable .first {
-
-	text-align: left;
-	padding-left: 7px;
-	width: 120px;
-	font-size: 12px
-
-}
 
 
 .footable.breakpoint > tbody > tr.footable-row-detail {

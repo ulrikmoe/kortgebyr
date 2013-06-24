@@ -1,5 +1,6 @@
 
 
+
 function calc() {
 
 
@@ -17,96 +18,96 @@ function calc() {
 	else if ( value <= 500 ) { acquirer[0].fixedTransactionFee = 1.45; }
 	else { acquirer[0].fixedTransactionFee = 1.45; acquirer[0].variableTransactionFee = 0.001 }
 
-	
-	
+
+
 	// Her udregner jeg costs for samtlige indløsere.
 
 	for (var i=0; i<acquirer.length; i++)
 	{
-	
-	
+
+
 		var kortfordeling = 1;
-					
+
 		if ( ( dankort === true ) && (visamc === true) )
-		{	
+		{
 			if ( acquirer[i].name !== "nets" )
 			{
 				kortfordeling = (100-dankortfrekvens )/100;
 			}
 			else
 			{
-				kortfordeling = dankortfrekvens/100;	
+				kortfordeling = dankortfrekvens/100;
 			}
 		}
-			
+
 		acquirer[i].transactionCosts = kortfordeling * ( transactions * acquirer[i].fixedTransactionFee + oms * (acquirer[i].variableTransactionFee / 100));
 
 		acquirer[i].totalCosts = acquirer[i].transactionCosts + acquirer[i].monthlyFee;
-	
+
 		console.log( acquirer[i].name +": " + acquirer[i].totalCosts);
-				
+
 	}
-	
-		
+
+
 	// Her sorterer jeg indløserne efter totalCosts
 
 
 
-	
-	
-	
+
+
+
 	// Her udregner jeg costs for samtlige betalingsløsninger
 
 	for (var i=0; i<PSP.length; i++)
 	{
-	
-					
-					
-	
-	
+
+
+
+
+
 		if ( PSP[i].acquirer == undefined ) // Paypal, ewire, Skrill
 		{
-		
+
 			PSP[i].transactionCosts = ( PSP[i].fixedTransactionFee * transactions ) + ( PSP[i].variableTransactionFee/100 * oms ) ;
-						
+
 		}
 		else if ( transactions > PSP[i].freeTransactions )
 		{
 
 			PSP[i].transactionCosts = ( PSP[i].fixedTransactionFee * ( transactions- PSP[i].freeTransactions ) );
-		
+
 
 		}
-		
+
 		PSP[i].costs =	PSP[i].monthlyFee + PSP[i].transactionCosts;
 
-		
-		
+
+
 		PSP[i].totalCosts = PSP[i].costs;
 		PSP[i].totalMonthlyFee = PSP[i].monthlyFee;
 		PSP[i].totalSetupFee = PSP[i].setupFee;
-		
-		
-		
+
+
+
 		if ( PSP[i].acquirer !== undefined ) {
-		
-		
+
+
 			var min = Number.POSITIVE_INFINITY;
 			var tmp;
 			var cheapestAcquirer;
-		
+
 			PSP[i].availableAcquirers.forEach(function(n, x)
 			{
-				
+
 				console.log("n="+n + ", x="+x);
-				
-				
-				
+
+
+
 				if ( ( n > 0 ) && (jcb === false) )
 				{
-					
+
 					 tmp = acquirer[n].totalCosts;
-					 					 					
+
 					 if ( tmp < min)
 					 {
 						 min = tmp;
@@ -115,42 +116,42 @@ function calc() {
 				}
 				else if ( jcb === true )
 				{
-					
+
 					cheapestAcquirer = 2; // Teller
-					
+
 				}
-				
-	
+
+
 			});
-		
+
 
 			PSP[i].acquirer = cheapestAcquirer;
-		
-		
-						
+
+
+
 			PSP[i].costs =	PSP[i].monthlyFee + PSP[i].transactionCosts;
 
-			
+
 			if ( ( dankort === true ) && ( PSP[i].acquirer !== undefined ) )
 			{
-			
+
 				PSP[i].totalSetupFee += acquirer[0].setupFee;
 				PSP[i].totalMonthlyFee += acquirer[0].monthlyFee;
 				PSP[i].totalCosts += acquirer[0].totalCosts;
 			}
-			
+
 			if ( ( PSP[i].acquirer !== 0 ) && ( visamc === true ) )
 			{
-						
+
 				PSP[i].totalSetupFee += acquirer[ PSP[i].acquirer ].setupFee;
 				PSP[i].totalMonthlyFee += acquirer[ PSP[i].acquirer ].monthlyFee;
-				PSP[i].totalCosts += acquirer[ PSP[i].acquirer ].totalCosts;	
+				PSP[i].totalCosts += acquirer[ PSP[i].acquirer ].totalCosts;
 			}
 
-			
+
 		}
-		
-		
+
+
 
 
 	}
@@ -163,14 +164,14 @@ function calc() {
 	});
 
 
-	
-	
-	
-	
 
-	
-	
-	
+
+
+
+
+
+
+
 
 	build();
 
@@ -190,9 +191,9 @@ function build() {
 
 	for (var i=0; i<PSP.length; i++)
 	{
-			
+
 		// fjern dankort-only løsninger
-		
+
 		if ( ( visamc === true )  && ( PSP[i].availableAcquirers == 0 ) ) {
 				console.log(PSP[i].acquirer);
 
@@ -209,60 +210,63 @@ function build() {
 		var cell7=row.insertCell(5);
 		var cell8=row.insertCell(6);
 
-		var HTML_acquirer = "";
+		var HTML_acquirer = "<div class='acquirer'>";
 		var HTML_cards = "";
-		
-		
-		
-		
+
+
+
+
 
 		if ( PSP[i].acquirer == undefined )
 		{
-			
+
 			PSP[i].cards.forEach(function(n, i)
 			{
 					HTML_cards += "<img src='cards/"+cards[n].logo+"' width='24' />";
 			});
-			
+
 		}
 		else
 		{
-			
+
 			if ( ( dankort === true ) && ( PSP[i].acquirer !== undefined ) )
 			{
-				HTML_acquirer = "<img src='logo/nets.png' width='55' /><br />";
-				HTML_cards += "<img src='cards/dankort.gif' width='24' />";
-				
+				HTML_acquirer += "<p style='background-position: 0 0px'></p>";
+				HTML_cards += "<img src='cards/dankort.png' height='16' />";
+
 				if (PSP[i].cards.indexOf(1) > -1)
 				{
-					HTML_cards += "<img src='cards/edankort.png' width='24' />";
-					
+					HTML_cards += "<img src='cards/edankort.png' height='16' />";
+
 				}
 			}
-			
+
 			if ( ( PSP[i].acquirer !== 0 ) && ( visamc === true ) )
 			{
-				HTML_acquirer += "<img src='logo/"+ acquirer[PSP[i].acquirer].logo +"' width='55' />";
-				
-				
+				HTML_acquirer += "<p style='background-position: 0 -"+32*(acquirer[PSP[i].acquirer].logo - 1)+"px'></p>";
+
+
 				acquirer[PSP[i].acquirer].cards.forEach(function(n, x)
 				{
-				
+
 					if ( PSP[i].cards.indexOf(n) > -1)
 					{
-						HTML_cards += "<img src='cards/"+cards[n].logo+"' width='24' />";					
+						HTML_cards += "<img src='cards/"+cards[n].logo+"' height='16' />";
 					}
-					
+
 				});
-	
+
 			}
-						
+
 
 		}
 
+		HTML_acquirer += "</div>";
 
 
-		cell1.innerHTML = "<div class=first><a target='_blank' href='http://"+PSP[i].link+"'><img style='margin:3px 0 3px;' height='32' src='logo/"+PSP[i].logo+"' /><br />"+ PSP[i].name +"</a></div>";
+		// <img style='margin:3px 0 3px;' height='32' src='logo/"+PSP[i].logo+"' />
+
+		cell1.innerHTML = "<div class=psp><a target='_blank' href='http://"+PSP[i].link+"'><p style='background-position: 0 -"+32*(PSP[i].logo - 1)+"px'></p>"+ PSP[i].name +"</a></div>";
 
 		cell2.innerHTML = "<div class=kort>"+ HTML_cards +"</div>";
 
@@ -271,24 +275,24 @@ function build() {
 		cell5.innerHTML = Math.round(PSP[i].totalMonthlyFee) + " kr";
 
 
-		
+
 		var	tooltip = "<a href='#' class='tooltip'>?<span>"+PSP[i].name +":"+ (PSP[i].costs );
-		
+
 		if ( PSP[i].acquirer !== undefined )
 		{
-			
+
 			if (dankort === true )
 			{
 				tooltip += "<br />Nets: "+ acquirer[0].totalCosts;
 			}
-			
+
 			if (visamc === true)
 			{
 				tooltip += "<br />"+acquirer[ PSP[i].acquirer ].name + ": "+ acquirer[ PSP[i].acquirer ].totalCosts;
 			}
 
 		}
-		
+
 		tooltip += "</span></a>";
 
 

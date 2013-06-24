@@ -5,8 +5,8 @@ function init() {
 	dankort = document.getElementById("dankort").checked;
 	visamc = document.getElementById("visamc").checked;
 	jcb = document.getElementById("jcb").checked; //jcb, amex, UnionPay
-	
-	
+
+
 	if (visamc == false && jcb == true)
 	{
 		document.getElementById("jcb").checked = false;
@@ -17,13 +17,13 @@ function init() {
 	dankortfrekvens = 80;
 
 	cards = [
-	
-	
+
+
 	// hover effect : http://www.catskillflies.com/collections/simms?page=2
 
 		{
 			name: "Dankort", // 0
-			logo: "dankort.gif"
+			logo: "dankort.png"
 		},
 		{
 			name: "eDankort", // 1
@@ -31,11 +31,11 @@ function init() {
 		},
 		{
 			name: "Visa", // 2
-			logo: "visa.gif"
+			logo: "visa.png"
 		},
 		{
 			name: "Visa Electron", // 3
-			logo: "visaelectron.gif"
+			logo: "visaelectron.png"
 		},
 		{
 			name: "MasterCard", // 4
@@ -43,7 +43,7 @@ function init() {
 		},
 		{
 			name: "Maestro", // 5
-			logo: "maestro.gif"
+			logo: "maestro.png"
 		},
 		{
 			name: "Diners", // 6
@@ -70,11 +70,11 @@ function init() {
 
 
 
-	acquirer = 
+	acquirer =
 	[
 		{
 			name: "nets", //0
-			logo: "nets.png",
+			logo: 1,
 			cards: [0,1],
 			setupFee: 250,
 			monthlyFee: 83.33,
@@ -85,7 +85,7 @@ function init() {
 		},
 		{
 			name: "SEB", // 1
-			logo: "seb.png",
+			logo: 2,
 			cards: [2,3,4,5,6],
 			setupFee: 0,
 			monthlyFee: 0,
@@ -96,7 +96,7 @@ function init() {
 		},
 		{
 			name: "Teller", // 2
-			logo: "teller.png",
+			logo: 3,
 			cards: [2,3,4,5,6,7,8,9],
 			setupFee: 1000,
 			monthlyFee: 100,
@@ -107,7 +107,7 @@ function init() {
 		},
 		{
 			name: "SWE Bank", // 3
-			logo: "swe.png",
+			logo: 4,
 			cards: [2,3,4,5,6],
 			setupFee: 1900,
 			monthlyFee: 0,
@@ -118,7 +118,7 @@ function init() {
 		},
 		{
 			name: "Handelsbanken", // 4
-			logo: "swe.png",
+			logo: 5,
 			cards: [2,3,4,5,6],
 			setupFee: 1900,
 			monthlyFee: 0,
@@ -132,11 +132,11 @@ function init() {
 
 
 
-	PSP = 
+	PSP =
 	[
 		{
 			name: "paypal",
-			logo: "paypal.png",
+			logo: 6,
 			link: "paypal.com",
 			cards: [2,3,4,5,9,10],
 			setupFee: 0,
@@ -153,7 +153,7 @@ function init() {
 		},
 		{
 			name: "ewire",
-			logo: "ewire.png",
+			logo: 4,
 			link: "ewire.dk",
 			cards: [0,2,3,4,5],
 			setupFee: 1195,
@@ -170,7 +170,7 @@ function init() {
 		},
 		{
 			name: "ewire",
-			logo: "ewire.png",
+			logo: 4,
 			link: "ewire.dk",
 			cards: [0,2,3,4,5],
 			setupFee: 395,
@@ -187,8 +187,8 @@ function init() {
 		},
 		{
 			name: "skrill",
-			logo: "skrill.png",
-			link: "skrill.com",	
+			logo: 8,
+			link: "skrill.com",
 			cards: [2,3,4,6,7,9],
 			setupFee: 0,
 			monthlyFee: 148.75,
@@ -204,7 +204,7 @@ function init() {
 		},
 		{
 			name: "quickpay",
-			logo: "quickpay.png",
+			logo: 7,
 			link: "quickpay.dk",
 			acquirer: 1,
 			availableAcquirers: [1,2,3],
@@ -223,7 +223,7 @@ function init() {
 		},
 		{
 			name: "ePay Light",
-			logo: "epay.png",
+			logo: 3,
 			link: "epay.dk",
 			acquirer: 0,
 			availableAcquirers: [0],
@@ -242,7 +242,7 @@ function init() {
 		},
 		{
 			name: "ePay Business",
-			logo: "epay.png",
+			logo: 3,
 			link: "epay.dk",
 			acquirer: 1,
 			availableAcquirers: [1,2,3],
@@ -261,7 +261,7 @@ function init() {
 		},
 		{
 			name: "ePay Pro",
-			logo: "epay.png",
+			logo: 3,
 			link: "epay.dk",
 			acquirer: 2,
 			availableAcquirers: [2],
@@ -280,7 +280,7 @@ function init() {
 		},
 		{
 			name: "DIBS Entrepreneur",
-			logo: "dibs.png",
+			logo: 2,
 			link: "dibs.dk",
 			acquirer: 0,
 			availableAcquirers: [0],
@@ -299,7 +299,7 @@ function init() {
 		},
 	  	{
 			name: "DIBS Business",
-			logo: "dibs.png",
+			logo: 2,
 			link: "dibs.dk",
 			acquirer: 1,
 			availableAcquirers: [1,2,3],
@@ -318,7 +318,7 @@ function init() {
 		},
 		{
 			name: "DIBS Professional",
-			logo: "dibs.png",
+			logo: 2,
 			link: "dibs.dk",
 			acquirer: 1,
 			availableAcquirers: [1,2,3],
@@ -337,7 +337,7 @@ function init() {
 		},
 		{
 			name: "Netaxept start",
-			logo: "nets.png",
+			logo: 5,
 			link: "terminalshop.dk",
 			acquirer: 1,
 			availableAcquirers: [2],
@@ -354,10 +354,10 @@ function init() {
 			totalTransactionCosts: 0,
 			totalCosts: 0
 		},
-		
+
 		{
 			name: "Netaxept plus",
-			logo: "nets.png",
+			logo: 5,
 			link: "terminalshop.dk",
 			acquirer: 2,
 			availableAcquirers: [2],
@@ -376,7 +376,7 @@ function init() {
 		},
 		{
 			name: "Netaxept advanced",
-			logo: "nets.png",
+			logo: 5,
 			link: "terminalshop.dk",
 			acquirer: 2,
 			availableAcquirers: [2],
@@ -395,7 +395,7 @@ function init() {
 		},
 		{
 			name: "Dandomain",
-			logo: "dandomain.png",
+			logo: 1,
 			link: "dandomain.dk/produkter/betalingssystem.html",
 			acquirer: 2,
 			availableAcquirers: [2],
@@ -414,32 +414,13 @@ function init() {
 		},
 		{
 			name: "Wannafind",
-			logo: "wannafind.png",
+			logo: 9,
 			link: "wannafind.dk/betalingsgateway/",
 			acquirer: 1,
 			availableAcquirers: [1,2,3],
 			cards: [0,1,2,3,4,5],
 			setupFee: 0,
 			monthlyFee: 198,
-			fixedTransactionFee: 0,
-			variableTransactionFee: 0,
-			freeTransactions: 0,
-			transactionCosts: 0,
-			costs: 0,
-			totalSetupFee: 0,
-			totalMonthlyFee: 0,
-			totalTransactionCosts: 0,
-			totalCosts: 0
-		},
-		{
-			name: "ScanPay",
-			logo: "scanpay.png",
-			link: "wannafind.dk/betalingsgateway/",
-			acquirer: 1,
-			availableAcquirers: [1,2,3],
-			cards: [0,1,2,3,4,5],
-			setupFee: 0,
-			monthlyFee: 0,
 			fixedTransactionFee: 0,
 			variableTransactionFee: 0,
 			freeTransactions: 0,
