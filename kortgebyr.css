@@ -286,6 +286,8 @@ padding: 10px;
 
 
 
+.tooltip img {margin: -2px 0 0 6px;}
+
 
 
 a.tooltip {outline:none; }

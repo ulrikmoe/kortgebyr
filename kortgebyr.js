@@ -276,7 +276,7 @@ function build() {
 
 
 
-		var	tooltip = "<a href='#' class='tooltip'>?<span>"+PSP[i].name +":"+ (PSP[i].costs );
+		var	tooltip = "<a href='#' class='tooltip'><img src='tooltip.gif' /><span>"+PSP[i].name +":"+ (PSP[i].costs );
 
 		if ( PSP[i].acquirer !== undefined )
 		{
