@@ -243,7 +243,7 @@ function build() {
 
 			if ( ( PSP[i].acquirer !== 0 ) && ( visamc === true ) )
 			{
-				HTML_acquirer += "<p style='background-position: 0 -"+32*(acquirer[PSP[i].acquirer].logo - 1)+"px'></p>";
+				HTML_acquirer += "<p style='background-position: 0 -"+16*(acquirer[PSP[i].acquirer].logo - 1)+"px'></p>";
 
 
 				acquirer[PSP[i].acquirer].cards.forEach(function(n, x)

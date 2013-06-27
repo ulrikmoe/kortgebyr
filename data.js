@@ -4,14 +4,7 @@ function init() {
 	value = document.getElementById("value").value;
 	dankort = document.getElementById("dankort").checked;
 	visamc = document.getElementById("visamc").checked;
-	jcb = document.getElementById("jcb").checked; //jcb, amex, UnionPay
-
-
-	if (visamc == false && jcb == true)
-	{
-		document.getElementById("jcb").checked = false;
-		jcb = false;
-	}
+	jcb = false;
 
 
 	dankortfrekvens = 80;
@@ -88,9 +81,9 @@ function init() {
 			logo: 2,
 			cards: [2,3,4,5,6],
 			setupFee: 0,
-			monthlyFee: 0,
+			monthlyFee: 200,
 			fixedTransactionFee: 0,
-			variableTransactionFee: 1.65,
+			variableTransactionFee: 2.65,
 			transactionCosts: 0,
 			totalCosts: 0
 		},
@@ -110,7 +103,7 @@ function init() {
 			logo: 4,
 			cards: [2,3,4,5,6],
 			setupFee: 1900,
-			monthlyFee: 0,
+			monthlyFee: 100,
 			fixedTransactionFee: 0,
 			variableTransactionFee: 1.7,
 			totalTransactionCosts: 0,
@@ -121,7 +114,7 @@ function init() {
 			logo: 5,
 			cards: [2,3,4,5,6],
 			setupFee: 1900,
-			monthlyFee: 0,
+			monthlyFee: 100,
 			fixedTransactionFee: 0,
 			variableTransactionFee: 1.7,
 			totalTransactionCosts: 0,
@@ -135,7 +128,7 @@ function init() {
 	PSP =
 	[
 		{
-			name: "paypal",
+			name: "paypal", // 0
 			logo: 6,
 			link: "paypal.com",
 			cards: [2,3,4,5,9,10],
@@ -152,7 +145,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "ewire",
+			name: "ewire", // 1
 			logo: 4,
 			link: "ewire.dk",
 			cards: [0,2,3,4,5],
@@ -169,7 +162,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "ewire",
+			name: "ewire", // 2
 			logo: 4,
 			link: "ewire.dk",
 			cards: [0,2,3,4,5],
@@ -186,7 +179,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "skrill",
+			name: "skrill", // 3
 			logo: 8,
 			link: "skrill.com",
 			cards: [2,3,4,6,7,9],
@@ -203,12 +196,12 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "quickpay",
+			name: "quickpay", // 4
 			logo: 7,
 			link: "quickpay.dk",
 			acquirer: 1,
 			availableAcquirers: [1,2,3],
-			cards: [0,1,2,3,4,5],
+			cards: [0,1,2,3,4,5,6,7,8,9],
 			setupFee: 0,
 			monthlyFee: 150,
 			fixedTransactionFee: 0,
@@ -222,7 +215,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "ePay Light",
+			name: "ePay Light", // 5
 			logo: 3,
 			link: "epay.dk",
 			acquirer: 0,
@@ -241,7 +234,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "ePay Business",
+			name: "ePay Business", // 6
 			logo: 3,
 			link: "epay.dk",
 			acquirer: 1,
@@ -260,7 +253,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "ePay Pro",
+			name: "ePay Pro", // 7
 			logo: 3,
 			link: "epay.dk",
 			acquirer: 2,
@@ -279,7 +272,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "DIBS Entrepreneur",
+			name: "DIBS Entrepreneur", // 8
 			logo: 2,
 			link: "dibs.dk",
 			acquirer: 0,
@@ -298,7 +291,7 @@ function init() {
 			totalCosts: 0
 		},
 	  	{
-			name: "DIBS Business",
+			name: "DIBS Business", // 9
 			logo: 2,
 			link: "dibs.dk",
 			acquirer: 1,
@@ -317,7 +310,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "DIBS Professional",
+			name: "DIBS Professional", // 10
 			logo: 2,
 			link: "dibs.dk",
 			acquirer: 1,
@@ -336,7 +329,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "Netaxept start",
+			name: "Netaxept start", // 11
 			logo: 5,
 			link: "terminalshop.dk",
 			acquirer: 1,
@@ -356,7 +349,7 @@ function init() {
 		},
 
 		{
-			name: "Netaxept plus",
+			name: "Netaxept plus", // 12
 			logo: 5,
 			link: "terminalshop.dk",
 			acquirer: 2,
@@ -375,7 +368,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "Netaxept advanced",
+			name: "Netaxept advanced", // 13
 			logo: 5,
 			link: "terminalshop.dk",
 			acquirer: 2,
@@ -394,12 +387,12 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "Dandomain",
+			name: "Dandomain", // 14
 			logo: 1,
 			link: "dandomain.dk/produkter/betalingssystem.html",
 			acquirer: 2,
 			availableAcquirers: [2],
-			cards: [0,2,3,4,5],
+			cards: [0,2,3,4,5,6,7,9],
 			setupFee: 298,
 			monthlyFee: 198,
 			fixedTransactionFee: 0,
@@ -413,7 +406,7 @@ function init() {
 			totalCosts: 0
 		},
 		{
-			name: "Wannafind",
+			name: "Wannafind", // 15
 			logo: 9,
 			link: "wannafind.dk/betalingsgateway/",
 			acquirer: 1,
@@ -436,91 +429,60 @@ function init() {
 
 	oms = transactions * value;
 
-	calc();
-
-}
 
 
+	/*
+		501 -> 600	50 øre/stk
+		601 -> 1000	40 øre/stk
+		1001 -> 3000	30 øre/stk
+		3001 -> 10000	25 øre/stk
+		10001 -> 30000	15 øre/stk
+		30001 -> 60000	10 øre/stk
+	*/
 
 
-function gateways() {
 
 
-	for (var i=0; i< gateway_monthly.length; i++)
-	{
-
-
-		var total = gateway_monthly[i]+nets+seb;
-
-
-		if ( ( i == 0 ) && ( transactions > 500 ) ) {
-		// Quickpay
-
-		/*
-			501 -> 600	50 øre/stk
-			601 -> 1000	40 øre/stk
-			1001 -> 3000	30 øre/stk
-			3001 -> 10000	25 øre/stk
-			10001 -> 30000	15 øre/stk
-			30001 -> 60000	10 øre/stk
-		*/
-
-			var quickpayFees = 0;
-
-
-			if ( transactions < 601 )
-			{
-
-				quickpayFees += ( transactions - 500 ) * 0.5 ;
-
-			}
-			else if ( transactions < 1001 )
-			{
-
-				quickpayFees += 99 * 0.5 ;
-				quickpayFees += ( transactions - 600 ) * 0.4 ;
-			}
-
-			else if ( transactions < 3001 )
-			{
-
-				quickpayFees += 99 * 0.5 ;
-				quickpayFees += 400 * 0.4 ;
-			}
-
-
-			total = total + quickpayFees;
-
-
+	if ( transactions > 500) {
+		
+		var quickpay = 0;
+		
+		if ( transactions < 601 )
+		{
+			quickpay = ( transactions - 500 ) * 0.5 ;				
 		}
-		else if ( ( i == 1 ) && ( transactions > 500 ) ) {
-		// epay
-
-			total = total + ( (transactions - 500) *  0.25);
-
+		else if ( transactions < 1001 )
+		{
+			quickpay = 100 * 0.5 + ( transactions - 600 ) * 0.4;				
 		}
-		else if ( i == 2 ) {
-
-			total = total + (transactions *  1.5);
-
+		else if ( transactions < 3001 )
+		{
+			quickpay = 100 * 0.5 + 400 * 0.4 + ( transactions - 1000 ) * 0.3;
 		}
-		else if ( i == 3 ) {
-
-			total = total + (transactions *  1);
-
+		else if ( transactions < 10001 )
+		{
+			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3;
+			quickpay += ( transactions - 3000 ) * 0.25;
 		}
-		else if ( i == 4 ) {
-
-			total = total + (transactions *  0.7);
-
+		else if ( transactions < 30001 )
+		{
+			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3 + 7000 * 0.25 ;
+			quickpay += ( transactions - 10000 ) * 0.15;
+		}			
+		else
+		{
+			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3 + 7000 * 0.25 + 20000 * 0.15 ;
+			quickpay += ( transactions - 30000 ) * 0.10;
 		}
-
-		document.getElementById("gateway_total_"+i).innerHTML = total;
-
-
+		
+		
+		PSP[4].fixedTransactionFee = quickpay / ( transactions - 500 );
+		
+		
 	}
 
 
+	calc();
 
 
 }

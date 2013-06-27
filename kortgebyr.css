@@ -77,7 +77,7 @@ h2 {
 #box {
 
 	padding: 10px 20px;
-	margin:14px 0 0 0;
+	margin:14px 0 26px 0;
 	background:#efefef;
 	border:1px solid #ccc;
 
@@ -165,13 +165,12 @@ button {
 
 .acquirer p {
 
-	margin: 2px auto;
+	margin: 10px auto;
 	height: 16px;
 	width: 70px;
 	background: url(acquirer.png) no-repeat;
 
 }
-
 
 
 
