@@ -41,17 +41,17 @@
 	</header>
 
 
-	<article>
+	<article id="box">
+
+		<a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="github.png" alt="Fork me on GitHub"></a>
 
 
-		<div id="box">
+		<section>
 
-
-			<div style="float:left;width:50%">
 			<h2>Betalingsløsninger og -gateways</h2>
 
 			Kortgebyr er en uafhænging prissammenligning af betalingsløsninger på nettet. Formålet med siden er at udregne de faktiske omkostninger forbundet med at modtage betalingskort på nettet. <br /><br />
-			
+
 			<p>Tilmeld dig nyhedsbrevet og bliv opdateret et par gange om året.</p>
 
 
@@ -60,33 +60,28 @@
 
 			<p><input placeholder="Din e-mail..." type="email" /> <button>Tilmeld</button></p>
 
-			<br />
+		</section>
 
-			</div>
+		<section>
 
+			<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
+			<label>Transaktioner: <input type="text" id="transactions" value="100"></label><br />
 
-			<div style="float:right; line-height:30px; width: 350px">
-
-				<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
-				<label>Transaktioner: <input type="text" id="transactions" value="100"></label><br />
-
-				<label>FDIH data for kortfordeling: <input type="checkbox" disabled="" checked="" name="forbrug" /></label><br />
+			<label>FDIH data for kortfordeling: <input type="checkbox" disabled="" checked="" name="forbrug" /></label><br />
 
 
-				<label>Dankort: <input type="checkbox" checked="" id="dankort" /></label>
-				<label>Visa/MasterCard: <input type="checkbox" checked="" id="visamc" /></label><br />
+			<label>Dankort: <input type="checkbox" checked="" id="dankort" /></label>
+			<label>Visa/MasterCard: <input type="checkbox" checked="" id="visamc" /></label><br />
 
-				<label>3D Secure: <input type="checkbox" disabled="" checked="" id="3d" /></label>
+			<label>3D Secure: <input type="checkbox" disabled="" checked="" id="3d" /></label>
 
-				<label>Svindelkontrol: <input type="checkbox" disabled="" id="svindel" /></label><br />
+			<label>Svindelkontrol: <input type="checkbox" disabled="" id="svindel" /></label><br />
 
-				<label>Medregn oprettelsesgebyr: <input type="checkbox" disabled="" id="priskorrigering" /></label><br />
+			<label>Medregn oprettelsesgebyr: <input type="checkbox" disabled="" id="priskorrigering" /></label><br />
 
-				<button onclick="init()">Udregn kortgebyr</button>
+			<button onclick="init()">Udregn kortgebyr</button>
 
-			</div>
-
-			<p style="clear:both"></p>
+		</section>
 
 	</article>
 
@@ -137,14 +132,6 @@
 
 
 	</output>
-
-<script>
-window.onload = function () {
-
-	init();
-
-}
-</script>
 
 </body>
 </html>

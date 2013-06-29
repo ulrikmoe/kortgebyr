@@ -431,3 +431,10 @@ function init() {
 	calc();
 
 }
+
+
+window.onload = function () {
+
+	init();
+
+}

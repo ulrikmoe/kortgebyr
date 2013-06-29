@@ -12,7 +12,7 @@ a {
 
 body {
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
-	max-width: 1020px;
+	max-width: 1040px;
 	padding: 0;
 	margin: auto;
 	position: relative;
@@ -80,8 +80,21 @@ h2 {
 	margin:14px 0 26px 0;
 	background:#efefef;
 	border:1px solid #ccc;
+	position: relative
 
 }
+
+
+#box section {
+
+	display: inline-block;
+	vertical-align: top;
+	width: 49%
+
+}
+
+
+
 
 
 
