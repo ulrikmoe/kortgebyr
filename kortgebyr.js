@@ -4,6 +4,60 @@
 function calc() {
 
 
+	oms = transactions * value;
+
+
+
+	/*
+		501 -> 600	50 øre/stk
+		601 -> 1000	40 øre/stk
+		1001 -> 3000	30 øre/stk
+		3001 -> 10000	25 øre/stk
+		10001 -> 30000	15 øre/stk
+		30001 -> 60000	10 øre/stk
+	*/
+
+
+
+	if ( transactions > 500) {
+		
+		var quickpay = 0;
+		
+		if ( transactions < 601 )
+		{
+			quickpay = ( transactions - 500 ) * 0.5 ;				
+		}
+		else if ( transactions < 1001 )
+		{
+			quickpay = 100 * 0.5 + ( transactions - 600 ) * 0.4;				
+		}
+		else if ( transactions < 3001 )
+		{
+			quickpay = 100 * 0.5 + 400 * 0.4 + ( transactions - 1000 ) * 0.3;
+		}
+		else if ( transactions < 10001 )
+		{
+			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3;
+			quickpay += ( transactions - 3000 ) * 0.25;
+		}
+		else if ( transactions < 30001 )
+		{
+			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3 + 7000 * 0.25 ;
+			quickpay += ( transactions - 10000 ) * 0.15;
+		}			
+		else
+		{
+			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3 + 7000 * 0.25 + 20000 * 0.15 ;
+			quickpay += ( transactions - 30000 ) * 0.10;
+		}
+		
+		
+		PSP[4].fixedTransactionFee = quickpay / ( transactions - 500 );
+			
+	}
+
+
+
 	// Paypal
 	if (oms < 20000 ) { PSP[0].variableTransactionFee = 3.4; }
 	else if (oms <= 80000) { PSP[0].variableTransactionFee = 2.9; }
@@ -152,8 +206,6 @@ function calc() {
 		}
 
 
-
-
 	}
 
 	// Her sorterer jeg betalingsgateways efter totalCosts
@@ -162,14 +214,6 @@ function calc() {
 		return a.totalCosts - b.totalCosts;
 
 	});
-
-
-
-
-
-
-
-
 
 
 
@@ -200,15 +244,14 @@ function build() {
 			continue;
 		}
 
-		row=table.insertRow(0);
-		var cell1=row.insertCell(0);
-		var cell2=row.insertCell(1);
-		var cell3=row.insertCell(2);
-		var cell4=row.insertCell(3);
-		var cell5=row.insertCell(4);
-
-		var cell7=row.insertCell(5);
-		var cell8=row.insertCell(6);
+		row = table.insertRow(0);
+		var logo_cell = row.insertCell(0);
+		var kort_cell = row.insertCell(1);
+		var acquirer_cell = row.insertCell(2);
+		var oprettelse_cell = row.insertCell(3);
+		var faste_cell = row.insertCell(4);
+		var samlet_cell = row.insertCell(5);
+		var kortgebyr_cell = row.insertCell(6);
 
 		var HTML_acquirer = "<div class='acquirer'>";
 		var HTML_cards = "";
@@ -262,44 +305,39 @@ function build() {
 		}
 
 		HTML_acquirer += "</div>";
+		
+		
+		
+		
+		var	tooltip = "<a href='#' class='tooltip'><img src='tooltip.gif' /><span>Kortgebyr er de samlede omkostninger pr. gns. transaktion.</span></a>";
+		
+		
+		
+		
+		
+		
 
+		logo_cell.innerHTML = "<div class=psp><a target='_blank' href='http://"+PSP[i].link+"'><p style='background-position: 0 -"+32*(PSP[i].logo - 1)+"px'></p>"+ PSP[i].name +"</a></div>";
 
-		// <img style='margin:3px 0 3px;' height='32' src='logo/"+PSP[i].logo+"' />
+		kort_cell.innerHTML = "<div class=kort>"+ HTML_cards +"</div>";
 
-		cell1.innerHTML = "<div class=psp><a target='_blank' href='http://"+PSP[i].link+"'><p style='background-position: 0 -"+32*(PSP[i].logo - 1)+"px'></p>"+ PSP[i].name +"</a></div>";
-
-		cell2.innerHTML = "<div class=kort>"+ HTML_cards +"</div>";
-
-		cell3.innerHTML = HTML_acquirer;
-		cell4.innerHTML = Math.round(PSP[i].totalSetupFee) + " kr";
-		cell5.innerHTML = Math.round(PSP[i].totalMonthlyFee) + " kr";
-
-
-
-		var	tooltip = "<a href='#' class='tooltip'><img src='tooltip.gif' /><span>"+PSP[i].name +":"+ (PSP[i].costs );
-
-		if ( PSP[i].acquirer !== undefined )
-		{
-
-			if (dankort === true )
-			{
-				tooltip += "<br />Nets: "+ acquirer[0].totalCosts;
-			}
-
-			if (visamc === true)
-			{
-				tooltip += "<br />"+acquirer[ PSP[i].acquirer ].name + ": "+ acquirer[ PSP[i].acquirer ].totalCosts;
-			}
-
-		}
-
-		tooltip += "</span></a>";
+		acquirer_cell.innerHTML = HTML_acquirer;
+		
+		
+		
+	
+		
+		
+		
+		
+		oprettelse_cell.innerHTML = Math.round(PSP[i].totalSetupFee) + " kr";
+		faste_cell.innerHTML = Math.round(PSP[i].totalMonthlyFee) + " kr";
 
 
 
-		cell7.innerHTML = Math.round(PSP[i].totalCosts) + " kr"+ tooltip;
+		samlet_cell.innerHTML = Math.round(PSP[i].totalCosts) + " kr";
 
-		cell8.innerHTML = (PSP[i].totalCosts/transactions).toFixed(2)+" kr"+ tooltip;
+		kortgebyr_cell.innerHTML = (PSP[i].totalCosts/transactions).toFixed(2)+" kr"+ tooltip;
 
 
 	}

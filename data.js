@@ -427,62 +427,7 @@ function init() {
 	];
 
 
-	oms = transactions * value;
-
-
-
-	/*
-		501 -> 600	50 øre/stk
-		601 -> 1000	40 øre/stk
-		1001 -> 3000	30 øre/stk
-		3001 -> 10000	25 øre/stk
-		10001 -> 30000	15 øre/stk
-		30001 -> 60000	10 øre/stk
-	*/
-
-
-
-
-	if ( transactions > 500) {
-		
-		var quickpay = 0;
-		
-		if ( transactions < 601 )
-		{
-			quickpay = ( transactions - 500 ) * 0.5 ;				
-		}
-		else if ( transactions < 1001 )
-		{
-			quickpay = 100 * 0.5 + ( transactions - 600 ) * 0.4;				
-		}
-		else if ( transactions < 3001 )
-		{
-			quickpay = 100 * 0.5 + 400 * 0.4 + ( transactions - 1000 ) * 0.3;
-		}
-		else if ( transactions < 10001 )
-		{
-			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3;
-			quickpay += ( transactions - 3000 ) * 0.25;
-		}
-		else if ( transactions < 30001 )
-		{
-			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3 + 7000 * 0.25 ;
-			quickpay += ( transactions - 10000 ) * 0.15;
-		}			
-		else
-		{
-			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3 + 7000 * 0.25 + 20000 * 0.15 ;
-			quickpay += ( transactions - 30000 ) * 0.10;
-		}
-		
-		
-		PSP[4].fixedTransactionFee = quickpay / ( transactions - 500 );
-		
-		
-	}
-
 
 	calc();
-
 
 }
