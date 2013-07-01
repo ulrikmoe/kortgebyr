@@ -7,34 +7,18 @@
 	<script async="" type="text/javascript" src="data.js"></script>
 	<script async="" type="text/javascript" src="kortgebyr.js"></script>
 	<link href="kortgebyr.css" rel="stylesheet" type="text/css" />
+	<base target="_blank">
 </head>
 <body>
 
 
 	<header>
+	
+		<p>opdateret: <span id="opdateret"></span></p>
 
-		<script>
+		<a href="http://amino.dk"><img src="amino.png" />Amino tråd</a>
 
-			var dato = new Date(document.lastModified);
-			var timezone = dato.getTimezoneOffset()*60;
-			var sekunder = timezone + Math.floor( ( Date.now() - dato ) / 1000); // minutter
-			var opdateret = "";
-
-			if (sekunder < 60) { opdateret = sekunder + " sekunder"; }
-			else if ( sekunder < 7200 ) { opdateret = Math.floor(sekunder/60) + " minutter"; }
-			else if ( sekunder < 86400 ) { opdateret = Math.floor(sekunder/3600) + " timer"; }
-			else if ( sekunder < 172800 ) { opdateret = Math.floor(sekunder/86400) + " dag"; }
-			else { opdateret = Math.floor(sekunder/86400) + " dage"; }
-
-		</script>
-
-		<p>opdateret: <script>document.write( opdateret + " siden");</script>
-
-		</p>
-
-		<a target="_blank" href="http://amino.dk"><img src="amino.png" />Amino tråd</a>
-
-		<a target="_blank" href="https://docs.google.com/forms/d/1R792wbgtrjZARbRgfoezTA2E0VikJRDXKtaLKPIIp_Q/viewform">Spørgeskema</a>
+		<a href="https://docs.google.com/forms/d/1R792wbgtrjZARbRgfoezTA2E0VikJRDXKtaLKPIIp_Q/viewform">Spørgeskema</a>
 
 		<a style="border-right:0" href="mailto:ulrik.moe@gmail.com">Kontakt</a>
 
@@ -43,12 +27,10 @@
 
 	<article id="box">
 
-		<a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="github.png" alt="Fork me on GitHub"></a>
 
+		<section id="left">
 
-		<section>
-
-			<h2>Betalingsløsninger og -gateways</h2>
+			<h2>Betalingsløsninger</h2>
 
 			Kortgebyr er en uafhænging prissammenligning af betalingsløsninger på nettet. Formålet med siden er at udregne de faktiske omkostninger forbundet med at modtage betalingskort på nettet. <br /><br />
 
@@ -57,28 +39,27 @@
 
 			<br />
 
-
-			<p><input placeholder="Din e-mail..." type="email" /> <button>Tilmeld</button></p>
+			<p><input class="input email" placeholder="Din e-mail..." type="email" /> <button>Tilmeld</button></p>
 
 		</section>
 
-		<section>
+		<section id="right">
 
-			<label>Gns. ordre: <input type="text" id="value" value="570"></label><br />
-			<label>Transaktioner: <input type="text" id="transactions" value="100"></label><br />
-
-			<label>FDIH data for kortfordeling: <input type="checkbox" disabled="" checked="" name="forbrug" /></label><br />
+			<ul>
+				<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100"></label></li>
 
 
-			<label>Dankort: <input type="checkbox" checked="" id="dankort" /></label>
-			<label>Visa/MasterCard: <input type="checkbox" checked="" id="visamc" /></label><br />
+				<li><label>Gennemsnitlig ordreværdi: <input type="text" class="input" id="value" value="570"></label></li>
 
-			<label>3D Secure: <input type="checkbox" disabled="" checked="" id="3d" /></label>
+			<li><label>FDIH data for kortfordeling: <input type="checkbox" disabled="" checked="" name="forbrug" /></label></li>
 
-			<label>Svindelkontrol: <input type="checkbox" disabled="" id="svindel" /></label><br />
 
-			<label>Medregn oprettelsesgebyr: <input type="checkbox" disabled="" id="priskorrigering" /></label><br />
+			<li><label>Dankort: <input type="checkbox" checked="" id="dankort" /></label></li>
+			<li><label>Visa / MasterCard: <input type="checkbox" checked="" id="visamc" /></label></li>
 
+			<li><label>3D Secure: <input type="checkbox" disabled="" checked="" id="3d" /></label></li>
+
+			</ul>
 			<button onclick="init()">Udregn kortgebyr</button>
 
 		</section>

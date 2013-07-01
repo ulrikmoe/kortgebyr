@@ -317,7 +317,7 @@ function build() {
 		
 		
 
-		logo_cell.innerHTML = "<div class=psp><a target='_blank' href='http://"+PSP[i].link+"'><p style='background-position: 0 -"+32*(PSP[i].logo - 1)+"px'></p>"+ PSP[i].name +"</a></div>";
+		logo_cell.innerHTML = "<div class=psp><a href='http://"+PSP[i].link+"'><p style='background-position: 0 -"+32*(PSP[i].logo - 1)+"px'></p>"+ PSP[i].name +"</a></div>";
 
 		kort_cell.innerHTML = "<div class=kort>"+ HTML_cards +"</div>";
 

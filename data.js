@@ -429,11 +429,25 @@ function init() {
 
 
 	calc();
+	
 
 }
 
 
 window.onload = function () {
+
+	var dato = new Date(document.lastModified);
+	var timezone = dato.getTimezoneOffset()*60;
+	var sekunder = timezone + Math.floor( ( Date.now() - dato ) / 1000); // minutter
+	var opdateret = "";
+
+	if (sekunder < 60) { opdateret = sekunder + " sekunder"; }
+	else if ( sekunder < 7200 ) { opdateret = Math.floor(sekunder/60) + " minutter"; }
+	else if ( sekunder < 86400 ) { opdateret = Math.floor(sekunder/3600) + " timer"; }
+	else if ( sekunder < 172800 ) { opdateret = Math.floor(sekunder/86400) + " dag"; }
+	else { opdateret = Math.floor(sekunder/86400) + " dage"; }
+	
+	document.getElementById("opdateret").innerHTML = opdateret + " siden";
 
 	init();
 
