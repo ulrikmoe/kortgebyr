@@ -11,9 +11,8 @@
 </head>
 <body>
 
-
 	<header>
-	
+
 		<p>opdateret: <span id="opdateret"></span></p>
 
 		<a href="http://amino.dk"><img src="amino.png" />Amino tråd</a>
@@ -30,7 +29,7 @@
 
 		<section id="left">
 
-			Kortgebyr er en uafhænging prissammenligning af betalingsløsninger på nettet. Formålet med siden er at udregne de faktiske omkostninger forbundet med at modtage betalingskort på nettet. <br /><br />
+			Kortgebyr er en uafhænging prissammenligning af betalingsløsninger på nettet. <br /><br />
 
 			<p>Tilmeld dig nyhedsbrevet og bliv opdateret et par gange om året.</p>
 
@@ -39,9 +38,14 @@
 
 			<p><input class="input email" placeholder="Din e-mail..." type="email" /> <button>Tilmeld</button></p>
 
-		</section>
+		</section><section id="mid">
 
-		<section id="right">
+		<h3>Seneste nyt</h3>
+		<ul>
+			<li><a href="#">Velkommen til Kortgebyr</a></li>
+
+		</ul>
+		</section><section id="right">
 
 			<ul>
 				<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100"></label></li>
@@ -49,13 +53,15 @@
 
 				<li><label>Gennemsnitlig ordreværdi: <input type="text" class="input" id="value" value="570"></label></li>
 
-			<li><label>FDIH data for kortfordeling: <input type="checkbox" disabled="" checked="" name="forbrug" /></label></li>
+				<li>
+					<label>Dankort: <input type="checkbox" checked="" id="dankort" /></label>
+					<label>Visa/MasterCard: <input type="checkbox" checked="" id="visamc" /></label>
+				</li>
 
-
-			<li><label>Dankort: <input type="checkbox" checked="" id="dankort" /></label></li>
-			<li><label>Visa / MasterCard: <input type="checkbox" checked="" id="visamc" /></label></li>
-
-			<li><label>3D Secure: <input type="checkbox" disabled="" checked="" id="3d" /></label></li>
+				<li>
+					<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="fdih" /></label>
+					<label>3D Secure: <input type="checkbox" disabled="" checked="" id="3d" /></label>
+				</li>
 
 			</ul>
 			<button onclick="init()">Udregn kortgebyr</button>
