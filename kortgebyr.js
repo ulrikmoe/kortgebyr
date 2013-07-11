@@ -17,8 +17,6 @@ function calc() {
 		30001 -> 60000	10 øre/stk
 	*/
 
-
-
 	if ( transactions > 500) {
 		
 		var quickpay = 0;
