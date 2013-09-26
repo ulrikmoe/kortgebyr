@@ -423,13 +423,30 @@ function init() {
 			totalMonthlyFee: 0,
 			totalTransactionCosts: 0,
 			totalCosts: 0
+		},
+		{
+			name: "Paymill", // 0
+			logo: 10,
+			link: "paymill.com",
+			cards: [2,3,4,5,9,10],
+			setupFee: 0,
+			monthlyFee: 0,
+			fixedTransactionFee: 2.1,
+			variableTransactionFee: 2.95,
+			freeTransactions: 0,
+			transactionCosts: 0,
+			costs: 0,
+			totalSetupFee: 0,
+			totalMonthlyFee: 0,
+			totalTransactionCosts: 0,
+			totalCosts: 0
 		}
 	];
 
 
 
 	calc();
-	
+
 
 }
 
@@ -446,7 +463,7 @@ window.onload = function () {
 	else if ( sekunder < 86400 ) { opdateret = Math.floor(sekunder/3600) + " timer"; }
 	else if ( sekunder < 172800 ) { opdateret = Math.floor(sekunder/86400) + " dag"; }
 	else { opdateret = Math.floor(sekunder/86400) + " dage"; }
-	
+
 	document.getElementById("opdateret").innerHTML = opdateret + " siden";
 
 	init();
