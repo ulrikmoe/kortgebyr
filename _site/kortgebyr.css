@@ -255,8 +255,6 @@ h2 {
 
 
 
-
-
 .psp {
 	text-align: left;
 	padding-left: 7px;
@@ -265,7 +263,7 @@ h2 {
 
 .psp p {
 	height: 32px;
-	width: 120px;
+	width: 140px;
 	background: url(psp.png) no-repeat;
 	margin: 9px 0 2px;
 }
