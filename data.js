@@ -12,7 +12,6 @@ function init() {
 
 	cards = [
 
-
 	// hover effect : http://www.catskillflies.com/collections/simms?page=2
 
 		{
@@ -64,7 +63,7 @@ function init() {
 
 
 
-	acquirer =
+	ACQUIRER =
 	[
 		{
 			name: "nets", //0
