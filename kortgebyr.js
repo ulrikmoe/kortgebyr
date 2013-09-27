@@ -7,16 +7,6 @@ function calc() {
 	oms = transactions * value;
 
 
-
-	/*
-		501 -> 600	50 øre/stk
-		601 -> 1000	40 øre/stk
-		1001 -> 3000	30 øre/stk
-		3001 -> 10000	25 øre/stk
-		10001 -> 30000	15 øre/stk
-		30001 -> 60000	10 øre/stk
-	*/
-
 	if ( transactions > 500) {
 		
 		var quickpay = 0;
@@ -269,7 +259,7 @@ function build() {
 			if ( ( dankort === true ) && ( PSP[i].acquirer !== undefined ) )
 			{
 			
-				HTML_acquirer += "<img src='/psp/"+ PSP[i].logo +"' />";
+				HTML_acquirer += "<img src='psp/"+ PSP[i].logo +"' />";
 
 				HTML_cards += "<img src='cards/dankort.png' height='16' />";
 
@@ -282,7 +272,7 @@ function build() {
 
 			if ( ( PSP[i].acquirer !== 0 ) && ( visamc === true ) )
 			{
-				HTML_acquirer += "<img src='/psp/"+ PSP[i].logo +"' />";
+				HTML_acquirer += "<img src='psp/"+ PSP[i].logo +"' />";
 
 
 				acquirer[PSP[i].acquirer].cards.forEach(function(n, x)
