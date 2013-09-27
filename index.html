@@ -4,18 +4,21 @@
 	<meta name="description" content="" />
 	<title>Kortgebyr - betaling på internettet</title>
 
+	<script async="" type="text/javascript" src="data.js"></script>
 	<script async="" type="text/javascript" src="kortgebyr.js"></script>
 	<link href="kortgebyr.css" rel="stylesheet" type="text/css" />
 	<base target="_blank">
 </head>
 <body>
 
-<a href="https://github.com/ulrikmoe"><img style="position: absolute; top: 0; right: 0; border: 0;" src="forkme.png" alt="Fork me on GitHub"></a>
-
-	<header>
+<a class="github" href="https://github.com/ulrikmoe"><img style="position: absolute; top: 0; right: 0; border: 0;" src="github.png" alt="Fork me on GitHub"></a>
 
 
-		<p>opdateret: <span id="opdateret"></span></p>
+<div class="container">
+	
+	<div class="header">
+
+		<p style="float:right">opdateret: <span id="opdateret"></span></p>
 
 		<a href="http://amino.dk"><img src="amino.png" />Amino tråd</a>
 
@@ -23,10 +26,10 @@
 
 		<a style="border-right:0" href="mailto:ulrik.moe@gmail.com">Kontakt</a>
 
-	</header>
+	</div>
 
 
-	<article id="box">
+	<div class="article" id="box">
 
 
 		<section id="left">
@@ -42,11 +45,9 @@
 
 		</section><section id="mid">
 
-
-		<ul>
-			<li><a href="#">Velkommen til Kortgebyr</a></li>
-
-		</ul>
+			<ul>
+			</ul>
+		
 		</section><section id="right">
 
 			<ul>
@@ -70,55 +71,47 @@
 
 		</section>
 
-	</article>
+	</div>
 
 
+	<table class="footable">
+		<thead>
+			<tr>
+				<th style="text-align:left; padding-left:11px">
+					Løsning
+				</th>
+				<th>
+					Kort
+				</th>
 
-	<output>
+				<th>
+					Indløsere
+				</th>
 
-		<table class="footable">
-			<thead>
-				<tr>
-					<th style="text-align:left; padding-left:11px">
-						Løsning
-					</th>
-					<th>
-						Kort
-					</th>
+				<th>
+					Oprettelse
+				</th>
 
-					<th>
-						Indløsere
-					</th>
+				<th>
+					Faste omk.
+				</th>
 
-					<th>
-						Oprettelse
-					</th>
+				<th>
+					Samlet pr. mån.
+				</th>
 
-					<th>
-						Faste omk.
-					</th>
+				<th>
+					Kortgebyr
+				</th>
 
-					<th>
-						Samlet pr. mån.
-					</th>
+			</tr>
+		</thead>
 
-					<th>
-						Kortgebyr
-					</th>
+		<tbody id="data"></tbody>
 
-				</tr>
-			</thead>
-
-			<tbody id="data">
-
+	</table>
 
 
-			</tbody>
-
-		</table>
-
-
-	</output>
 
 </body>
 </html>

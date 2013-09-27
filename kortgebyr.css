@@ -13,36 +13,44 @@ a {
 
 body {
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
-	width: 1040px;
-	padding: 0;
-	margin: auto;
-	position: relative;
 	line-height: 23px;
 	font-size: 14px;
 	margin-top: 17px;
 	padding-bottom: 70px
 }
 
-
 ul {
 
 	list-style: none
 }
 
-header {
+
+
+.container {
+	
+	width: 1040px;
+	padding: 0;
+	margin: auto;
+	position: relative;
+	
+}
+
+
+/*
+
+	H E A D E R
+
+*/
+
+
+.header {
 
 	font-size:13px;
 	color: #444
 
 }
 
-header p {
-
-	float:right;
-
-}
-
-header a {
+.header a {
 
 	border-right: 1px solid #999;
 	padding-right:12px;
@@ -50,22 +58,22 @@ header a {
 
 }
 
-header a img {
+.header a img {
 
 	float:left;
 	margin:2px 5px 0 0
 
 }
 
-h2 {
-	font-weight: 300;
-	font-size: 2.3em;
-	line-height: 2em;
-	color: #333;
-	text-rendering: optimizeLegibility;
-	margin: 5px 0 6px
 
-}
+
+/*
+
+	O P T I O N S
+
+*/
+
+
 
 .half {
 	display: inline-block;
@@ -78,7 +86,7 @@ h2 {
 #box {
 
 	border-radius: 2px;
-	margin:14px 0 26px 0;
+	margin:14px auto 26px auto;
 	background:#f2f2f2;
 	border:1px solid #ccc;
 	position: relative
@@ -293,7 +301,8 @@ h2 {
 	margin: 10px auto;
 	height: 16px;
 	width: 70px;
-	background: url(acquirer.png) no-repeat;
+	background: url(psp.png) no-repeat;
+	background-position-x: 100px
 
 }
 
