@@ -4,8 +4,6 @@
 	<meta name="description" content="" />
 	<title>Kortgebyr - betaling på internettet</title>
 
-	<script async="" type="text/javascript" src="data.js"></script>
-	<script async="" type="text/javascript" src="kortgebyr.js"></script>
 	<link href="kortgebyr.css" rel="stylesheet" type="text/css" />
 	<base target="_blank">
 </head>
@@ -29,10 +27,10 @@
 	</div>
 
 
-	<div class="article" id="box">
+	<div class="options">
 
 
-		<section id="left">
+		<div class="left">
 
 			Kortgebyr er en uafhænging prissammenligning af betalingsløsninger på nettet. <br /><br />
 
@@ -43,12 +41,38 @@
 
 			<p><input class="input email" placeholder="Din e-mail..." type="email" /> <button>Tilmeld</button></p>
 
-		</section><section id="mid">
+		</div>
+		
+		
+		<div class="mid">
 
 			<ul>
+			
+				<li>											
+					<label style="margin-right:20px">Dankort: <input type="checkbox" checked="" id="dankort" /></label>
+					<label>Visa/MasterCard: <input type="checkbox" checked="" id="visamc" /></label>		
+				</li>
+				<li>
+					<label>
+						Indløsningsaftale:
+						
+						<select>
+							<option>Teller</option>
+						</select>
+					</label>
+				</li>
+
+				<li>
+					<label>3D Secure (udenlandske kort): <input type="checkbox" checked="" id="3d" /></label>
+				</li>
+			
+			
+			
 			</ul>
 		
-		</section><section id="right">
+		</div>
+		
+		<div class="right">
 
 			<ul>
 				<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100"></label></li>
@@ -57,19 +81,14 @@
 				<li><label>Gennemsnitlig ordreværdi: <input type="text" class="input" id="value" value="570"></label></li>
 
 				<li>
-					<label>Dankort: <input type="checkbox" checked="" id="dankort" /></label>
-					<label>Visa/MasterCard: <input type="checkbox" checked="" id="visamc" /></label>
+					<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="3d" /></label>
 				</li>
 
-				<li>
-					<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="fdih" /></label>
-					<label>3D Secure: <input type="checkbox" disabled="" checked="" id="3d" /></label>
-				</li>
 
 			</ul>
 			<button onclick="init()">Udregn kortgebyr</button>
 
-		</section>
+		</div>
 
 	</div>
 
@@ -77,15 +96,11 @@
 	<table class="footable">
 		<thead>
 			<tr>
-				<th style="text-align:left; padding-left:11px">
-					Løsning
+				<th style="text-align:left; padding-left:12px">
+					Betalingsløsning
 				</th>
 				<th>
-					Kort
-				</th>
-
-				<th>
-					Indløsere
+					Betalingskort
 				</th>
 
 				<th>
@@ -93,21 +108,153 @@
 				</th>
 
 				<th>
-					Faste omk.
+					Abonnement<br /> per måned
 				</th>
 
 				<th>
-					Samlet pr. mån.
+					Transaktions-<br />gebyrer
 				</th>
 
 				<th>
-					Kortgebyr
+					Samlet <br />per måned
+				</th>
+
+				<th>
+					Kortgebyr per<br />transaktion
 				</th>
 
 			</tr>
 		</thead>
 
-		<tbody id="data"></tbody>
+		<tbody id="data">
+			
+			<tr>
+
+				<td>
+					<div class="psp">
+						<a href="http://epay.dk">
+							<img src="psp/epay.png" />
+							<br />
+							ePay Pro
+						</a>
+					</div>
+				</td>
+				<td>
+					<div class="kort">
+						<img src="cards/dankort.png" />
+						<img src="cards/visa.png" />
+						<img src="cards/visaelectron.png" />
+						<img src="cards/mastercard.gif" />
+						<img src="cards/maestro.png" />
+						
+						<a href="#" class="tooltip">
+						<img src="tooltip.gif">
+						<span>
+						Epay pro: 599,00 kr<br />
+						Nets: 1.250,00 kr<br />
+						Teller: 1.000,00 kr
+						</span></a>
+					</div>
+				</td>
+				<td>
+					599,00 kr	
+					<a href="#" class="tooltip">
+						<img src="tooltip.gif">
+						<span>
+						Epay pro: 599,00 kr<br />
+						Nets: 1.250,00 kr<br />
+						Teller: 1.000,00 kr
+						</span></a>
+				</td>
+				<td>
+					199,00 kr
+					
+					<a href="#" class="tooltip"><img src="tooltip.gif"><span>Kortgebyr er de samlede omkostninger pr. gns. transaktion.</span></a>
+				</td>
+				<td>
+					0 kr
+					
+					<a href="#" class="tooltip"><img src="tooltip.gif"><span>Kortgebyr er de samlede omkostninger pr. gns. transaktion.</span></a>
+				</td>
+				<td>
+					0 kr
+					
+					<a href="#" class="tooltip"><img src="tooltip.gif"><span>Kortgebyr er de samlede omkostninger pr. gns. transaktion.</span></a>
+				</td>
+				<td>
+					14.18 kr
+					
+					<a href="#" class="tooltip"><img src="tooltip.gif"><span>Kortgebyr er de samlede omkostninger pr. gns. transaktion.</span></a>
+					
+				</td>
+			</tr>
+			
+						<tr>
+
+				<td>
+					<div class="psp">
+						<a href="http://epay.dk">
+							<img src="psp/epay.png" />
+							<br />
+							ePay Pro
+						</a>
+					</div>
+				</td>
+				<td>
+					<div class="kort">
+						<img src="cards/dankort.png" />
+						<img src="cards/visa.png" />
+						<img src="cards/visaelectron.png" />
+						<img src="cards/mastercard.gif" />
+						<img src="cards/maestro.png" />
+						
+						<a href="#" class="tooltip">
+						<img src="tooltip.gif">
+						<span>
+						Epay pro: 599,00 kr<br />
+						Nets: 1.250,00 kr<br />
+						Teller: 1.000,00 kr
+						</span></a>
+					</div>
+				</td>
+				<td>
+					599,00 kr	
+					<a href="#" class="tooltip">
+						<img src="tooltip.gif">
+						<span>
+						Epay pro: 599,00 kr<br />
+						Nets: 1.250,00 kr<br />
+						Teller: 1.000,00 kr
+						</span></a>
+				</td>
+				<td>
+					199,00 kr
+					
+					<a href="#" class="tooltip"><img src="tooltip.gif"><span>Kortgebyr er de samlede omkostninger pr. gns. transaktion.</span></a>
+				</td>
+				<td>
+					0 kr
+					
+					<a href="#" class="tooltip"><img src="tooltip.gif"><span>Kortgebyr er de samlede omkostninger pr. gns. transaktion.</span></a>
+				</td>
+				<td>
+					0 kr
+					
+					<a href="#" class="tooltip"><img src="tooltip.gif"><span>Kortgebyr er de samlede omkostninger pr. gns. transaktion.</span></a>
+				</td>
+				<td>
+					14.18 kr
+					
+					<a href="#" class="tooltip"><img src="tooltip.gif"><span>Kortgebyr er de samlede omkostninger pr. gns. transaktion.</span></a>
+					
+				</td>
+			</tr>
+			
+			
+			
+		</tbody>
+
+
 
 	</table>
 

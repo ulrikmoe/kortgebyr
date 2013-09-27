@@ -74,31 +74,23 @@ ul {
 */
 
 
-
-.half {
-	display: inline-block;
-	width: 50%;
-	vertical-align: top;
-}
-
-
-
-#box {
+.options {
 
 	border-radius: 2px;
 	margin:14px auto 26px auto;
 	background:#f2f2f2;
 	border:1px solid #ccc;
-	position: relative
+	position: relative;
+	height: 240px
 
 }
 
 
-#box section {
+.options div {
 
-	display: inline-block;
-	vertical-align: top;
-	width: 34%;
+	display: block;
+	float: left;
+	width: 33.33%;
 	height: 200px;
 	margin: 15px 0;
 	box-sizing:border-box;
@@ -107,22 +99,28 @@ ul {
 
 }
 
-#mid {
+.mid {
 
-	width: 32% !important;
 	border-right: 1px solid #fff;
 	border-left: 1px solid #fff
 
 }
 
+.mid ul {
+	
+	margin-left: 30px;
+	line-height: 36px
+	
+}
 
-#left {
+
+.left {
 	border-right: 1px solid #ccc;
 	padding: 8px 20px 0 25px
 }
 
 
-#right {
+.right {
 	line-height: 36px;
 	text-align: right;
 	border-left: 1px solid #ccc
@@ -171,7 +169,7 @@ ul {
 
 
 
-#left button {
+.left button {
 
 	display: inline-block;
 	vertical-align: top;
@@ -205,7 +203,7 @@ ul {
 
 }
 
-#right button {
+.right button {
 
 	cursor: pointer;
 	float:right;
@@ -224,7 +222,7 @@ ul {
     box-shadow: 0 1px 2px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.2) inset;
 }
 
-#right button:hover {
+.right button:hover {
 
     background-image: -moz-linear-gradient(100% 100% 90deg, rgba(0,0,0,.2), rgba(255,255,255,.2));
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,.2)), to(rgba(0,0,0,.2)));
@@ -235,19 +233,19 @@ ul {
 
 
 
-#right ul {
+.right ul {
 
 	margin: 0 20px 0 0
 
 }
 
-#right .input {
+.right .input {
 
 	margin-left: 8px
 
 }
 
-#right label {
+.right label {
 
 	margin-left: 8px
 
@@ -265,14 +263,12 @@ ul {
 
 .psp {
 	text-align: left;
-	padding-left: 7px;
-	font-size: 12px
+	padding-left: 8px;
+	font-size: 12px;
+	width: 115px
 }
 
-.psp p {
-	height: 32px;
-	width: 140px;
-	background: url(psp.png) no-repeat;
+.psp img {
 	margin: 9px 0 2px;
 }
 
@@ -286,7 +282,7 @@ ul {
 }
 
 .kort img {
-	margin: 0 3px
+	margin: 4px 4px
 }
 
 
@@ -447,3 +443,23 @@ a.tooltip span
     -webkit-box-shadow: 5px 5px 8px #CCC;
     box-shadow: 5px 5px 8px #CCC;
 }
+
+
+
+
+
+
+@media screen and (max-width: 1150px){
+
+	.github {
+		
+		display: none
+		
+	}
+
+
+}
+
+
+
+
