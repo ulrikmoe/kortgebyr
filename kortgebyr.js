@@ -55,15 +55,15 @@ function calc() {
 
 
 	// Nets
-	if ( value <= 50 ) { acquirer[0].fixedTransactionFee = 0.7; }
-	else if ( value <= 100 ) { acquirer[0].fixedTransactionFee = 1.1; }
-	else { acquirer[0].fixedTransactionFee = 1.39; }
+	if ( value <= 50 ) { ACQUIRER[0].fixedTransactionFee = 0.7; }
+	else if ( value <= 100 ) { ACQUIRER[0].fixedTransactionFee = 1.1; }
+	else { ACQUIRER[0].fixedTransactionFee = 1.39; }
 
 
 
 	// Her udregner jeg costs for samtlige indløsere.
 
-	for (var i=0; i<acquirer.length; i++)
+	for (var i=0; i<ACQUIRER.length; i++)
 	{
 
 
@@ -71,7 +71,7 @@ function calc() {
 
 		if ( ( dankort === true ) && (visamc === true) )
 		{
-			if ( acquirer[i].name !== "nets" )
+			if ( ACQUIRER[i].name !== "nets" )
 			{
 				kortfordeling = (100-dankortfrekvens )/100;
 			}
@@ -81,16 +81,17 @@ function calc() {
 			}
 		}
 
-		acquirer[i].transactionCosts = kortfordeling * ( transactions * acquirer[i].fixedTransactionFee + oms * (acquirer[i].variableTransactionFee / 100));
+		ACQUIRER[i].transactionCosts = kortfordeling * ( transactions * ACQUIRER[i].fixedTransactionFee + oms * (ACQUIRER[i].variableTransactionFee / 100));
 
-		acquirer[i].totalCosts = acquirer[i].transactionCosts + acquirer[i].monthlyFee;
+		ACQUIRER[i].totalCosts = ACQUIRER[i].transactionCosts + ACQUIRER[i].monthlyFee;
 
-		console.log( acquirer[i].name +": " + acquirer[i].totalCosts);
+		console.log( ACQUIRER[i].name +": " + ACQUIRER[i].totalCosts);
 
 	}
 
 
 	// Her sorterer jeg indløserne efter totalCosts
+
 
 
 
@@ -144,7 +145,7 @@ function calc() {
 				if ( ( n > 0 ) && (jcb === false) )
 				{
 
-					 tmp = acquirer[n].totalCosts;
+					 tmp = ACQUIRER[n].totalCosts;
 
 					 if ( tmp < min)
 					 {
@@ -173,17 +174,17 @@ function calc() {
 			if ( ( dankort === true ) && ( PSP[i].acquirer !== undefined ) )
 			{
 
-				PSP[i].totalSetupFee += acquirer[0].setupFee;
-				PSP[i].totalMonthlyFee += acquirer[0].monthlyFee;
-				PSP[i].totalCosts += acquirer[0].totalCosts;
+				PSP[i].totalSetupFee += ACQUIRER[0].setupFee;
+				PSP[i].totalMonthlyFee += ACQUIRER[0].monthlyFee;
+				PSP[i].totalCosts += ACQUIRER[0].totalCosts;
 			}
 
 			if ( ( PSP[i].acquirer !== 0 ) && ( visamc === true ) )
 			{
 
-				PSP[i].totalSetupFee += acquirer[ PSP[i].acquirer ].setupFee;
-				PSP[i].totalMonthlyFee += acquirer[ PSP[i].acquirer ].monthlyFee;
-				PSP[i].totalCosts += acquirer[ PSP[i].acquirer ].totalCosts;
+				PSP[i].totalSetupFee += ACQUIRER[ PSP[i].acquirer ].setupFee;
+				PSP[i].totalMonthlyFee += ACQUIRER[ PSP[i].acquirer ].monthlyFee;
+				PSP[i].totalCosts += ACQUIRER[ PSP[i].acquirer ].totalCosts;
 			}
 
 
@@ -259,7 +260,7 @@ function build() {
 			if ( ( dankort === true ) && ( PSP[i].acquirer !== undefined ) )
 			{
 			
-				HTML_acquirer += "<img src='psp/"+ PSP[i].logo +"' />";
+				HTML_acquirer += "<img src='acquirer/"+ PSP[i].logo +"' />";
 
 				HTML_cards += "<img src='cards/dankort.png' height='16' />";
 
@@ -272,7 +273,7 @@ function build() {
 
 			if ( ( PSP[i].acquirer !== 0 ) && ( visamc === true ) )
 			{
-				HTML_acquirer += "<img src='psp/"+ PSP[i].logo +"' />";
+				HTML_acquirer += "<img src='acquirer/"+ ACQUIRER[i].logo +"' />";
 
 
 				acquirer[PSP[i].acquirer].cards.forEach(function(n, x)
