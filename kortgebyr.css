@@ -276,13 +276,14 @@ ul {
 
 
 .kort {
-	width: 100px;
+	width: 90px;
+	padding-right: 10px;
 	text-align: center;
 	margin: auto
 }
 
 .kort img {
-	margin: 4px 4px
+	margin: 4px 3px
 }
 
 
@@ -320,7 +321,8 @@ color: #444;
 
 .footable th, .footable td {
 
-	text-align: center
+	text-align: center;
+	position: relative
 }
 
 
@@ -420,20 +422,20 @@ padding: 10px;
 
 
 
-a.tooltip {outline:none; }
-a.tooltip strong {line-height:30px;}
-a.tooltip:hover {text-decoration:none;}
-a.tooltip span {
+.tooltip {outline:none; }
+.tooltip strong {line-height:30px;}
+.tooltip:hover {text-decoration:none;}
+.tooltip span {
     z-index:10;display:none; padding:14px 20px;
     margin-top:-30px; margin-left:-260px;
     width:180px; line-height:16px;
 }
-a.tooltip:hover span{
+.tooltip:hover span{
     display:inline; position:absolute; color:#111;
     border:1px solid #DCA; background:#fffAF0;}
 .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
 
-a.tooltip span
+.tooltip span
 {
     border-radius:4px;
     -moz-border-radius: 4px;
