@@ -143,7 +143,7 @@ var CARDS = {
 	};
 
 	function defaultCostFn(ntransactions,averageprice){
-		var monthlytotal=this.setupFee/120+this.monthlyFee;
+		var monthlytotal=this.setupFee/120+this.monthlyFee+$('3d').checked*this.monthly3dsecureFee;
 		if(ntransactions>this.freeTransactions)
 			monthlytotal+=this.fixedTransactionFee*(ntransactions-this.freeTransactions);
 		if(this.isAcquirer)
