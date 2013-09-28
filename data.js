@@ -60,7 +60,7 @@ var CARDS = {
 	};
 
 	function defaultAcquirerCostFn(ntransactions,averageprice){
-		monthlytotal=this.setupFee/120+this.monthlyFee;
+		monthlytotal=$('incSetupFee').checked*this.setupFee/120+this.monthlyFee;
 		monthlytotal+=this.percentageTransactionFee/100*averageprice*ntransactions;
 		
 		return monthlytotal;
@@ -86,7 +86,7 @@ var CARDS = {
 						if(averageprice <= 50 ){fee=0.7}
 						else if (averageprice <= 100) { fee = 1.1; }
 						else { fee = 1.9; }
-						return fee*ntransactions+this.monthlyFee+this.setupFee/120;
+						return fee*ntransactions+this.monthlyFee+$('incSetupFee').checked*this.setupFee/120;
 					}
 		},
 		"seb":
@@ -143,7 +143,7 @@ var CARDS = {
 	};
 
 	function defaultCostFn(ntransactions,averageprice){
-		var monthlytotal=this.setupFee/120+this.monthlyFee+$('3d').checked*this.monthly3dsecureFee;
+		var monthlytotal=$('incSetupFee').checked*this.setupFee/120+this.monthlyFee+$('3d').checked*this.monthly3dsecureFee;
 		if(ntransactions>this.freeTransactions)
 			monthlytotal+=this.fixedTransactionFee*(ntransactions-this.freeTransactions);
 		if(this.isAcquirer)
