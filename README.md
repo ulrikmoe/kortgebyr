@@ -1,4 +1,4 @@
 kortgebyr
 =========
 
-Kortgebyr er en dansk prissammenligning af betalingsløsninger på nettet. 
+Kortgebyr er en dansk prissammenligningsside for betalingsløsninger og betalingsgateways.
