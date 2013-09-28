@@ -18,15 +18,16 @@ function build() {
 		var netsSupport=0,otherAcquirerSupport=0;
 		var HTML_cards = "";
 		var isAcquirer=PSP[key].isAcquirer;
-		PSP[key].cards.forEach(function(n, i)
-		{
+		if( (!($('dankort').checked))||(PSP[key].cards.indexOf('visa')>-1&&PSP[key].cards.indexOf('mastercard')) )
+			PSP[key].cards.forEach(function(n, i)
+			{
 			var dankortCheck =($('dankort').checked && n == 'dankort');
 			var visamcCheck=( $('visamc').checked && ACQUIRER[selectedAcquirer].cards.indexOf(n) > -1  );
 			netsSupport|=dankortCheck;
 			otherAcquirerSupport|=visamcCheck;
 			if( (visamcCheck|| dankortCheck) && (n!='maestro'|| $('3d').checked ) )
 				HTML_cards += "<img src='cards/"+CARDS[n].logo+"'/>";
-		});
+			});
 		if(HTML_cards!=""){
 			fee3dsecureMonthly=$('3d').checked*PSP[key].monthly3dsecureFee;
 
