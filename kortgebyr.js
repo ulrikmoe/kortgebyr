@@ -31,7 +31,6 @@ function build() {
 				HTML_cards += "<img src='cards/"+CARDS[n].logo+"'/>";
 			});
 		if(HTML_cards!=""){
-			fee3dsecureMonthly=$('3d').checked*PSP[key].monthly3dsecureFee;
 
 			var indloser_icons='';
 			var info_icon ='<a href="#" class="tooltip"><img src="tooltip.gif"><span>';
@@ -55,11 +54,11 @@ function build() {
 			{ 	if(!isAcquirer)indloser_icons+='<img src="acquirer/teller.png">';
 				dkshare=0  ;vmshare=1;}
 
-			samlet=PSP[key].costfn(transactions,value)+fee3dsecureMonthly;
+			samlet=PSP[key].costfn(transactions,value);
 			samlet_info=info_icon+PSP[key].name+': '+': '+samlet.toFixed(2)+'kr';
 			samletgebyr_info=info_icon+PSP[key].name+': '+(samlet/transactions).toFixed(2)+'kr';
 			oprettelse_info=info_icon+PSP[key].name+': '+PSP[key].setupFee.toFixed(2)+'kr';
-			faste_info=info_icon+PSP[key].name+': '+(PSP[key].monthlyFee+fee3dsecureMonthly).toFixed(2)+'kr';
+			faste_info=info_icon+PSP[key].name+': '+(PSP[key].monthlyFee+$('3d').checked*PSP[key].monthly3dsecureFee).toFixed(2)+'kr';
 			if(!isAcquirer&& netsSupport){
 				addcost=dkshare*ACQUIRER['nets'].costfn(transactions,value);
 				samlet_info+='<br>'+ACQUIRER['nets'].name+' ('+(dkshare*100)+'\% tr.): '+addcost.toFixed(2)+'kr';
@@ -100,8 +99,7 @@ function build() {
 			kort_cell.innerHTML = HTML_cards;
 			kort_cell.className='kort';
 			oprettelse_cell.innerHTML=(PSP[key].setupFee+ACQUIRER[selectedAcquirer].setupFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].setupFee*netsSupport ).toFixed(2)+' kr';
-			faste_cell.innerHTML    =(PSP[key].monthlyFee+PSP[key].monthly3dsecureFee+ACQUIRER[selectedAcquirer].monthlyFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].monthlyFee*netsSupport ).toFixed(2)+' kr';
-
+			faste_cell.innerHTML    =(PSP[key].monthlyFee+$('3d').checked*PSP[key].monthly3dsecureFee+ACQUIRER[selectedAcquirer].monthlyFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].monthlyFee*netsSupport ).toFixed(2)+' kr';
 			indloser_cell.innerHTML=indloser_icons;
 			indloser_cell.className='acquirer';
 
