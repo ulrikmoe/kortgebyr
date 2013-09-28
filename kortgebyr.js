@@ -18,7 +18,9 @@ function build() {
 		var netsSupport=0,otherAcquirerSupport=0;
 		var HTML_cards = "";
 		var isAcquirer=PSP[key].isAcquirer;
-		if( (!($('dankort').checked))||(PSP[key].cards.indexOf('visa')>-1&&PSP[key].cards.indexOf('mastercard')) )
+		
+
+		if( !($('dankort').checked&&$('visamc').checked )||(PSP[key].cards.indexOf('visa')>-1&&PSP[key].cards.indexOf('mastercard')) )
 			PSP[key].cards.forEach(function(n, i)
 			{
 			var dankortCheck =($('dankort').checked && n == 'dankort');
