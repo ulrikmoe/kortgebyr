@@ -276,30 +276,27 @@ ul {
 
 
 .kort {
-	width: 90px;
-	padding-right: 10px;
+	width: 100px;
+	padding-top: 16px !important;
 	text-align: center;
 	margin: auto
 }
 
 .kort img {
-	margin: 4px 3px
+	margin: 3px 0px
 }
 
 
 
 .acquirer {
 
-	text-align: center
+	text-align: center;
+	width: 100px
 }
 
-.acquirer p {
+.acquirer img {
 
-	margin: 10px auto;
-	height: 16px;
-	width: 70px;
-	background: url(psp.png) no-repeat;
-	background-position-x: 100px
+	margin: 5px 0;
 
 }
 
@@ -339,7 +336,7 @@ cursor: pointer;
 .footable > tbody > tr > td, .footable > thead > tr > th {
 	border-left: 1px solid #ccc;
 	border-top: 1px solid #ccc;
-	padding: 11px 7px 10px;
+	padding: 11px 7px 9px;
 }
 
 .footable > tbody > tr > td.footable-cell-detail {
@@ -422,7 +419,7 @@ padding: 10px;
 
 
 
-.tooltip {outline:none; }
+.tooltip {outline:none; cursor: help }
 .tooltip strong {line-height:30px;}
 .tooltip:hover {text-decoration:none;}
 .tooltip span {
