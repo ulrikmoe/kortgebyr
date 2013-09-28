@@ -1,357 +1,117 @@
 
-
-
-function calc() {
-
-
-	oms = transactions * value;
-
-
-	if ( transactions > 500) {
-		
-		var quickpay = 0;
-		
-		if ( transactions < 601 )
-		{
-			quickpay = ( transactions - 500 ) * 0.5 ;				
-		}
-		else if ( transactions < 1001 )
-		{
-			quickpay = 100 * 0.5 + ( transactions - 600 ) * 0.4;				
-		}
-		else if ( transactions < 3001 )
-		{
-			quickpay = 100 * 0.5 + 400 * 0.4 + ( transactions - 1000 ) * 0.3;
-		}
-		else if ( transactions < 10001 )
-		{
-			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3;
-			quickpay += ( transactions - 3000 ) * 0.25;
-		}
-		else if ( transactions < 30001 )
-		{
-			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3 + 7000 * 0.25 ;
-			quickpay += ( transactions - 10000 ) * 0.15;
-		}			
-		else
-		{
-			quickpay = 100 * 0.5 + 400 * 0.4 + 2000 * 0.3 + 7000 * 0.25 + 20000 * 0.15 ;
-			quickpay += ( transactions - 30000 ) * 0.10;
-		}
-		
-		
-		PSP[4].fixedTransactionFee = quickpay / ( transactions - 500 );
-			
-	}
-
-
-
-	// Paypal
-	if (oms < 20000 ) { PSP[0].variableTransactionFee = 3.4; }
-	else if (oms <= 80000) { PSP[0].variableTransactionFee = 2.9; }
-	else if (oms <= 400000) { PSP[0].variableTransactionFee = 2.7; }
-	else if (oms <= 800000) { PSP[0].variableTransactionFee = 2.4; }
-	else { PSP[0].variableTransactionFee = 1.9; }
-
-
-	// Nets
-	if ( value <= 50 ) { ACQUIRER[0].fixedTransactionFee = 0.7; }
-	else if ( value <= 100 ) { ACQUIRER[0].fixedTransactionFee = 1.1; }
-	else { ACQUIRER[0].fixedTransactionFee = 1.39; }
-
-
-
-	// Her udregner jeg costs for samtlige indløsere.
-
-	for (var i=0; i<ACQUIRER.length; i++)
-	{
-
-
-		var kortfordeling = 1;
-
-		if ( ( dankort === true ) && (visamc === true) )
-		{
-			if ( ACQUIRER[i].name !== "nets" )
-			{
-				kortfordeling = (100-dankortfrekvens )/100;
-			}
-			else
-			{
-				kortfordeling = dankortfrekvens/100;
-			}
-		}
-
-		ACQUIRER[i].transactionCosts = kortfordeling * ( transactions * ACQUIRER[i].fixedTransactionFee + oms * (ACQUIRER[i].variableTransactionFee / 100));
-
-		ACQUIRER[i].totalCosts = ACQUIRER[i].transactionCosts + ACQUIRER[i].monthlyFee;
-
-		console.log( ACQUIRER[i].name +": " + ACQUIRER[i].totalCosts);
-
-	}
-
-
-	// Her sorterer jeg indløserne efter totalCosts
-
-
-
-
-
-
-
-	// Her udregner jeg costs for samtlige betalingsløsninger
-
-	for (var i=0; i<PSP.length; i++)
-	{
-
-
-		if ( PSP[i].acquirer == undefined ) // Paypal, ewire, Skrill
-		{
-
-			PSP[i].transactionCosts = ( PSP[i].fixedTransactionFee * transactions ) + ( PSP[i].variableTransactionFee/100 * oms ) ;
-
-		}
-		else if ( transactions > PSP[i].freeTransactions )
-		{
-
-			PSP[i].transactionCosts = ( PSP[i].fixedTransactionFee * ( transactions- PSP[i].freeTransactions ) );
-
-
-		}
-
-		PSP[i].costs =	PSP[i].monthlyFee + PSP[i].transactionCosts;
-
-
-
-		PSP[i].totalCosts = PSP[i].costs;
-		PSP[i].totalMonthlyFee = PSP[i].monthlyFee;
-		PSP[i].totalSetupFee = PSP[i].setupFee;
-
-
-
-		if ( PSP[i].acquirer !== undefined ) {
-
-
-			var min = Number.POSITIVE_INFINITY;
-			var tmp;
-			var cheapestAcquirer;
-
-			PSP[i].availableAcquirers.forEach(function(n, x)
-			{
-
-				console.log("n="+n + ", x="+x);
-
-
-
-				if ( ( n > 0 ) && (jcb === false) )
-				{
-
-					 tmp = ACQUIRER[n].totalCosts;
-
-					 if ( tmp < min)
-					 {
-						 min = tmp;
-						 cheapestAcquirer = n;
-					 }
-				}
-				else if ( jcb === true )
-				{
-
-					cheapestAcquirer = 2; // Teller
-
-				}
-
-
-			});
-
-
-			PSP[i].acquirer = cheapestAcquirer;
-
-
-
-			PSP[i].costs =	PSP[i].monthlyFee + PSP[i].transactionCosts;
-
-
-			if ( ( dankort === true ) && ( PSP[i].acquirer !== undefined ) )
-			{
-
-				PSP[i].totalSetupFee += ACQUIRER[0].setupFee;
-				PSP[i].totalMonthlyFee += ACQUIRER[0].monthlyFee;
-				PSP[i].totalCosts += ACQUIRER[0].totalCosts;
-			}
-
-			if ( ( PSP[i].acquirer !== 0 ) && ( visamc === true ) )
-			{
-
-				PSP[i].totalSetupFee += ACQUIRER[ PSP[i].acquirer ].setupFee;
-				PSP[i].totalMonthlyFee += ACQUIRER[ PSP[i].acquirer ].monthlyFee;
-				PSP[i].totalCosts += ACQUIRER[ PSP[i].acquirer ].totalCosts;
-			}
-
-
-		}
-
-
-	}
-
-	// Her sorterer jeg betalingsgateways efter totalCosts
-	PSP.sort(function (b, a) {
-
-		return a.totalCosts - b.totalCosts;
-
-	});
-
-
-
-	build();
-
+function $(s){
+	return document.getElementById(s);
 }
-
-
-
 
 function build() {
-
-
-	var table = document.getElementById("data");
+	var selectedAcquirer="teller"; //****** tillad ændring af acquirer
+	var transactions=$("transactions").value;
+	var value=$("value").value;
+	var table = $("data");
 	var row;
-
-
+	var rowValue=new Array();
 	table.innerHTML = "";
-
-	for (var i=0; i<PSP.length; i++)
+	
+	for (key in PSP)
 	{
 
-		// fjern dankort-only løsninger
-
-		if ( ( visamc === true )  && ( PSP[i].availableAcquirers == 0 ) ) {
-				console.log(PSP[i].acquirer);
-
-			continue;
-		}
-
-		row = table.insertRow(0);
-		var logo_cell = row.insertCell(0);
-		var kort_cell = row.insertCell(1);
-		var acquirer_cell = row.insertCell(2);
-		var oprettelse_cell = row.insertCell(3);
-		var faste_cell = row.insertCell(4);
-		var samlet_cell = row.insertCell(5);
-		var kortgebyr_cell = row.insertCell(6);
-
-		var HTML_acquirer = "<div class='acquirer'>";
+		var netsSupport=0,otherAcquirerSupport=0;
 		var HTML_cards = "";
-
-
-
-
-
-		if ( PSP[i].acquirer == undefined )
+		var isAcquirer=PSP[key].isAcquirer;
+		PSP[key].cards.forEach(function(n, i)
 		{
-
-			PSP[i].cards.forEach(function(n, i)
-			{
-					HTML_cards += "<img src='cards/"+cards[n].logo+"' width='24' />";
-			});
-
-		}
-		else
-		{
-
-			if ( ( dankort === true ) && ( PSP[i].acquirer !== undefined ) )
-			{
+			var dankortCheck =($('dankort').checked && n == 'dankort');
+			var visamcCheck=( $('visamc').checked && ACQUIRER[selectedAcquirer].cards.indexOf(n) > -1  );
+			netsSupport|=dankortCheck;
+			otherAcquirerSupport|=visamcCheck;
+			if( (visamcCheck|| dankortCheck) && (n!='maestro'|| $('3d').checked ) )
+				HTML_cards += "<img src='cards/"+CARDS[n].logo+"'/>";			
+		});
+		if(HTML_cards!=""){
+			fee3dsecureMonthly=$('3d').checked*PSP[key].monthly3dsecureFee;
 			
-				HTML_acquirer += "<img src='acquirer/"+ PSP[i].logo +"' />";
-
-				HTML_cards += "<img src='cards/dankort.png' height='16' />";
-
-				if (PSP[i].cards.indexOf(1) > -1)
+			var indloser_icons='';
+			var info_icon ='<a href="#" class="tooltip"><img src="tooltip.gif"><span>';
+			var info_icon_end='</span></a>';
+			var oprettelse_info,faste_info,samlet_info,samletgebyr_info;
+			
+			//Assumed 80% Dankort og 20% visa/mastercard jf. statistik
+			var dkshare,vmshare;
+			if(netsSupport && (!isAcquirer))
+			{ 
+				indloser_icons='<img src="acquirer/nets.png">';
+				if(otherAcquirerSupport)
 				{
-					HTML_cards += "<img src='cards/edankort.png' height='16' />";
-
+					indloser_icons+='<br><img src="acquirer/teller.png">';
+					dkshare=0.8;vmshare=0.2;
 				}
+				else
+					{dkshare=1;vmshare=0;}
 			}
+			else
+			{ 	if(!isAcquirer)indloser_icons+='<img src="acquirer/teller.png">';
+				dkshare=0  ;vmshare=1;}
 
-			if ( ( PSP[i].acquirer !== 0 ) && ( visamc === true ) )
-			{
-				HTML_acquirer += "<img src='acquirer/"+ ACQUIRER[i].logo +"' />";
-
-
-				acquirer[PSP[i].acquirer].cards.forEach(function(n, x)
-				{
-
-					if ( PSP[i].cards.indexOf(n) > -1)
-					{
-						HTML_cards += "<img src='cards/"+cards[n].logo+"' height='16' />";
-					}
-
-				});
-
+			samlet=PSP[key].costfn(transactions,value)+fee3dsecureMonthly;
+			samlet_info=info_icon+PSP[key].name+': '+': '+samlet.toFixed(2)+'kr';
+			samletgebyr_info=info_icon+PSP[key].name+': '+(samlet/transactions).toFixed(2)+'kr';
+			oprettelse_info=info_icon+PSP[key].name+': '+PSP[key].setupFee.toFixed(2)+'kr';
+			faste_info=info_icon+PSP[key].name+': '+(PSP[key].monthlyFee+fee3dsecureMonthly).toFixed(2)+'kr';
+			if(!isAcquirer&& netsSupport){
+				addcost=dkshare*ACQUIRER['nets'].costfn(transactions,value);
+				samlet_info+='<br>'+ACQUIRER['nets'].name+' ('+(dkshare*100)+'\% tr.): '+addcost.toFixed(2)+'kr';
+				samletgebyr_info+='<br>'+ACQUIRER['nets'].name+' ('+(dkshare*100)+'\% tr.): '+(addcost/transactions).toFixed(2)+'kr';
+				oprettelse_info+='<br>'+ACQUIRER['nets'].name+': '+ACQUIRER['nets'].setupFee.toFixed(2)+'kr';
+				faste_info+='<br>'+ACQUIRER['nets'].name+': '+ACQUIRER['nets'].monthlyFee.toFixed(2)+'kr';
+				samlet+=addcost;
 			}
+			if(!isAcquirer && otherAcquirerSupport){
+				addcost=vmshare*ACQUIRER[selectedAcquirer].costfn(transactions,value);
+				samlet_info+='<br>'+ACQUIRER[selectedAcquirer].name+' ('+(vmshare*100)+'\% tr.): '+addcost.toFixed(2)+'kr';
+				samletgebyr_info+='<br>'+ACQUIRER[selectedAcquirer].name+' ('+(vmshare*100)+'\% tr.): '+(addcost/transactions).toFixed(2)+'kr';
+				oprettelse_info+='<br>'+ACQUIRER[selectedAcquirer].name+': '+ACQUIRER[selectedAcquirer].setupFee.toFixed(2)+'kr';
+				faste_info+='<br>'+ACQUIRER[selectedAcquirer].name+': '+ACQUIRER[selectedAcquirer].monthlyFee.toFixed(2)+'kr';
+				samlet+=addcost;
+			}
+			
+			//Insert at the right place to sort the PSPs by cost
+			
+			var rowcounter=0;
+			while(rowcounter<rowValue.length && samlet>rowValue[rowcounter]){
+				rowcounter++;
+			}
+			row = table.insertRow(rowcounter);
+			rowValue.splice(rowcounter,0,samlet);
+			
+			// Insert HTML
+			var logo_cell = row.insertCell(0);
+			var indloser_cell = row.insertCell(1);
+			var kort_cell = row.insertCell(2);
+			var oprettelse_cell = row.insertCell(3);
+			var faste_cell = row.insertCell(4);
+			var samlet_cell = row.insertCell(5);
+			var samletgebyr_cell = row.insertCell(6);
 
-
+			logo_cell.innerHTML='<div class="psp"><a href=http://'+PSP[key].link+'><img src="psp/'+PSP[key].logo+'"><br>'+PSP[key].name+'</a></div>';
+			
+			kort_cell.innerHTML = HTML_cards;
+			kort_cell.className='kort';
+			oprettelse_cell.innerHTML=(PSP[key].setupFee+ACQUIRER[selectedAcquirer].setupFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].setupFee*netsSupport ).toFixed(2)+' kr';
+			faste_cell.innerHTML    =(PSP[key].monthlyFee+PSP[key].monthly3dsecureFee+ACQUIRER[selectedAcquirer].monthlyFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].monthlyFee*netsSupport ).toFixed(2)+' kr';
+			
+			indloser_cell.innerHTML=indloser_icons;
+			indloser_cell.className='acquirer';
+			
+			
+			oprettelse_cell.innerHTML+=oprettelse_info+info_icon_end;
+			faste_cell.innerHTML+=faste_info+info_icon_end;			
+			samlet_info+=info_icon_end;
+			samletgebyr_info+=info_icon_end;
+			samlet_cell.innerHTML=samlet.toFixed(2)+' kr'+samlet_info;
+			samletgebyr_cell.innerHTML=(samlet/transactions).toFixed(2)+' kr'+samletgebyr_info;
 		}
-
-		HTML_acquirer += "</div>";
-		
-		
-		
-		
-		var	tooltip = "<a href='#' class='tooltip'><img src='tooltip.gif' /><span>Kortgebyr er de samlede omkostninger pr. gns. transaktion.</span></a>";
-		
-		
-		
-		
-		
-		
-
-		logo_cell.innerHTML = "<div class=psp><a href='http://"+PSP[i].link+"'><p style='background-position: 0 -"+32*(PSP[i].logo - 1)+"px'></p>"+ PSP[i].name +"</a></div>";
-
-		kort_cell.innerHTML = "<div class=kort>"+ HTML_cards +"</div>";
-
-		acquirer_cell.innerHTML = HTML_acquirer;
-		
-		
-		
-	
-		
-		
-		
-		
-		oprettelse_cell.innerHTML = Math.round(PSP[i].totalSetupFee) + " kr";
-		faste_cell.innerHTML = Math.round(PSP[i].totalMonthlyFee) + " kr";
-
-
-
-		samlet_cell.innerHTML = Math.round(PSP[i].totalCosts) + " kr";
-
-		kortgebyr_cell.innerHTML = (PSP[i].totalCosts/transactions).toFixed(2)+" kr"+ tooltip;
-
-
 	}
 
-
-
 }
-
-
-window.onload = function () {
-
-	var dato = new Date(document.lastModified);
-	var timezone = dato.getTimezoneOffset()*60;
-	var sekunder = timezone + Math.floor( ( Date.now() - dato ) / 1000); // minutter
-	var opdateret = "";
-
-	if (sekunder < 60) { opdateret = sekunder + " sekunder"; }
-	else if ( sekunder < 7200 ) { opdateret = Math.floor(sekunder/60) + " minutter"; }
-	else if ( sekunder < 86400 ) { opdateret = Math.floor(sekunder/3600) + " timer"; }
-	else if ( sekunder < 172800 ) { opdateret = Math.floor(sekunder/86400) + " dag"; }
-	else { opdateret = Math.floor(sekunder/86400) + " dage"; }
-
-	document.getElementById("opdateret").innerHTML = opdateret + " siden";
-
-	init();
-
-}
-
 
 
