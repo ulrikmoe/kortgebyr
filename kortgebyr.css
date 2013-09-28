@@ -27,12 +27,12 @@ ul {
 
 
 .container {
-	
+
 	width: 1040px;
 	padding: 0;
 	margin: auto;
 	position: relative;
-	
+
 }
 
 
@@ -107,10 +107,10 @@ ul {
 }
 
 .mid ul {
-	
+
 	margin-left: 30px;
 	line-height: 36px
-	
+
 }
 
 
@@ -265,7 +265,7 @@ ul {
 	text-align: left;
 	padding-left: 8px;
 	font-size: 12px;
-	width: 115px
+	width: 105px
 }
 
 .psp img {
@@ -276,7 +276,7 @@ ul {
 
 
 .kort {
-	width: 100px;
+	width: 90px;
 	padding-top: 16px !important;
 	text-align: center;
 	margin: auto
@@ -451,9 +451,9 @@ padding: 10px;
 @media screen and (max-width: 1150px){
 
 	.github {
-		
+
 		display: none
-		
+
 	}
 
 

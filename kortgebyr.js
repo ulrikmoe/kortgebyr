@@ -11,7 +11,7 @@ function build() {
 	var row;
 	var rowValue=new Array();
 	table.innerHTML = "";
-	
+
 	for (key in PSP)
 	{
 
@@ -25,20 +25,20 @@ function build() {
 			netsSupport|=dankortCheck;
 			otherAcquirerSupport|=visamcCheck;
 			if( (visamcCheck|| dankortCheck) && (n!='maestro'|| $('3d').checked ) )
-				HTML_cards += "<img src='cards/"+CARDS[n].logo+"'/>";			
+				HTML_cards += "<img src='cards/"+CARDS[n].logo+"'/>";
 		});
 		if(HTML_cards!=""){
 			fee3dsecureMonthly=$('3d').checked*PSP[key].monthly3dsecureFee;
-			
+
 			var indloser_icons='';
 			var info_icon ='<a href="#" class="tooltip"><img src="tooltip.gif"><span>';
 			var info_icon_end='</span></a>';
 			var oprettelse_info,faste_info,samlet_info,samletgebyr_info;
-			
+
 			//Assumed 80% Dankort og 20% visa/mastercard jf. statistik
 			var dkshare,vmshare;
 			if(netsSupport && (!isAcquirer))
-			{ 
+			{
 				indloser_icons='<img src="acquirer/nets.png">';
 				if(otherAcquirerSupport)
 				{
@@ -73,16 +73,16 @@ function build() {
 				faste_info+='<br>'+ACQUIRER[selectedAcquirer].name+': '+ACQUIRER[selectedAcquirer].monthlyFee.toFixed(2)+'kr';
 				samlet+=addcost;
 			}
-			
+
 			//Insert at the right place to sort the PSPs by cost
-			
+
 			var rowcounter=0;
 			while(rowcounter<rowValue.length && samlet>rowValue[rowcounter]){
 				rowcounter++;
 			}
 			row = table.insertRow(rowcounter);
 			rowValue.splice(rowcounter,0,samlet);
-			
+
 			// Insert HTML
 			var logo_cell = row.insertCell(0);
 			var indloser_cell = row.insertCell(1);
@@ -93,18 +93,18 @@ function build() {
 			var samletgebyr_cell = row.insertCell(6);
 
 			logo_cell.innerHTML='<div class="psp"><a href=http://'+PSP[key].link+'><img src="psp/'+PSP[key].logo+'"><br>'+PSP[key].name+'</a></div>';
-			
+
 			kort_cell.innerHTML = HTML_cards;
 			kort_cell.className='kort';
 			oprettelse_cell.innerHTML=(PSP[key].setupFee+ACQUIRER[selectedAcquirer].setupFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].setupFee*netsSupport ).toFixed(2)+' kr';
 			faste_cell.innerHTML    =(PSP[key].monthlyFee+PSP[key].monthly3dsecureFee+ACQUIRER[selectedAcquirer].monthlyFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].monthlyFee*netsSupport ).toFixed(2)+' kr';
-			
+
 			indloser_cell.innerHTML=indloser_icons;
 			indloser_cell.className='acquirer';
-			
-			
+
+
 			oprettelse_cell.innerHTML+=oprettelse_info+info_icon_end;
-			faste_cell.innerHTML+=faste_info+info_icon_end;			
+			faste_cell.innerHTML+=faste_info+info_icon_end;
 			samlet_info+=info_icon_end;
 			samletgebyr_info+=info_icon_end;
 			samlet_cell.innerHTML=samlet.toFixed(2)+' kr'+samlet_info;
