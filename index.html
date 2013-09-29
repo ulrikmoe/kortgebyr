@@ -75,7 +75,7 @@
 					<label>3D Secure (udenlandske kort): <input type="checkbox" checked="" id="3d" /></label>
 				</li>
 				<li>
-					<label>Medregn oprettelsesgebyr: <input type="checkbox" checked="" id="incSetupFee" /></label> <a href="#" class="tooltip"><img src="tooltip.gif"><span>Hvis du bruger penge på et oprettelsesgebyr, mister du penge du kunne have investeret i andre ting som fx dit varelager. Ifølge fdih giver en investering i varelager en gennemsnitlig forrenting på 16% om året (1.3% om måneden). Dette giver mening at medregne i kortomkostninger.</span></a>
+					<label>Medregn oprettelsesgebyr: <input type="checkbox" checked="" id="incSetupFee" /></label> <a href="#" class="tooltip"><img src="tooltip.gif"><span>Hvis du bruger penge på et oprettelsesgebyr, mister du penge du kunne have investeret i andre ting som fx dit varelager. Ifølge fdih giver en investering i varelager en gennemsnitlig forrenting på 16% om året (1.3% om måneden). Her regnes dog noget mere konservativt med 10% om året.</span></a>
 				</li>
 
 
@@ -148,4 +148,7 @@
 
 </body>
 </html>
-<script type='text/javascript'>build();</script>
+<script type='text/javascript'> 
+getUrlVars();
+build();
+</script>

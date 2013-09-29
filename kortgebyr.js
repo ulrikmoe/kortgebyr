@@ -3,6 +3,52 @@ function $(s){
 	return document.getElementById(s);
 }
 
+fieldVars=['transactions','value','3d','incSetupFee','dankort','visamc'];
+queryVars=['trn','gns','3ds','mog','dk','vmc'];
+defaultVal=[100,570,true,true,true,true];
+
+function getUrlVars(){
+	if (location.search != "")
+	{
+		varTable=new Array();
+		var x = location.search.substr(1).split("&")
+		for (var i=0; i<x.length; i++)
+		{
+			var y = x[i].split("=");
+			varTable[y[0]]=y[1];
+		}
+		
+		queryVars.forEach(function(n, i){
+			if(varTable[n])
+				if($(fieldVars[i]).type != 'checkbox'){
+					$(fieldVars[i]).value=varTable[n];
+				}
+				else{
+					$(fieldVars[i]).checked=(varTable[n]==1);
+				}
+			
+		});
+	}
+}
+function parseUrlVars(){
+	
+	var str='';
+	fieldVars.forEach(function(n, i){
+		if($(n).type != 'checkbox'&& $(n).value!=defaultVal[i] ){
+			str+=queryVars[i]+'='+$(n).value;
+			if(str!='')str+='&';
+		}
+		else if($(n).type == 'checkbox' && $(n).checked!=defaultVal[i]){
+			str+=queryVars[i]+'='+(($(n).checked)? 1 : 0);
+			if(str!='')str+='&';
+		}
+	});
+	qmark='';
+	if(str[str.length - 1]=='&')str=str.substring(0, str.length - 1);
+	if(str!=''){qmark='?';}
+	history.pushState('','',window.location.href.split('?')[0]+qmark+str);
+}
+
 function build() {
 	var selectedAcquirer="teller"; //****** tillad ændring af acquirer
 	var transactions=$("transactions").value;
@@ -98,7 +144,7 @@ function build() {
 
 			kort_cell.innerHTML = HTML_cards;
 			kort_cell.className='kort';
-			oprettelse_cell.innerHTML=(PSP[key].setupFee+ACQUIRER[selectedAcquirer].setupFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].setupFee*netsSupport ).toFixed(2)+' kr';
+			oprettelse_cell.innerHTML=(PSP[key].setupFee+ACQUIRER[selectedAcquirer].setupFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].setupFee*netsSupport ).toFixed(0)+' kr';
 			faste_cell.innerHTML    =(PSP[key].monthlyFee+$('3d').checked*PSP[key].monthly3dsecureFee+ACQUIRER[selectedAcquirer].monthlyFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].monthlyFee*netsSupport ).toFixed(2)+' kr';
 			indloser_cell.innerHTML=indloser_icons;
 			indloser_cell.className='acquirer';
@@ -112,7 +158,6 @@ function build() {
 			samletgebyr_cell.innerHTML=(samlet/transactions).toFixed(2)+' kr'+samletgebyr_info;
 		}
 	}
+	parseUrlVars();
 
 }
-
-
