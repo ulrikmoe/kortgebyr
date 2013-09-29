@@ -7,7 +7,7 @@ fieldVars=['transactions','value','3d','incSetupFee','dankort','visamc'];
 queryVars=['trn','gns','3ds','mog','dk','vmc'];
 defaultVal=[100,570,true,true,true,true];
 
-function getUrlVars(){
+function parseUrlVars(){
 	if (location.search != "")
 	{
 		varTable=new Array();
@@ -30,7 +30,7 @@ function getUrlVars(){
 		});
 	}
 }
-function parseUrlVars(){
+function saveUrlVars(){
 	
 	var str='';
 	fieldVars.forEach(function(n, i){
@@ -46,7 +46,7 @@ function parseUrlVars(){
 	qmark='';
 	if(str[str.length - 1]=='&')str=str.substring(0, str.length - 1);
 	if(str!=''){qmark='?';}
-	history.pushState('','',window.location.href.split('?')[0]+qmark+str);
+	history.pushState('','',window.location.pathname+qmark+str);
 }
 
 function build() {
@@ -158,6 +158,6 @@ function build() {
 			samletgebyr_cell.innerHTML=(samlet/transactions).toFixed(2)+' kr'+samletgebyr_info;
 		}
 	}
-	parseUrlVars();
+	saveUrlVars();
 
 }
