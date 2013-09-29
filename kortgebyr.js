@@ -106,7 +106,7 @@ function build() {
 			oprettelse_info=info_icon+PSP[key].name+': '+PSP[key].setupFee.toFixed(2)+'kr';
 			faste_info=info_icon+PSP[key].name+': '+(PSP[key].monthlyFee+$('3d').checked*PSP[key].monthly3dsecureFee).toFixed(2)+'kr';
 			if(!isAcquirer&& netsSupport){
-				addcost=dkshare*ACQUIRER['nets'].costfn(transactions,value);
+				addcost=ACQUIRER['nets'].costfn(transactions*dkshare,value);
 				samlet_info+='<br>'+ACQUIRER['nets'].name+' ('+(dkshare*100)+'\% tr.): '+addcost.toFixed(2)+'kr';
 				samletgebyr_info+='<br>'+ACQUIRER['nets'].name+' ('+(dkshare*100)+'\% tr.): '+(addcost/transactions).toFixed(2)+'kr';
 				oprettelse_info+='<br>'+ACQUIRER['nets'].name+': '+ACQUIRER['nets'].setupFee.toFixed(2)+'kr';
@@ -114,7 +114,7 @@ function build() {
 				samlet+=addcost;
 			}
 			if(!isAcquirer && otherAcquirerSupport){
-				addcost=vmshare*ACQUIRER[selectedAcquirer].costfn(transactions,value);
+				addcost=ACQUIRER[selectedAcquirer].costfn(transactions*vmshare,value);
 				samlet_info+='<br>'+ACQUIRER[selectedAcquirer].name+' ('+(vmshare*100)+'\% tr.): '+addcost.toFixed(2)+'kr';
 				samletgebyr_info+='<br>'+ACQUIRER[selectedAcquirer].name+' ('+(vmshare*100)+'\% tr.): '+(addcost/transactions).toFixed(2)+'kr';
 				oprettelse_info+='<br>'+ACQUIRER[selectedAcquirer].name+': '+ACQUIRER[selectedAcquirer].setupFee.toFixed(2)+'kr';
@@ -145,7 +145,7 @@ function build() {
 			kort_cell.innerHTML = HTML_cards;
 			kort_cell.className='kort';
 			oprettelse_cell.innerHTML=(PSP[key].setupFee+ACQUIRER[selectedAcquirer].setupFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].setupFee*netsSupport ).toFixed(0)+' kr';
-			faste_cell.innerHTML    =(PSP[key].monthlyFee+$('3d').checked*PSP[key].monthly3dsecureFee+ACQUIRER[selectedAcquirer].monthlyFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].monthlyFee*netsSupport ).toFixed(2)+' kr';
+			faste_cell.innerHTML    =(PSP[key].monthlyFee+$('3d').checked*PSP[key].monthly3dsecureFee+ACQUIRER[selectedAcquirer].monthlyFee*otherAcquirerSupport*(!isAcquirer)+ACQUIRER['nets'].monthlyFee*netsSupport*(!isAcquirer) ).toFixed(2)+' kr';
 			indloser_cell.innerHTML=indloser_icons;
 			indloser_cell.className='acquirer';
 
