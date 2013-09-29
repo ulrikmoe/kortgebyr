@@ -424,13 +424,24 @@ padding: 10px;
 .tooltip:hover {text-decoration:none;}
 .tooltip span {
     z-index:10;display:none; padding:14px 20px;
-    margin-top:-30px; margin-left:-260px;
+    margin-top:-80px; margin-left:-130px;
     width:180px; line-height:16px;
 }
 
 .tooltip:hover span{
     display:inline; position:absolute; color:#111;
     border:1px solid #DCA; background:#fffAF0;}
+	
+.tooltip:hover:after {
+		content: "";
+		display: block;
+		position:absolute;
+		bottom: -10px;
+		width:10px;
+		height:10px;
+		background: #000;
+}
+
 .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
 
 .tooltip span
