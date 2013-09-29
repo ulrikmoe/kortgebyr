@@ -140,7 +140,7 @@ function build() {
 			var samlet_cell = row.insertCell(5);
 			var samletgebyr_cell = row.insertCell(6);
 
-			logo_cell.innerHTML='<div class="psp"><a href=http://'+PSP[key].link+'><img src="psp/'+PSP[key].logo+'"><br>'+PSP[key].name+'</a></div>';
+			logo_cell.innerHTML='<div class="psp"><a href='+PSP[key].link+'><img src="psp/'+PSP[key].logo+'"><br>'+PSP[key].name+'</a></div>';
 
 			kort_cell.innerHTML = HTML_cards;
 			kort_cell.className='kort';
