@@ -160,7 +160,7 @@ var CARDS = {
 		{
 			name: "paypal", // 0
 			logo: "paypal.png",
-			link: "paypal.com",
+			link: "https://paypal.com",
 			isAcquirer: true,
 			cards: ["visa","mastercard","maestro"],
 			setupFee: 0,
@@ -183,7 +183,7 @@ var CARDS = {
 		{
 			name: "ewire light", // 1
 			logo: "ewire.png",
-			link: "ewire.dk",
+			link: "http://ewire.dk",
 			isAcquirer: true,
 			cards: ["dankort","visa","mastercard","maestro"],
 			setupFee: 395,
@@ -200,7 +200,7 @@ var CARDS = {
 		{
 			name: "ewire pro", // 2
 			logo: "ewire.png",
-			link: "ewire.dk",
+			link: "http://ewire.dk",
 			isAcquirer: true,
 			cards: ["dankort","visa","mastercard","maestro"],
 			setupFee: 1195,
@@ -216,7 +216,7 @@ var CARDS = {
 		{
 			name: "quickpay", // 4
 			logo: "quickpay.png",
-			link: "quickpay.dk",
+			link: "http://quickpay.dk",
 			isAcquirer: false,
 			acquirer: 1,
 			availableAcquirers:  ["seb","teller","swebank"],
@@ -251,7 +251,7 @@ var CARDS = {
 		{
 			name: "ePay Light", // 5
 			logo: "epay.png",
-			link: "epay.dk",
+			link: "http://epay.dk",
 			isAcquirer: false,
 			acquirer: 0,
 			availableAcquirers: [0],
@@ -267,7 +267,7 @@ var CARDS = {
 		{
 			name: "ePay Business", // 6
 			logo: "epay.png",
-			link: "epay.dk",
+			link: "http://epay.dk",
 			isAcquirer: false,
 			acquirer: 1,
 			availableAcquirers: ["seb","teller","swebank"],
@@ -283,7 +283,7 @@ var CARDS = {
 		{
 			name: "ePay Pro", // 7
 			logo: "epay.png",
-			link: "epay.dk",
+			link: "http://epay.dk",
 			isAcquirer: false,
 			acquirer: 2,
 			availableAcquirers: ["teller"],
@@ -299,7 +299,7 @@ var CARDS = {
 		{
 			name: "DIBS Entrepreneur", // 8
 			logo: "dibs.png",
-			link: "dibs.dk",
+			link: "http://dibs.dk",
 			isAcquirer: false,
 			acquirer: 1,
 			availableAcquirers: [1,2,3],
@@ -315,7 +315,7 @@ var CARDS = {
 	  	{
 			name: "DIBS Business", // 9
 			logo: "dibs.png",
-			link: "dibs.dk",
+			link: "http://dibs.dk",
 			isAcquirer: false,
 			acquirer: 1,
 			availableAcquirers: ["seb","teller","swebank"],
@@ -331,7 +331,7 @@ var CARDS = {
 		{
 			name: "DIBS Professional", // 10
 			logo: "dibs.png",
-			link: "dibs.dk",
+			link: "http://dibs.dk",
 			isAcquirer: false,
 			acquirer: 1,
 			availableAcquirers: ["seb","teller","swebank"],
@@ -347,7 +347,7 @@ var CARDS = {
 		{
 			name: "Netaxept start", // 11
 			logo: "nets.png",
-			link: "terminalshop.dk",
+			link: "https://terminalshop.dk",
 			isAcquirer: false,
 			acquirer: 1,
 			availableAcquirers: ["teller"],
@@ -363,7 +363,7 @@ var CARDS = {
 		{
 			name: "Netaxept plus", // 12
 			logo: "nets.png",
-			link: "terminalshop.dk",
+			link: "https://terminalshop.dk",
 			isAcquirer: false,
 			acquirer: 2,
 			availableAcquirers: ["teller"],
@@ -379,7 +379,7 @@ var CARDS = {
 		{
 			name: "Netaxept advanced", // 13
 			logo: "nets.png",
-			link: "terminalshop.dk",
+			link: "https://terminalshop.dk",
 			isAcquirer: false,
 			acquirer: 2,
 			availableAcquirers: ["teller"],
@@ -395,7 +395,7 @@ var CARDS = {
 		{
 			name: "Dandomain", // 14
 			logo: "dandomain.png",
-			link: "dandomain.dk/produkter/betalingssystem.html",
+			link: "http://dandomain.dk/produkter/betalingssystem.html",
 			isAcquirer: false,
 			acquirer: 2,
 			availableAcquirers: ["teller"],
@@ -411,7 +411,7 @@ var CARDS = {
 		{
 			name: "Wannafind", // 15
 			logo: "wannafind.png",
-			link: "wannafind.dk/betalingsgateway/",
+			link: "https://wannafind.dk/betalingsgateway/",
 			isAcquirer: false,
 			acquirer: 1,
 			availableAcquirers: ["seb","teller","swebank"],
@@ -427,7 +427,7 @@ var CARDS = {
 		{
 			name: "Paymill", // 0
 			logo: "paymill.png",
-			link: "paymill.com",
+			link: "https://paymill.com",
 			isAcquirer: true,
 			cards: ["visa","mastercard","maestro"],
 			setupFee: 0,
@@ -443,7 +443,7 @@ var CARDS = {
 		{
 			name: "Payson", // 0
 			logo: "payson.png",
-			link: "payson.se",
+			link: "https://payson.se",
 			isAcquirer: true,
 			cards: ["visa","mastercard","maestro"],
 			setupFee: 0,
