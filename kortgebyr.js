@@ -79,8 +79,8 @@ function build() {
 		if(HTML_cards!=""){
 
 			var indloser_icons='';
-			var info_icon ='<a href="#" class="tooltip"><img src="tooltip.gif"><span>';
-			var info_icon_end='</span></a>';
+			var info_icon ='<p class="tooltip"><img src="tooltip.gif"><span>';
+			var info_icon_end='</span></p>';
 			var oprettelse_info,faste_info,samlet_info,samletgebyr_info;
 
 			//Assumed 80% Dankort og 20% visa/mastercard jf. statistik

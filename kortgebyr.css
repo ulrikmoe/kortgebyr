@@ -419,7 +419,7 @@ padding: 10px;
 
 
 
-.tooltip {outline:none; cursor: help }
+.tooltip {outline:none; cursor: help;display:inline; }
 .tooltip strong {line-height:30px;}
 .tooltip:hover {text-decoration:none;}
 .tooltip span {
@@ -427,6 +427,7 @@ padding: 10px;
     margin-top:-30px; margin-left:-260px;
     width:180px; line-height:16px;
 }
+
 .tooltip:hover span{
     display:inline; position:absolute; color:#111;
     border:1px solid #DCA; background:#fffAF0;}
