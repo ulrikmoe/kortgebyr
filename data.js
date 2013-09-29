@@ -347,7 +347,7 @@ var CARDS = {
 		{
 			name: "Netaxept start", // 11
 			logo: "nets.png",
-			link: "https://terminalshop.dk",
+			link: "https://www.terminalshop.dk/Netaxept/",
 			isAcquirer: false,
 			acquirer: 1,
 			availableAcquirers: ["teller"],
@@ -363,7 +363,7 @@ var CARDS = {
 		{
 			name: "Netaxept plus", // 12
 			logo: "nets.png",
-			link: "https://terminalshop.dk",
+			link: "https://www.terminalshop.dk/Netaxept/",
 			isAcquirer: false,
 			acquirer: 2,
 			availableAcquirers: ["teller"],
@@ -379,7 +379,7 @@ var CARDS = {
 		{
 			name: "Netaxept advanced", // 13
 			logo: "nets.png",
-			link: "https://terminalshop.dk",
+			link: "https://www.terminalshop.dk/Netaxept/",
 			isAcquirer: false,
 			acquirer: 2,
 			availableAcquirers: ["teller"],
@@ -443,7 +443,7 @@ var CARDS = {
 		{
 			name: "Payson", // 0
 			logo: "payson.png",
-			link: "https://payson.se",
+			link: "https://www.payson.se",
 			isAcquirer: true,
 			cards: ["visa","mastercard","maestro"],
 			setupFee: 0,
