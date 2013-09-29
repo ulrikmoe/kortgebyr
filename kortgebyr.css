@@ -1,10 +1,5 @@
 body, div, p, header, h1 ,h2, h3, ul, li { margin: 0; padding: 0 }
 
-html {
-	border-top: 3px solid #222;
-}
-
-
 a {
 	color: #36b;
 	text-decoration: none
