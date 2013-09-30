@@ -14,12 +14,9 @@ body {
 	padding-bottom: 70px
 }
 
-ul {
+ul { list-style: none; }
 
-	list-style: none
-}
-
-img {border:0}
+img { border:0 }
 
 .container {
 
