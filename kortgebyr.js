@@ -224,7 +224,7 @@ function build()
 	
 				kort_cell.innerHTML = HTML_cards;
 				kort_cell.className = 'kort';
-				oprettelse_cell.innerHTML = (PSP[key].setupFee+ACQUIRER[selectedAcquirer].setupFee * otherAcquirerSupport * (!isAcquirer)+ACQUIRER['nets'].setupFee*netsSupport ).toFixed(0) + ' kr';
+				oprettelse_cell.innerHTML = (PSP[key].setupFee+ACQUIRER[selectedAcquirer].setupFee * otherAcquirerSupport * (!isAcquirer)+ACQUIRER['nets'].setupFee*netsSupport*(!isAcquirer) ).toFixed(0) + ' kr';
 				
 				faste_cell.innerHTML = ( PSP[key].monthlyFee + $('3d').checked*PSP[key].monthly3dsecureFee + ACQUIRER[selectedAcquirer].monthlyFee * otherAcquirerSupport * (!isAcquirer)+ACQUIRER['nets'].monthlyFee*netsSupport * (!isAcquirer) ).toFixed(2)+' kr';
 				indloser_cell.innerHTML = indloser_icons;
