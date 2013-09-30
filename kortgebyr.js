@@ -149,7 +149,7 @@ function build()
 					if ( otherAcquirerSupport )
 					{
 						indloser_icons += '<br><img src="acquirer/teller.png">';
-						dkshare = 0.8; vmshare=0.2;
+						dkshare = 0.82; vmshare=0.18;
 					}
 					else
 					{ 

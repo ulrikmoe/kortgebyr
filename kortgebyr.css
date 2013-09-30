@@ -374,6 +374,29 @@ img { border:0 }
 	margin-left: -186px;
     top: -118px;
 }
+#kortfordelinginfo span{
+		text-align:left;
+		width:300px;
+		margin-left: -350px;
+	    top: -60px;
+}
+#kortfordelinginfo:hover span:after {
+	border-width: 8px 0 8px 16px; /*10px;*/
+	border-color: transparent;
+	border-left-color: #2C3843;
+	margin-left:0px;
+	left: 100%;
+	top: 46%;
+}
+#kortfordelinginfo:hover span:before {
+	border-color: rgba(136, 183, 213, 0);
+	border-left-color: #000;
+	border-width: 8px 0 8px 17px;
+	margin-left:1px;
+	left: 100%;
+	top: 46%;
+
+}
 
 
 

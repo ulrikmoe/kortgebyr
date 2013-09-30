@@ -90,7 +90,7 @@
 					<label>3D Secure (udenlandske kort): <input type="checkbox" checked="" id="3d" /></label>
 				</li>
 				<li>
-					<label>Medregn oprettelsesgebyr: <input type="checkbox" checked="" id="incSetupFee" /></label> <p href="#" class="tooltip" id='medregnopretgebyrinfo'><img src="tooltip.gif"><span>Hvis du bruger penge på et oprettelsesgebyr, mister du penge du kunne have investeret i andre ting som fx dit varelager. Ifølge fdih giver en investering i varelager en gennemsnitlig forrenting på 16% om året (1.3% om måneden). Her regnes dog noget mere konservativt med et tab på 10% af oprettelsesgebyret om året.</span></p>
+					<label>Medregn oprettelsesgebyr: <input type="checkbox" checked="" id="incSetupFee" /></label> <p href="#" class="tooltip" id='medregnopretgebyrinfo'><img src="tooltip.gif"><span>Hvis du bruger penge på et oprettelsesgebyr, mister du penge du kunne have investeret i andre ting som fx dit varelager. Ifølge FDIH giver en investering i varelager en gennemsnitlig forrenting på 16% om året (1.3% om måneden). Her regnes dog noget mere konservativt med et tab på 10% af oprettelsesgebyret om året.</span></p>
 				</li>
 
 
@@ -108,7 +108,12 @@
 				<li><label>Gennemsnitlig ordreværdi: <input type="text" class="input" id="value" value="570"></label></li>
 
 				<li>
-					<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="3d" /></label>
+					<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="fdihkortfordeling" /></label>
+					<p href="#" class="tooltip" id="kortfordelinginfo">
+						<img src="tooltip.gif">
+						<span>Jævnfør FDIH's tal regnes der med at Dankort og Visa/Dankort samlet står for 82% af betalingerne (gennem NETS). De resterende 18% regnes som mastercard/ eurocard og visa (gennem Teller m.fl.). Bemærk at der ses bort fra forbrugsforeningskort og andre mindre kort.
+						</span>
+					</p>
 				</li>
 
 
