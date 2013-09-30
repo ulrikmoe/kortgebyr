@@ -1,10 +1,8 @@
-
 /*
 	
 D A T A
 
 */
-
 
 function $(s){
 
@@ -229,8 +227,8 @@ function build()
 				faste_cell.innerHTML = ( PSP[key].monthlyFee + $('3d').checked*PSP[key].monthly3dsecureFee + ACQUIRER[selectedAcquirer].monthlyFee * otherAcquirerSupport * (!isAcquirer)+ACQUIRER['nets'].monthlyFee*netsSupport * (!isAcquirer) ).toFixed(2)+' kr';
 				indloser_cell.innerHTML = indloser_icons;
 				indloser_cell.className = 'acquirer';
-	
-	
+
+
 				oprettelse_cell.innerHTML += oprettelse_info+info_icon_end;
 				faste_cell.innerHTML += faste_info+info_icon_end;
 				samlet_info += info_icon_end;
