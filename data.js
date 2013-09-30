@@ -260,7 +260,7 @@ var PSP =
 		monthlyFee: 150,
 		monthly3dsecureFee: 0,
 		costfn: function(ntransactions,averageprice){
-						if(ntransactions==0)return 0;
+						if(ntransactions===0){return 0;}
 						var quickpayLimits=
 						[500,600,1000,3000,10000,30000,9007199254740992],
 							quickpayPerTransaction=
@@ -270,13 +270,13 @@ var PSP =
 							if(ntransactions<=quickpayLimits[i])
 							{
 								if(i-1>=0)
-									monthlytotal+=quickpayPerTransaction[i]*(ntransactions-quickpayLimits[i-1]) ;
+									{ monthlytotal += quickpayPerTransaction[i] * (ntransactions - quickpayLimits[i-1]); }
 								break;
 							}
 							else
 							{
 								if(i-1>=0)
-									monthlytotal+=(quickpayLimits[i]-quickpayLimits[i-1])*quickpayPerTransaction[i];
+									{ monthlytotal += (quickpayLimits[i]-quickpayLimits[i - 1]) * quickpayPerTransaction[i]; }
 							}
 						}
 						return monthlytotal;
