@@ -89,9 +89,7 @@
 				<li>
 				<label>Variabelt indløsergebyr pr. transaktion: <input type="text" class="input" value="0%" id="acquirerPercentageRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
 				</li>
-				<li>
-					<label>3D Secure (udenlandske kort): <input type="checkbox" checked="" id="3d" onChange='build();'/></label>
-				</li>
+
 				<li>
 					<label>Medregn oprettelsesgebyr: <input type="checkbox" checked="" id="incSetupFee" onChange='build();'/></label> <p href="#" class="tooltip" id='medregnopretgebyrinfo'><img src="tooltip.gif"><span>Hvis du bruger penge på et oprettelsesgebyr, mister du penge du kunne have investeret i andre ting som fx dit varelager. Ifølge FDIH giver en investering i varelager en gennemsnitlig forrenting på 16% om året (1.3% om måneden). Her regnes dog noget mere konservativt med et tab på 10% af oprettelsesgebyret om året.</span></p>
 				</li>
@@ -117,6 +115,10 @@
 						<span>Jævnfør FDIH's tal regnes der med at Dankort og Visa/Dankort samlet står for 82% af betalingerne (gennem NETS). De resterende 18% regnes som mastercard/ eurocard og visa (gennem Teller m.fl.). Bemærk at der ses bort fra forbrugsforeningskort og andre mindre kort.
 						</span>
 					</p>
+				</li>
+
+				<li>
+					<label>3D Secure (udenlandske kort): <input type="checkbox" checked="" id="3d" onChange='build();'/></label>
 				</li>
 
 
