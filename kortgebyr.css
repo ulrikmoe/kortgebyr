@@ -237,7 +237,7 @@ img { border:0 }
 /*
 
 	T A B L E
-	
+
 */
 
 
@@ -285,7 +285,7 @@ img { border:0 }
 	width: 100%;
 	border: solid #ccc 1px;
 	border-left: 0;
-	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-weight: 400;
 	font-size: 13px;
 	color: #444;
@@ -299,7 +299,7 @@ img { border:0 }
 .table > tbody > tr > td, .table > thead > tr > th {
 	border-left: 1px solid #ccc;
 	border-top: 1px solid #ccc;
-	padding: 11px 7px 9px;
+	padding: 12px 7px 9px;
 }
 
 .table > thead > tr > th, .table > thead > tr > td {
@@ -398,6 +398,15 @@ img { border:0 }
 
 }
 
+
+
+.footer {
+
+	text-align: center;
+	margin-top: 50px;
+	color: #bbb
+
+}
 
 
 

@@ -1,5 +1,5 @@
 /*
-	
+
 D A T A
 
 */
@@ -72,13 +72,13 @@ var CARDS =
 
 function defaultAcquirerCostFn(ntransactions,averageprice)
 {
-	
+
 	monthlytotal = $('incSetupFee').checked * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
-	monthlytotal += ($('acquirerPercentageRate').value.replace(',','.').replace('%','').replace(' ','') / 100 * averageprice 
+	monthlytotal += ($('acquirerPercentageRate').value.replace(',','.').replace('%','').replace(' ','') / 100 * averageprice
 	+ $('acquirerFixedRate').value.replace(',','.').replace('k','').replace('r','').replace(' ','')*1 )   * ntransactions;
 
 	return monthlytotal;
-	
+
 }
 
 
@@ -102,10 +102,10 @@ var ACQUIRER =
 			else if (averageprice <= 100) { fee = 1.1; }
 			else { fee = 1.9; }
 			return fee * ntransactions + this.monthlyFee + $('incSetupFee').checked * this.setupFee * lostReturnsFromSetupFee / 12;
-			
+
 		}
 	},
-	
+
 	"teller":
 	{
 		name: "Teller",
@@ -117,11 +117,11 @@ var ACQUIRER =
 		percentageTransactionFee: 1.5,
 		costfn: defaultAcquirerCostFn
 	},
-	
+
 	"seb":
 	{
 		name: "SEB Euroline",
-		logo: "euroline.gif",
+		logo: "euroline.png",
 		cards: ["visa", "mastercard", "maestro"],
 		setupFee: 0,
 		monthlyFee: 0,
@@ -131,11 +131,11 @@ var ACQUIRER =
 		totalCosts: 0,
 		costfn: defaultAcquirerCostFn
 	},
-	
+
 	"swedbank":
 	{
 		name: "Swedbank",
-		logo: "swedbank.jpg",
+		logo: "swedbank.png",
 		cards: ["visa", "mastercard", "maestro"],
 		setupFee: 1900,
 		monthlyFee: 100,
@@ -145,11 +145,11 @@ var ACQUIRER =
 		totalCosts: 0,
 		costfn: defaultAcquirerCostFn
 	},
-	
+
 	"handelsbanken":
 	{
 		name: "Handelsbanken", // 4
-		logo: "handelsbanken.gif",
+		logo: "handelsbanken.png",
 		cards: ["visa", "mastercard", "maestro"],
 		setupFee: 1900,
 		monthlyFee: 100,
@@ -159,7 +159,7 @@ var ACQUIRER =
 		totalCosts: 0,
 		costfn: defaultAcquirerCostFn
 	},
-	
+
 	"valitor":
 	{
 		name: "Valitor", // 4
@@ -173,7 +173,7 @@ var ACQUIRER =
 		totalCosts: 0,
 		costfn: defaultAcquirerCostFn
 	}
-	
+
 
 };
 
@@ -181,11 +181,11 @@ var ACQUIRER =
 
 
 function defaultCostFn(ntransactions,averageprice)
-{	
+{
 
 	monthlytotal = $('incSetupFee').checked * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee + $('3d').checked * this.monthly3dsecureFee;
-	
-	if (ntransactions > this.freeTransactions) 
+
+	if (ntransactions > this.freeTransactions)
 	{
 		monthlytotal += this.fixedTransactionFee * ( ntransactions - this.freeTransactions );
 	}
@@ -193,7 +193,7 @@ function defaultCostFn(ntransactions,averageprice)
 	{
 		monthlytotal += this.percentageTransactionFee / 100 * averageprice * ntransactions;
 	}
-	
+
 	return monthlytotal;
 }
 
@@ -216,7 +216,7 @@ var PSP =
 		chargeback: 120,
 		costfn:	function( ntransactions, averageprice)
 		{
-		
+
 			var oms = ntransactions * averageprice;
 			var fee;
 			if (oms < 20000 ) { fee = 3.4; }
@@ -227,7 +227,7 @@ var PSP =
 			return ( fee / 100 * averageprice + 2.6 ) * ntransactions;
 		}
 	},
-	
+
 	"ewirelight":
 	{
 		name: "ewire light",
@@ -243,9 +243,9 @@ var PSP =
 		freeTransactions: 0,
 		chargeback: 275,
 		costfn: defaultCostFn
-		
+
 	},
-	
+
 	"ewirepro":
 	{
 		name: "ewire pro",
@@ -262,7 +262,7 @@ var PSP =
 		chargeback: 275,
 		costfn:defaultCostFn
 	},
-	
+
 	"quickpay":
 	{
 		name: "quickpay",
@@ -296,7 +296,7 @@ var PSP =
 						}
 						return monthlytotal;
 		}
-       
+
 	},
 	"epaylight":
 	{
