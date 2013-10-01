@@ -382,7 +382,7 @@ var PSP =
 		availableAcquirers: ["seb","teller","swedbank"],
 		cards: ["dankort","visa","mastercard","maestro"],
 		setupFee: 0,
-		monthlyFee: 249,
+		monthlyFee: 449,
 		monthly3dsecureFee: 0,
 		fixedTransactionFee: 1.5,
 		freeTransactions: 500,

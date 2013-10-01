@@ -21,16 +21,38 @@ var VARS=
 	'average_value':
 	{
 		field: 'value',
-		query: 'gns',
+		query: 'avg',
 		type: 'int',
 		default: 570
 	},
 	'acquirer_selection':
 	{
 		field: 'selectacquirer',
-		query: 'ind',
+		query: 'acq',
 		type: 'select',
 		default: 'teller'
+	},
+	'acquirer_fee':
+	{
+		field: 'acquirerFixedRate',
+		query: 'fee',
+		type: 'int',
+		default: function()
+				{
+					var curAcq=$('selectacquirer').options[ $('selectacquirer').selectedIndex ].id.substring(7);
+					return ACQUIRER[curAcq].fixedTransactionFee;
+				}
+	},
+	'acquirer_percent':
+	{
+		field: 'acquirerPercentageRate',
+		query: 'pfee',
+		type: 'int',
+		default: function()
+				{
+					var curAcq=$('selectacquirer').options[ $('selectacquirer').selectedIndex ].id.substring(7);
+					return ACQUIRER[curAcq].percentageTransactionFee;
+				}
 	},
 	'3dsecure':
 	{
@@ -42,7 +64,7 @@ var VARS=
 	'include_setup_fee':
 	{
 		field: 'incSetupFee',
-		query: 'mog', //Med OprettelsesGebyr
+		query: 'isf', //Med OprettelsesGebyr
 		type: 'checkbox',
 		default: 1
 	},
@@ -80,7 +102,7 @@ function getFieldValue(key){
 	switch(VARS[key].type)
 	{
 	case 'int':
-		value=$(VARS[key].field).value;
+		value=$(VARS[key].field).value.replace(',','.').replace('k','').replace('r','').replace(' ','');
 		break;
 	case 'checkbox':
 		value=$(VARS[key].field).checked;
@@ -92,6 +114,14 @@ function getFieldValue(key){
 	return value;
 }
 
+function getValue(n)
+{
+	if(typeof n == 'function')
+	{
+		return n();
+	}
+	else return n;
+}
 
 function parseUrlVars()
 {
@@ -115,7 +145,7 @@ function parseUrlVars()
 		}
 		else
 		{
-			setFieldValue( key , VARS[key].default );	
+			setFieldValue( key , getValue(VARS[key].default) );	
 		}
 
 	}
@@ -128,7 +158,9 @@ function saveUrlVars()
 	
 	for(key in VARS)
 	{
-		if(getFieldValue(key) != VARS[key].default){
+
+		if(getFieldValue(key) != getValue(VARS[key].default))
+		{
 			str += VARS[key].query+'='+getFieldValue(key);
 			if (str!=='') { str+='&'; }
 		}
@@ -169,7 +201,7 @@ function build(condition)
 	
 	}
 	var selectedAcquirer = $('selectacquirer').options[ $('selectacquirer').selectedIndex ].id.substring(7);
-	if( selectedAcquirer !== this.previousAcquirer)
+	if( selectedAcquirer !== this.previousAcquirer && condition !== 'init')
 	{
 		$('acquirerFixedRate').value=(ACQUIRER[selectedAcquirer].fixedTransactionFee+'kr').replace(".", ",");
 		$('acquirerPercentageRate').value=(ACQUIRER[selectedAcquirer].percentageTransactionFee+'%').replace(".", ",");
