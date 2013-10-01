@@ -74,8 +74,9 @@ function defaultAcquirerCostFn(ntransactions,averageprice)
 {
 	
 	monthlytotal = $('incSetupFee').checked * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
-	monthlytotal += this.percentageTransactionFee / 100 * averageprice * ntransactions;
-	
+	monthlytotal += ($('acquirerPercentageRate').value.replace(',','.').replace('%','').replace(' ','') / 100 * averageprice 
+	+ $('acquirerFixedRate').value.replace(',','.').replace('k','').replace('r','').replace(' ','')*1 )   * ntransactions;
+
 	return monthlytotal;
 	
 }
@@ -157,7 +158,22 @@ var ACQUIRER =
 		totalTransactionCosts: 0,
 		totalCosts: 0,
 		costfn: defaultAcquirerCostFn
+	},
+	
+	"valitor":
+	{
+		name: "Valitor", // 4
+		logo: "valitor.png",
+		cards: ["visa", "mastercard", "maestro"],
+		setupFee: 0,
+		monthlyFee: 0,
+		fixedTransactionFee: 0,
+		percentageTransactionFee: 2.95,
+		totalTransactionCosts: 0,
+		totalCosts: 0,
+		costfn: defaultAcquirerCostFn
 	}
+	
 
 };
 
@@ -253,7 +269,7 @@ var PSP =
 		logo: "quickpay.png",
 		link: "http://quickpay.dk",
 		isAcquirer: false,
-		availableAcquirers:  ["seb", "teller", "swedbank"],
+		availableAcquirers:  ["seb", "teller", "swedbank","valitor"],
 		cards: ["dankort", "visa", "mastercard", "maestro"],
 		setupFee: 0,
 		monthlyFee: 150,
@@ -303,7 +319,7 @@ var PSP =
 		logo: "epay.png",
 		link: "http://epay.dk",
 		isAcquirer: false,
-		availableAcquirers: ["seb","teller","swedbank","handelsbanken"],
+		availableAcquirers: ["seb","teller","swedbank","handelsbanken","valitor"],
 		cards: ["dankort","visa","mastercard","maestro"],
 		setupFee: 999,
 		monthlyFee: 299,
