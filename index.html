@@ -84,7 +84,12 @@
 						</select>
 					</label>
 				</li>
-
+				<li >
+					<label>Fast indløsergebyr pr. transaktion: <input type="text" class="input" value="0" id="acquirerFixedRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
+				</li>
+				<li>
+				<label>Variabelt indløsergebyr pr. transaktion: <input type="text" class="input" value="0%" id="acquirerPercentageRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
+				</li>
 				<li>
 					<label>3D Secure (udenlandske kort): <input type="checkbox" checked="" id="3d" onChange='build();'/></label>
 				</li>

@@ -166,9 +166,25 @@ function build(condition)
 		$('selectacquirer').innerHTML = acquirersString;
 		parseUrlVars();
 		history.replaceState({ foo: window.location.search },'b',window.location.pathname+window.location.search);
+	
 	}
 	var selectedAcquirer = $('selectacquirer').options[ $('selectacquirer').selectedIndex ].id.substring(7);
-		
+	if( selectedAcquirer !== this.previousAcquirer)
+	{
+		$('acquirerFixedRate').value=(ACQUIRER[selectedAcquirer].fixedTransactionFee+'kr').replace(".", ",");
+		$('acquirerPercentageRate').value=(ACQUIRER[selectedAcquirer].percentageTransactionFee+'%').replace(".", ",");
+	}
+	this.previousAcquirer=selectedAcquirer;
+	if(selectedAcquirer==='teller'){
+		$('acquirerFixedRate').parentNode.style.display='none';
+		$('acquirerPercentageRate').parentNode.style.display='none';
+	}
+	else{
+		$('acquirerFixedRate').parentNode.style.display='inline';
+		$('acquirerPercentageRate').parentNode.style.display='inline';
+	}
+	
+	
 	// Variable brugt hele vejen igennem genereringen af tabellen:
 		
 	var transactions = $("transactions").value.replace(",", ".");
