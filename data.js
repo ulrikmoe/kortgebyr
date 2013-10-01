@@ -105,20 +105,6 @@ var ACQUIRER =
 		}
 	},
 	
-	"seb":
-	{
-		name: "SEB",
-		logo: "seb.png",
-		cards: ["visa", "mastercard", "maestro"],
-		setupFee: 0,
-		monthlyFee: 0,
-		fixedTransactionFee: 0,
-		percentageTransactionFee: 2.65,
-		transactionCosts: 0,
-		totalCosts: 0,
-		costfn: defaultAcquirerCostFn
-	},
-	
 	"teller":
 	{
 		name: "Teller",
@@ -131,10 +117,24 @@ var ACQUIRER =
 		costfn: defaultAcquirerCostFn
 	},
 	
-	"swebank":
+	"seb":
 	{
-		name: "SWE Bank",
-		logo: "swebank.png",
+		name: "SEB Euroline",
+		logo: "euroline.gif",
+		cards: ["visa", "mastercard", "maestro"],
+		setupFee: 0,
+		monthlyFee: 0,
+		fixedTransactionFee: 0,
+		percentageTransactionFee: 2.65,
+		transactionCosts: 0,
+		totalCosts: 0,
+		costfn: defaultAcquirerCostFn
+	},
+	
+	"swedbank":
+	{
+		name: "Swedbank",
+		logo: "swedbank.jpg",
 		cards: ["visa", "mastercard", "maestro"],
 		setupFee: 1900,
 		monthlyFee: 100,
@@ -148,7 +148,7 @@ var ACQUIRER =
 	"handelsbanken":
 	{
 		name: "Handelsbanken", // 4
-		logo: "handelsbanken.png",
+		logo: "handelsbanken.gif",
 		cards: ["visa", "mastercard", "maestro"],
 		setupFee: 1900,
 		monthlyFee: 100,
@@ -253,8 +253,7 @@ var PSP =
 		logo: "quickpay.png",
 		link: "http://quickpay.dk",
 		isAcquirer: false,
-		acquirer: 1,
-		availableAcquirers:  ["seb", "teller", "swebank"],
+		availableAcquirers:  ["seb", "teller", "swedbank"],
 		cards: ["dankort", "visa", "mastercard", "maestro"],
 		setupFee: 0,
 		monthlyFee: 150,
@@ -289,7 +288,6 @@ var PSP =
 		logo: "epay.png",
 		link: "http://epay.dk",
 		isAcquirer: false,
-		acquirer: 0,
 		availableAcquirers: [0],
 		cards: ["dankort"],
 		setupFee: 399,
@@ -305,8 +303,7 @@ var PSP =
 		logo: "epay.png",
 		link: "http://epay.dk",
 		isAcquirer: false,
-		acquirer: 1,
-		availableAcquirers: ["seb","teller","swebank"],
+		availableAcquirers: ["seb","teller","swedbank","handelsbanken"],
 		cards: ["dankort","visa","mastercard","maestro"],
 		setupFee: 999,
 		monthlyFee: 299,
@@ -321,7 +318,6 @@ var PSP =
 		logo: "epay.png",
 		link: "http://epay.dk",
 		isAcquirer: false,
-		acquirer: 2,
 		availableAcquirers: ["teller"],
 		cards: ["dankort","visa","mastercard","maestro"],
 		setupFee: 599,
@@ -337,8 +333,7 @@ var PSP =
 		logo: "dibs.png",
 		link: "http://dibs.dk",
 		isAcquirer: false,
-		acquirer: 1,
-		availableAcquirers: [1,2,3],
+		availableAcquirers: ["seb","teller","swedbank"],
 		cards: ["dankort"],
 		setupFee: 0,
 		monthlyFee: 149,
@@ -353,8 +348,7 @@ var PSP =
 		logo: "dibs.png",
 		link: "http://dibs.dk",
 		isAcquirer: false,
-		acquirer: 1,
-		availableAcquirers: ["seb","teller","swebank"],
+		availableAcquirers: ["seb","teller","swedbank"],
 		cards: ["dankort","visa","mastercard","maestro"],
 		setupFee: 0,
 		monthlyFee: 249,
@@ -369,8 +363,7 @@ var PSP =
 		logo: "dibs.png",
 		link: "http://dibs.dk",
 		isAcquirer: false,
-		acquirer: 1,
-		availableAcquirers: ["seb","teller","swebank"],
+		availableAcquirers: ["seb","teller","swedbank"],
 		cards: ["dankort","visa","mastercard","maestro"],
 		setupFee: 0,
 		monthlyFee: 249,
@@ -385,7 +378,6 @@ var PSP =
 		logo: "nets.png",
 		link: "https://www.terminalshop.dk/Netaxept/",
 		isAcquirer: false,
-		acquirer: 1,
 		availableAcquirers: ["teller"],
 		cards: ["dankort","visa","mastercard","maestro"],
 		setupFee: 1000,
@@ -401,7 +393,6 @@ var PSP =
 		logo: "nets.png",
 		link: "https://www.terminalshop.dk/Netaxept/",
 		isAcquirer: false,
-		acquirer: 2,
 		availableAcquirers: ["teller"],
 		cards: ["dankort","visa","mastercard","maestro"],
 		setupFee: 3000,
@@ -417,7 +408,6 @@ var PSP =
 		logo: "nets.png",
 		link: "https://www.terminalshop.dk/Netaxept/",
 		isAcquirer: false,
-		acquirer: 2,
 		availableAcquirers: ["teller"],
 		cards: ["dankort","visa","mastercard","maestro"],
 		setupFee: 7500,
@@ -433,7 +423,6 @@ var PSP =
 		logo: "dandomain.png",
 		link: "http://dandomain.dk/produkter/betalingssystem.html",
 		isAcquirer: false,
-		acquirer: 2,
 		availableAcquirers: ["teller"],
 		cards: ["dankort","visa","mastercard","maestro"],
 		setupFee: 199,
@@ -449,8 +438,7 @@ var PSP =
 		logo: "wannafind.png",
 		link: "https://wannafind.dk/betalingsgateway/",
 		isAcquirer: false,
-		acquirer: 1,
-		availableAcquirers: ["seb","teller","swebank"],
+		availableAcquirers: ["seb","teller","swedbank"],
 		cards:["dankort","visa","mastercard","maestro"],
 		setupFee: 0,
 		monthlyFee: 198,
