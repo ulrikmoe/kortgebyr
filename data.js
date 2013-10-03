@@ -309,7 +309,7 @@ var PSP =
 		setupFee: 399,
 		monthlyFee: 99,
 		monthly3dsecureFee: 0,
-		fixedTransactionFee: 0.25,
+		fixedTransactionFee: 0.55,
 		freeTransactions: 500,
 		costfn:defaultCostFn
 	},
@@ -324,7 +324,7 @@ var PSP =
 		setupFee: 999,
 		monthlyFee: 299,
 		monthly3dsecureFee: 0,
-		fixedTransactionFee: 0.25,
+		fixedTransactionFee: 0.55,
 		freeTransactions: 500,
 		costfn:defaultCostFn
 	},
@@ -339,7 +339,7 @@ var PSP =
 		setupFee: 599,
 		monthlyFee: 199,
 		monthly3dsecureFee: 0,
-		fixedTransactionFee: 0.25,
+		fixedTransactionFee: 0.55,
 		freeTransactions: 500,
 		costfn:defaultCostFn
 	},
@@ -474,7 +474,7 @@ var PSP =
 		monthlyFee: 0,
 		monthly3dsecureFee: 0,
 		fixedTransactionFee: 2.088,
-		percentageTransactionFee:2.95,
+		percentageTransactionFee:3.95,
 		freeTransactions: 0,
 		chargeback: 140,
 		costfn:defaultCostFn
