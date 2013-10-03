@@ -43,8 +43,8 @@ function getMousePos(canvas, evt) {
 
 function initCanvas(){
 	var cs = new CoordinateSystem('graph',500,350);
-	cs.drawGraph(0,100,300,200,"#FF0000");
-	cs.drawGraph(0,0,300,300,"blue");
+	cs.drawGraph([[0,100],[390,260]],"#FF0000");
+	cs.drawGraph([[0,0],[100,140],[250,250],[390,300]],"blue");
 }
 
 CanvasRenderingContext2D.prototype.arrowFromTo = function(fromx,fromy,tox,toy,labelx,labely)
@@ -163,18 +163,25 @@ var CoordinateSystem = Class.extend({
 				cs.cursorctx.stroke();
 		      }, false);
 	},
-	drawGraph: function(fromX,fromY,toX,toY,color){
-		this.graphctx.beginPath();
-		this.graphctx.moveTo(0.5+fromX,0.5+fromY);
-		this.graphctx.lineTo(0.5+toX,0.5+toY);
-		this.graphctx.strokeStyle=color;
-		this.graphctx.lineCap="round";
-		this.graphctx.lineWidth=3;
-		this.graphctx.shadowBlur=4;
-		this.graphctx.shadowColor="black";
-		this.graphctx.shadowOffsetY=1;
-		this.graphctx.closePath();
-		this.graphctx.stroke();
+	drawGraph: function(points,color){
+		for(var i=0;i<points.length-1;i++)
+		{
+			var fromX=points[i][0],
+			fromY=points[i][1],
+			toX=points[i+1][0],
+			toY=points[i+1][1];
+			this.graphctx.beginPath();
+			this.graphctx.moveTo(0.5+fromX,0.5+fromY);
+			this.graphctx.lineTo(0.5+toX,0.5+toY);
+			this.graphctx.strokeStyle=color;
+			this.graphctx.lineCap="round";
+			this.graphctx.lineWidth=3;
+			this.graphctx.shadowBlur=4;
+			this.graphctx.shadowColor="black";
+			this.graphctx.shadowOffsetY=1;
+			this.graphctx.closePath();
+			this.graphctx.stroke();
+		}
 	},
 
 	
