@@ -43,8 +43,9 @@ function getMousePos(canvas, evt) {
 
 function initCanvas(){
 	var cs = new CoordinateSystem('graph',500,350);
-	cs.drawGraph([[0,100],[390,260]],"#FF0000");
-	cs.drawGraph([[0,0],[100,140],[250,250],[390,300]],"blue");
+	cs.drawGraph([[0,100],[390,260]],{key:'epay',color:"#FF0000"});
+	cs.drawGraph([[0,0],[100,140],[250,250],[390,300]],{key:'quickpay',color:"blue"});
+	cs.getClosestGraph();
 }
 
 CanvasRenderingContext2D.prototype.arrowFromTo = function(fromx,fromy,tox,toy,labelx,labely)
@@ -64,7 +65,6 @@ CanvasRenderingContext2D.prototype.arrowFromTo = function(fromx,fromy,tox,toy,la
 	this.closePath();
 	this.stroke();
 	this.fill();
-
 }
 
 function log10(val) {
@@ -90,6 +90,9 @@ var CoordinateSystem = Class.extend({
 	ctx: null,
 	graphctx:null,
 	cursorctx:null,
+	graph:{},
+	currentHighlight:'',
+	
 	init: function(id,width,height){
 
 		var x0=40.5,y0=20.5,x1=width-65,y1=height-19.5;
@@ -116,8 +119,8 @@ var CoordinateSystem = Class.extend({
 		cursorLayer.style.top=y0+'px';
 		this.cursorctx=cursorLayer.getContext('2d');
 		cursorLayer.cs=this;
-		//this.graphctx.translate(0, graphLayer.height);
-		//this.graphctx.scale(1,-1);
+		this.cursorctx.translate(0, cursorLayer.height);
+		this.cursorctx.scale(1,-1);
 		
 		
 		this.ctx.beginPath();
@@ -155,32 +158,89 @@ var CoordinateSystem = Class.extend({
 		        var mousePos = getMousePos(cursorLayer, evt);
 		        var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
 				var cs=cursorLayer.cs;
-				cs.cursorctx.clearRect(0, 0, cursorLayer.width, cursorLayer.height);
+				/*cs.cursorctx.clearRect(0, 0, cursorLayer.width, cursorLayer.height);
 				cs.cursorctx.beginPath();
 				cs.cursorctx.moveTo(mousePos.x,0);
 				cs.cursorctx.lineTo(mousePos.x,cursorLayer.height);
 				cs.cursorctx.closePath();
 				cs.cursorctx.stroke();
+				*/
+				//console.log(cs.getClosestGraph(mousePos.x,mousePos.y));
+				var key=cs.getClosestGraph(mousePos.x,this.height-mousePos.y);
+				if(key !== this.currentHighlighted)
+				{
+					cs.cursorctx.clearRect(0, 0, cursorLayer.width, cursorLayer.height);
+					if(key !== '')
+					{
+						this.currentHighlighted=key;
+						cs.drawGraph(cs.graph[key],{color:"yellow", ctx:cs.cursorctx,linewidth:10} );
+					}
+						
+				}				
+					
 		      }, false);
 	},
-	drawGraph: function(points,color){
-		for(var i=0;i<points.length-1;i++)
+	getClosestGraph: function(pointX,pointY)
+	{
+		var minDistance=10; // if further than this, do not register
+		var minKey='';
+		for(var key in this.graph){
+			var nlines=this.graph[key].length-1;
+			for(var i=0; i<nlines; i++){
+				var xep=this.graph[key][i+1][0],yep=this.graph[key][i+1][1];
+				var a=(yep - this.graph[key][i][1])/(xep - this.graph[key][i][0]);
+				var b=yep-a*xep;
+				var distance=Math.abs(a * pointX - pointY + b)/Math.sqrt(a * a +1);
+				if(nlines>1)
+				{
+					var x0=(a*(pointY-b)+pointX)/(a*a+1);
+					if(x0<this.graph[key][i][0] || x0>xep)
+					{
+						distance=Math.sqrt( (xep - pointX) * (xep-pointX) + (yep-pointY) * (yep - pointY));
+					}
+				}
+				if(distance<minDistance)
+				{
+					minDistance=distance;
+					minKey=key;
+				}
+			}
+
+			
+		}
+		//console.log(minDistance);
+		return minKey;
+	},
+	drawGraph: function(points,params){
+		for(var i=0; i<points.length-1; i++)
 		{
+			var ctx;
+			if(params.ctx)
+				ctx=params.ctx;
+			else
+				ctx=this.graphctx;
+			if(params.key)
+				this.graph[params.key]=points;
 			var fromX=points[i][0],
 			fromY=points[i][1],
 			toX=points[i+1][0],
 			toY=points[i+1][1];
-			this.graphctx.beginPath();
-			this.graphctx.moveTo(0.5+fromX,0.5+fromY);
-			this.graphctx.lineTo(0.5+toX,0.5+toY);
-			this.graphctx.strokeStyle=color;
-			this.graphctx.lineCap="round";
-			this.graphctx.lineWidth=3;
-			this.graphctx.shadowBlur=4;
-			this.graphctx.shadowColor="black";
-			this.graphctx.shadowOffsetY=1;
-			this.graphctx.closePath();
-			this.graphctx.stroke();
+			ctx.beginPath();
+			ctx.moveTo(0.5 + fromX,0.5 + fromY);
+			ctx.lineTo(0.5 + toX,0.5 + toY);
+			if(params.color)
+				ctx.strokeStyle=params.color;
+			ctx.lineCap="round";
+			
+			if(params.lineWidth)
+				ctx.lineWidth=params.lineWidth;
+			else
+				ctx.lineWidth=3;
+			ctx.shadowBlur=4;
+			ctx.shadowColor="black";
+			ctx.shadowOffsetY=1;
+			ctx.closePath();
+			ctx.stroke();
 		}
 	},
 
