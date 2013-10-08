@@ -5,7 +5,7 @@ D A T A
 */
 
 
-var lostReturnsFromSetupFee = 0.1; // 0.1 = 10% per år
+var lostReturnsFromSetupFee = 0.16; // 0.1 = 10% per år
 var monthlytotal = 0;
 
 var CARDS =
@@ -13,57 +13,22 @@ var CARDS =
 	"dankort":
 	{
 		name: "Dankort",
-		logo: "dankort.gif"
-	},
-	"edankort":
-	{
-		name: "eDankort",
-		logo: "edankort.png"
+		logo: "dankort.png"
 	},
 	"visa":
 	{
 		name: "Visa",
-		logo: "visa.gif"
-	},
-	"visaelectron":
-	{
-		name: "Visa Electron",
-		logo: "visaelectron.png"
+		logo: "visa.png"
 	},
 	"mastercard":
 	{
 		name: "MasterCard",
-		logo: "master.gif"
+		logo: "master.png"
 	},
 	"maestro":
 	{
 		name: "Maestro",
-		logo: "maestro.gif"
-	},
-	"diners":
-	{
-		name: "Diners",
-		logo: "diners.gif"
-	},
-	"jcb":
-	{
-		name: "JCB",
-		logo: "jcb.gif"
-	},
-	"unionpay":
-	{
-		name: "UnionPay",
-		logo: "unionpay.gif"
-	},
-	"americanexpress":
-	{
-		name: "American Express",
-		logo: "amex.png"
-	},
-	"discover":
-	{
-		name: "Discover",
-		logo: "discover.png"
+		logo: "maestro.png"
 	}
 
 };
@@ -395,7 +360,7 @@ var PSP =
 		link: "https://www.terminalshop.dk/Netaxept/",
 		isAcquirer: false,
 		availableAcquirers: ["teller"],
-		cards: ["dankort","visa","mastercard","maestro"],
+		cards: ["dankort","visa","mastercard"],
 		setupFee: 1000,
 		monthlyFee: 180,
 		monthly3dsecureFee: 0,
@@ -410,7 +375,7 @@ var PSP =
 		link: "https://www.terminalshop.dk/Netaxept/",
 		isAcquirer: false,
 		availableAcquirers: ["teller"],
-		cards: ["dankort","visa","mastercard","maestro"],
+		cards: ["dankort","visa","mastercard"],
 		setupFee: 3000,
 		monthlyFee: 500,
 		monthly3dsecureFee: 0,
@@ -425,7 +390,7 @@ var PSP =
 		link: "https://www.terminalshop.dk/Netaxept/",
 		isAcquirer: false,
 		availableAcquirers: ["teller"],
-		cards: ["dankort","visa","mastercard","maestro"],
+		cards: ["dankort","visa","mastercard"],
 		setupFee: 7500,
 		monthlyFee: 700,
 		monthly3dsecureFee: 0,
