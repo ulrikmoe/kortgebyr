@@ -96,6 +96,15 @@ function log10(val) {
   return Math.log(val) / Math.LN10;
 }
 
+function isEmpty(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return false;
+    }
+
+    return true;
+}
+
 function createLayer(width,height,z,firstLayer){
 	var canvas = document.createElement('canvas');
 	canvas.width = width;
@@ -128,10 +137,15 @@ var PieChart = Class.extend({
 	chartLayer: null,
 	chartCtx: null,
 	chartSelectCtx:null,
+	chartSelectLayer:null,
 	centerX:0,
 	centerY:0,
 	radius:0,
 	data:null,
+	bloat: 0.1, // Bloats a slice 10% when hovered
+	animationStack:{},
+	numObjects:0,
+	paused: false,
 	init: function(id,width,height,data)
 		{
 			this.data=data;
@@ -145,7 +159,7 @@ var PieChart = Class.extend({
 
 			this.chartCtx.beginPath();
 			this.chartCtx.arc(this.centerX,this.centerY,this.radius,0,2*Math.PI);
-			this.chartCtx.shadowBlur=10;
+			this.chartCtx.shadowBlur=2;
 			this.chartCtx.shadowColor="black";
 			this.chartCtx.shadowOffsetY=0;
 			this.chartCtx.stroke();
@@ -157,28 +171,28 @@ var PieChart = Class.extend({
 				toRad += data[i].percentage/100*2*Math.PI;
 				this.chartCtx.lineTo(this.centerX,this.centerY);
 				this.chartCtx.arc(this.centerX,this.centerY,this.radius,fromRad,toRad);
-				console.log(fromRad+' '+toRad)
 				fromRad+=data[i].percentage/100*2*Math.PI;
 				this.chartCtx.closePath();
 				this.chartCtx.fillStyle=defaultColorPattern[i];
 				this.chartCtx.shadowBlur=0;
 				this.chartCtx.strokeStyle=defaultColorPattern[i];
-				this.chartCtx.lineWidth=0;
+				this.chartCtx.lineWidth = 0;
 				this.chartCtx.fill();
 				this.chartCtx.stroke();
 			}
 
 			
 			// Mouse events
-			var chartSelectLayer=createLayer(width,height,2,false);
-			chartSelectLayer.getClass=this;
-			this.chartSelectCtx=chartSelectLayer.getContext("2d");
+			this.chartSelectLayer=createLayer(width,height,2,false);
+			this.chartSelectLayer.getClass=this;
+			this.chartSelectCtx=this.chartSelectLayer.getContext("2d");
 			graphdiv.appendChild(chartLayer);
-			graphdiv.appendChild(chartSelectLayer);
+			graphdiv.appendChild(this.chartSelectLayer);
+			var chartSelectLayer=this.chartSelectLayer;
 			chartSelectLayer.addEventListener('mousemove', function(evt) 
 				{
-					var mousePos = getMousePos(chartSelectLayer, evt);
 					var piechartClass=chartSelectLayer.getClass;
+					var mousePos = getMousePos(chartSelectLayer, evt);
 					var distance = Math.sqrt((mousePos.x-piechartClass.centerX) * (mousePos.x-piechartClass.centerX) 
 									+ (mousePos.y-piechartClass.centerY) * (mousePos.y-piechartClass.centerX));
 
@@ -186,52 +200,99 @@ var PieChart = Class.extend({
 
 					if(distance < piechartClass.radius)
 					{
-						if( slice.id !== this.currentHighlight  )
+						if( slice.id !== piechartClass.currentHighlight  )
 						{
-							this.currentHighlight=slice.id;
-							piechartClass.chartSelectCtx.clearRect(0, 0, chartSelectLayer.width, chartSelectLayer.height);
-							piechartClass.data[slice.id].percentage;
-							piechartClass.chartSelectCtx.beginPath();
-							piechartClass.chartSelectCtx.arc(piechartClass.centerX,piechartClass.centerY,piechartClass.radius*1.1,slice.fromRad+3/4*2*Math.PI,slice.toRad+3/4*2*Math.PI);
-							piechartClass.chartSelectCtx.lineTo(piechartClass.centerX,piechartClass.centerY);
-							piechartClass.chartSelectCtx.closePath()
-							piechartClass.chartSelectCtx.fillStyle=defaultColorPattern[slice.id];
-							piechartClass.chartSelectCtx.fill();
+							piechartClass.currentHighlight=slice.id;
+							if(requestAnimationFrame){
+								if( isEmpty(piechartClass.animationStack) ||  piechartClass.paused){
+									
+									requestAnimationFrame(function() { piechartClass.animateSlice();});
+									piechartClass.paused=false;
+								}
+								if(!piechartClass.animationStack[slice.id])
+								{
+									piechartClass.animationStack[slice.id] = slice;
+									piechartClass.animationStack[slice.id].currentRadius=piechartClass.radius;
+									piechartClass.numObjects++;
+								}
+
+							}
+
 						}
 					}
 					else if( distance > piechartClass.radius)
 					{
-						if( this.currentHighlight )
+						if( piechartClass.currentHighlight )
 						{
-							if(! (distance< piechartClass.radius*1.1  && slice.id === this.currentHighlight ) )
+							if(! (distance< piechartClass.radius * (1+piechartClass.bloat)  && slice.id === piechartClass.currentHighlight ) )
 							{
-								this.currentHighlight=null;
-								piechartClass.chartSelectCtx.clearRect(0, 0, chartSelectLayer.width, chartSelectLayer.height);
+								piechartClass.currentHighlight=null; 
+								if(piechartClass.paused)
+								{
+									requestAnimationFrame(function() { piechartClass.animateSlice();});
+									piechartClass.paused=false;
+								}
+								//piechartClass.chartSelectCtx.clearRect(0, 0, chartSelectLayer.width, chartSelectLayer.height);
+								
 							}
 						}
 					}
 					
-					//console.log(getSliceFromAngle( GetAngleOfLineBetweenTwoPoints(mousePos.x,mousePos.y, piechartClass.centerX,piechartClass.centerY ) ));
-					/*this.chartCtx.beginPath();
-					toRad += data[i].percentage/100*2*Math.PI;
-					this.chartCtx.lineTo(this.centerX,this.centerY);
-					this.chartCtx.arc(this.centerX,this.centerY,this.radius,fromRad,toRad);
-					console.log(fromRad+' '+toRad)
-					fromRad+=data[i].percentage/100*2*Math.PI;
-					this.chartCtx.closePath();
-					this.chartCtx.fillStyle=myColors[i];
-					this.chartCtx.shadowBlur=0;
-					this.chartCtx.strokeStyle=myColors[i];
-					this.chartCtx.lineWidth=0;
-					this.chartCtx.fill();
-					this.chartCtx.stroke();*/
-					/*if(key !== this.currentHighlighted)
-					{
-						this.currentHighlighted=key;
-						cs.cursorctx.clearRect(0, 0, cursorLayer.width, cursorLayer.height);	
-					}*/				
-					
 				}, false);
+		},
+		animateSlice: function()
+		{
+		    //if (start === null) start = timestamp;
+		    //var progress = timestamp - start;
+			if(this.numObjects ===1 && this.currentHighlight && this.radius*(1+this.bloat) === this.animationStack[this.currentHighlight].currentRadius   )
+			{this.paused=true; return;}
+			this.chartSelectCtx.clearRect(0, 0, this.chartSelectLayer.width, this.chartSelectLayer.height);
+			for(var id in this.animationStack)
+			{
+				var toRadius;
+				var rate = Math.abs()
+				if(this.currentHighlight === id)
+				{
+					toRadius = this.radius*(1+this.bloat);
+					this.animationStack[id].currentRadius += 0.1 + 0.1 * Math.abs(toRadius-this.animationStack[id].currentRadius);
+				}
+				else
+				{
+					toRadius = this.radius;
+					this.animationStack[id].currentRadius -= 0.1 + 0.1 * Math.abs(toRadius-this.animationStack[id].currentRadius);
+				}
+				var destroy=false;
+				if( (this.animationStack[id].currentRadius>toRadius && this.currentHighlight === id) 
+				||  (this.animationStack[id].currentRadius<toRadius && this.currentHighlight!== id))
+				{
+					if(this.animationStack[id].currentRadius<toRadius)
+					{
+						destroy = true;
+					}
+					this.animationStack[id].currentRadius = toRadius;
+				}
+				this.chartSelectCtx.beginPath();
+				this.chartSelectCtx.arc(this.centerX,this.centerY, this.animationStack[id].currentRadius,this.animationStack[id].fromRad+3/4*2*Math.PI,this.animationStack[id].toRad+3/4*2*Math.PI);
+				this.chartSelectCtx.lineTo(this.centerX,this.centerY);
+				this.chartSelectCtx.closePath()
+				this.chartSelectCtx.fillStyle=defaultColorPattern[this.animationStack[id].id];
+				this.chartSelectCtx.fill();	
+				if(destroy)
+				{
+					delete this.animationStack[id];
+					this.numObjects--;
+				}
+				
+			}
+
+		    if (!isEmpty(this.animationStack)) {
+				var that = this;
+				requestAnimationFrame(function() { that.animateSlice();});
+		    }
+			else
+			{
+				//console.log(this.animationStack);
+			}
 		},
 		getSliceFromAngle: function(rad)
 		{
@@ -352,7 +413,6 @@ var CoordinateSystem = Class.extend({
 				cs.cursorctx.closePath();
 				cs.cursorctx.stroke();
 				*/
-				//console.log(cs.getClosestGraph(mousePos.x,mousePos.y));
 				var key=cs.getClosestGraph(mousePos.x,this.height-mousePos.y);
 				if(key !== this.currentHighlighted)
 				{
@@ -428,10 +488,10 @@ var CoordinateSystem = Class.extend({
 			ctx.lineWidth=params.lineWidth;
 		}
 		else
+			ctx.lineWidth=4;
 		ctx.lineCap="round";
 		ctx.lineJoin="round";
-			ctx.lineWidth=4;
-		ctx.shadowBlur=4;
+		ctx.shadowBlur=1;
 		ctx.shadowColor="black";
 		ctx.shadowOffsetY=1;
 		ctx.stroke();
