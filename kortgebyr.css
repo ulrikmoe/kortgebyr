@@ -258,13 +258,13 @@ img { border:0 }
 
 .kort {
 	width: 95px;
-	padding-top: 16px !important;
+	padding-top: 13px !important;
 	text-align: center;
 	margin: auto
 }
 
 .kort img {
-	margin: 3px 2px
+	margin: 4px
 }
 
 .acquirer {
@@ -302,10 +302,17 @@ img { border:0 }
 	padding: 12px 7px 9px;
 }
 
+.table td {
+	
+	height: 70px;
+	
+}
+
 .table > thead > tr > th, .table > thead > tr > td {
 	background: #dce9f9;
 	border-top:1px solid #F5F9FC;
 	text-shadow: 0 1px 0 rgba(255,255,255,.5);
+
 }
 
 .table tbody img {
@@ -404,7 +411,7 @@ img { border:0 }
 
 	text-align: center;
 	margin-top: 50px;
-	color: #bbb
+	color: #aaa
 
 }
 

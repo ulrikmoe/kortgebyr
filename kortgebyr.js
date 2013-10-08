@@ -1,13 +1,11 @@
-/*
-	
-D A T A
-
-*/
-
 function $(s){
 
 	return document.getElementById(s);
 }
+
+var valuta = "kr";
+
+
 
 var VARS=
 {
@@ -228,7 +226,7 @@ function build(condition)
 	for (var key in PSP)
 	{
 	
-		if ((PSP[key].isAcquirer || PSP[key].availableAcquirers.indexOf(selectedAcquirer) >-1)  
+		if ((PSP[key].isAcquirer || PSP[key].availableAcquirers.indexOf(selectedAcquirer) >-1 || PSP[key].availableAcquirers == 0)  
 		&& ( !( $('dankort').checked && $('visamc').checked ) 
 			|| ( PSP[key].cards.indexOf('visa') > -1 && PSP[key].cards.indexOf('mastercard') > -1 ) ) )
 		{
@@ -289,27 +287,27 @@ function build(condition)
 				// Rækken bliver nu konstrueret:
 	
 				var samlet = PSP[key].costfn(transactions,value);
-				var samlet_info = info_icon + PSP[key].name + ': ' + samlet.toFixed(2).replace(".", ",") + 'kr';		
-				var samletgebyr_info = info_icon + PSP[key].name + ': ' + (samlet / transactions).toFixed(2).replace(".", ",") + 'kr';
-				var oprettelse_info = info_icon + PSP[key].name + ': ' + PSP[key].setupFee.toFixed(2).replace(".", ",") + 'kr';
-				var faste_info = info_icon + PSP[key].name + ': '+ (PSP[key].monthlyFee + $('3d').checked * PSP[key].monthly3dsecureFee).toFixed(2).replace(".", ",") + 'kr';
+				var samlet_info = info_icon + PSP[key].name + ': ' + toMoney(samlet);		
+				var samletgebyr_info = info_icon + PSP[key].name + ': ' + toMoney(samlet / transactions);
+				var oprettelse_info = info_icon + PSP[key].name + ': ' + toMoney(PSP[key].setupFee);
+				var faste_info = info_icon + PSP[key].name + ': '+ toMoney(PSP[key].monthlyFee + $('3d').checked * PSP[key].monthly3dsecureFee);
 				var addcost;
 				if (!isAcquirer && netsSupport)
 				{
 					addcost = ACQUIRER.nets.costfn( transactions * dkshare,value );
-					samlet_info += '<br>' + ACQUIRER.nets.name + ' ('+(dkshare * 100) + '% tr.): '+addcost.toFixed(2).replace(".", ",")+'kr';
-					samletgebyr_info += '<br>'+ACQUIRER.nets.name+' ('+(dkshare * 100)+'% tr.): '+(addcost/transactions).toFixed(2).replace(".", ",") + 'kr';
-					oprettelse_info += '<br>'+ACQUIRER.nets.name+': '+ ACQUIRER.nets.setupFee.toFixed(2).replace(".", ",") + 'kr';
-					faste_info += '<br>'+ACQUIRER.nets.name + ': '+ACQUIRER.nets.monthlyFee.toFixed(2).replace(".", ",") + 'kr';
+					samlet_info += '<br>' + ACQUIRER.nets.name + ' ('+(dkshare * 100) + '% tr.): '+ toMoney(addcost);
+					samletgebyr_info += '<br>'+ACQUIRER.nets.name+' ('+(dkshare * 100)+'% tr.): '+ toMoney(addcost/transactions);
+					oprettelse_info += '<br>'+ACQUIRER.nets.name+': '+ toMoney(ACQUIRER.nets.setupFee);
+					faste_info += '<br>'+ACQUIRER.nets.name + ': ' + toMoney(ACQUIRER.nets.monthlyFee);
 					samlet += addcost;
 				}
 				if (!isAcquirer && otherAcquirerSupport)
 				{
 					addcost = ACQUIRER[selectedAcquirer].costfn( transactions * vmshare, value);
-					samlet_info += '<br>'+ACQUIRER[selectedAcquirer].name + ' (' + (vmshare * 100) + '% tr.): ' + addcost.toFixed(2).replace(".", ",") + 'kr';
-					samletgebyr_info += '<br>' + ACQUIRER[selectedAcquirer].name+' (' + (vmshare * 100) + '% tr.): ' + (addcost/transactions).toFixed(2).replace(".", ",") + 'kr';
-					oprettelse_info += '<br>' + ACQUIRER[selectedAcquirer].name + ': ' + ACQUIRER[selectedAcquirer].setupFee.toFixed(2).replace(".", ",") + 'kr';
-					faste_info += '<br>' + ACQUIRER[selectedAcquirer].name + ': ' + ACQUIRER[selectedAcquirer].monthlyFee.toFixed(2).replace(".", ",") + 'kr';
+					samlet_info += '<br>' + ACQUIRER[selectedAcquirer].name + ' (' + (vmshare * 100) + '% tr.): ' + toMoney(addcost);
+					samletgebyr_info += '<br>' + ACQUIRER[selectedAcquirer].name+' (' + (vmshare * 100) + '% tr.): ' + toMoney(addcost/transactions);
+					oprettelse_info += '<br>' + ACQUIRER[selectedAcquirer].name + ': ' + toMoney(ACQUIRER[selectedAcquirer].setupFee);
+					faste_info += '<br>' + ACQUIRER[selectedAcquirer].name + ': ' + toMoney(ACQUIRER[selectedAcquirer].monthlyFee);
 					samlet += addcost;
 				}
 	
@@ -337,9 +335,9 @@ function build(condition)
 	
 				kort_cell.innerHTML = HTML_cards;
 				kort_cell.className = 'kort';
-				oprettelse_cell.innerHTML = (PSP[key].setupFee+ACQUIRER[selectedAcquirer].setupFee * otherAcquirerSupport * (!isAcquirer)+ACQUIRER.nets.setupFee*netsSupport*(!isAcquirer) ).toFixed(0) + ' kr';
+				oprettelse_cell.innerHTML = toMoney( PSP[key].setupFee + ACQUIRER[selectedAcquirer].setupFee * otherAcquirerSupport * (!isAcquirer)+ ACQUIRER.nets.setupFee * netsSupport * (!isAcquirer) );
 				
-				faste_cell.innerHTML = ( PSP[key].monthlyFee + $('3d').checked*PSP[key].monthly3dsecureFee + ACQUIRER[selectedAcquirer].monthlyFee * otherAcquirerSupport * (!isAcquirer)+ACQUIRER.nets.monthlyFee*netsSupport * (!isAcquirer) ).toFixed(2).replace(".", ",")+' kr';
+				faste_cell.innerHTML = toMoney( PSP[key].monthlyFee + $('3d').checked * PSP[key].monthly3dsecureFee + ACQUIRER[selectedAcquirer].monthlyFee * otherAcquirerSupport * (!isAcquirer)+ ACQUIRER.nets.monthlyFee * netsSupport * (!isAcquirer) );
 				indloser_cell.innerHTML = indloser_icons;
 				indloser_cell.className = 'acquirer';
 
@@ -348,8 +346,8 @@ function build(condition)
 				faste_cell.innerHTML += faste_info+info_icon_end;
 				samlet_info += info_icon_end;
 				samletgebyr_info += info_icon_end;
-				samlet_cell.innerHTML=samlet.toFixed(2).replace(".", ",")+' kr' + samlet_info;
-				samletgebyr_cell.innerHTML = (samlet/transactions).toFixed(2).replace(".", ",")+' kr' +samletgebyr_info;
+				samlet_cell.innerHTML = toMoney(samlet) + samlet_info;
+				samletgebyr_cell.innerHTML = toMoney(samlet/transactions) + samletgebyr_info;
 			}
 		
 		}
@@ -358,4 +356,15 @@ function build(condition)
 	if(condition!=='init' && condition !== 'popstate' && condition!=='keyup')
 		saveUrlVars();
 
+}
+
+
+function toMoney(x)
+{
+	var number = Math.round(x * 100) / 100;
+	
+    var parts = number.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    parts.join(",");
+    return parts+ " " + valuta;
 }
