@@ -254,12 +254,12 @@ var PieChart = Class.extend({
 				if(this.currentHighlight === id)
 				{
 					toRadius = this.radius*(1+this.bloat);
-					this.animationStack[id].currentRadius += 0.1 + 0.1 * Math.abs(toRadius-this.animationStack[id].currentRadius);
+					this.animationStack[id].currentRadius += 0.05 + 0.1 * Math.abs(toRadius-this.animationStack[id].currentRadius);
 				}
 				else
 				{
 					toRadius = this.radius;
-					this.animationStack[id].currentRadius -= 0.1 + 0.1 * Math.abs(toRadius-this.animationStack[id].currentRadius);
+					this.animationStack[id].currentRadius -= 0.05 + 0.1 * Math.abs(toRadius-this.animationStack[id].currentRadius);
 				}
 				var destroy=false;
 				if( (this.animationStack[id].currentRadius>toRadius && this.currentHighlight === id) 
