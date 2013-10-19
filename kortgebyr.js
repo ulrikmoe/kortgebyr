@@ -12,14 +12,14 @@ var VARS=
 	'transactions':
 	{
 		field: 'transactions',
-		query: 'trn',
+		query: 't',
 		type: 'int',
 		default: 100
 	},
 	'average_value':
 	{
 		field: 'value',
-		query: 'avg',
+		query: 'p',
 		type: 'int',
 		default: 570
 	},
@@ -123,10 +123,13 @@ function getValue(n)
 
 function parseUrlVars()
 {
-	if ( location.search !== "" )
+
+	var hash = window.location.hash;
+
+	if ( hash !== "" )
 	{
 		var varTable = [];
-		var x = location.search.substr(1).toLowerCase().split("&");
+		var x = hash.substr(1).toLowerCase().split("&");
 		
 		for (var i=0; i<x.length; i++)
 		{
@@ -165,10 +168,10 @@ function saveUrlVars()
 	}
 	var qmark = '';
 	if (str[str.length - 1]==='&') { str=str.substring(0, str.length - 1); }
-	if (str!=='') { qmark='?'; }
-	if(window.location.pathname+qmark+str !== window.location.pathname+window.location.search )
+	if (str!=='') { qmark='#'; }
+	if(window.location.pathname+qmark+str !== window.location.pathname+window.location.hash )
 	{
-		history.pushState({ foo: window.location.search },'b', window.location.pathname+qmark+str);
+		history.pushState({ foo: window.location.hash },'b', window.location.pathname+qmark+str);
 	}
 }
 window.addEventListener('popstate', function(event) {
@@ -195,7 +198,7 @@ function build(condition)
 		}
 		$('selectacquirer').innerHTML = acquirersString;
 		parseUrlVars();
-		history.replaceState({ foo: window.location.search },'b',window.location.pathname+window.location.search);
+		history.replaceState({ foo: window.location.hash },'b',window.location.pathname+window.location.hash);
 	
 	}
 	var selectedAcquirer = $('selectacquirer').options[ $('selectacquirer').selectedIndex ].id.substring(7);
