@@ -40,9 +40,8 @@ img { border:0 }
 .title {
 
 	background-color: #f4f4f4;
-	margin-bottom: 30px;
 	position: relative;
-	height: 200px;
+	height: 195px;
 	border-bottom: 3px solid rgba(0,0,0,0.05);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;

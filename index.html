@@ -14,6 +14,16 @@
 <body>
 
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/da_DK/all.js#xfbml=1&appId=544544962293468";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
 	<div class="title">
 	
 		<div class="banner">
@@ -22,9 +32,9 @@
 			<div class="container">
 			
 				<div class="flags">
-					<a href="/fi/"><img alt="finsk" src="fi.png" /></a>	
-					<a href="/no/"><img alt="norsk" src="no.png" /></a>	
-					<a href="/se/"><img alt="svensk" src="se.png" /></a>	
+					<a href="#kommer-snart"><img alt="finsk" src="fi.png" /></a>	
+					<a href="#kommer-snart"><img alt="norsk" src="no.png" /></a>	
+					<a href="#kommer-snart"><img alt="svensk" src="se.png" /></a>	
 					<a href="/"><img class="active" alt="dansk" src="dk.png" /></a>
 				</div>
 				
@@ -56,11 +66,16 @@
 		
 		
 			<div style="float:right; margin-top: 40px">
+			
+			
+			<div class="fb-share-button" data-href="http://kortgebyr.dk" data-type="box_count"></div>
+			
 	
-				<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://kortgebyr.dk" data-lang="da">Tweet</a>
+				<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://kortgebyr.dk" data-lang="da" data-count="vertical">Tweet</a>
+				
 	
-				<div class="g-plusone" data-size="medium" data-href="http://kortgebyr.dk"></div>
-	
+				<div class="g-plusone" data-size="tall" data-href="http://kortgebyr.dk"></div>
+				
 				<script type="text/javascript">
 				  window.___gcfg = {lang: 'da'};
 	
@@ -79,7 +94,7 @@
 
 				<a href="#">Udregner</a>
 				<a href="#">Guide</a>
-				<a href="#">Blog</a>
+				<a href="#kommer-snart">Blog</a>
 
 			</div>
 		
@@ -225,7 +240,7 @@
 
 	<div class="footer">
 
-		Kortgebyr er nonprofit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small>GPL v.3</small>).
+		Kortgebyr er udviklet af <a href="https://twitter.com/ulrikmoe">@ulrikmoe</a> og <a href="#">@christianblach</a>. <br />Siden er nonprofit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small>GPL v.3</small>).
 
 	</div>
 
