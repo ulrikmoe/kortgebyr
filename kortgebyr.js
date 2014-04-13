@@ -21,7 +21,7 @@ var VARS=
 		field: 'value',
 		query: 'avg',
 		type: 'int',
-		default: 570
+		default: 500
 	},
 	'acquirer_selection':
 	{
