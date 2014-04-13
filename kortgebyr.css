@@ -2,7 +2,25 @@ body, div, p, header, h1 ,h2, h3, ul, li { margin: 0; padding: 0 }
 
 a {
 	color: #36b;
+	-webkit-transition: all 0.1s ease-in;
+	-moz-transition: all 0.1s ease-in;
+	-ms-transition: all 0.1s ease-in;
+	-o-transition: all 0.1s ease-in;
+	transition: all 0.1s ease-in;
 	text-decoration: none
+}
+
+*, *:before, *:after {
+	margin: 0;
+	padding: 0; 
+	border: 0; 
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+	box-sizing: border-box;
+}
+
+:focus {
+	outline:none;
 }
 
 
@@ -11,12 +29,109 @@ body {
 	line-height: 23px;
 	font-size: 14px;
 	margin-top: 17px;
-	padding-bottom: 70px
+	padding-bottom: 70px;
+	margin: 0;
 }
 
 ul { list-style: none; }
 
 img { border:0 }
+
+.title {
+
+	background-color: #f4f4f4;
+	margin-bottom: 30px;
+	position: relative;
+	height: 200px;
+	border-bottom: 3px solid rgba(0,0,0,0.05);
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	
+}
+
+	.title .banner {
+		
+		background: #2c3f69;
+		border-bottom: 3px solid rgba(255,255,255,0.2);
+		height: 45px;
+		
+	}
+	
+	.title .logo {
+		
+		margin-top:-66px;
+		background: url(/logo.png) no-repeat;
+		width: 240px;
+		height: 70px;
+		line-height: 55px;
+		text-align: center
+		
+	}
+	
+	
+	.title .logo-bg1 {
+		
+		background: #fff;
+		border-radius: 50%;
+		position: absolute;
+		left: 50%;
+		top: -10px;
+		margin-left: -120px;
+		width: 240px;
+		height: 240px;
+	}
+
+
+	.title .logo-bg2 {
+		
+		background: #C4EBEB url(/card.png) no-repeat center 30px;
+		border-radius: 50%;
+		margin: 13px auto 0;
+		width: 214px;
+		height: 214px;
+	}
+
+
+
+
+	.title .flags {
+		float:right;
+		margin-top: 14px;
+	}
+	
+	.title .flags a {
+		margin-left: 5px	
+	}
+	
+	.title .flags img {
+		opacity:0.5;
+		filter:alpha(opacity=50); /* For IE8 and earlier */
+	}
+	
+	.title .flags .active, .title .flags img:hover {
+		opacity: 1;
+		filter:alpha(opacity=100); /* For IE8 and earlier */
+	}
+
+
+	.title a {
+		
+		text-decoration: none;
+		color: #345;
+		text-shadow: 0px 1px 1px #fff;
+		position: relative;
+		
+	}
+	
+
+	.title .logo span {
+		font-family: 'Bree Serif', serif;
+		vertical-align: middle;
+		font-weight: 400;
+		font-size: 2em;		
+	}
+
+
 
 .container {
 
@@ -309,7 +424,7 @@ img { border:0 }
 }
 
 .table > thead > tr > th, .table > thead > tr > td {
-	background: #dce9f9;
+	background: #eee;
 	border-top:1px solid #F5F9FC;
 	text-shadow: 0 1px 0 rgba(255,255,255,.5);
 
