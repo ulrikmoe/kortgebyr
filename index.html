@@ -3,15 +3,15 @@
 	<meta charset="utf-8">
 	<title>Kortgebyr - prissammenligning for betalingsløsninger</title>
 	<meta name="description" content="Prissammenligningsside for betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr." />
-	<base target="_blank">
 
 	<link rel="canonical" href="http://kortgebyr.dk">
 	<link href="kortgebyr.css?1" rel="stylesheet" type="text/css" />
 	<link href="http://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="data.js?1"></script>
 	<script type="text/javascript" src="kortgebyr.js?1"></script>
-	<script src="//platform.linkedin.com/in.js" type="text/javascript">lang: da_DK</script>
-
+	
+	<script type="text/javascript" src="//use.typekit.net/xbn0tkd.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 <body>
 
@@ -36,6 +36,8 @@
 				</script>
 
 
+
+
 	<div class="header">
 	
 	
@@ -50,8 +52,10 @@
 				</div>
 				
 				<div class="contact">
-					<a href="http://www.amino.dk/forums/t/208824.aspx"><img src="amino.png" />Amino tråd</a>
+					<a href="http://www.amino.dk/groups/kortgebyr/forum/default.aspx">Forum</a>
 					<a href="mailto:ulrik.moe@gmail.com">Kontakt</a>
+					<a href="/changelog.md">Changelog</a>
+					<span class="last_update">(13/04/2014)</span>
 				</div>
 			</div>
 		</div>
@@ -69,48 +73,20 @@
 		</div>
 		
 		
-		<div class="container">
-					
-			<ul class="social">
-				<li>
-					<div class="fb-share-button" data-href="http://kortgebyr.dk" data-type="box_count"></div>
-				</li>
-				<li>
-					<script type="IN/Share" data-url="http://kortgebyr.dk" data-counter="top"></script>
-				</li>
-				<li>
-					<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://kortgebyr.dk" data-lang="da" data-count="vertical">Tweet</a>
-				</li>
-				<li>
-					<div class="g-plusone" data-size="tall" data-href="http://kortgebyr.dk"></div>
-				</li>
-			</ul>
+		
+		
+		<div class="info container" style="height:300px">
+	
+			<div style="float:right">
 			
-			<div style="width:400px; font-size:13px; color: #333; -webkit-font-">
-
-
-				<a href="#">Udregner</a>
-				<a href="#">Guide</a>
-				<a href="#kommer-snart">Blog</a>
-
+				<iframe width="270" height="155" src="//www.youtube-nocookie.com/embed/PoXfAuWRay8" frameborder="0" allowfullscreen></iframe>
+			
 			</div>
-		
-		</div>
-		
-		
-	</div>
-
-
-<div class="container" style="margin-top:70px">
-
-
-
-
-	<div class="options">
-
-
-		<div class="left">
-
+	
+	
+		<h1>Hvad er kortgebyr?</h1>
+	
+	
 			Kortgebyr er en prissammenligningsside for betalingsløsninger og betalingsgateways. <br /><br />
 
 			<p>Tilmeld dig nyhedsbrevet og bliv opdateret et par gange om året.</p>
@@ -126,8 +102,66 @@
 			<input class="input email" placeholder="Din e-mail..." name="EMAIL" type="email" /> <button>Tilmeld</button></p>
 
 		</form>
+	
+	
+	
+	</div>
 
+		
+		
+		
+		
+				
+	</div>
+	
+	
+	
+	
+	
+	
+			
+		<div class="menu container">
+						
+			<ul class="social">
+				<li>
+					<div class="fb-share-button" data-href="http://kortgebyr.dk" data-type="button_count"></div>
+				</li>
+				<li>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://kortgebyr.dk" data-lang="da">Tweet</a>
+				</li>
+				<li>
+					<div class="g-plusone" data-size="medium" data-href="http://kortgebyr.dk"></div>
+				</li>
+			</ul>
+			
+			<div style="font-size:13px; color: #333;">
+
+
+				<a href="#">E-handel</a>
+				<a href="#">Fysisk handel</a>
+
+			</div>
+					
 		</div>
+		
+
+
+		<div class="container" style="margin-top:70px">
+		
+		
+		<h1 id="app-name">Compare Consumer Banks</h1>
+
+
+
+
+
+
+
+
+
+
+
+	<div class="options">
 
 
 		<div class="mid">
@@ -155,11 +189,10 @@
 
 				<li>
 					<label>Medregn oprettelsesgebyr: <input type="checkbox" checked="" id="incSetupFee" onChange='build();'/></label> <p href="#" class="tooltip" id='medregnopretgebyrinfo'><img src="tooltip.gif"><span>Medregn mistet/forbigået forrentning af oprettelsesgebyret. Betaler du et oprettelsesgebyr, mister du penge du kunne have investeret i dit varelager. Vi regner med en intern rente på 16% p.a. og pålægger dette på kortgebyret for at opnå en retvisende prissammenligning.
-					
-					
 					</span></p>
 				</li>
 
+				<li>Svindelbekæmpelse</li>
 
 
 			</ul>
@@ -237,7 +270,7 @@
 
 	<div class="footer">
 
-		Kortgebyr er udviklet af <a href="https://twitter.com/ulrikmoe">@ulrikmoe</a> og <a href="#">@christianblach</a>. <br />Siden er nonprofit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small>GPL v.3</small>).
+		Kortgebyr er udviklet af <a href="https://twitter.com/ulrikmoe">@ulrikmoe</a> og <a href="https://twitter.com/christianblach">@christianblach</a>. <br />Siden er nonprofit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small>GPL v.3</small>).
 
 	</div>
 
@@ -258,7 +291,6 @@
 	ga('send', 'pageview');
 
 </script>
-
 
 </body>
 </html>
