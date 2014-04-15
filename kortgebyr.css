@@ -50,8 +50,8 @@ img { border:0 }
 .nav {
 	height: 61px;
 	line-height: 62px;
-	background: #F0F1F2;
-	border-bottom: 1px solid #D5DAE3;
+	background: #F7F7F7;
+	border-bottom: 1px solid #dfdfdf;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 }
@@ -74,7 +74,7 @@ img { border:0 }
 	}
 
 	.social .twitter {
-		width: 97px;
+		width: 98px;
 	}
 
 
@@ -107,7 +107,8 @@ img { border:0 }
 	.nav .contact a {
 		
 		color: #5D6268;
-		margin-right: 6px
+		font-weight: 600;
+		margin-right: 10px
 		
 	}
 
@@ -200,12 +201,13 @@ img { border:0 }
 
 .options {
 
-	border-radius: 2px;
-	margin:14px auto 26px auto;
+	float: left;
 	background:#F7F7F7;
 	border:1px solid #ccc;
 	position: relative;
-	height: 240px
+	width: 250px;
+	min-height: 500px
+	
 
 }
 
@@ -213,22 +215,10 @@ img { border:0 }
 .options div {
 
 	display: block;
-	float: left;
-	width: 33.33%;
-	height: 200px;
 	margin: 15px 0;
-	box-sizing:border-box;
-	-moz-box-sizing:border-box;
-	-webkit-box-sizing:border-box;
 
 }
 
-.mid {
-
-	border-right: 1px solid #fff;
-	border-left: 1px solid #fff
-
-}
 
 .mid ul {
 
@@ -410,9 +400,9 @@ img { border:0 }
 
 
 .table {
+	width: 100%;
 	border-collapse: separate;
 	border-spacing: 0;
-	width: 100%;
 	border: solid #ccc 1px;
 	border-left: 0;
 	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -420,6 +410,8 @@ img { border:0 }
 	font-size: 13px;
 	color: #444;
 }
+
+
 
 .table th, .table td {
 	text-align: center;
@@ -430,6 +422,15 @@ img { border:0 }
 	border-left: 1px solid #ccc;
 	border-top: 1px solid #ccc;
 	padding: 12px 7px 9px;
+}
+
+.table > thead > tr > th {
+	
+	padding: 5px;
+	-webkit-font-smoothing: antialiased;
+	font-size: 12px;
+	line-height: 20px
+	
 }
 
 .table td {
