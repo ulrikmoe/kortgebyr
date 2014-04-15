@@ -78,7 +78,15 @@ var ACQUIRER =
 		monthlyFee: 100,
 		fixedTransactionFee: 0.7,
 		percentageTransactionFee: 1.5,
-		costfn: defaultAcquirerCostFn
+		costfn: function(ntransactions,averageprice){
+			monthlytotal = $('incSetupFee').checked * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
+			var averageFee = $('acquirerPercentageRate').value.replace(',','.').replace('%','').replace(' ','') / 100 * averageprice;
+			if( averageFee < 0.7){
+				averageFee = 0.7;
+			}						
+			monthlytotal += averageFee * ntransactions;
+			return monthlytotal;
+		}
 	},
 	"seb":
 	{
