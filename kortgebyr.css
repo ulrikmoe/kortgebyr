@@ -33,9 +33,9 @@ ul { list-style: none; }
 img { border:0 }
 
 .container {
-	width: 95%;
+	width: 96%;
 	min-width: 900px;
-	max-width: 1200px;
+	max-width: 1500px;
 	padding: 0;
 	margin: auto;
 	position: relative;
@@ -75,6 +75,12 @@ img { border:0 }
 
 	.social .twitter {
 		width: 98px;
+	}
+	
+	.social .linkedin {
+		
+		width: 64px
+		
 	}
 
 
@@ -366,7 +372,7 @@ img { border:0 }
 	text-align: left;
 	padding-left: 8px;
 	font-size: 12px;
-	width: 105px
+	max-width: 105px
 }
 
 .psp img {
@@ -403,9 +409,8 @@ img { border:0 }
 	width: 100%;
 	border-collapse: separate;
 	border-spacing: 0;
-	border: solid #ccc 1px;
+	border: 1px solid #ddd;
 	border-left: 0;
-	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-weight: 400;
 	font-size: 13px;
 	color: #444;
@@ -421,15 +426,24 @@ img { border:0 }
 .table > tbody > tr > td, .table > thead > tr > th {
 	border-left: 1px solid #ccc;
 	border-top: 1px solid #ccc;
-	padding: 12px 7px 9px;
+	padding: 11px 6px 8px;
 }
 
 .table > thead > tr > th {
 	
 	padding: 5px;
 	-webkit-font-smoothing: antialiased;
-	font-size: 12px;
-	line-height: 20px
+	font-size: 13px;
+	line-height: 20px;
+	font-weight: 600;
+	background-color: #f1f1f1;
+	background-image: -moz-linear-gradient(top,rgba(255,255,255,0.7) 25%,rgba(255,255,255,0.1) 100%);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(25%,rgba(255,255,255,0.7)),color-stop(100%,rgba(255,255,255,0.1)));
+	background-image: -o-linear-gradient(top,rgba(255,255,255,0.7) 25%,rgba(255,255,255,0.1) 100%);
+	background-image: linear-gradient(to bottom,rgba(255,255,255,0.7) 25%,rgba(255,255,255,0.1) 100%);
+	border-top:0;
+	text-shadow: 0 1px 0 rgba(255,255,255,.5);
+	color: #555
 	
 }
 
@@ -439,12 +453,6 @@ img { border:0 }
 	
 }
 
-.table > thead > tr > th, .table > thead > tr > td {
-	background: #eee;
-	border-top:1px solid #F5F9FC;
-	text-shadow: 0 1px 0 rgba(255,255,255,.5);
-
-}
 
 .table tbody img {
 	vertical-align:middle;
@@ -549,27 +557,6 @@ img { border:0 }
 
 
 
-
-
-
-.callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
-
-
-
-
-
-
-
-@media screen and (max-width: 1150px){
-
-	.github {
-
-		display: none
-
-	}
-
-
-}
 
 
 
