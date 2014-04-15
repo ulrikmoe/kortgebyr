@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
-	<title>Kortgebyr - prissammenligning for betalingsløsninger</title>
+	<title>Kortgebyr - betalingsløsninger &amp; betalingsgateways</title>
 	<meta name="description" content="Prissammenligningsside for betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr." />
 
 	<link rel="canonical" href="http://kortgebyr.dk">
@@ -57,7 +57,7 @@
 	
 					
 		<div class="contact">
-			<a href="http://www.amino.dk/groups/kortgebyr/forum/default.aspx">Forum</a>
+			<a href="http://www.amino.dk/groups/kortgebyr/forum/default.aspx"><img src="amino.png">Amino</a>
 			<a href="mailto:ulrik.moe@gmail.com">Kontakt</a>
 			<a href="/changelog.md">Changelog</a>
 		</div>
@@ -75,162 +75,116 @@
 	
 	
 	
-	
-	
-	
-	
-<div style="display:none" class="header">
-	
-	<div style="float:right; margin: 10px 10px 0 0">
-			
-		<form action="http://macn.us2.list-manage1.com/subscribe/post?u=a05df0456ab6d17cf1c11fba4&amp;id=a24e3913b9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-	
-			<p>Tilmeld dig nyhedsbrevet og bliv opdateret et par gange om året.</p>
-
-	
-			<input class="input email" placeholder="Din e-mail..." name="EMAIL" type="email" /> <button>Tilmeld</button></p>
-	
-		</form>
-			
-	</div>
-		
-
-	<div class="left">
-	
-		Open-source prissammenligningsside for betalingsløsninger og betalingsgateways. <br /><br />
-		
-	</div>
-
-	
 
 
-</div>
-	
-	
-	
+
+	<h1 id="app-name">Sammenlign betalingsløsninger</h1>
+
+
+
 	
 		
 <div class="container" style="margin-top:70px">
 		
-		
-	<h1 id="app-name">Compare Consumer Banks</h1>
-
-
-
-
-
-
-
-
-
-
 
 	<div class="options">
 
+		<ul>
 
-		<div class="mid">
+			<li>
+				<label style="margin-right:20px">Dankort: <input type="checkbox" checked="" id="dankort" onChange='build();'/></label>
+				<label>Visa/MasterCard: <input type="checkbox" checked="" id="visamc" onChange='build();'/></label>
+			</li>
+			<li>
+				<label>
+					Indløsningsaftale:
 
-			<ul>
+					<select id="selectacquirer" onChange='build();'>
+					</select>
+				</label>
+			</li>
+			<li >
+				<label>Fast indløsergebyr pr. transaktion: <input type="text" class="input" value="0" id="acquirerFixedRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
+			</li>
+			<li>
+			<label>Variabelt indløsergebyr pr. transaktion: <input type="text" class="input" value="0%" id="acquirerPercentageRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
+			</li>
 
-				<li>
-					<label style="margin-right:20px">Dankort: <input type="checkbox" checked="" id="dankort" onChange='build();'/></label>
-					<label>Visa/MasterCard: <input type="checkbox" checked="" id="visamc" onChange='build();'/></label>
-				</li>
-				<li>
-					<label>
-						Indløsningsaftale:
+			<li>
+				<label>Medregn oprettelsesgebyr: <input type="checkbox" checked="" id="incSetupFee" onChange='build();'/></label> <p href="#" class="tooltip" id='medregnopretgebyrinfo'><img src="tooltip.gif"><span>Medregn mistet/forbigået forrentning af oprettelsesgebyret. Betaler du et oprettelsesgebyr, mister du penge du kunne have investeret i dit varelager. Vi regner med en intern rente på 16% p.a. og pålægger dette på kortgebyret for at opnå en retvisende prissammenligning.
+				</span></p>
+			</li>
 
-						<select id="selectacquirer" onChange='build();'>
-						</select>
-					</label>
-				</li>
-				<li >
-					<label>Fast indløsergebyr pr. transaktion: <input type="text" class="input" value="0" id="acquirerFixedRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
-				</li>
-				<li>
-				<label>Variabelt indløsergebyr pr. transaktion: <input type="text" class="input" value="0%" id="acquirerPercentageRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
-				</li>
+			<li>Svindelbekæmpelse</li>
+			
+		</ul>
 
-				<li>
-					<label>Medregn oprettelsesgebyr: <input type="checkbox" checked="" id="incSetupFee" onChange='build();'/></label> <p href="#" class="tooltip" id='medregnopretgebyrinfo'><img src="tooltip.gif"><span>Medregn mistet/forbigået forrentning af oprettelsesgebyret. Betaler du et oprettelsesgebyr, mister du penge du kunne have investeret i dit varelager. Vi regner med en intern rente på 16% p.a. og pålægger dette på kortgebyret for at opnå en retvisende prissammenligning.
-					</span></p>
-				</li>
-
-				<li>Svindelbekæmpelse</li>
-
-
-			</ul>
-
-		</div>
-
-		<div class="right">
-
-			<ul>
-				<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
+		<ul>
+			<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
 
 
-				<li><label>Gennemsnitlig ordreværdi: <input type="text" class="input" id="value" value="500" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
+			<li><label>Gennemsnitlig ordreværdi: <input type="text" class="input" id="value" value="500" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
 
-				<li>
-					<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="fdihkortfordeling" /></label>
-					<p href="#" class="tooltip" id="kortfordelinginfo">
-						<img src="tooltip.gif">
-						<span>Jævnfør FDIH's tal regnes der med at Dankort og Visa/Dankort samlet står for 82% af betalingerne (gennem NETS). De resterende 18% regnes som mastercard/ eurocard og visa (gennem Teller m.fl.). Bemærk at der ses bort fra forbrugsforeningskort og andre mindre kort.
-						</span>
-					</p>
-				</li>
+			<li>
+				<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="fdihkortfordeling" /></label>
+				<p href="#" class="tooltip" id="kortfordelinginfo">
+					<img src="tooltip.gif">
+					<span>Jævnfør FDIH's tal regnes der med at Dankort og Visa/Dankort samlet står for 82% af betalingerne (gennem NETS). De resterende 18% regnes som mastercard/ eurocard og visa (gennem Teller m.fl.). Bemærk at der ses bort fra forbrugsforeningskort og andre mindre kort.
+					</span>
+				</p>
+			</li>
 
-				<li>
-					<label>3D Secure (udenlandske kort): <input type="checkbox" checked="" id="3d" onChange='build();'/></label>
-				</li>
+			<li>
+				<label>3D Secure (udenlandske kort): <input type="checkbox" checked="" id="3d" onChange='build();'/></label>
+			</li>
 
 
-			</ul>
-			<!--<button onclick="build('button');">Udregn kortgebyr</button>-->
+		</ul>
 
-		</div>
+	</div><!-- /options -->
 
+
+	<div style="margin-left:265px;">
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align:left; padding-left:12px">
+						Betalingsløsning
+					</th>
+					<th>
+						Indløsere
+					</th>
+	
+					<th>
+						Betalingskort
+					</th>
+	
+					<th>
+						Oprettelse
+					</th>
+	
+					<th>
+						Abonnement<br /> per måned
+					</th>
+	
+					<th>
+						Samlet <br />per måned
+					</th>
+	
+					<th>
+						Kortgebyr per<br />transaktion
+					</th>
+	
+				</tr>
+			</thead>
+	
+			<tbody id="data"></tbody>
+	
+	
+	
+		</table>
+	
 	</div>
-
-
-	<table class="table">
-		<thead>
-			<tr>
-				<th style="text-align:left; padding-left:12px">
-					Betalingsløsning
-				</th>
-				<th>
-					Indløsere
-				</th>
-
-				<th>
-					Betalingskort
-				</th>
-
-				<th>
-					Oprettelse
-				</th>
-
-				<th>
-					Abonnement<br /> per måned
-				</th>
-
-				<th>
-					Samlet <br />per måned
-				</th>
-
-				<th>
-					Kortgebyr per<br />transaktion
-				</th>
-
-			</tr>
-		</thead>
-
-		<tbody id="data"></tbody>
-
-
-
-	</table>
 
 	<div class="footer">
 
