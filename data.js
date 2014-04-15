@@ -50,7 +50,6 @@ function defaultAcquirerCostFn(ntransactions,averageprice)
 
 var ACQUIRER =
 {
-
 	"nets":
 	{
 		name: "nets",
@@ -70,7 +69,6 @@ var ACQUIRER =
 
 		}
 	},
-
 	"teller":
 	{
 		name: "Teller",
@@ -82,7 +80,6 @@ var ACQUIRER =
 		percentageTransactionFee: 1.5,
 		costfn: defaultAcquirerCostFn
 	},
-
 	"seb":
 	{
 		name: "SEB Euroline",
@@ -91,12 +88,11 @@ var ACQUIRER =
 		setupFee: 0,
 		monthlyFee: 0,
 		fixedTransactionFee: 0,
-		percentageTransactionFee: 2.65,
+		percentageTransactionFee: 1.7,
 		transactionCosts: 0,
 		totalCosts: 0,
 		costfn: defaultAcquirerCostFn
 	},
-
 	"swedbank":
 	{
 		name: "Swedbank",
@@ -110,10 +106,9 @@ var ACQUIRER =
 		totalCosts: 0,
 		costfn: defaultAcquirerCostFn
 	},
-
 	"handelsbanken":
 	{
-		name: "Handelsbanken", // 4
+		name: "Handelsbanken",
 		logo: "handelsbanken.png",
 		cards: ["visa", "mastercard", "maestro"],
 		setupFee: 1900,
@@ -124,21 +119,19 @@ var ACQUIRER =
 		totalCosts: 0,
 		costfn: defaultAcquirerCostFn
 	},
-
 	"valitor":
 	{
-		name: "Valitor", // 4
+		name: "Valitor",
 		logo: "valitor.png",
 		cards: ["visa", "mastercard", "maestro"],
 		setupFee: 0,
 		monthlyFee: 0,
 		fixedTransactionFee: 0,
-		percentageTransactionFee: 2.95,
+		percentageTransactionFee: 1.7,
 		totalTransactionCosts: 0,
 		totalCosts: 0,
 		costfn: defaultAcquirerCostFn
 	}
-
 
 };
 
@@ -430,7 +423,7 @@ var PSP =
 	},
 	"paymill":
 	{
-		name: "Paymill", // 0
+		name: "Paymill", // 16
 		logo: "paymill.png",
 		link: "https://paymill.com",
 		isAcquirer: true,
@@ -446,7 +439,7 @@ var PSP =
 	},
 	"payson":
 	{
-		name: "Payson", // 0
+		name: "Payson", // 17
 		logo: "payson.png",
 		link: "https://www.payson.se",
 		isAcquirer: true,
@@ -458,6 +451,21 @@ var PSP =
 		percentageTransactionFee:3,
 		freeTransactions: 0,
 		chargeback: 140,
+		costfn:defaultCostFn
+	},
+	"scannet":
+	{
+		name: "Scannet", // 18
+		logo: "scannet.png",
+		link: "http://www.scannet.dk/hosting/betalingsloesning/",
+		isAcquirer: false,
+		availableAcquirers: ["teller"],
+		cards: ["dankort","visa","mastercard","maestro"],
+		setupFee: 950,
+		monthlyFee: 399,
+		monthly3dsecureFee: 0,
+		fixedTransactionFee: 0,
+		freeTransactions: 0,
 		costfn:defaultCostFn
 	}
 	
