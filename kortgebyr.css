@@ -186,10 +186,10 @@ img { border:0 }
 	
 }
 
-.info h1 {
+h2 {
 	
-	color: #004165;
-	font-weight: 400;
+	font-size: 24px;
+	color: #444;
 	-webkit-font-smoothing: antialiased
 	
 }
@@ -205,9 +205,16 @@ img { border:0 }
 */
 
 
+.sidebar {
+	
+	float: left;
+	width: 250px;
+	
+}
+
+
 .options {
 
-	float: left;
 	background:#F7F7F7;
 	border:1px solid #ccc;
 	position: relative;
@@ -550,7 +557,8 @@ img { border:0 }
 
 	text-align: center;
 	margin-top: 50px;
-	color: #aaa
+	color: #aaa;
+	line-height: 28px
 
 }
 

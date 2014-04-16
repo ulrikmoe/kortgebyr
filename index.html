@@ -64,7 +64,6 @@
 			<a href="http://www.amino.dk/groups/kortgebyr/forum/default.aspx"><img src="amino.png">Amino</a>
 			<a href="mailto:ulrik.moe@gmail.com">Kontakt</a>
 			<a href="/changelog.md">Changelog</a>
-			<a href="/changelog.md">Forklaring</a>
 		</div>
 		
 		
@@ -82,73 +81,80 @@
 	
 <div class="container">
 
-	<h1 id="app-name">Sammenlign betalingsløsninger</h1>	
+	<h2 id="app-name">Sammenlign betalingsløsninger</h2>	
 		
 </div>
 
 
-
-	
 		
 <div class="container" style="margin-top:70px">
 		
 
-	<div class="options">
-
-		<ul>
-
-			<li>
-				<label style="margin-right:20px">Dankort: <input type="checkbox" checked="" id="dankort" onChange='build();'/></label>
-				<label>Visa/MasterCard: <input type="checkbox" checked="" id="visamc" onChange='build();'/></label>
-			</li>
-			<li>
-				<label>
-					Indløsningsaftale:
-
-					<select id="selectacquirer" onChange='build();'>
-					</select>
-				</label>
-			</li>
-			<li >
-				<label>Fast indløsergebyr pr. transaktion: <input type="text" class="input" value="0" id="acquirerFixedRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
-			</li>
-			<li>
-			<label>Variabelt indløsergebyr pr. transaktion: <input type="text" class="input" value="0%" id="acquirerPercentageRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
-			</li>
-
-			<li>
-				<label>Medregn oprettelsesgebyr: <input type="checkbox" checked="" id="incSetupFee" onChange='build();'/></label> <p href="#" class="tooltip" id='medregnopretgebyrinfo'><img src="tooltip.gif"><span>Medregn mistet/forbigået forrentning af oprettelsesgebyret. Betaler du et oprettelsesgebyr, mister du penge du kunne have investeret i dit varelager. Vi regner med en intern rente på 16% p.a. og pålægger dette på kortgebyret for at opnå en retvisende prissammenligning.
-				</span></p>
-			</li>
-
-			<li>Svindelbekæmpelse</li>
-			
-		</ul>
-
-		<ul>
-			<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
-
-
-			<li><label>Gennemsnitlig ordreværdi: <input type="text" class="input" id="value" value="500" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
-
-			<li>
-				<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="fdihkortfordeling" /></label>
-				<p href="#" class="tooltip" id="kortfordelinginfo">
-					<img src="tooltip.gif">
-					<span>Jævnfør FDIH's tal regnes der med at Dankort og Visa/Dankort samlet står for 82% af betalingerne (gennem NETS). De resterende 18% regnes som mastercard/ eurocard og visa (gennem Teller m.fl.). Bemærk at der ses bort fra forbrugsforeningskort og andre mindre kort.
-					</span>
-				</p>
-			</li>
-
-			<li>
-				<label>3D Secure (udenlandske kort): <input type="checkbox" checked="" id="3d" onChange='build();'/></label>
-			</li>
-
-
-		</ul>
-
-	</div><!-- /options -->
-
+	<div class="sidebar">
+		<div class="options">
+	
+			<ul>
+	
+				<li>
+					<label style="margin-right:20px">Dankort: <input type="checkbox" checked="" id="dankort" onChange='build();'/></label>
+					<label>Visa/MasterCard: <input type="checkbox" checked="" id="visamc" onChange='build();'/></label>
+				</li>
+				<li>
+					<label>
+						Indløsningsaftale:
+	
+						<select id="selectacquirer" onChange='build();'>
+						</select>
+					</label>
+				</li>
+				<li >
+					<label>Fast indløsergebyr pr. transaktion: <input type="text" class="input" value="0" id="acquirerFixedRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
+				</li>
+				<li>
+				<label>Variabelt indløsergebyr pr. transaktion: <input type="text" class="input" value="0%" id="acquirerPercentageRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
+				</li>
+	
+				<li>
+					<label>Medregn oprettelsesgebyr: <input type="checkbox" checked="" id="incSetupFee" onChange='build();'/></label> <p href="#" class="tooltip" id='medregnopretgebyrinfo'><img src="tooltip.gif"><span>Medregn mistet/forbigået forrentning af oprettelsesgebyret. Betaler du et oprettelsesgebyr, mister du penge du kunne have investeret i dit varelager. Vi regner med en intern rente på 16% p.a. og pålægger dette på kortgebyret for at opnå en retvisende prissammenligning.
+					</span></p>
+				</li>
+	
+				<li>Svindelbekæmpelse</li>
+				
+			</ul>
+	
+			<ul>
+				<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
+	
+	
+				<li><label>Gennemsnitlig ordreværdi: <input type="text" class="input" id="value" value="500" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
+	
+				<li>
+					<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="fdihkortfordeling" /></label>
+					<p href="#" class="tooltip" id="kortfordelinginfo">
+						<img src="tooltip.gif">
+						<span>Jævnfør FDIH's tal regnes der med at Dankort og Visa/Dankort samlet står for 82% af betalingerne (gennem NETS). De resterende 18% regnes som mastercard/ eurocard og visa (gennem Teller m.fl.). Bemærk at der ses bort fra forbrugsforeningskort og andre mindre kort.
+						</span>
+					</p>
+				</li>
+	
+				<li>
+					<label>3D Secure (udenlandske kort): <input type="checkbox" checked="" id="3d" onChange='build();'/></label>
+				</li>
+	
+	
+			</ul>
+	
+		</div><!-- /options -->
+		
+		<div class="amino-extension">
+			amino extension
+		</div>
+		
+	</div>
+	
+	
+	
 
 	<div style="margin-left:267px;">
 		<table class="table">
