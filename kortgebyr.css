@@ -221,7 +221,7 @@ h2 {
 
 
 .options {
-	background:#F7F7F7;
+	background:#F9F9F9;
 	border:1px solid #ccc;
 	position: relative;
 	width: 250px;
@@ -229,7 +229,7 @@ h2 {
 }
 
 	.options-header {
-		border-bottom: 1px solid #ccc;
+		border-bottom: 1px solid #ddd;
 		text-transform: uppercase;
 		font-size: 14px;
 		font-weight: bold;
