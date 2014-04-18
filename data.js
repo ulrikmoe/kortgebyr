@@ -518,6 +518,20 @@ var PSP =
 			var fee = 4.94;
 			return ( fee / 100 * averageprice + 1.9 ) * ntransactions;
 		}
+	},
+	"payer":
+	{
+		name: "Payer", // 18
+		logo: "payer.png",
+		link: "http://payer.se/betallosning/",
+		isAcquirer: true,
+		cards: ["visa","mastercard","maestro"],
+		setupFee: 1146.4, // 1400 sek
+		monthlyFee: 327.55, // 400 sek
+		monthly3dsecureFee: 0,
+		fixedTransactionFee: 1.64, // 2 sek
+		freeTransactions: 0,
+		costfn:defaultCostFn
 	}
 	
 };
