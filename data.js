@@ -533,6 +533,51 @@ var PSP =
 		fixedTransactionFee: 1.64, // 2 sek
 		freeTransactions: 0,
 		costfn:defaultCostFn
+	},
+	"pointbas":
+	{
+		name: "Point Bas", // 19
+		logo: "point.png",
+		link: "http://www.point.se/sv/Sweden/Start/E-handel/E-handel-Bas/",
+		isAcquirer: false,
+		availableAcquirers: ["teller","handelsbanken", "nordea", "seb", "swedbank"],
+		cards: ["visa","mastercard","maestro"],
+		setupFee: 818.04, // 999 sek
+		monthlyFee: 162.92, // 199 sek
+		monthly3dsecureFee: 0,
+		fixedTransactionFee: 3.27, // 4 sek
+		freeTransactions: 100,
+		costfn:defaultCostFn
+	},
+	"pointpremium":
+	{
+		name: "Point Premium", // 19
+		logo: "point.png",
+		link: "http://www.point.se/sv/Sweden/Start/E-handel/E-handel-Bas/",
+		isAcquirer: false,
+		availableAcquirers: ["teller","handelsbanken", "nordea", "seb", "swedbank"],
+		cards: ["visa","mastercard","maestro"],
+		setupFee: 2046.34, // 2499 sek
+		monthlyFee: 408.61, // 499 sek
+		monthly3dsecureFee: 0,
+		fixedTransactionFee: 2.05, // 2.5 sek
+		freeTransactions: 400,
+		costfn:defaultCostFn
+	},
+	"pointpremiumplus":
+	{
+		name: "Point Plus", // 19
+		logo: "point.png",
+		link: "http://www.point.se/sv/Sweden/Start/E-handel/E-handel-Bas/",
+		isAcquirer: false,
+		availableAcquirers: ["teller","handelsbanken", "nordea", "seb", "swedbank"],
+		cards: ["visa","mastercard","maestro"],
+		setupFee: 4092.6, // 4999 sek
+		monthlyFee: 1636.9, // 1999 sek
+		monthly3dsecureFee: 0,
+		fixedTransactionFee: 0.61, // 0.75 sek
+		freeTransactions: 4000,
+		costfn:defaultCostFn
 	}
 	
 };

@@ -2,16 +2,19 @@ CHANGELOG
 ==================
 
 TO DO: Finde en smart måde at tilføje Nordpay, Pensio m.fl.
+TO DO: Finde en smart måde at "straffe" bindingsperiode
 
 17/04 2014
 -----------------
 - tilføjet Payza
-- 
+- tilføjet Payer
+- tilføjet Point
 
 15/04 2014
 ------------------
 - fixet mindre regnefejl for Teller
 - tilføjet Scannet
+- tilføjet skrill
 
 
 14/04 2014
