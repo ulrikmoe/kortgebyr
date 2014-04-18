@@ -1,4 +1,4 @@
-body, div, ul {
+body, div, ul, p {
 	margin: 0;
 	padding: 0; 
 	border: 0; 
@@ -42,6 +42,14 @@ img { border:0 }
 }
 
 
+.nav, .options {
+	
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	
+}
+
 
 
 /* Header */
@@ -52,8 +60,6 @@ img { border:0 }
 	line-height: 62px;
 	background: #F7F7F7;
 	border-bottom: 1px solid #dfdfdf;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
 }
 
 	/* This gets Google to fall into place */
@@ -209,28 +215,29 @@ h2 {
 	
 	float: left;
 	width: 250px;
+	font: 13px/1.4 Helvetica,Arial,sans-serif;
 	
 }
 
 
 .options {
-
 	background:#F7F7F7;
 	border:1px solid #ccc;
 	position: relative;
 	width: 250px;
 	min-height: 500px
-	
-
 }
 
+	.options-header {
+		border-bottom: 1px solid #ccc;
+		text-transform: uppercase;
+		font-size: 14px;
+		font-weight: bold;
+		white-space: nowrap;
+	}
 
-.options div {
 
-	display: block;
-	margin: 15px 0;
 
-}
 
 
 .amino-extension {
@@ -259,9 +266,7 @@ h2 {
 
 
 .right {
-	line-height: 36px;
-	text-align: right;
-	border-left: 1px solid #ccc
+	float: right;
 }
 
 

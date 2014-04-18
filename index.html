@@ -85,12 +85,20 @@
 		
 		<div class="options">
 		
-			<div id="filter_header">
-				<div id="filter_title">Filters</div>
-				<div class="result_stats">17/17</div>
+			<div class="options-header">
+				<p class="right">17/17</p>
+				Filters
 			</div>
 		
 			<ul style="padding: 10px">
+			
+				<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
+	
+	
+				<li><label>Gns. ordreværdi: <input type="text" class="input" id="value" value="500" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
+			
+			
+			
 	
 				<li>
 					<label style="margin-right:20px">Dankort: <input type="checkbox" checked="" id="dankort" onChange='build();'/></label>
@@ -121,10 +129,6 @@
 			</ul>
 	
 			<ul>
-				<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
-	
-	
-				<li><label>Gns. ordreværdi: <input type="text" class="input" id="value" value="500" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
 	
 				<li>
 					<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="fdihkortfordeling" /></label>
