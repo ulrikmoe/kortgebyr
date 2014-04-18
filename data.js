@@ -311,7 +311,7 @@ var PSP =
 	},
 	"dibsent":
 	{
-		name: "DIBS Entrepreneur", // 8
+		name: "DIBS Entrepre.", // 8
 		logo: "dibs.png",
 		link: "http://dibs.dk",
 		isAcquirer: false,
