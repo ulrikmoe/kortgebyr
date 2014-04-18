@@ -521,10 +521,11 @@ var PSP =
 	},
 	"payer":
 	{
-		name: "Payer", // 18
+		name: "Payer.se", // 19
 		logo: "payer.png",
 		link: "http://payer.se/betallosning/",
-		isAcquirer: true,
+		isAcquirer: false,
+		availableAcquirers: ["teller"],
 		cards: ["visa","mastercard","maestro"],
 		setupFee: 1146.4, // 1400 sek
 		monthlyFee: 327.55, // 400 sek
