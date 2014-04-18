@@ -386,7 +386,7 @@ var PSP =
 	},
 	"netaxeptadvanced":
 	{
-		name: "Netaxept advanced", // 13
+		name: "Netaxept adv.", // 13
 		logo: "nets.png",
 		link: "https://www.terminalshop.dk/Netaxept/",
 		isAcquirer: false,
@@ -476,7 +476,7 @@ var PSP =
 		freeTransactions: 0,
 		costfn:defaultCostFn
 	},
-		"skrill":
+	"skrill":
 	{
 		name: "Skrill",
 		logo: "skrill.png",
@@ -497,6 +497,25 @@ var PSP =
 			else if (oms <= 373324) { fee = 2.1; }
 			else { fee = 1.9; }
 			return ( fee / 100 * averageprice + 1.87 ) * ntransactions;
+		}
+	},
+	"payza":
+	{
+		name: "Payza",
+		logo: "payza.png",
+		link: "https://payza.com",
+		isAcquirer: true,
+		cards: ["visa", "mastercard", "maestro"],
+		setupFee: 0,
+		monthlyFee: 0,
+		monthly3dsecureFee: 0,
+		chargeback: 187,
+		costfn:	function( ntransactions, averageprice)
+		{
+
+			var oms = ntransactions * averageprice;
+			var fee = 4.94;
+			return ( fee / 100 * averageprice + 1.9 ) * ntransactions;
 		}
 	}
 	

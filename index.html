@@ -58,7 +58,7 @@
 	
 					
 		<div class="contact">
-			<a href="http://www.amino.dk/groups/kortgebyr/forum/default.aspx"><img src="amino.png">Amino</a>
+			<a href="http://www.amino.dk/groups/kortgebyr/forum/default.aspx"><img src="amino.png"> Amino</a>
 			<a href="mailto:ulrik.moe@gmail.com">Kontakt</a>
 			<a href="/changelog.md">Changelog</a>
 		</div>
@@ -75,12 +75,6 @@
 </div>
 	
 	
-	
-<div class="container">
-
-	<h2 id="app-name">Sammenlign betalingsløsninger</h2>	
-		
-</div>
 
 
 		
@@ -88,9 +82,15 @@
 		
 
 	<div class="sidebar">
+		
 		<div class="options">
-	
-			<ul>
+		
+			<div id="filter_header">
+				<div id="filter_title">Filters</div>
+				<div class="result_stats">17/17</div>
+			</div>
+		
+			<ul style="padding: 10px">
 	
 				<li>
 					<label style="margin-right:20px">Dankort: <input type="checkbox" checked="" id="dankort" onChange='build();'/></label>
@@ -124,7 +124,7 @@
 				<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
 	
 	
-				<li><label>Gennemsnitlig ordreværdi: <input type="text" class="input" id="value" value="500" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
+				<li><label>Gns. ordreværdi: <input type="text" class="input" id="value" value="500" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
 	
 				<li>
 					<label>FDIH kortfordeling: <input type="checkbox" disabled="" checked="" id="fdihkortfordeling" /></label>
@@ -145,13 +145,13 @@
 		</div><!-- /options -->
 		
 		<div class="amino-extension">
-			amino extension
+			<a href="https://chrome.google.com/webstore/detail/amino-topliste/goodeiddahdeknaodlidligcnlpcbplb">
+				<img src="extension.png" alt="Amino Topliste chrome extension">
+			</a>
 		</div>
 		
 	</div>
-	
-	
-	
+		
 
 	<div style="margin-left:267px;">
 		<table class="table">

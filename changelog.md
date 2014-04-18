@@ -1,8 +1,12 @@
 CHANGELOG
 ==================
 
-TO DO: Finde en smart måde at tilføje Nordpay
+TO DO: Finde en smart måde at tilføje Nordpay, Pensio m.fl.
 
+17/04 2014
+-----------------
+- tilføjet Payza
+- 
 
 15/04 2014
 ------------------
