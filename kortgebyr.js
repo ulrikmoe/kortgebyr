@@ -59,13 +59,6 @@ var VARS=
 		type: 'checkbox',
 		default: 1
 	},
-	'include_setup_fee':
-	{
-		field: 'incSetupFee',
-		query: 'isf', //Med OprettelsesGebyr
-		type: 'checkbox',
-		default: 1
-	},
 	'dankort':
 	{
 		field: 'dankort',

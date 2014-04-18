@@ -7,6 +7,7 @@ D A T A
 
 var lostReturnsFromSetupFee = 0.16; // 0.1 = 10% per år
 var monthlytotal = 0;
+var include_setup_fee = 1;
 
 var CARDS =
 {
@@ -38,7 +39,7 @@ var CARDS =
 function defaultAcquirerCostFn(ntransactions,averageprice)
 {
 
-	monthlytotal = $('incSetupFee').checked * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
+	monthlytotal = include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
 	monthlytotal += ($('acquirerPercentageRate').value.replace(',','.').replace('%','').replace(' ','') / 100 * averageprice
 	+ $('acquirerFixedRate').value.replace(',','.').replace('k','').replace('r','').replace(' ','')*1 )   * ntransactions;
 
@@ -65,7 +66,7 @@ var ACQUIRER =
 			if (averageprice <= 50 ) { fee=0.7; }
 			else if (averageprice <= 100) { fee = 1.1; }
 			else { fee = 1.9; }
-			return fee * ntransactions + this.monthlyFee + $('incSetupFee').checked * this.setupFee * lostReturnsFromSetupFee / 12;
+			return fee * ntransactions + this.monthlyFee + include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12;
 
 		}
 	},
@@ -79,7 +80,7 @@ var ACQUIRER =
 		fixedTransactionFee: 0.7,
 		percentageTransactionFee: 1.5,
 		costfn: function(ntransactions,averageprice){
-			monthlytotal = $('incSetupFee').checked * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
+			monthlytotal = include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
 			var averageFee = $('acquirerPercentageRate').value.replace(',','.').replace('%','').replace(' ','') / 100 * averageprice;
 			if( averageFee < 0.7){
 				averageFee = 0.7;
@@ -149,7 +150,7 @@ var ACQUIRER =
 function defaultCostFn(ntransactions,averageprice)
 {
 
-	monthlytotal = $('incSetupFee').checked * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee + $('3d').checked * this.monthly3dsecureFee;
+	monthlytotal = include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee + $('3d').checked * this.monthly3dsecureFee;
 
 	if (ntransactions > this.freeTransactions)
 	{
