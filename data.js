@@ -578,6 +578,54 @@ var PSP =
 		fixedTransactionFee: 0.61, // 0.75 sek
 		freeTransactions: 4000,
 		costfn:defaultCostFn
-	}
+	},
+	"certitrade":
+	{
+		name: "Certitrade", // 19
+		logo: "certitrade.png",
+		link: "http://www.certitrade.net/kortbetalning.php",
+		isAcquirer: false,
+		availableAcquirers: ["teller","handelsbanken", "nordea", "seb", "swedbank"],
+		cards: ["visa","mastercard","maestro"],
+		setupFee: 0,
+		monthlyFee: 157.19, // 192 sek
+		monthly3dsecureFee: 0,
+		fixedTransactionFee: 1.23, // 1.5 sek
+		percentageTransactionFee: 0.9, // VIRKER IKKE
+		freeTransactions: 0,
+		costfn:defaultCostFn
+	},
+	"noirepay":
+	{
+		name: "Noirepay", // 19
+		logo: "noirepay.png",
+		link: "http://noirepay.se/",
+		isAcquirer: true,
+		cards: ["visa","mastercard","maestro"],
+		setupFee: 0,
+		monthlyFee: 0, // 192 sek
+		monthly3dsecureFee: 0,
+		fixedTransactionFee: 0.82, // 1 sek
+		percentageTransactionFee: 1.9, // VIRKER IKKE
+		freeTransactions: 0,
+		costfn:defaultCostFn
+	},
+	"scanpay":
+	{
+		name: "Scanpay", // 19
+		logo: "scanpay.png",
+		link: "http://www.certitrade.net/kortbetalning.php",
+		isAcquirer: false,
+		availableAcquirers: ["teller","handelsbanken", "nordea", "seb", "swedbank"],
+		cards: ["dankort","visa","mastercard","maestro"],
+		setupFee: 0,
+		monthlyFee: 0,
+		monthly3dsecureFee: 0,
+		fixedTransactionFee: 0,
+		freeTransactions: 0,
+		costfn:defaultCostFn
+	},
+	
+	
 	
 };
