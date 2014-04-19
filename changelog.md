@@ -4,11 +4,13 @@ CHANGELOG
 TO DO: Finde en smart måde at tilføje Nordpay, Pensio m.fl.
 TO DO: Finde en smart måde at "straffe" bindingsperiode
 
-17/04 2014
+18/04 2014
 -----------------
 - tilføjet Payza
 - tilføjet Payer
 - tilføjet Point
+- tilføjet certitrade
+- tilføjet noirepay
 
 15/04 2014
 ------------------
