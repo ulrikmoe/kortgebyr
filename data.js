@@ -203,7 +203,7 @@ var PSP =
 		logo: "yourpay.png",
 		link: "http://yourpay.dk",
 		isAcquirer: true,
-		cards: ["visa", "mastercard", "maestro"],
+		cards: ["visa", "mastercard"],
 		setupFee: 0,
 		monthlyFee: 0,
 		monthly3dsecureFee: 0,
