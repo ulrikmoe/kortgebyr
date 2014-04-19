@@ -65,7 +65,7 @@ var ACQUIRER =
 			var fee;
 			if (averageprice <= 50 ) { fee=0.7; }
 			else if (averageprice <= 100) { fee = 1.1; }
-			else { fee = 1.9; }
+			else { fee = 1.39; }
 			return fee * ntransactions + this.monthlyFee + include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12;
 
 		}
