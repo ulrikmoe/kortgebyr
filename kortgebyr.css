@@ -105,14 +105,12 @@ img { border:0 }
 	
 	.nav .logo a {
 		
+		display: block;
 		color: #fff;
-		display: none;
 		text-align: center;
 		font-family: 'Bree Serif', serif;
-		vertical-align: middle;
 		font-weight: 400;
-		font-size: 1.4em;
-		margin-right: 6px
+		font-size: 1.6em;
 		
 	}
 	

@@ -197,41 +197,6 @@ var PSP =
 		}
 	},
 
-	"yourpay":
-	{
-		name: "yourpay",
-		logo: "yourpay.png",
-		link: "http://yourpay.dk",
-		isAcquirer: true,
-		cards: ["visa", "mastercard"],
-		setupFee: 0,
-		monthlyFee: 0,
-		monthly3dsecureFee: 0,
-		chargeback: 275,
-		costfn: function(ntransactions,averageprice){
-			var freetransactions;
-			var rate;
-			if(ntransactions <= 2500){
-				freetransactions = 25;
-				rate = 0.02;
-			}
-			else if( ntransactions <= 5000){
-				freetransactions = 25;
-				rate = 0.0175;
-			}
-			else{
-				freetransactions = 50;
-				rate = 0.015;
-			}
-			
-			if(ntransactions < freetransactions){
-				freetransactions = ntransactions;
-			}
-			return (ntransactions-freetransactions) * averageprice * rate;
-			
-		}
-
-	},
 	"quickpay":
 	{
 		name: "quickpay",
@@ -598,6 +563,52 @@ var PSP =
 		percentageTransactionFee: 0.9, // VIRKER IKKE
 		freeTransactions: 0,
 		costfn:defaultCostFn
+	}
+	
+	
+	
+};
+
+
+
+
+var comingSoon =
+{
+
+	"yourpay":
+	{
+		name: "yourpay",
+		logo: "yourpay.png",
+		link: "http://yourpay.dk",
+		isAcquirer: true,
+		cards: ["visa", "mastercard"],
+		setupFee: 0,
+		monthlyFee: 0,
+		monthly3dsecureFee: 0,
+		chargeback: 275,
+		costfn: function(ntransactions,averageprice){
+			var freetransactions;
+			var rate;
+			if(ntransactions <= 2500){
+				freetransactions = 25;
+				rate = 0.02;
+			}
+			else if( ntransactions <= 5000){
+				freetransactions = 25;
+				rate = 0.0175;
+			}
+			else{
+				freetransactions = 50;
+				rate = 0.015;
+			}
+			
+			if(ntransactions < freetransactions){
+				freetransactions = ntransactions;
+			}
+			return (ntransactions-freetransactions) * averageprice * rate;
+			
+		}
+
 	},
 	"noirepay":
 	{
@@ -628,8 +639,10 @@ var PSP =
 		fixedTransactionFee: 0,
 		freeTransactions: 0,
 		costfn:defaultCostFn
-	},
+	}
 	
-	
-	
-};
+}
+
+
+
+
