@@ -39,7 +39,7 @@ var CARDS =
 function defaultAcquirerCostFn(ntransactions,averageprice)
 {
 
-	monthlytotal = include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
+	var monthlytotal = include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
 	monthlytotal += ($('acquirerPercentageRate').value.replace(',','.').replace('%','').replace(' ','') / 100 * averageprice
 	+ $('acquirerFixedRate').value.replace(',','.').replace('k','').replace('r','').replace(' ','')*1 )   * ntransactions;
 
@@ -57,7 +57,7 @@ var ACQUIRER =
 		logo: "nets.png",
 		cards: ["dankort"],
 		setupFee: 250,
-		monthlyFee: 83.33,
+		monthlyFee: 1000/12,
 		transactionCosts: 0,
 		totalCosts: 0,
 		costfn: function(ntransactions,averageprice)
@@ -80,7 +80,7 @@ var ACQUIRER =
 		fixedTransactionFee: 0.7,
 		percentageTransactionFee: 1.5,
 		costfn: function(ntransactions,averageprice){
-			monthlytotal = include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
+			var monthlytotal = include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
 			var averageFee = $('acquirerPercentageRate').value.replace(',','.').replace('%','').replace(' ','') / 100 * averageprice;
 			if( averageFee < 0.7){
 				averageFee = 0.7;
@@ -150,15 +150,17 @@ var ACQUIRER =
 function defaultCostFn(ntransactions,averageprice)
 {
 
-	monthlytotal = include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee + $('3d').checked * this.monthly3dsecureFee;
+	var monthlytotal = include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee + $('3d').checked * this.monthly3dsecureFee;
 
 	if (ntransactions > this.freeTransactions)
 	{
-		monthlytotal += this.fixedTransactionFee * ( ntransactions - this.freeTransactions );
-	}
-	if (this.isAcquirer)
-	{
-		monthlytotal += this.percentageTransactionFee / 100 * averageprice * ntransactions;
+		if( this.fixedTransactionFee ){
+			monthlytotal += this.fixedTransactionFee * ( ntransactions - this.freeTransactions );
+		}
+		if (this.percentageTransactionFee)
+		{
+			monthlytotal += this.percentageTransactionFee / 100 * averageprice * ntransactions;
+		}
 	}
 
 	return monthlytotal;
@@ -442,8 +444,8 @@ var PSP =
 		monthly3dsecureFee: 0,
 		fixedTransactionFee: 2.088,
 		percentageTransactionFee: 3.95,
-		freeTransactions: 0,
 		chargeback: 140,
+		freeTransactions: 0,
 		costfn:defaultCostFn
 	},
 	"payson":
@@ -458,8 +460,8 @@ var PSP =
 		monthly3dsecureFee: 0,
 		fixedTransactionFee: 3,
 		percentageTransactionFee:3,
-		freeTransactions: 0,
 		chargeback: 140,
+		freeTransactions: 0,
 		costfn:defaultCostFn
 	},
 	"scannet":
@@ -488,6 +490,7 @@ var PSP =
 		monthlyFee: 0,
 		monthly3dsecureFee: 0,
 		chargeback: 187,
+		freeTransactions: 0,
 		costfn:	function( ntransactions, averageprice)
 		{
 
@@ -511,6 +514,7 @@ var PSP =
 		monthlyFee: 0,
 		monthly3dsecureFee: 0,
 		chargeback: 187,
+		freeTransactions: 0,
 		costfn:	function( ntransactions, averageprice)
 		{
 

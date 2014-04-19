@@ -4,6 +4,11 @@ CHANGELOG
 TO DO: Finde en smart måde at tilføje Nordpay, Pensio m.fl.
 TO DO: Finde en smart måde at "straffe" bindingsperiode
 
+19/04 2014
+-----------------
+- tilføjet Metode
+- Fixet regnefejl for NETS ved transaktioner over 100kr
+
 18/04 2014
 -----------------
 - tilføjet Payza
