@@ -33,11 +33,7 @@ ul { list-style: none; }
 img { border:0 }
 
 .container {
-<<<<<<< HEAD
 	width: 97%;
-=======
-	width: 96%;
->>>>>>> FETCH_HEAD
 	min-width: 900px;
 	max-width: 1500px;
 	padding: 0;
@@ -216,28 +212,17 @@ h2 {
 .sidebar {
 	
 	float: left;
-<<<<<<< HEAD
-=======
-	width: 250px;
->>>>>>> FETCH_HEAD
 	font: 13px/1.4 Helvetica,Arial,sans-serif;
 	
 }
 
 
 .options {
-<<<<<<< HEAD
 	display: block;
 	background:#F9F9F9;
 	border:1px solid #ccc;
 	position: relative;
 	width: 230px;
-=======
-	background:#F9F9F9;
-	border:1px solid #ccc;
-	position: relative;
-	width: 250px;
->>>>>>> FETCH_HEAD
 	min-height: 500px
 }
 
@@ -408,10 +393,6 @@ h2 {
 	text-align: left;
 	padding-left: 9px;
 	font-size: 12px;
-<<<<<<< HEAD
-=======
-	max-width: 105px
->>>>>>> FETCH_HEAD
 }
 
 .psp img {
@@ -435,13 +416,6 @@ h2 {
 .acquirer {
 	text-align: center;
 	width: 90px
-<<<<<<< HEAD
-}
-
-.acquirer img {
-	margin: 6px 0;
-}
-=======
 }
 
 .acquirer img {
@@ -450,23 +424,7 @@ h2 {
 
 
 
->>>>>>> FETCH_HEAD
 
-.table {
-	width: 100%;
-	border-collapse: separate;
-	border-spacing: 0;
-	border: 1px solid #ddd;
-	border-left: 0;
-	font-weight: 400;
-	font-size: 13px;
-	color: #444;
-}
-
-.table tr td:first-child { width: 175px }
-
-
-<<<<<<< HEAD
 .table {
 	width: 100%;
 	border-collapse: separate;
@@ -482,47 +440,10 @@ h2 {
 	width: 16%;
 	min-width: 150px;
 	max-width: 180px;
-=======
-
-
-.table th, .table td {
-	text-align: center;
-	position: relative
-}
-
-.table > tbody > tr > td, .table > thead > tr > th {
-	border-left: 1px solid #ccc;
-	border-top: 1px solid #ccc;
-	padding: 11px 6px 8px;
-}
-
-.table > thead > tr > th {
-	
-	padding: 5px;
-	-webkit-font-smoothing: antialiased;
-	font-size: 13px;
-	line-height: 20px;
-	font-weight: 600;
-	background-color: #f1f1f1;
-	background-image: -moz-linear-gradient(top,rgba(255,255,255,0.7) 25%,rgba(255,255,255,0.1) 100%);
-	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(25%,rgba(255,255,255,0.7)),color-stop(100%,rgba(255,255,255,0.1)));
-	background-image: -o-linear-gradient(top,rgba(255,255,255,0.7) 25%,rgba(255,255,255,0.1) 100%);
-	background-image: linear-gradient(to bottom,rgba(255,255,255,0.7) 25%,rgba(255,255,255,0.1) 100%);
-	border-top:0;
-	text-shadow: 0 1px 0 rgba(255,255,255,.5);
-	color: #555
-	
->>>>>>> FETCH_HEAD
-}
-
-.table td {
-	
-	height: 70px;
-	
 }
 
 
-<<<<<<< HEAD
+
 
 .table th, .table td {
 	text-align: center;
@@ -596,44 +517,6 @@ h2 {
 }
 
 
-=======
-.table tbody img {
-	vertical-align:middle;
-}
-
-
-
-
-
-
-.tooltip img {margin: -2px 0 0 6px;}
-
-.tooltip {outline:none; cursor: help;display:inline; position: relative }
-.tooltip strong {line-height:30px;}
-.tooltip:hover {text-decoration:none;}
-
-.tooltip span {
-    z-index:10;
-    display:none;
-	position:absolute;
-    padding:14px 20px;
-    top: -80px;
-    margin-left: -88px;
-    width:160px;
-    line-height:16px;
-    font-size: 12px;
-    background: #2C3843;
-	color:#f4f4f4;
-	border: 1px solid #000;
-	border-radius: 3px;
-}
-
-.tooltip:hover span {
-	display:block;
-}
-
-
->>>>>>> FETCH_HEAD
 .tooltip:hover span:after, .tooltip:hover span:before {
 	top: 100%;
 	border: solid transparent;
@@ -669,7 +552,6 @@ h2 {
 		width:300px;
 		margin-left: -350px;
 	    top: -60px;
-<<<<<<< HEAD
 }
 #kortfordelinginfo:hover span:after {
 	border-width: 8px 0 8px 16px; /*10px;*/
@@ -679,17 +561,6 @@ h2 {
 	left: 100%;
 	top: 46%;
 }
-=======
-}
-#kortfordelinginfo:hover span:after {
-	border-width: 8px 0 8px 16px; /*10px;*/
-	border-color: transparent;
-	border-left-color: #2C3843;
-	margin-left:0px;
-	left: 100%;
-	top: 46%;
-}
->>>>>>> FETCH_HEAD
 #kortfordelinginfo:hover span:before {
 	border-color: rgba(136, 183, 213, 0);
 	border-left-color: #000;
