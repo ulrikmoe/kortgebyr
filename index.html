@@ -1,9 +1,13 @@
 ---
 layout: default
+<<<<<<< HEAD
 title: Kortgebyr
 canonical: "http://kortgebyr.dk"
 description: "Kortgebyr er en prissammenligningsside for betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr."
 index: true
+=======
+title: ScanPay - Gratis Betalingsgateway
+>>>>>>> FETCH_HEAD
 ---
 
 
@@ -24,6 +28,7 @@ index: true
 			<ul style="padding: 10px">
 			
 				<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
+<<<<<<< HEAD
 	
 	
 				<li><label>Gns. ordreværdi: <input type="text" class="input" id="value" value="500" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
@@ -59,6 +64,45 @@ index: true
 	
 
 				</li>
+=======
+	
+	
+				<li><label>Gns. ordreværdi: <input type="text" class="input" id="value" value="500" onkeyup='build("keyup");' onblur='saveUrlVars();'></label></li>
+			
+			
+			
+			
+				<li>
+					<label style="margin-right:20px">Dankort: <input type="checkbox" checked="" id="dankort" onChange='build();'/></label>
+					<label>Visa: <input type="checkbox" checked="" id="visamc" onChange='build();'/></label>
+					<label>MasterCard: <input type="checkbox" checked="" id="mastercard" onChange='build();'/></label>
+					<label>Maestro: <input type="checkbox" checked="" id="maestro" onChange='build();'/></label>
+					<label>Amex: <input type="checkbox" checked="" id="amex" onChange='build();'/></label>
+					<label>JCB: <input type="checkbox" checked="" id="amex" onChange='build();'/></label>
+					<label>Diners: <input type="checkbox" checked="" id="amex" onChange='build();'/></label>
+					<label>Forbrugsforeningen: <input type="checkbox" checked="" id="amex" onChange='build();'/></label>
+				
+					
+					<label>Paii: <input type="checkbox" checked="" id="paii" onChange='build();'/></label>
+				
+
+				</li>
+				<li>
+					<label>
+						Indløsningsaftale:
+	
+						<select id="selectacquirer" onChange='build();'>
+						</select>
+					</label>
+				</li>
+				<li >
+					<label>Fast indløsergebyr pr. transaktion: <input type="text" class="input" value="0" id="acquirerFixedRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
+				</li>
+				<li>
+				<label>Variabelt indløsergebyr pr. transaktion: <input type="text" class="input" value="0%" id="acquirerPercentageRate" onkeyup='build("keyup");' onblur='saveUrlVars();'></label>
+				</li>
+				
+>>>>>>> FETCH_HEAD
 			</ul>
 	
 			<ul>
@@ -95,7 +139,11 @@ index: true
 	</div>
 		
 
+<<<<<<< HEAD
 	<div style="margin-left:247px;">
+=======
+	<div style="margin-left:267px;">
+>>>>>>> FETCH_HEAD
 		<table class="table">
 			<thead>
 				<tr>
@@ -107,7 +155,11 @@ index: true
 					</th>
 	
 					<th>
+<<<<<<< HEAD
 						Betalingsmuligheder
+=======
+						Betalingskort
+>>>>>>> FETCH_HEAD
 					</th>
 	
 					<th>
