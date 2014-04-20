@@ -209,16 +209,12 @@ function build(condition)
 	
 	
 	// Variable brugt hele vejen igennem genereringen af tabellen:
-	
+		
 	var transactions = $("transactions").value.replace(",", ".");
 	var value = $("value").value.replace(",", ".");
 	var table = $("data");
 	var rowValue = [];
 	table.innerHTML = "";
-	
-	// Variable used to set the row where gateways without dankort are moved
-	// if dankort is required by the user
-	var dankortPenaltyOffset = 0;
 
 	for (var key in PSP)
 	{
@@ -239,6 +235,7 @@ function build(condition)
 				
 				netsSupport|= dankortCheck;
 				otherAcquirerSupport|=visamcCheck;
+			
 				if ( (visamcCheck|| dankortCheck) && (n!=='maestro'|| $('3d').checked ) ) 
 				{
 
@@ -306,36 +303,18 @@ function build(condition)
 					faste_info += '<br>' + ACQUIRER[selectedAcquirer].name + ': ' + toMoney(ACQUIRER[selectedAcquirer].monthlyFee);
 					samlet += addcost;
 				}
-				
-				var rowcounter=0;
-				var finalRow = rowValue.length;
-				
-				//======= Dankort penalty start
-				// Degrade position & create crossed dankort, if Dankort is required, but not available
-				
-				if(PSP[key].cards.indexOf("dankort") === -1 && $('dankort').checked ){
-					HTML_cards = "<img src='cards/dankortCrossed.png'/>" + HTML_cards;
-					rowcounter = dankortPenaltyOffset;
-				}
-				else{
-					finalRow = dankortPenaltyOffset;
-					dankortPenaltyOffset++;
-				}
-				//======= Dankort penalty end
 	
 				//Insert at the right place to sort the PSPs by cost
 	
-				
-				while(rowcounter<finalRow && samlet>rowValue[rowcounter])
+				var rowcounter=0;
+				while(rowcounter<rowValue.length && samlet>rowValue[rowcounter])
 				{
 					rowcounter++;
 				}
-
 				
 				var row = table.insertRow(rowcounter);
 				rowValue.splice(rowcounter,0,samlet);
 	
-
 				// Insert HTML
 				var logo_cell = row.insertCell(0);
 				var indloser_cell = row.insertCell(1);

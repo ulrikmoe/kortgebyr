@@ -40,7 +40,8 @@ function defaultAcquirerCostFn(ntransactions,averageprice)
 {
 
 	var monthlytotal = include_setup_fee * this.setupFee * lostReturnsFromSetupFee / 12 + this.monthlyFee;
-	monthlytotal += ($('acquirerPercentageRate').value.replace(',','.').replace('%','').replace(' ','') / 100 * averageprice + $('acquirerFixedRate').value.replace(',','.').replace('k','').replace('r','').replace(' ','')*1 )   * ntransactions;
+	monthlytotal += ($('acquirerPercentageRate').value.replace(',','.').replace('%','').replace(' ','') / 100 * averageprice
+	+ $('acquirerFixedRate').value.replace(',','.').replace('k','').replace('r','').replace(' ','')*1 )   * ntransactions;
 
 	return monthlytotal;
 
@@ -563,7 +564,9 @@ var PSP =
 		freeTransactions: 0,
 		costfn:defaultCostFn
 	}
-
+	
+	
+	
 };
 
 
@@ -638,7 +641,7 @@ var comingSoon =
 		costfn:defaultCostFn
 	}
 	
-};
+}
 
 
 
