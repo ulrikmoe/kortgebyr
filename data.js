@@ -559,9 +559,59 @@ var PSP =
 		monthlyFee: 157.19, // 192 sek
 		monthly3dsecureFee: 0,
 		fixedTransactionFee: 1.23, // 1.5 sek
-		percentageTransactionFee: 0.9, // VIRKER IKKE
+		percentageTransactionFee: 0.9,
 		freeTransactions: 0,
 		costfn:defaultCostFn
+	},
+	"scanpay":
+	{
+		name: "Scanpay", // 19
+		logo: "scanpay.png",
+		link: "https://scanpay.dk",
+		isAcquirer: false,
+		availableAcquirers: ["teller","handelsbanken", "nordea", "seb", "swedbank"],
+		cards: ["dankort","visa","mastercard","maestro"],
+		setupFee: 0,
+		monthlyFee: 0,
+		monthly3dsecureFee: 0,
+		fixedTransactionFee: 0,
+		freeTransactions: 0,
+		costfn:defaultCostFn
+	},
+	"yourpay":
+	{
+		name: "yourpay",
+		logo: "yourpay.png",
+		link: "http://yourpay.dk",
+		isAcquirer: true,
+		cards: ["visa", "mastercard"],
+		setupFee: 0,
+		monthlyFee: 0,
+		monthly3dsecureFee: 0,
+		chargeback: 275,
+		costfn: function(ntransactions,averageprice){
+			var freetransactions;
+			var rate;
+			if(ntransactions <= 2500){
+				freetransactions = 25;
+				rate = 0.02;
+			}
+			else if( ntransactions <= 5000){
+				freetransactions = 25;
+				rate = 0.0175;
+			}
+			else{
+				freetransactions = 50;
+				rate = 0.015;
+			}
+			
+			if(ntransactions < freetransactions){
+				freetransactions = ntransactions;
+			}
+			return (ntransactions-freetransactions) * averageprice * rate;
+			
+		}
+
 	}
 
 };
