@@ -33,7 +33,7 @@ ul { list-style: none; }
 img { border:0 }
 
 .container {
-	width: 96%;
+	width: 97%;
 	min-width: 900px;
 	max-width: 1500px;
 	padding: 0;
@@ -212,17 +212,17 @@ h2 {
 .sidebar {
 	
 	float: left;
-	width: 250px;
 	font: 13px/1.4 Helvetica,Arial,sans-serif;
 	
 }
 
 
 .options {
+	display: block;
 	background:#F9F9F9;
 	border:1px solid #ccc;
 	position: relative;
-	width: 250px;
+	width: 230px;
 	min-height: 500px
 }
 
@@ -393,7 +393,6 @@ h2 {
 	text-align: left;
 	padding-left: 9px;
 	font-size: 12px;
-	max-width: 105px
 }
 
 .psp img {
@@ -437,7 +436,11 @@ h2 {
 	color: #444;
 }
 
-.table tr td:first-child { width: 175px }
+.table tr td:first-child {
+	width: 16%;
+	min-width: 150px;
+	max-width: 180px;
+}
 
 
 

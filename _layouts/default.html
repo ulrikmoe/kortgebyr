@@ -1,12 +1,11 @@
 <html><!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
-	<title>Kortgebyr - udregningsmetode</title>
-	<link rel="canonical" href="http://kortgebyr.dk">	
-	<meta name="description" content="Prissammenligningsside for betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr.">
+	<title>{{ page.title }}</title>
+	<link rel="canonical" href="{{ page.canonical }}">
+	<meta name="description" content="{{ page.description }}">
 
-	<meta name="robots" content="noindex">
-
+	{% if page.index == false %}<meta name="robots" content="noindex">{% endif %}
 	<link href="kortgebyr.css" rel="stylesheet" type="text/css" />
 	<link href="http://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet" type="text/css">
 	
