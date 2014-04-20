@@ -1,6 +1,8 @@
 CHANGELOG
 ==================
 
+TO DO: Flyt over til Jekyll
+
 TO DO: Finde en smart måde at tilføje Nordpay, Pensio m.fl.
 
 TO DO: Finde en smart måde at "straffe" bindingsperioder
@@ -12,7 +14,7 @@ TO DO: Mulighed for at vælge Maestro, American Express, JCB, Diners, Forbrugsfo
 
 TO DO: Mulighed for at vælge Paii, MobilePay (disabled), Swipp (disabled).
 
-TO DO: Fakturabetaling. For at gøre det simpelt er dette bare om løsningen tilbyder nogen som helst form for fakturabetaling. Interessant pga. potentiel merværdiskabelse for webshops.
+TO DO: Fakturabetaling. For at gøre det simpelt er dette bare om løsningen tilbyder nogen som helst form for fakturabetaling. Interessant pga. potentiel merværdiskabelse for webshops. Effekt: fjerner paypal, yourpay m.fl. 
 
 TO DO: Indløsningsaftale skal som udgangspunkt være sat til Automatisk og vi skal så vælge den billigste indløser (som udgangspunkt Teller medmindre denne ikke er en mulighed). Ved Automatisk vil løsninger som Yourpay være synlige, men vælger man f.eks. at ændre Automatisk til Teller, så forsvinder Yourpay og lignende løsninger.
 -> KOMMENTAR Dette kan i praksis ikke lade sig gøre da indløsningsaftaler hos mange indløsere forhandles (herunder SEB Euroline), og altså er priserne ikke offentlige.
