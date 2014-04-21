@@ -35,7 +35,7 @@ img { border:0 }
 .container {
 	width: 97%;
 	min-width: 900px;
-	max-width: 1500px;
+	max-width: 1300px;
 	padding: 0;
 	margin: auto;
 	position: relative;
@@ -212,6 +212,7 @@ h2 {
 .sidebar {
 	
 	float: left;
+	width: 230px;
 	font: 13px/1.4 Helvetica,Arial,sans-serif;
 	
 }
@@ -222,7 +223,6 @@ h2 {
 	background:#F9F9F9;
 	border:1px solid #ccc;
 	position: relative;
-	width: 230px;
 	min-height: 500px
 }
 
