@@ -56,32 +56,80 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
 	<div class="sidebar">
 	
 	
-		<div style="width:220px" class="list-group">
+		<div style="width:230px" class="list-group">
 			<a href="#" class="list-group-item active">Introduktion</a>
+			<a href="#" class="list-group-item">... Betalingsgateway</a>
+			<a href="#" class="list-group-item">... Betalingsløsning</a>
 			<a href="#" class="list-group-item">Beregningsmetoden</a>
-			<a href="#" class="list-group-item">Eksempel</a>
+			<a href="#" class="list-group-item">... Regneeksempel</a>
 			<a href="#" class="list-group-item">Om os</a>
 		</div>
 	
 	
 	</div>
 
-	<div style="margin-left:280px">
+	<div style="margin: 0 0 0 276px; padding-top: 1px">
 
 		
-		<h1>Eksempel på udregning af kortgebyr for betalingsgatewayen Epay med et pro-abonnement (inklusiv fraudfighter):</h1>
+		<h2 style="margin-top:0">Introduktion til kortgebyr</h2>
+		<div>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget nisl quam. Ut eu purus sagittis augue porta varius eu nec dolor. Aliquam tempus ornare ipsum, eget vulputate libero ultricies sit amet.
+		
+		
+		
+		
+		</div>
+
+
+
+		
+		<h3>Hvad er en betalingsgateway</h3>
+		
+		<div class="">
+		
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget nisl quam. Ut eu purus sagittis augue porta varius eu nec dolor. Aliquam tempus ornare ipsum, eget vulputate libero ultricies sit amet. Nulla ut aliquet libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer id velit accumsan, gravida neque nec, pretium mi. Ut lobortis pharetra consectetur. Nam ultricies cursus hendrerit. Nulla facilisi. Quisque dignissim eros quis urna vestibulum adipiscing. Maecenas venenatis metus eu elit posuere rhoncus. Duis sed ante ut est consectetur tristique. Morbi tempor, tellus eu vehicula egestas, diam leo imperdiet lorem, ut dapibus urna felis id metus.
+
+		</div>
+		
+
+		<h3>Hvad er en betalingsløsning</h3>
+
+		<div class="">
+		
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget nisl quam. Ut eu purus sagittis augue porta varius eu nec dolor. Aliquam tempus ornare ipsum, eget vulputate libero ultricies sit amet. Nulla ut aliquet libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer id velit accumsan, gravida neque nec, pretium mi. Ut lobortis pharetra consectetur. Nam ultricies cursus hendrerit. Nulla facilisi. Quisque dignissim eros quis urna vestibulum adipiscing. Maecenas venenatis metus eu elit posuere rhoncus. Duis sed ante ut est consectetur tristique. Morbi tempor, tellus eu vehicula egestas, diam leo imperdiet lorem, ut dapibus urna felis id metus.
+
+		</div>
+		
+
+
+
+
+		
+
+		<h2>Beregningsmetoden</h2>
+
+		
+		
+		
+		
+		<h2>Regneeksempel (epay)</h2>
+
+		
+		
+		Eksempel på udregning af kortgebyr for betalingsgatewayen Epay med et pro-abonnement (inklusiv fraudfighter)
 		
 		
 		<ul>
 			<li>
-				<h2>Step 1: Udregn de månedlige omkostninger</h2>
+				<h3>Step 1: Udregn de månedlige omkostninger</h3>
 				De månedlige omkostniger til kortgebyr udgøres normalt af to ting:<br>
 				Udgifter til en betalingsgateway og udgifter til indløserer.
 				<br>
 				De forskellige betalingsgateways bruger forskellige prisstrukturer, men de har typisk et et gebyr per transaktion samt et månedligt gebyr.
 				
 				<div>
-					<h3>Månedlige omkostninger til Epay:</h1>
+					<h4>Månedlige omkostninger til Epay:</h4>
 					En webshop har 1500 transaktioner om måneden til en gennemsnitsværdi på 600kr. De månedlige omkostninger til Epay er da: <br>
 					Månedlige Epay-omkostninger = (transaktioner - gratis transaktiner) * transaktionsfee + månedligt abonnement
 					<br> = ( 1500 - 500 ) * 0.55kr + 199kr = 749kr
@@ -89,7 +137,7 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
 				<br>
 				Webshoppen har vil gerne tage mod dankort, Visa og Mastercard og har derfor indgået indløsningsaftaler hhv. med NETS og Teller. Jævnfør FDIH's statistikker antages det, at 18% af kunderne betaler med Dankort og 82% af kunderne betaler med Visa eller Mastercard.
 				<div>
-					<h3>Månedlige omkostninger for dankort til NETS</h3>
+					<h4>Månedlige omkostninger for dankort til NETS</h4>
 					Nets tager 1.39kr per transaktion over 100kr. Hvis vi antager at samtlige af de 1500 transaktioner er over 100kr, vil det månedligt koste:
 					<br>
 					Månedlige NETS-omkostninger = ( transaktioner * procentdel dankorttransaktioner ) * transaktionsfee + månedligt abonnement
@@ -97,7 +145,7 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
 					= (1500 * 0.82 ) * 1.39kr + 1000kr/år / ( 12måneder/år ) = 1793.03kr
 				</div>
 				<div>
-					<h3>Månedlige omkostninger for Visa og Mastercard til Teller</h3>
+					<h4>Månedlige omkostninger for Visa og Mastercard til Teller</h4>
 					Teller tager 1.5% af beløbet, dog mindst 0.7kr per transaktion.
 					<br>Det antages, at alle transaktioner er over 0.7kr / (0.0015) = 466.67kr, således at det er procentsatsen og ikke minimumssatsen, der gælder for alle transaktioner.
 					<br>
@@ -108,22 +156,22 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
 			</li>
 			
 			<li>
-				<h2>Step 2: Korriger for mistet/forbigået forrentning pga. oprettelsesgebyret</h2>
+				<h3>Step 2: Korriger for mistet/forbigået forrentning pga. oprettelsesgebyret</h3>
 				Betaler du et oprettelsesgebyr, mister du penge du kunne have investeret i dit varelager. Vi regner med en intern rente på 16% p.a. og pålægger dette på kortgebyret for at opnå en retvisende prissammenligning.
 				<div>
-					<h3>Korrigering for Epays oprettelsesgebyr:</h3>
+					<h4>Korrigering for Epays oprettelsesgebyr:</h4>
 					Epay Pro har et oprettelsesgebyr på 599kr
 					<br>Korrigerede Epay-omkostninger = Månedlige Epay-omkostninger + Oprettelsesgebyr * intern rente per år / 12 = 
 					<br>= 749kr + 599kr * 0.16 / 12 = 756.99kr
 				</div>
 				<div>
-					<h3>Korrigering for NETS' oprettelsesgebyr:</h3>
+					<h4>Korrigering for NETS' oprettelsesgebyr:</h4>
 					NETS har et oprettelsesgebyr på 250kr
 					<br>Korrigerede NETS-omkostninger = Månedlige Epay-omkostninger + Oprettelsesgebyr * intern rente per år / 12 = 
 					<br>= 1793.03 + 250kr * 0.16 / 12 = 1796.37kr
 				</div>
 				<div>
-					<h3>Korrigering for Tellers oprettelsesgebyr:</h3>
+					<h4>Korrigering for Tellers oprettelsesgebyr:</h4>
 					Teller har et oprettelsesgebyr på 1000kr
 					<br>Korrigerede Teller-omkostninger = Månedlige Teller-omkostninger + Oprettelsesgebyr * intern rente per år / 12 = 
 					<br>= 2530 + 1000 * 0.16 / 12 = 2543.33kr
@@ -135,7 +183,7 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
 				
 			</li>
 			<li>
-				<h2>Step 3: Del omkostningerne ud på hver transaktion</h2>
+				<h3>Step 3: Del omkostningerne ud på hver transaktion</h3>
 					Kortgebyr = Total-omkostninger / Transaktioner
 					<br>= 5096.69kr / 1500 = 3.40kr
 			</li>
