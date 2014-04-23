@@ -119,7 +119,7 @@ var opts = {
     'fraud_fighter': {
         get: function () { return getbool('fraud_fighter'); },
         set: function (v) { setbool('fraud_fighter', v); },
-        def: true
+        def: false
     },
     'dankort': {
         get: function () { return getbool('dankort'); },
