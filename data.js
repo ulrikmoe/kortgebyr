@@ -665,22 +665,5 @@ var psps = {
                 trans: o.avgvalue.scale(fee / 100).scale(Math.max(o.n - nfree, 0))
             };
         }
-    },
-    "noirepay": {
-        name: "Noirepay",
-        logo: "noirepay.png",
-        link: "http://noirepay.se/",
-        is_acquirer: true,
-        acquirers: [],
-        cards: ["visa", "mastercard", "maestro"],
-        costfn: function (o) {
-            if (o.antifraud) { return null; }
-
-            return {
-                setup: new Currency(0, 'SEK'),
-                monthly: new Currency(192, 'SEK'),
-                trans: o.avgvalue.scale(1.9 / 100).add(new Currency(1, 'SEK')).scale(o.n)
-            };
-        }
     }
 };
