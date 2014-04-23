@@ -257,24 +257,6 @@ function build(action)
     var info_icon ='<p class="tooltip"><img src="tooltip.gif"><span>';
     var info_icon_end='</span></p>';
 
-    var acq_prices = [];
-    var acq_auto = [];
-    if (acq == "auto") {
-        for (var a in acqs) {
-            if (a == "nets") { continue; }
-
-            var p = acqs[a].costfn(o);
-            var tot = price_total(p, 1, newstate['setup_loss']).dkk();
-            var i;
-            for (i = 0; i < acq_prices.length; ++i) {
-                if (tot < acq_prices[i]) { break; }
-            }
-
-            acq_prices.splice(i, 0, tot);
-            acq_auto.splice(i, 0, a);
-        }
-    }
-
     for (var k in psps) {
         var use_dankort = newstate['dankort'];
         var use_visamc = newstate['visa_mastercard'];
@@ -293,13 +275,26 @@ function build(action)
         if (psps[k].is_acquirer && acq != 'auto') { continue; }
 
         var tmpacq = acq;
-        for (var i = 0; i < acq_auto.length; ++i) {
-            if (psps[k].acquirers.indexOf(acq_auto[i]) !== -1) {
-                tmpacq = acq_auto[i];
-                break;
+
+        if (tmpacq == "auto") {
+            var best = null;
+            for (var a in acqs) {
+                if (a == "nets") { continue; }
+                if (psps[k].acquirers.indexOf(a) < 0) { continue; }
+                if (best == null) {
+                    tmpacq = a;
+                    best = acqs[a].costfn(o);
+                    continue;
+                }
+
+                var cmp = acqs[a].costfn(o);
+                if (price_total(best, 1, newstate['setup_loss']).dkk() >
+                    price_total(cmp, 1, newstate['setup_loss']).dkk()) {
+                    tmpacq = a;
+                    best = cmp;
+                }
             }
         }
-
         if (psps[k].acquirers.indexOf(tmpacq) < 0 && !psps[k].is_acquirer) { continue; }
 
         var visamc_scale = 0.18;
