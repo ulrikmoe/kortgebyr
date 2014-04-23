@@ -272,6 +272,8 @@ function build(action)
         if (!use_dankort && !use_visamc) { continue; }
         if (use_visamc && psps[k].cards.length == 1 && psps[k].cards[0] == 'dankort') { continue; }
 
+        if (psps[k].is_acquirer && acq != 'auto') { continue; }
+
         var tmpacq = acq;
 
         if (tmpacq == "auto") {
