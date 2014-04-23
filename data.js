@@ -542,10 +542,10 @@ var psps = {
     "pointbas": {
         name: "Point Bas",
         logo: "point.png",
-        link: "http://www.point.se/sv/Sweden/Start/E-handel/E-handel-Bas/",
+        link: "http://www.point.se/sv/Sweden/Start/E-handel/",
         is_acquirer: false,
         acquirers: ["handelsbanken", "nordea", "seb", "swedbank"],
-        cards: ["visa", "mastercard", "maestro"],
+        cards: ["visa", "mastercard"],
         costfn: function (o) {
             return {
                 setup: new Currency(999, 'SEK'),
@@ -557,10 +557,10 @@ var psps = {
     "pointpremium": {
         name: "Point Premium",
         logo: "point.png",
-        link: "http://www.point.se/sv/Sweden/Start/E-handel/E-handel-Bas/",
+        link: "http://www.point.se/sv/Sweden/Start/E-handel/",
         is_acquirer: false,
         acquirers: ["handelsbanken", "nordea", "seb", "swedbank"],
-        cards: ["visa", "mastercard", "maestro"],
+        cards: ["visa", "mastercard"],
         costfn: function (o) {
             return {
                 setup: new Currency(2499, 'SEK'),
@@ -572,10 +572,10 @@ var psps = {
     "pointpremiumplus": {
         name: "Point PremiumPlus",
         logo: "point.png",
-        link: "http://www.point.se/sv/Sweden/Start/E-handel/E-handel-Bas/",
+        link: "http://www.point.se/sv/Sweden/Start/E-handel/",
         is_acquirer: false,
-        acquirers: ["handelsbanken", "nordea", "seb", "swedbank"],
-        cards: ["visa", "mastercard", "maestro"],
+        acquirers: ["nets", "handelsbanken", "nordea", "seb", "swedbank"],
+        cards: ["dankort", "visa", "mastercard"],
         costfn: function (o) {
             return {
                 setup: new Currency(4999, 'SEK'),
