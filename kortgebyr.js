@@ -314,6 +314,7 @@ function build(action)
         }
 
         var c_psp = psps[k].costfn(o);
+        if (c_psp == null) { continue; }
 
         var i_setup = {};
         var i_fixedmonth = {};

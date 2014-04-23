@@ -271,12 +271,16 @@ var psps = {
         cards: ["dankort"],
         costfn: function (o) {
             var fee = 0.25;
-            if (o.antifraud) { fee += 0.30; }
+            var ff = new Currency(0, 'DKK');
+            if (o.antifraud) {
+                fee += 0.30;
+                ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
+            }
 
             return {
                 setup: new Currency(399, 'DKK'),
                 monthly: new Currency(99, 'DKK'),
-                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0))
+                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0)).add(ff)
             };
         }
     },
@@ -289,12 +293,16 @@ var psps = {
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             var fee = 0.25;
-            if (o.antifraud) { fee += 0.30; }
+            var ff = new Currency(0, 'DKK');
+            if (o.antifraud) {
+                fee += 0.30;
+                ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
+            }
 
             return {
                 setup: new Currency(599, 'DKK'),
                 monthly: new Currency(199, 'DKK'),
-                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0))
+                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0)).add(ff)
             };
         }
     },
@@ -307,12 +315,16 @@ var psps = {
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             var fee = 0.25;
-            if (o.antifraud) { fee += 0.30; }
+            var ff = new Currency(0, 'DKK');
+            if (o.antifraud) {
+                fee += 0.30;
+                ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
+            }
 
             return {
                 setup: new Currency(999, 'DKK'),
                 monthly: new Currency(299, 'DKK'),
-                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0))
+                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0)).add(ff)
             };
         }
     },
@@ -414,6 +426,8 @@ var psps = {
         acquirers: ["nets", "teller"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
+            if (o.antifraud) { return null; }
+
             var s = 199;
             var m = 149;
             if (o.intlsecure) {
@@ -436,6 +450,8 @@ var psps = {
         acquirers: ["nets", "teller"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
+            if (o.antifraud) { return null; }
+
             return {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(198 + (o.intlsecure ? 49 : 0), 'DKK'),
@@ -607,6 +623,8 @@ var psps = {
         acquirers: [],
         cards: ["visa", "mastercard"],
         costfn: function (o) {
+            if (o.antifraud) { return null; }
+
             var fee;
             var nfree;
 
