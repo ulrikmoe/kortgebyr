@@ -32,11 +32,18 @@
 			</span>
 		</div>	
 
-		<div class="contact">
+		<div class="menu">
+			{% if page.canonical == "http://kortgebyr.dk" %}
+			<a href="/" class="active">Forside</a>
+			{% else %}
 			<a href="/">Forside</a>
-			<a href="/metode.html">Forklaring</a>
+			{% endif %}
+			{% if page.canonical == "http://kortgebyr.dk/forklaring.html" %}
+			<a href="/forklaring.html" class="active">Forklaring</a>
+			{% else %}
+			<a href="/forklaring.html">Forklaring</a>
+			{% endif %}
 			<a href="mailto:ulrik.moe@gmail.com">Kontakt</a>
-			<a href="/changelog.md">Changelog</a>
 		</div>
 
 		<div class="logo">
