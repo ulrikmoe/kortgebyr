@@ -274,6 +274,9 @@ function build(action)
 
         if (psps[k].is_acquirer && acq != 'auto') { continue; }
 
+        var tmpacq = acq;
+        var tmpo = o;
+
         var visamc_scale = 0.18;
         var dankort_scale = 0.82;
         if (!use_dankort) {
@@ -283,9 +286,9 @@ function build(action)
         if (!use_visamc) {
             visamc_scale = 0;
             dankort_scale = 1;
+            tmpo.visasecure = false;
         }
 
-        var tmpacq = acq;
         if (tmpacq == "auto") {
             var best = null;
             for (var a in acqs) {
@@ -293,11 +296,11 @@ function build(action)
                 if (psps[k].acquirers.indexOf(a) < 0) { continue; }
                 if (best == null) {
                     tmpacq = a;
-                    best = acqs[a].costfn(o);
+                    best = acqs[a].costfn(tmpo);
                     continue;
                 }
 
-                var cmp = acqs[a].costfn(o);
+                var cmp = acqs[a].costfn(tmpo);
                 if (price_total(best, visamc_scale, newstate['setup_loss']).dkk() >
                     price_total(cmp, visamc_scale, newstate['setup_loss']).dkk()) {
                     tmpacq = a;
@@ -307,7 +310,7 @@ function build(action)
         }
         if (psps[k].acquirers.indexOf(tmpacq) < 0 && !psps[k].is_acquirer) { continue; }
 
-        var c_psp = psps[k].costfn(o);
+        var c_psp = psps[k].costfn(tmpo);
         if (c_psp == null) { continue; }
 
         var i_setup = {};
@@ -323,7 +326,7 @@ function build(action)
         i_totalmonth[psps[k].name] = price_total(c_psp, psps[k].is_acquirer ? visamc_scale : 1, newstate['setup_loss']);
 
         if (use_dankort) {
-            var c_nets = acqs['nets'].costfn(o);
+            var c_nets = acqs['nets'].costfn(tmpo);
             var netsname = 'nets (' + dankort_scale * 100 + '% tr.)';
 
             i_setup['nets'] = c_nets.setup;
@@ -335,7 +338,7 @@ function build(action)
         }
 
         if (!psps[k].is_acquirer && use_visamc) {
-            var c_acq = acqs[tmpacq].costfn(o);
+            var c_acq = acqs[tmpacq].costfn(tmpo);
             var acqname = acqs[tmpacq].name + ' (' + visamc_scale * 100 + '% tr.)';
 
             i_setup[acqs[tmpacq].name] = c_acq.setup;
