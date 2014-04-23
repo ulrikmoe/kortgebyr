@@ -105,6 +105,26 @@ var cards = {
     "maestro": {
         name: "Maestro",
         logo: "maestro.png"
+    },
+    "diners": {
+	    name: "Diners",
+		logo: ""
+    },
+    "amex": {
+	    name: "American Express",
+		logo: ""
+    },
+    "jcb": {
+	    name: "JCB",
+		logo: ""
+    },
+    "unionpay": {
+	    name: "UnionPay",
+		logo: ""
+    },
+    "forbrugsforeningen": {
+	    name: "Forbrugsforeningen",
+		logo: ""
     }
 };
 
@@ -155,16 +175,6 @@ var acqs = {
             };
         }
     },
-    "euroline": {
-        name: "SEB Euroline",
-        logo: "euroline.png",
-        cards: ["visa", "mastercard", "maestro"],
-        fee_setup: new Currency(0, 'DKK'),
-        fee_monthly: new Currency(0, 'DKK'),
-        fee_fixed: new Currency(0, 'DKK'),
-        fee_variable: 1.7,
-        costfn: acq_cost_default
-    },
     "swedbank": {
         name: "Swedbank",
         logo: "swedbank.png",
@@ -172,7 +182,7 @@ var acqs = {
         fee_setup: new Currency(1900, 'DKK'),
         fee_monthly: new Currency(100, 'DKK'),
         fee_fixed: new Currency(0, 'DKK'),
-        fee_variable: 1.7,
+        fee_variable: 1.5,
         costfn: acq_cost_default
     },
     "handelsbanken": {
@@ -182,7 +192,7 @@ var acqs = {
         fee_setup: new Currency(1900, 'DKK'),
         fee_monthly: new Currency(100, 'DKK'),
         fee_fixed: new Currency(0, 'DKK'),
-        fee_variable: 1.7,
+        fee_variable: 1.5,
         costfn: acq_cost_default
     },
     "valitor": {
@@ -192,7 +202,7 @@ var acqs = {
         fee_setup: new Currency(0, 'DKK'),
         fee_monthly: new Currency(0, 'DKK'),
         fee_fixed: new Currency(0, 'DKK'),
-        fee_variable: 1.7,
+        fee_variable: 1.5,
         costfn: acq_cost_default
     },
     "nordea": {
@@ -202,7 +212,7 @@ var acqs = {
         fee_setup: new Currency(0, 'DKK'),
         fee_monthly: new Currency(0, 'DKK'),
         fee_fixed: new Currency(0, 'DKK'),
-        fee_variable: 1.6,
+        fee_variable: 1.5,
         costfn: acq_cost_default
     }
 };
@@ -573,7 +583,7 @@ var psps = {
         link: "http://www.point.se/sv/Sweden/Start/E-handel/",
         is_acquirer: false,
         acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
-        cards: ["visa", "mastercard"],
+        cards: ["visa", "mastercard", "diners", "amex"],
         costfn: function (o) {
             if (o.antifraud) { return null; }
 
@@ -590,7 +600,7 @@ var psps = {
         link: "http://www.point.se/sv/Sweden/Start/E-handel/",
         is_acquirer: false,
         acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
-        cards: ["visa", "mastercard"],
+        cards: ["visa", "mastercard", "diners", "amex"],
         costfn: function (o) {
             if (o.antifraud) { return null; }
             
@@ -607,7 +617,7 @@ var psps = {
         link: "http://www.point.se/sv/Sweden/Start/E-handel/",
         is_acquirer: false,
         acquirers: ["nets", "handelsbanken", "nordea", "euroline", "swedbank"],
-        cards: ["dankort", "visa", "mastercard"],
+        cards: ["dankort", "visa", "mastercard", "diners", "amex", "unionpay", "jcb"],
         costfn: function (o) {
             if (o.antifraud) { return null; }
 

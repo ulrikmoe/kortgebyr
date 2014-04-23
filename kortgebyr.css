@@ -490,9 +490,10 @@ h2 {
 
 
 
-.tooltip img {margin: -2px 0 0 6px;}
 
-.tooltip {outline:none; cursor: help;display:inline; position: relative }
+.tooltip {outline:none; cursor: help; display: inline-block; position: relative;}
+
+.tooltip img {margin: -2px 0 0 6px; opacity: 0.7; }
 .tooltip strong {line-height:30px;}
 .tooltip:hover {text-decoration:none;}
 

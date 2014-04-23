@@ -383,7 +383,7 @@ function build(action)
 
         var h_cards = "";
         if (dankort_penalty) {
-            h_cards += '<img src="cards/dankortCrossed.png" />';
+            //h_cards += '<img src="cards/dankortCrossed.png" />';
         }
         for (var l in n_cards) {
             var logo = cards[n_cards[l]].logo;
