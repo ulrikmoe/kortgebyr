@@ -70,7 +70,7 @@ function setoption(v, prefix)
 function getpercent(k)
 {
     var elem = $(k);
-    var str = elem.value.replace('%', '').trim();
+    var str = elem.value.replace('%', '').replace(',', '.').trim();
     if (!isNaN(parseFloat(str)) && isFinite(str)) {
         $(k).style.background = color_good;
         return parseFloat(str);
@@ -81,7 +81,7 @@ function getpercent(k)
 
 function setpercent(k, v)
 {
-    $(k).value = parseFloat(v) + "%";
+    $(k).value = (parseFloat(v) + "%").replace('.', ',');
     $(k).style.background = color_good;
 }
 
