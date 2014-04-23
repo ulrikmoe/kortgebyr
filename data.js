@@ -1,8 +1,8 @@
 var currency_value = {
     'DKK':    1,
-    'SEK':    0.82,
-    'EUR':    7.47,
-    'BTC': 2651.15
+    'SEK':    0.822,
+    'EUR':    7.4665,
+    'BTC': 2631.135
 }
 
 var currency_map = {
