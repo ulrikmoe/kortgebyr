@@ -432,7 +432,7 @@ var psps = {
 
             var s = 199;
             var m = 149;
-            if (o.intlsecure) {
+            if (o.visasecure) {
                 s += 99;
                 m += 49;
             }
@@ -456,7 +456,7 @@ var psps = {
 
             return {
                 setup: new Currency(0, 'DKK'),
-                monthly: new Currency(198 + (o.intlsecure ? 49 : 0), 'DKK'),
+                monthly: new Currency(198 + (o.visasecure ? 49 : 0), 'DKK'),
                 trans: new Currency(0, 'DKK')
             };
         }
