@@ -381,12 +381,18 @@ function build(action)
             h_cards += '<img src="cards/dankortCrossed.png" />';
         }
         for (var l in n_cards) {
-            h_cards += '<img src="cards/' + cards[n_cards[l]].logo + '" />';
+            var logo = cards[n_cards[l]].logo;
+            var name = cards[n_cards[l]].name;
+            h_cards += '<img src="cards/' + logo + '" alt="' + name +
+                       '" title="' + name + '" />';
         }
 
         var h_acqs = [];
         for (var l in n_acqs) {
-            h_acqs.push('<img src="acquirer/' + acqs[n_acqs[l]].logo + '" />');
+            var logo = acqs[n_acqs[l]].logo;
+            var name = acqs[n_acqs[l]].name;
+            h_acqs.push('<img src="acquirer/' + logo + '" alt="' + name +
+                        '" title="' + name + '" />');
         }
         h_acqs = h_acqs.join("<br />");
 
@@ -413,7 +419,10 @@ function build(action)
         var totalmonth_cell = row.insertCell(5);
         var trans_cell = row.insertCell(6);
 
-        logo_cell.innerHTML = '<div class="psp"><a href=' + psps[k].link + '><img src="psp/' + psps[k].logo + '"><br>' + psps[k].name + '</a></div>';
+        logo_cell.innerHTML = '<div class="psp"><a href=' + psps[k].link +
+            '><img src="psp/' + psps[k].logo + '" alt="' + psps[k].name +
+            '" title="' + psps[k].name + '" /><br>' + psps[k].name +
+            '</a></div>';
         acq_cell.innerHTML = h_acqs;
         acq_cell.className = 'acquirer';
         card_cell.innerHTML = h_cards;
