@@ -26,7 +26,7 @@ function mkcurregex()
 {
     var a = [];
     for (var k in currency_rmap) { a.push(k); }
-    for (var k in currency_map) { a.push(k); }
+    for (var k in currency_value) { a.push(k); }
     return RegExp("^ *([0-9][0-9., ]*)(" + a.join("|") + ")? *$", "i");
 }
 
