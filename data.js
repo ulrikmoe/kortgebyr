@@ -162,7 +162,7 @@ var acqs = {
         fee_setup: new Currency(0, 'DKK'),
         fee_monthly: new Currency(0, 'DKK'),
         fee_fixed: new Currency(0, 'DKK'),
-        fee_variable: 1.2,
+        fee_variable: 1.7,
         costfn: acq_cost_default
     },
     "swedbank": {
