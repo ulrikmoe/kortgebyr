@@ -194,6 +194,16 @@ var acqs = {
         fee_fixed: new Currency(0, 'DKK'),
         fee_variable: 1.7,
         costfn: acq_cost_default
+    },
+    "nordea": {
+        name: "Nordea",
+        logo: "nordea.png",
+        cards: ["visa", "mastercard", "maestro"],
+        fee_setup: new Currency(0, 'DKK'),
+        fee_monthly: new Currency(0, 'DKK'),
+        fee_fixed: new Currency(0, 'DKK'),
+        fee_variable: 1.6,
+        costfn: acq_cost_default
     }
 };
 
@@ -225,7 +235,7 @@ var psps = {
         logo: "quickpay.png",
         link: "http://quickpay.dk",
         is_acquirer: false,
-        acquirers: ["nets", "seb", "teller", "swedbank","valitor"],
+        acquirers: ["nets", "seb", "teller", "swedbank", "valitor", "Elavon", "Handelsbanken"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             var limits = [500, 600, 1000, 3000, 10000, 30000, 30000];
@@ -326,7 +336,7 @@ var psps = {
         logo: "dibs.png",
         link: "http://dibs.dk",
         is_acquirer: false,
-        acquirers: ["nets", "seb", "teller", "swedbank"],
+        acquirers: ["nets", "seb", "teller", "swedbank", "valitor", "handelsbanken", "Elavon"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             return {
@@ -341,7 +351,7 @@ var psps = {
         logo: "dibs.png",
         link: "http://dibs.dk",
         is_acquirer: false,
-        acquirers: ["nets", "seb", "teller", "swedbank"],
+        acquirers: ["nets", "seb", "teller", "swedbank", "valitor", "handelsbanken", "Elavon"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             return {
@@ -423,7 +433,7 @@ var psps = {
         logo: "wannafind.png",
         link: "https://wannafind.dk/betalingsgateway/",
         is_acquirer: false,
-        acquirers: ["nets", "seb", "teller", "swedbank"],
+        acquirers: ["nets", "teller"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             return {
@@ -519,7 +529,7 @@ var psps = {
         logo: "payer.png",
         link: "http://payer.se/betallosning/",
         is_acquirer: false,
-        acquirers: ["teller"],
+        acquirers: ["handelsbanken", "seb", "swedbank"],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
             return {
@@ -534,7 +544,7 @@ var psps = {
         logo: "point.png",
         link: "http://www.point.se/sv/Sweden/Start/E-handel/E-handel-Bas/",
         is_acquirer: false,
-        acquirers: ["teller", "handelsbanken", "nordea", "seb", "swedbank"],
+        acquirers: ["handelsbanken", "nordea", "seb", "swedbank"],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
             return {
@@ -549,7 +559,7 @@ var psps = {
         logo: "point.png",
         link: "http://www.point.se/sv/Sweden/Start/E-handel/E-handel-Bas/",
         is_acquirer: false,
-        acquirers: ["teller", "handelsbanken", "nordea", "seb", "swedbank"],
+        acquirers: ["handelsbanken", "nordea", "seb", "swedbank"],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
             return {
@@ -564,7 +574,7 @@ var psps = {
         logo: "point.png",
         link: "http://www.point.se/sv/Sweden/Start/E-handel/E-handel-Bas/",
         is_acquirer: false,
-        acquirers: ["teller", "handelsbanken", "nordea", "seb", "swedbank"],
+        acquirers: ["handelsbanken", "nordea", "seb", "swedbank"],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
             return {
@@ -579,7 +589,7 @@ var psps = {
         logo: "certitrade.png",
         link: "http://www.certitrade.net/kortbetalning.php",
         is_acquirer: false,
-        acquirers: ["teller", "handelsbanken", "nordea", "seb", "swedbank"],
+        acquirers: ["handelsbanken", "nordea", "seb", "swedbank"],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
             return {
