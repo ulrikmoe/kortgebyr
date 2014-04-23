@@ -1,384 +1,436 @@
-function $(s){
+function $(s) { return document.getElementById(s); }
 
-	return document.getElementById(s);
-}
+var color_error = "#f88";
+var color_good = null;
 
-var valuta = "kr";
-
-
-
-var VARS=
+function getint(k)
 {
-	'transactions':
-	{
-		field: 'transactions',
-		query: 'trn',
-		type: 'int',
-		default: 100
-	},
-	'average_value':
-	{
-		field: 'value',
-		query: 'avg',
-		type: 'int',
-		default: 500
-	},
-	'acquirer_selection':
-	{
-		field: 'selectacquirer',
-		query: 'acq',
-		type: 'select',
-		default: 'teller'
-	},
-	'acquirer_fee':
-	{
-		field: 'acquirerFixedRate',
-		query: 'fee',
-		type: 'int',
-		default: function()
-				{
-					var curAcq=$('selectacquirer').options[ $('selectacquirer').selectedIndex ].id.substring(7);
-					return ACQUIRER[curAcq].fixedTransactionFee;
-				}
-	},
-	'acquirer_percent':
-	{
-		field: 'acquirerPercentageRate',
-		query: 'pfee',
-		type: 'int',
-		default: function()
-				{
-					var curAcq=$('selectacquirer').options[ $('selectacquirer').selectedIndex ].id.substring(7);
-					return ACQUIRER[curAcq].percentageTransactionFee;
-				}
-	},
-	'3dsecure':
-	{
-		field: '3d',
-		query: '3ds',
-		type: 'checkbox',
-		default: 1
-	},
-	'dankort':
-	{
-		field: 'dankort',
-		query: 'dk', 
-		type: 'checkbox',
-		default: 1
-	},
-	'visa_mastercard':
-	{
-		field: 'visamc',
-		query: 'vmc',
-		type: 'checkbox',
-		default: 1
-	}
-	
-}
-function setFieldValue(key,value){
-	switch(VARS[key].type)
-	{
-	case 'int':
-		$(VARS[key].field).value=value;
-		break;
-	case 'checkbox':
-		$(VARS[key].field).checked =( value === 1);
-		break;
-	case 'select':
-		$('option_'+value).selected = true;
-	}
-}
-function getFieldValue(key){
-	var value;
-	switch(VARS[key].type)
-	{
-	case 'int':
-		value=$(VARS[key].field).value.replace(',','.').replace('k','').replace('r','').replace(' ','');
-		break;
-	case 'checkbox':
-		value=$(VARS[key].field).checked;
-		break;
-	case 'select':
-		value=$(VARS[key].field).options[ $(VARS[key].field).selectedIndex ].id.substr(7);
-		break;
-	}
-	return value;
-}
-
-function getValue(n)
-{
-	if(typeof n == 'function')
-	{
-		return n();
-	}
-	else return n;
-}
-
-function parseUrlVars()
-{
-	if ( location.search !== "" )
-	{
-		var varTable = [];
-		var x = location.search.substr(1).toLowerCase().split("&");
-		
-		for (var i=0; i<x.length; i++)
-		{
-			var y = x[i].split("=");
-			varTable[y[0]] = y[1];
-		}
-	}
-	for(key in VARS)
-	{
-		if(varTable && varTable[VARS[key].query])
-		{
-
-			setFieldValue( key , varTable[VARS[key].query] );
-		}
-		else
-		{
-			setFieldValue( key , getValue(VARS[key].default) );	
-		}
-
-	}
-}
-
-function saveUrlVars()
-{
-	
-	var str='';
-	
-	for(key in VARS)
-	{
-
-		if(getFieldValue(key) != getValue(VARS[key].default))
-		{
-			str += VARS[key].query+'='+getFieldValue(key);
-			if (str!=='') { str+='&'; }
-		}
-	}
-	var qmark = '';
-	if (str[str.length - 1]==='&') { str=str.substring(0, str.length - 1); }
-	if (str!=='') { qmark='?'; }
-	if(window.location.pathname+qmark+str !== window.location.pathname+window.location.search )
-	{
-		history.pushState({ foo: window.location.search },'b', window.location.pathname+qmark+str);
-	}
-}
-window.addEventListener('popstate', function(event) {
-    if (event.state) {
-		parseUrlVars();
-		build('popstate');
+    var elem = $(k);
+    var str = elem.value.trim();
+    if (!isNaN(parseFloat(str)) && isFinite(str) &&
+        parseFloat(str) == parseInt(str, 10)) {
+        $(k).style.background = color_good;
+        return parseInt(str, 10);
     }
-}, false);
-
-
-function build(condition)
-{
-	//Generer muligheden for at vælge indløser, samt vælg indløser:
-	
-	if(condition === 'init')
-	{
-		var acquirersString="";
-		for(var key in ACQUIRER)
-		{
-			if( key !== 'nets' )
-			{
-				acquirersString += '<option id="option_'+ key + '">' + ACQUIRER[key].name + '</option>';
-			}
-		}
-		$('selectacquirer').innerHTML = acquirersString;
-		parseUrlVars();
-		history.replaceState({ foo: window.location.search },'b',window.location.pathname+window.location.search);
-	
-	}
-	var selectedAcquirer = $('selectacquirer').options[ $('selectacquirer').selectedIndex ].id.substring(7);
-	if( selectedAcquirer !== this.previousAcquirer && condition !== 'init')
-	{
-		$('acquirerFixedRate').value=(ACQUIRER[selectedAcquirer].fixedTransactionFee+'kr').replace(".", ",");
-		$('acquirerPercentageRate').value=(ACQUIRER[selectedAcquirer].percentageTransactionFee+'%').replace(".", ",");
-	}
-	this.previousAcquirer=selectedAcquirer;
-	if(selectedAcquirer==='teller'){
-		$('acquirerFixedRate').parentNode.style.display='none';
-		$('acquirerPercentageRate').parentNode.style.display='none';
-	}
-	else{
-		$('acquirerFixedRate').parentNode.style.display='inline';
-		$('acquirerPercentageRate').parentNode.style.display='inline';
-	}
-	
-	
-	// Variable brugt hele vejen igennem genereringen af tabellen:
-	
-	var transactions = $("transactions").value.replace(",", ".");
-	var value = $("value").value.replace(",", ".");
-	var table = $("data");
-	var rowValue = [];
-	table.innerHTML = "";
-	
-	// Variable used to set the row where gateways without dankort are moved
-	// if dankort is required by the user
-	var dankortPenaltyOffset = 0;
-
-	for (var key in PSP)
-	{
-	
-		if ((PSP[key].isAcquirer || PSP[key].availableAcquirers.indexOf(selectedAcquirer) >-1 || PSP[key].availableAcquirers == 0)  
-		&& ( !( $('dankort').checked && $('visamc').checked ) 
-			|| ( PSP[key].cards.indexOf('visa') > -1 && PSP[key].cards.indexOf('mastercard') > -1 ) ) )
-		{
-			var netsSupport = 0, otherAcquirerSupport = 0;
-			var HTML_cards = "";
-			var isAcquirer = PSP[key].isAcquirer;
-			
-			for(var i in PSP[key].cards)
-			{
-				var n= PSP[key].cards[i];
-				var dankortCheck = ( $('dankort').checked && n === 'dankort');
-				var visamcCheck= ( $('visamc').checked && ACQUIRER[selectedAcquirer].cards.indexOf(n) > -1  );
-				
-				netsSupport|= dankortCheck;
-				otherAcquirerSupport|=visamcCheck;
-				if ( (visamcCheck|| dankortCheck) && (n!=='maestro'|| $('3d').checked ) ) 
-				{
-
-					HTML_cards += "<img src='cards/"+CARDS[n].logo+"'/>";
-
-				}
-			}
-			
-			// Fortsæt kun hvis PSP'en supporter nogen af de valgte kort:
-			if ( HTML_cards !== "")
-			{
-				var indloser_icons='';
-				var info_icon ='<p class="tooltip"><img src="tooltip.gif"><span>';
-				var info_icon_end='</span></p>';
-	
-				//Assumed 80% Dankort og 20% visa/mastercard jf. statistik
-				var dkshare, vmshare;
-				
-				if ( netsSupport && (!isAcquirer) )
-				{
-					indloser_icons='<img src="acquirer/nets.png">';
-					if ( otherAcquirerSupport )
-					{
-						indloser_icons += '<br><img src="acquirer/' + ACQUIRER[ selectedAcquirer ].logo + '">';
-						dkshare = 0.82; vmshare=0.18;
-					}
-					else
-					{ 
-						dkshare=1; vmshare=0;
-					}
-				}
-				else
-				{
-					if (!isAcquirer)
-					{
-						indloser_icons+= '<br><img src="acquirer/' + ACQUIRER[ selectedAcquirer ].logo + '">';
-						dkshare=0  ;vmshare=1;
-					}
-					
-				}
-				
-				// Rækken bliver nu konstrueret:
-	
-				var samlet = PSP[key].costfn(transactions,value);
-				var samlet_info = info_icon + PSP[key].name + ': ' + toMoney(samlet);		
-				var samletgebyr_info = info_icon + PSP[key].name + ': ' + toMoney(samlet / transactions);
-				var oprettelse_info = info_icon + PSP[key].name + ': ' + toMoney(PSP[key].setupFee);
-				var faste_info = info_icon + PSP[key].name + ': '+ toMoney(PSP[key].monthlyFee + $('3d').checked * PSP[key].monthly3dsecureFee);
-				var addcost;
-				if (!isAcquirer && netsSupport)
-				{
-					addcost = ACQUIRER.nets.costfn( transactions * dkshare,value );
-					samlet_info += '<br>' + ACQUIRER.nets.name + ' ('+(dkshare * 100) + '% tr.): '+ toMoney(addcost);
-					samletgebyr_info += '<br>'+ACQUIRER.nets.name+' ('+(dkshare * 100)+'% tr.): '+ toMoney(addcost/transactions);
-					oprettelse_info += '<br>'+ACQUIRER.nets.name+': '+ toMoney(ACQUIRER.nets.setupFee);
-					faste_info += '<br>'+ACQUIRER.nets.name + ': ' + toMoney(ACQUIRER.nets.monthlyFee);
-					samlet += addcost;
-				}
-				if (!isAcquirer && otherAcquirerSupport)
-				{
-					addcost = ACQUIRER[selectedAcquirer].costfn( transactions * vmshare, value);
-					samlet_info += '<br>' + ACQUIRER[selectedAcquirer].name + ' (' + (vmshare * 100) + '% tr.): ' + toMoney(addcost);
-					samletgebyr_info += '<br>' + ACQUIRER[selectedAcquirer].name+' (' + (vmshare * 100) + '% tr.): ' + toMoney(addcost/transactions);
-					oprettelse_info += '<br>' + ACQUIRER[selectedAcquirer].name + ': ' + toMoney(ACQUIRER[selectedAcquirer].setupFee);
-					faste_info += '<br>' + ACQUIRER[selectedAcquirer].name + ': ' + toMoney(ACQUIRER[selectedAcquirer].monthlyFee);
-					samlet += addcost;
-				}
-				
-				var rowcounter=0;
-				var finalRow = rowValue.length;
-				
-				//======= Dankort penalty start
-				// Degrade position & create crossed dankort, if Dankort is required, but not available
-				
-				if(PSP[key].cards.indexOf("dankort") === -1 && $('dankort').checked ){
-					HTML_cards = "<img src='cards/dankortCrossed.png'/>" + HTML_cards;
-					rowcounter = dankortPenaltyOffset;
-				}
-				else{
-					finalRow = dankortPenaltyOffset;
-					dankortPenaltyOffset++;
-				}
-				//======= Dankort penalty end
-	
-				//Insert at the right place to sort the PSPs by cost
-	
-				
-				while(rowcounter<finalRow && samlet>rowValue[rowcounter])
-				{
-					rowcounter++;
-				}
-
-				
-				var row = table.insertRow(rowcounter);
-				rowValue.splice(rowcounter,0,samlet);
-	
-
-				// Insert HTML
-				var logo_cell = row.insertCell(0);
-				var indloser_cell = row.insertCell(1);
-				var kort_cell = row.insertCell(2);
-				var oprettelse_cell = row.insertCell(3);
-				var faste_cell = row.insertCell(4);
-				var samlet_cell = row.insertCell(5);
-				var samletgebyr_cell = row.insertCell(6);
-	
-				logo_cell.innerHTML = '<div class="psp"><a href='+PSP[key].link+'><img src="psp/'+PSP[key].logo+'"><br>'+PSP[key].name+'</a></div>';
-	
-				kort_cell.innerHTML = HTML_cards;
-				kort_cell.className = 'kort';
-				oprettelse_cell.innerHTML = toMoney( PSP[key].setupFee + ACQUIRER[selectedAcquirer].setupFee * otherAcquirerSupport * (!isAcquirer)+ ACQUIRER.nets.setupFee * netsSupport * (!isAcquirer) );
-				
-				faste_cell.innerHTML = toMoney( PSP[key].monthlyFee + $('3d').checked * PSP[key].monthly3dsecureFee + ACQUIRER[selectedAcquirer].monthlyFee * otherAcquirerSupport * (!isAcquirer)+ ACQUIRER.nets.monthlyFee * netsSupport * (!isAcquirer) );
-				indloser_cell.innerHTML = indloser_icons;
-				indloser_cell.className = 'acquirer';
-
-
-				oprettelse_cell.innerHTML += oprettelse_info+info_icon_end;
-				faste_cell.innerHTML += faste_info+info_icon_end;
-				samlet_info += info_icon_end;
-				samletgebyr_info += info_icon_end;
-				samlet_cell.innerHTML = toMoney(samlet) + samlet_info;
-				samletgebyr_cell.innerHTML = toMoney(samlet/transactions) + samletgebyr_info;
-			}
-		
-		}
-		
-	}
-	if(condition!=='init' && condition !== 'popstate' && condition!=='keyup')
-		saveUrlVars();
-
+    $(k).style.background = color_error;
+    return null;
 }
 
-
-function toMoney(x)
+function setint(k, v)
 {
-	var number = Math.round(x * 100) / 100;
-	
-    var parts = number.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    parts.join(",");
-    return parts+ " " + valuta;
+    $(k).value = parseInt(v, 10);
+    $(k).style.background = color_good;
+}
+
+function mkcurregex()
+{
+    var a = [];
+    for (var k in currency_rmap) { a.push(k); }
+    for (var k in currency_map) { a.push(k); }
+    return RegExp("^ *([0-9][0-9., ]*)(" + a.join("|") + ")? *$", "i");
+}
+
+var curregex = mkcurregex();
+function getcurrency(k)
+{
+    var a = $(k).value.match(curregex);
+    if (a == null) {
+        $(k).style.background = color_error;
+        return null;
+    }
+    $(k).style.background = color_good;
+
+    var c = a[2] ? a[2] : 'DKK';
+    for (var k in currency_rmap) {
+        if (k.toLowerCase() == c.toLowerCase()) {
+            c = currency_rmap[k];
+            break;
+        }
+    }
+
+    return new Currency(parseFloat(a[1].replace('.', '').replace(',', '.')), c);
+}
+
+function setcurrency(k, v)
+{
+    $(k).value = v.represent();
+    $(k).style.background = color_good;
+}
+
+function getoption(k, prefix)
+{
+    return $(k).options[$(k).selectedIndex].id.substr(prefix.length);
+}
+
+function setoption(v, prefix)
+{
+    $(prefix + v).selected = true;
+}
+
+function getpercent(k)
+{
+    var elem = $(k);
+    var str = elem.value.replace('%', '').trim();
+    if (!isNaN(parseFloat(str)) && isFinite(str)) {
+        $(k).style.background = color_good;
+        return parseFloat(str);
+    }
+    $(k).style.background = color_error;
+    return null;
+}
+
+function setpercent(k, v)
+{
+    $(k).value = parseFloat(v) + "%";
+    $(k).style.background = color_good;
+}
+
+function getbool(k)
+{
+    return $(k).checked ? true : false;
+}
+
+function setbool(k, v)
+{
+    $(k).checked = v ? true : false;
+}
+
+var opts = {
+    'transactions': {
+        get: function () { return getint('transactions'); },
+        set: function (v) { setint('transactions', v); },
+        def: 100
+    },
+    'average_value': {
+        get: function () { return getcurrency('average_value'); },
+        set: function (v) { setcurrency('average_value', v); },
+        def: new Currency(570, 'DKK')
+    },
+    'acquirer': {
+        get: function () { return getoption('acquirer', 'acq_'); },
+        set: function (v) { setoption(v, 'acq_'); },
+        def: 'auto'
+    },
+    '3dsecure': {
+        get: function () { return getbool('3dsecure'); },
+        set: function (v) { setbool('3dsecure', v); },
+        def: true
+    },
+    'fraud_fighter': {
+        get: function () { return getbool('fraud_fighter'); },
+        set: function (v) { setbool('fraud_fighter', v); },
+        def: true
+    },
+    'dankort': {
+        get: function () { return getbool('dankort'); },
+        set: function (v) { setbool('dankort', v); },
+        def: true
+    },
+    'visa_mastercard': {
+        get: function () { return getbool('visa_mastercard'); },
+        set: function (v) { setbool('visa_mastercard', v); },
+        def: true
+    },
+    'paii': {
+        get: function () { return false; },
+        set: function (v) { },
+        def: false
+    },
+    'bitcoin': {
+        get: function () { return false; },
+        set: function (v) { },
+        def: false
+    },
+    'setup_loss': {
+        get: function () { return 0.16; },
+        set: function (v) { },
+        def: 0.16
+    }
+}
+
+var sopts = {
+    'acquirer_fee_fixed': {
+        get: function () { return getcurrency('acquirer_fee_fixed'); },
+        set: function (v) { setcurrency('acquirer_fee_fixed', v); },
+        hide: function () { $('acquirer_fee_fixed').parentNode.style.display = 'none'; },
+        show: function () { $('acquirer_fee_fixed').parentNode.style.display = 'block'; },
+        def: function () { return acqs[opts['acquirer'].get()].fee_fixed; }
+    },
+    'acquirer_fee_variable': {
+        get: function () { return getpercent('acquirer_fee_variable'); },
+        set: function (v) { setpercent('acquirer_fee_variable', v); },
+        hide: function () { $('acquirer_fee_variable').parentNode.style.display = 'none'; },
+        show: function () { $('acquirer_fee_variable').parentNode.style.display = 'block'; },
+        def: function () { return acqs[opts['acquirer'].get()].fee_variable; }
+    }
+}
+
+function rnf(n)
+{
+    return (typeof n == 'function') ? n() : n;
+}
+
+function init_acqs()
+{
+    var s = '<option id="acq_auto">Automatisk</option>';
+    for (var k in acqs) {
+        if (acqs.hasOwnProperty(k) && k !== 'nets') {
+            s += '<option id="acq_' + k + '">' + acqs[k].name + '</option>'
+        }
+    }
+    $('acquirer').innerHTML = s;
+
+    sopts['acquirer_fee_fixed'].hide();
+    sopts['acquirer_fee_variable'].hide();
+}
+
+function init_defaults()
+{
+    for (var k in opts) {
+        opts[k].set(rnf(opts[k].def));
+    }
+}
+
+function price_total(v, s, loss)
+{
+    return v.trans.scale(s).add(v.monthly).add(v.setup.scale(loss / 12));
+}
+
+function intersect(a, b)
+{
+    var r = [];
+
+    for (var i = 0; i < a.length; i++) {
+        if (b.indexOf(a[i]) !== -1) { r.push(a[i]); }
+    }
+
+    return r;
+}
+
+var prevstate = {};
+function build(action)
+{
+    if (action == 'init') {
+        init_acqs();
+        init_defaults();
+    }
+
+    var newstate = {}
+    for (var k in opts)  { newstate[k] = rnf(opts[k].get()); }
+    for (var k in sopts) { newstate[k] = rnf(sopts[k].get()); }
+
+    if (action == 'init') { prevstate = newstate; }
+
+    for (var k in newstate) {
+        if (newstate[k] == null) { newstate[k] = prevstate[k]; }
+    }
+
+    var acq = newstate['acquirer'];
+    if (newstate['acquirer'] != prevstate['acquirer']) {
+        if (acq == "auto") {
+            sopts['acquirer_fee_fixed'].hide();
+            sopts['acquirer_fee_variable'].hide();
+        } else {
+            sopts['acquirer_fee_fixed'].show();
+            sopts['acquirer_fee_variable'].show();
+
+            sopts['acquirer_fee_fixed'].set(acqs[acq].fee_fixed);
+            sopts['acquirer_fee_variable'].set(acqs[acq].fee_variable);
+        }
+    } else if (acq != "auto") {
+        if (newstate['acquirer_fee_fixed'] != prevstate['acquirer_fee_fixed']) {
+            acqs[acq].fee_fixed = newstate['acquirer_fee_fixed'];
+        }
+        if (newstate['acquirer_fee_variable'] != prevstate['acquirer_fee_variable']) {
+            acqs[acq].fee_variable = newstate['acquirer_fee_variable'];
+        }
+    }
+
+    var o = new Options(newstate['transactions'], newstate['average_value'],
+                        newstate['fraud_fighter'], newstate['visa_mastercard']);
+
+    var table = $("data");
+    table.innerHTML = "";
+    var rows = [];
+    var dkpoffset = 0;
+
+    var info_icon ='<p class="tooltip"><img src="tooltip.gif"><span>';
+    var info_icon_end='</span></p>';
+
+    for (var k in psps) {
+        var use_dankort = newstate['dankort'];
+        var use_visamc = newstate['visa_mastercard'];
+        var dankort_penalty = false;
+        if (use_dankort) {
+            if (psps[k].cards.indexOf('dankort') < 0 ||
+                (psps[k].acquirers.indexOf('nets') < 0 &&
+                !psps[k].is_acquirer)) {
+                dankort_penalty = true;
+                use_dankort = false;
+            }
+        }
+        if (!use_dankort && !use_visamc) { continue; }
+        if (use_visamc && psps[k].cards.length == 1 && psps[k].cards[0] == 'dankort') { continue; }
+
+        var tmpacq = acq;
+
+        if (tmpacq == "auto") {
+            var best = null;
+            for (var a in acqs) {
+                if (a == "nets") { continue; }
+                if (psps[k].acquirers.indexOf(a) < 0) { continue; }
+                if (best == null) {
+                    tmpacq = a;
+                    best = acqs[a].costfn(o);
+                    continue;
+                }
+
+                var cmp = acqs[a].costfn(o);
+                if (price_total(best, 1, newstate['setup_loss']).dkk() >
+                    price_total(cmp, 1, newstate['setup_loss']).dkk()) {
+                    tmpacq = a;
+                    best = cmp;
+                }
+            }
+        }
+        if (psps[k].acquirers.indexOf(tmpacq) < 0 && !psps[k].is_acquirer) { continue; }
+
+        var visamc_scale = 0.18;
+        var dankort_scale = 0.82;
+        if (!use_dankort) {
+            visamc_scale = 1;
+            dankort_scale = 0;
+        }
+        if (!use_visamc) {
+            visamc_scale = 0;
+            dankort_scale = 1;
+        }
+
+        var c_psp = psps[k].costfn(o);
+
+        var i_setup = {};
+        var i_fixedmonth = {};
+        var i_totalmonth = {};
+        var i_trans = {};
+
+        var n_cards = [];
+        var n_acqs = [];
+
+        i_setup[psps[k].name] = c_psp.setup;
+        i_fixedmonth[psps[k].name] = c_psp.monthly;
+        i_totalmonth[psps[k].name] = price_total(c_psp, psps[k].is_acquirer ? visamc_scale : 1, newstate['setup_loss']);
+
+        if (use_dankort) {
+            var c_nets = acqs['nets'].costfn(o);
+            var netsname = 'nets (' + dankort_scale * 100 + '% tr.)';
+
+            i_setup['nets'] = c_nets.setup;
+            i_fixedmonth['nets'] = c_nets.monthly;
+            i_totalmonth[netsname] = price_total(c_nets, dankort_scale, newstate['setup_loss']);
+
+            n_cards.push('dankort');
+            n_acqs.push('nets');
+        }
+
+        if (!psps[k].is_acquirer && use_visamc) {
+            var c_acq = acqs[tmpacq].costfn(o);
+            var acqname = acqs[tmpacq].name + ' (' + visamc_scale * 100 + '% tr.)';
+
+            i_setup[acqs[tmpacq].name] = c_acq.setup;
+            i_fixedmonth[acqs[tmpacq].name] = c_acq.monthly;
+            i_totalmonth[acqname] = price_total(c_acq, visamc_scale, newstate['setup_loss']);
+
+            n_cards = n_cards.concat(intersect(psps[k].cards, acqs[tmpacq].cards));
+            n_acqs.push(tmpacq);
+        } else if (use_visamc) {
+            n_cards = n_cards.concat(psps[k].cards);
+        }
+
+        for (var l in i_totalmonth) {
+            i_trans[l] = i_totalmonth[l].scale(1 / newstate['transactions']);
+        }
+
+        var s_setup = [];
+        var t_setup = new Currency(0, 'DKK');
+        var s_fixedmonth = [];
+        var t_fixedmonth = new Currency(0, 'DKK');
+        var s_totalmonth = [];
+        var t_totalmonth = new Currency(0, 'DKK');
+        var s_trans = [];
+        var t_trans = new Currency(0, 'DKK');
+
+        for (var l in i_setup) {
+            s_setup.push(l + ': ' + i_setup[l].print());
+            t_setup = t_setup.add(i_setup[l]);
+        }
+        for (var l in i_fixedmonth) {
+            s_fixedmonth.push(l + ': ' + i_fixedmonth[l].print());
+            t_fixedmonth = t_fixedmonth.add(i_fixedmonth[l]);
+        }
+        for (var l in i_totalmonth) {
+            s_totalmonth.push(l + ': ' + i_totalmonth[l].print());
+            t_totalmonth = t_totalmonth.add(i_totalmonth[l]);
+        }
+        for (var l in i_trans) {
+            s_trans.push(l + ': ' + i_trans[l].print());
+            t_trans = t_trans.add(i_trans[l]);
+        }
+
+        var h_cards = "";
+        if (dankort_penalty) {
+            h_cards += '<img src="cards/dankortCrossed.png" />';
+        }
+        for (var l in n_cards) {
+            h_cards += '<img src="cards/' + cards[n_cards[l]].logo + '" />';
+        }
+
+        var h_acqs = [];
+        for (var l in n_acqs) {
+            h_acqs.push('<img src="acquirer/' + acqs[n_acqs[l]].logo + '" />');
+        }
+        h_acqs = h_acqs.join("<br />");
+
+        var i;
+        if (dankort_penalty) {
+            for (i = dkpoffset; i < rows.length; ++i) {
+                if (t_totalmonth.dkk() < rows[i]) { break; }
+            }
+        } else {
+            for (i = 0; i < dkpoffset; ++i) {
+                if (t_totalmonth.dkk() < rows[i]) { break; }
+            }
+            dkpoffset++;
+        }
+        rows.splice(i, 0, t_totalmonth.dkk());
+
+        var row = table.insertRow(i);
+
+        var logo_cell = row.insertCell(0);
+        var acq_cell = row.insertCell(1);
+        var card_cell = row.insertCell(2);
+        var setup_cell = row.insertCell(3);
+        var fixedmonth_cell = row.insertCell(4);
+        var totalmonth_cell = row.insertCell(5);
+        var trans_cell = row.insertCell(6);
+
+        logo_cell.innerHTML = '<div class="psp"><a href=' + psps[k].link + '><img src="psp/' + psps[k].logo + '"><br>' + psps[k].name + '</a></div>';
+        acq_cell.innerHTML = h_acqs;
+        acq_cell.className = 'acquirer';
+        card_cell.innerHTML = h_cards;
+        card_cell.className = 'kort';
+        setup_cell.innerHTML = t_setup.print() + info_icon + s_setup.join("<br />") + info_icon_end;
+        fixedmonth_cell.innerHTML = t_fixedmonth.print() + info_icon + s_fixedmonth.join("<br />") + info_icon_end;
+        totalmonth_cell.innerHTML = t_totalmonth.print() + info_icon + s_totalmonth.join("<br />") + info_icon_end;
+        trans_cell.innerHTML = t_trans.print() + info_icon + s_trans.join("<br />") + info_icon_end;
+    }
+
+    prevstate = newstate;
+}
+
+function save_url()
+{
+}
+
+function parse_url()
+{
 }
