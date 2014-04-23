@@ -216,7 +216,7 @@ var psps = {
         acquirers: [],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
-			if (o.antifraud) { return null; }
+            if (o.antifraud) { return null; }
 
             var oms = o.n * o.avgvalue.dkk();
             var fee = 1.9;
@@ -469,7 +469,7 @@ var psps = {
         acquirers: [],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
-			if (o.antifraud) { return null; }
+            if (o.antifraud) { return null; }
 
             return {
                 setup: new Currency(0, 'EUR'),
@@ -486,7 +486,7 @@ var psps = {
         acquirers: [],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
-			if (o.antifraud) { return null; }
+            if (o.antifraud) { return null; }
 
             return {
                 setup: new Currency(0, 'SEK'),
@@ -503,7 +503,7 @@ var psps = {
         acquirers: ["nets", "teller"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
-			if (o.antifraud) { return null; }
+            if (o.antifraud) { return null; }
 
             return {
                 setup: new Currency(950, 'DKK'),
@@ -558,7 +558,7 @@ var psps = {
         acquirers: ["handelsbanken", "euroline", "swedbank", "nordea"],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
-			if (o.antifraud) { return null; }
+            if (o.antifraud) { return null; }
 
             return {
                 setup: new Currency(1400, 'SEK'),
@@ -575,7 +575,7 @@ var psps = {
         acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
         cards: ["visa", "mastercard"],
         costfn: function (o) {
-			if (o.antifraud) { return null; }
+            if (o.antifraud) { return null; }
 
             return {
                 setup: new Currency(999, 'SEK'),

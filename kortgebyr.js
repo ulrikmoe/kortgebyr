@@ -112,9 +112,9 @@ var opts = {
         def: 'auto'
     },
     '3dsecure': {
-		get: function () { return true; },
-		set: function (v) {},
-		def: true
+        get: function () { return true; },
+        set: function (v) {},
+        def: true
     },
     'fraud_fighter': {
         get: function () { return getbool('fraud_fighter'); },
