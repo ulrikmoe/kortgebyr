@@ -274,8 +274,18 @@ function build(action)
 
         if (psps[k].is_acquirer && acq != 'auto') { continue; }
 
-        var tmpacq = acq;
+        var visamc_scale = 0.18;
+        var dankort_scale = 0.82;
+        if (!use_dankort) {
+            visamc_scale = 1;
+            dankort_scale = 0;
+        }
+        if (!use_visamc) {
+            visamc_scale = 0;
+            dankort_scale = 1;
+        }
 
+        var tmpacq = acq;
         if (tmpacq == "auto") {
             var best = null;
             for (var a in acqs) {
@@ -288,25 +298,14 @@ function build(action)
                 }
 
                 var cmp = acqs[a].costfn(o);
-                if (price_total(best, 1, newstate['setup_loss']).dkk() >
-                    price_total(cmp, 1, newstate['setup_loss']).dkk()) {
+                if (price_total(best, visamc_scale, newstate['setup_loss']).dkk() >
+                    price_total(cmp, visamc_scale, newstate['setup_loss']).dkk()) {
                     tmpacq = a;
                     best = cmp;
                 }
             }
         }
         if (psps[k].acquirers.indexOf(tmpacq) < 0 && !psps[k].is_acquirer) { continue; }
-
-        var visamc_scale = 0.18;
-        var dankort_scale = 0.82;
-        if (!use_dankort) {
-            visamc_scale = 1;
-            dankort_scale = 0;
-        }
-        if (!use_visamc) {
-            visamc_scale = 0;
-            dankort_scale = 1;
-        }
 
         var c_psp = psps[k].costfn(o);
         if (c_psp == null) { continue; }
