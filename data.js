@@ -212,9 +212,6 @@ var psps = {
             if (oms <= 400000) { fee = 2.7; }
             if (oms <=  80000) { fee = 2.9; }
             if (oms <=  20000) { fee = 3.4; }
-            fee /= 100;
-
-            var t = new Currency(2.6, 'DKK')
 
             return {
                 setup: new Currency(0, 'DKK'),
