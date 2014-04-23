@@ -104,7 +104,7 @@ var opts = {
     'average_value': {
         get: function () { return getcurrency('average_value'); },
         set: function (v) { setcurrency('average_value', v); },
-        def: new Currency(570, 'DKK')
+        def: new Currency(450, 'DKK')
     },
     'acquirer': {
         get: function () { return getoption('acquirer', 'acq_'); },
@@ -112,9 +112,9 @@ var opts = {
         def: 'auto'
     },
     '3dsecure': {
-        get: function () { return getbool('3dsecure'); },
-        set: function (v) { setbool('3dsecure', v); },
-        def: true
+		get: function () { return true; },
+		set: function (v) {},
+		def: true
     },
     'fraud_fighter': {
         get: function () { return getbool('fraud_fighter'); },
