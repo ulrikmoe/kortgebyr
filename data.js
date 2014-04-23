@@ -239,7 +239,7 @@ var psps = {
             for (var i = 0; i < limits.length-1; ++i) {
                 if (o.n <= limits[i]) { break; }
 
-                var delta = int(limits[i+1] - limits[i])
+                var delta = parseInt(limits[i+1] - limits[i])
                 if (delta == 0) {
                     price += (o.n - accum) * fees[i];
                 } else {
