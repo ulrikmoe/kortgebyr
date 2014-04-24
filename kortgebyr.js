@@ -92,57 +92,102 @@ function getbool(k)
 
 function setbool(k, v)
 {
+	if(typeof v === "number"){
+		v = v && 1;
+	}
     $(k).checked = v ? true : false;
 }
 
 	
 var opts = {
     'transactions': {
+		inactive:true,
+		type: "string",
         get: function () { return getint('transactions'); },
         set: function (v) { setint('transactions', v); },
         def: 100
     },
     'average_value': {
+		inactive:true,
+		type: "string",
         get: function () { return getcurrency('average_value'); },
         set: function (v) { setcurrency('average_value', v); },
         def: new Currency(450, 'DKK')
     },
     'acquirer': {
-        get: function () { return getoption('acquirer', 'acq_'); },
-        set: function (v) { setoption(v, 'acq_'); },
+		bits:4,
+        get: function (a) {if(a === "url"){ return parseInt( $("acquirer")[ $("acquirer").selectedIndex].value ); } return getoption('acquirer', 'acq_'); },
+        set: function (v) { 
+			if(typeof v === "number"){ 
+				for(var i=0; i<$("acquirer").length;i++){ 
+					if( parseInt( $("acquirer")[i].value ) === v){
+						$("acquirer")[i].selected = true;
+					}
+				}
+				return;
+			}
+			setoption(v, 'acq_'); 
+		},
         def: 'auto'
     },
     '3dsecure': {
+		inactive:true,
+		bits:1,
         get: function () { return true; },
         set: function (v) {},
         def: true
     },
     'fraud_fighter': {
-        get: function () { return getbool('fraud_fighter'); },
+		bits:1,
+        get: function () { return +getbool('fraud_fighter'); },
         set: function (v) { setbool('fraud_fighter', v); },
         def: false
     },
     'dankort': {
-        get: function () { return getbool('dankort'); },
+		bits:1,
+        get: function () { return +getbool('dankort'); },
         set: function (v) { setbool('dankort', v); },
         def: true
     },
     'visa_mastercard': {
-        get: function () { return getbool('visa_mastercard'); },
+		bits:1,
+        get: function () { return +getbool('visa_mastercard'); },
         set: function (v) { setbool('visa_mastercard', v); },
         def: true
     },
+	// Dirty bits: bit0 = er der ændret i antal/gns, bit 1..N_acquirers+1 er der ændret i acquirer costs?
+	'dirty_bits':{
+		bits: 1+acqs.length,
+		get: function(){
+			return 17;// detect de acquirers der er ændret i og konverter til binary
+					  // 17 => nummber 1 og nummer 5
+		},
+		set: function(i){
+			
+		},
+		def:""
+	},
+	
+	//==========
+	// INACTIVE
+	//==========
     'paii': {
+		inactive:true,
+		bits:1,
         get: function () { return false; },
         set: function (v) { },
         def: false
     },
     'bitcoin': {
+		inactive:true,
+		bits:1,
         get: function () { return false; },
         set: function (v) { },
         def: false
     },
     'setup_loss': {
+		inactive:true,
+		bits:1,
         get: function () { return 0.16; },
         set: function (v) { },
         def: 0.16
@@ -174,10 +219,12 @@ function rnf(n)
 
 function init_acqs()
 {
-    var s = '<option id="acq_auto">Automatisk</option>';
+    var s = '<option id="acq_auto" value="0">Automatisk</option>';
+	var i=0;
     for (var k in acqs) {
         if (acqs.hasOwnProperty(k) && k !== 'nets') {
-            s += '<option id="acq_' + k + '">' + acqs[k].name + '</option>'
+			i++;
+            s += '<option id="acq_' + k + '" value="'+i+'">' + acqs[k].name + '</option>'
         }
     }
     $('acquirer').innerHTML = s;
@@ -215,6 +262,7 @@ function build(action)
     if (action == 'init') {
         init_acqs();
         init_defaults();
+		load_url(location.search);
     }
 
 	var counter = 0;
@@ -226,8 +274,8 @@ function build(action)
 
     for (var k in newstate) {
         if (newstate[k] == null) { newstate[k] = prevstate[k]; }
-    }
-
+	}
+	
     var acq = newstate['acquirer'];
     if (newstate['acquirer'] != prevstate['acquirer']) {
         if (acq == "auto") {
@@ -273,6 +321,7 @@ function build(action)
 					use_dankort = false;
             }
         }
+
         if (!use_dankort && !use_visamc) { continue; }
         if (use_visamc && psps[k].cards.length == 1 && psps[k].cards[0] == 'dankort') { continue; }
 
@@ -446,10 +495,12 @@ function build(action)
 
     prevstate = newstate;
     
-    
     document.getElementById('psp_count').innerHTML = counter;
 	document.getElementById('psp_size').innerHTML = Object.size(psps);
-    
+    if(action !== "init"){
+		save_url();
+	}
+	
 }
 
 
@@ -461,12 +512,121 @@ Object.size = function(obj) {
     return size;
 };
 
+//===========================
+//			URL
+//===========================
+
+var base64_chars =  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/";
+
+function base64_encode(n)
+{
+	if(n<0){
+		return "";
+	}
+	var str = "",curr_n = n;
+	do{
+		str = base64_chars[ curr_n%64 ] + str;
+		curr_n = Math.floor( curr_n/64 );
+	}
+	while(curr_n !== 0);
+	return str;
+}
+
+var MAX_INT32 = 0x7FFFFFFF;
 
 
 function save_url()
-{
+{	
+	var url = "" ,first_bit = 0, // from left
+	sum=0,
+	last_index;
+	for( var i in opts){
+		if( !opts[i].inactive ){
+			last_index = i;
+		}
+	}
+	
+	
+	for( var i in opts){
+		var obj = opts[i], remainder = obj.get("url"), remainder_bits = obj.bits;
+		if( obj.inactive === true  ){
+			continue;
+		}
+		console.log(i+" : "+remainder);
+		do{
+			var last_bit = Math.min( first_bit + remainder_bits - 1, 5 );
+			sum +=  remainder >>> Math.max( remainder_bits - ( 1 +  last_bit - first_bit) , 0) << ( 5 - last_bit );
+			remainder_bits -= 1 + last_bit - first_bit;
+			remainder = remainder &  ( MAX_INT32 >>> (31 - remainder_bits ) ) ;
+			if ( last_bit === 5 || i === last_index ) {
+				url += base64_chars.charAt(sum);
+				first_bit = 0;
+				sum = 0;
+			}
+			else{
+				first_bit += last_bit - first_bit + 1;
+			}
+		} while(remainder_bits > 0);
+		//console.log(i+" : "+sum);
+	}	
+	history.replaceState({foo:"bar"} , "" , "?"+url);
 }
 
-function parse_url()
+function get_bit_range(n , from , to)
 {
+	 // fra venstre --- kun til 6-bit
+	return (n & ( MAX_INT32 >>> (31 - 6 + from ) )) >>> 5-to;
+}
+
+function load_url(url_query)
+{
+	url_query = url_query.replace("?","");
+	if(url_query === ""){
+		return;
+	}
+	var current_char_num = 0,first_bit = 0; // 0 char is ?
+	for( var i in opts){
+		var obj = opts[i], sum = 0;
+		if( obj.inactive === true  ){
+			continue;
+		}
+		var remaining_bits = obj.bits;
+		while(1){
+			if(current_char_num > url_query.length - 1){
+				return; // error url_query too short
+			}
+			var current_char = url_query.charAt( current_char_num );
+			if(current_char === ";"){
+				break;
+			}
+			var n = base64_chars.indexOf( current_char );
+			if( n === -1 ){
+				return; // error invalid char
+			}
+			var last_bit =  first_bit + remaining_bits - 1;
+			if( last_bit > 5){
+				last_bit = 5;
+			}
+			remaining_bits -= 1 + last_bit - first_bit; 
+			sum += get_bit_range( n , first_bit,last_bit) << remaining_bits;
+			console.log(i+" : "+sum);
+			if(remaining_bits > 0){
+				first_bit = 0;
+				current_char_num ++;
+			}
+			else{
+				first_bit = last_bit + 1;
+				if( first_bit > 5 ){
+					first_bit = 0;
+					current_char_num ++;
+				}
+				break;
+			}
+		}
+		obj.set(sum);
+		if(current_char === ";"){
+			break;
+		}
+	}
+	
 }
