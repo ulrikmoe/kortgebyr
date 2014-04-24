@@ -7,13 +7,12 @@
 
 	{% if page.index == false %}<meta name="robots" content="noindex">{% endif %}
 	<link href="kortgebyr.css" rel="stylesheet" type="text/css" />
-	<link href="http://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet" type="text/css">
 	
+	{% if page.canonical == "http://kortgebyr.dk" %}
 	<script type="text/javascript" src="data.js"></script>
 	<script type="text/javascript" src="kortgebyr.js"></script>
-
-	<script type="text/javascript" src="//use.typekit.net/xbn0tkd.js"></script>
-	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	{% endif %}
+	
 </head>
 <body>
 

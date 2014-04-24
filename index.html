@@ -1,18 +1,18 @@
 ---
 layout: default
-title: Kortgebyr - betalingsløsninger
+title: Betalingsløsninger - kortgebyr
 canonical: "http://kortgebyr.dk"
-description: "Kortgebyr er en prissammenligningsside for betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr."
+description: "Kortgebyr er en prissammenligning af betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr."
 index: true
 ---
 <div class="container" style="margin-top:70px">
 	<div class="sidebar">
 		<div class="options">
 			<div class="options-header">
-				<p class="right">17/17</p>
+				<p class="right"><span id="psp_count"></span>/<span id="psp_size"></span></p>
 				<span class="title">Kontrolpanel</span>
 				<div class="">
-					<span class="reset";>Reset</span>
+					<span onclick="build('init')" class="reset";>Reset</span>
 				
 				</div>
 			</div>
@@ -33,7 +33,7 @@ index: true
 				<label>Variabelt indløsergebyr pr. transaktion: <input type="text" class="input" value="0%" id="acquirer_fee_variable" onkeyup="build('keyup');" onblur="save_url();"></label>
 				</li>
 				<li>
-					<label style="margin-right:20px">Dankort: <input type="checkbox" checked="" id="dankort" onchange="build();"/></label>
+					<label style="margin-right:20px">Dankort (nets aftale): <input type="checkbox" checked="" id="dankort" onchange="build();"/></label>
 				</li>
 				<li>
 					<label>Visa/MasterCard: <input type="checkbox" checked="" id="visa_mastercard" onchange="build();"/></label>
@@ -48,19 +48,8 @@ index: true
 			</ul>
 		</div><!-- /options -->
 		
-		<form action="http://macn.us2.list-manage1.com/subscribe/post?u=a05df0456ab6d17cf1c11fba4&amp;id=a24e3913b9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
-
-			<input class="input email" placeholder="Din e-mail..." name="EMAIL" type="email"> <button>Tilmeld</button><p></p>
-
-		</form>
 		
 		
-		
-		<div class="amino-extension">
-			<a href="https://chrome.google.com/webstore/detail/amino-topliste/goodeiddahdeknaodlidligcnlpcbplb">
-				<img src="extension.png" alt="Amino Topliste chrome extension">
-			</a>
-		</div>
 	</div>
 	<div style="margin-left:247px;">
 		<table class="table">

@@ -8,7 +8,7 @@ body, div, ul, p {
 }
 
 body {
-	font-family: "proxima-nova",'Helvetica Neue', Helvetica, sans-serif;
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 	line-height: 23px;
 	font-size: 14px;
 	padding-bottom: 50px
@@ -23,6 +23,18 @@ a {
 	transition: all 0.1s ease-in;
 	text-decoration: none
 }
+
+hr {
+	margin: 35px 0;
+	border: 0;
+    height: 1px;
+    background: #bbb;
+    background-image: -webkit-linear-gradient(left, #ccc, #bbb, #ccc); 
+    background-image:    -moz-linear-gradient(left, #ccc, #bbb, #ccc); 
+    background-image:     -ms-linear-gradient(left, #ccc, #bbb, #ccc); 
+    background-image:      -o-linear-gradient(left, #ccc, #bbb, #ccc); 
+}
+
 
 :focus {
 	outline:none;
@@ -108,15 +120,14 @@ img { border:0 }
 		display: block;
 		color: #fff;
 		text-align: center;
-		font-family: 'Bree Serif', serif;
-		font-weight: 400;
+		font-weight: 600;
 		font-size: 1.6em;
 		
 	}
 	
 	.nav .menu :first-child {
 		
-		border-left: 1px solid #dedede
+		border-left: 1px solid #dfdfdf
 		
 	}
 	
@@ -125,7 +136,9 @@ img { border:0 }
 		color: #5D6268;
 		font-weight: 600;
 		padding: 0 16px;
-		border-right: 1px solid #dedede;
+		border-right: 1px solid #dfdfdf;
+		font-family: Helvetica;
+		font-size: 13px;
 		display: block;
 		float: left
 		
@@ -177,15 +190,15 @@ h2 {
 .options {
 	display: block;
 	background:#F9F9F9;
-	border:1px solid #ccc;
+	border:1px solid #ddd;
 	position: relative;
 	min-height: 460px;
 }
 
 	.options-header {
 		border-bottom: 1px solid #ddd;
-		height: 51px;
-		padding: 7px 10px 0;
+		height: 50px;
+		padding: 7px 11px 0;
 	}
 
 	.options-header .title {
@@ -380,7 +393,6 @@ h2 {
 
 
 
-
 .kort {
 	width: 95px;
 	padding-top: 13px !important;
@@ -430,14 +442,15 @@ h2 {
 }
 
 .table > tbody > tr > td, .table > thead > tr > th {
-	border-left: 1px solid #ccc;
-	border-top: 1px solid #ccc;
+	border-left: 1px solid #dcdcdc;
+	border-top: 1px solid #dcdcdc;
 	padding: 11px 6px 8px;
 }
 
+
 .table > thead > tr > th {
 	
-	padding: 5px;
+	padding: 5px 0 4px;
 	-webkit-font-smoothing: antialiased;
 	font-size: 13px;
 	line-height: 20px;
@@ -449,7 +462,7 @@ h2 {
 	background-image: linear-gradient(to bottom,rgba(255,255,255,0.7) 25%,rgba(255,255,255,0.1) 100%);
 	border-top:0;
 	text-shadow: 0 1px 0 rgba(255,255,255,.5);
-	color: #555
+	color: #555;
 	
 }
 

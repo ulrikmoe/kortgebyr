@@ -95,6 +95,7 @@ function setbool(k, v)
     $(k).checked = v ? true : false;
 }
 
+	
 var opts = {
     'transactions': {
         get: function () { return getint('transactions'); },
@@ -147,6 +148,7 @@ var opts = {
         def: 0.16
     }
 }
+
 
 var sopts = {
     'acquirer_fee_fixed': {
@@ -215,6 +217,7 @@ function build(action)
         init_defaults();
     }
 
+	var counter = 0;
     var newstate = {}
     for (var k in opts)  { newstate[k] = rnf(opts[k].get()); }
     for (var k in sopts) { newstate[k] = rnf(sopts[k].get()); }
@@ -256,7 +259,7 @@ function build(action)
 
     var info_icon ='<p class="tooltip"><img src="tooltip.gif"><span>';
     var info_icon_end='</span></p>';
-
+    
     for (var k in psps) {
         var use_dankort = newstate['dankort'];
         var use_visamc = newstate['visa_mastercard'];
@@ -265,8 +268,9 @@ function build(action)
             if (psps[k].cards.indexOf('dankort') < 0 ||
                 (psps[k].acquirers.indexOf('nets') < 0 &&
                 !psps[k].is_acquirer)) {
-                dankort_penalty = true;
-                use_dankort = false;
+					continue; // disable penalty for now
+					dankort_penalty = true;
+					use_dankort = false;
             }
         }
         if (!use_dankort && !use_visamc) { continue; }
@@ -436,10 +440,28 @@ function build(action)
         fixedmonth_cell.innerHTML = t_fixedmonth.print() + info_icon + s_fixedmonth.join("<br />") + info_icon_end;
         totalmonth_cell.innerHTML = t_totalmonth.print() + info_icon + s_totalmonth.join("<br />") + info_icon_end;
         trans_cell.innerHTML = t_trans.print() + info_icon + s_trans.join("<br />") + info_icon_end;
+        
+        counter++;
     }
 
     prevstate = newstate;
+    
+    
+    document.getElementById('psp_count').innerHTML = counter;
+	document.getElementById('psp_size').innerHTML = Object.size(psps);
+    
 }
+
+
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
+
 
 function save_url()
 {

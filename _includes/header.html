@@ -1,22 +1,22 @@
 <!-- Sociale knapper -->
 <div id="fb-root"></div>
-<script>
-	(function(d, s, id) {
-	var js, fjs = d.getElementsByTagName(s)[0];
-	if (d.getElementById(id)) return;
-	js = d.createElement(s); js.id = id;
-	js.src = "//connect.facebook.net/da_DK/all.js#xfbml=1&appId=544544962293468";
-	fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
 
-	window.___gcfg = {lang: 'da'};
+
+<script>
+function initialize() {
+
+	if (window.location.pathname == "/") { // midlertidig fix
+		build('init');
+	}
 	
-	(function() {
-	var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-	po.src = 'https://apis.google.com/js/plusone.js';
-	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-	})();
+	var element = document.createElement("script");
+	element.src = "defer.js";
+	document.body.appendChild(element);
+}
+window.onload = initialize;
+
 </script>
+
 
 <div class="nav">
 	<div class="container">
@@ -33,9 +33,9 @@
 
 		<div class="menu">
 			{% if page.canonical == "http://kortgebyr.dk" %}
-			<a href="/" class="active">Forside</a>
+			<a href="/" class="active">Kortgebyr</a>
 			{% else %}
-			<a href="/">Forside</a>
+			<a href="/">Kortgebyr</a>
 			{% endif %}
 			{% if page.canonical == "http://kortgebyr.dk/forklaring.html" %}
 			<a href="/forklaring.html" class="active">Forklaring</a>
