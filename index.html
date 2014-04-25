@@ -5,6 +5,21 @@ canonical: "http://kortgebyr.dk"
 description: "Kortgebyr er en prissammenligning af betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr."
 index: true
 ---
+
+<script>
+
+function initialize() {
+	build('init');
+
+	var element = document.createElement("script");
+	element.src = "defer.js";
+	document.body.appendChild(element);
+}
+window.onload = initialize;
+
+</script>
+
+
 <div class="container" style="margin-top:70px">
 	<div class="sidebar">
 		<div class="options">
@@ -13,7 +28,6 @@ index: true
 				<span class="title">Kontrolpanel</span>
 				<div class="">
 					<span onclick="build('init')" class="reset";>Reset</span>
-				
 				</div>
 			</div>
 			<ul style="padding: 10px">
@@ -47,9 +61,6 @@ index: true
 				</li>
 			</ul>
 		</div><!-- /options -->
-		
-		
-		
 	</div>
 	<div style="margin-left:247px;">
 		<table class="table">

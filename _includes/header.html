@@ -1,23 +1,6 @@
 <!-- Sociale knapper -->
 <div id="fb-root"></div>
 
-
-<script>
-function initialize() {
-
-	if (window.location.pathname == "/") { // midlertidig fix
-		build('init');
-	}
-	
-	var element = document.createElement("script");
-	element.src = "defer.js";
-	document.body.appendChild(element);
-}
-window.onload = initialize;
-
-</script>
-
-
 <div class="nav">
 	<div class="container">
 		<div class="social">
@@ -29,7 +12,7 @@ window.onload = initialize;
 			</span>
 			<span class="Facebook fb-share-button" data-href="http://kortgebyr.dk" data-type="button_count">
 			</span>
-		</div>	
+		</div>
 
 		<div class="menu">
 			{% if page.canonical == "http://kortgebyr.dk" %}
