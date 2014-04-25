@@ -361,7 +361,7 @@ function build(action)
                 }
             }
         }
-        if (psps[k].acquirers.indexOf(tmpacq) < 0 && !psps[k].is_acquirer) { continue; }
+        if (use_visamc && psps[k].acquirers.indexOf(tmpacq) < 0 && !psps[k].is_acquirer) { continue; }
 
         var c_psp = psps[k].costfn(tmpo);
         if (c_psp == null) { continue; }
