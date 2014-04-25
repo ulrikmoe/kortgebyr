@@ -107,24 +107,24 @@ var cards = {
         logo: "maestro.png"
     },
     "diners": {
-	    name: "Diners",
-		logo: ""
+        name: "Diners",
+        logo: ""
     },
     "amex": {
-	    name: "American Express",
-		logo: ""
+        name: "American Express",
+        logo: ""
     },
     "jcb": {
-	    name: "JCB",
-		logo: ""
+        name: "JCB",
+        logo: ""
     },
     "unionpay": {
-	    name: "UnionPay",
-		logo: ""
+        name: "UnionPay",
+        logo: ""
     },
     "forbrugsforeningen": {
-	    name: "Forbrugsforeningen",
-		logo: ""
+        name: "Forbrugsforeningen",
+        logo: ""
     }
 };
 
@@ -531,7 +531,7 @@ var psps = {
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
             if (o.antifraud) { return null; }
-            
+
             var oms = o.n * o.avgvalue.dkk();
             var fee = 1.9;
             if (oms <= (new Currency(50000, 'EUR')).dkk()) { fee = 2.1; }
@@ -603,7 +603,7 @@ var psps = {
         cards: ["visa", "mastercard", "diners", "amex"],
         costfn: function (o) {
             if (o.antifraud) { return null; }
-            
+
             return {
                 setup: new Currency(2499, 'SEK'),
                 monthly: new Currency(499, 'SEK'),
