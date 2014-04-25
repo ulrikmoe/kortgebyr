@@ -100,20 +100,6 @@ function setbool(k, v)
 
 	
 var opts = {
-    'transactions': {
-		inactive:true,
-		type: "string",
-        get: function () { return getint('transactions'); },
-        set: function (v) { setint('transactions', v); },
-        def: 100
-    },
-    'average_value': {
-		inactive:true,
-		type: "string",
-        get: function () { return getcurrency('average_value'); },
-        set: function (v) { setcurrency('average_value', v); },
-        def: new Currency(450, 'DKK')
-    },
     'acquirer': {
 		bits:4,
         get: function (a) {if(a === "url"){ return parseInt( $("acquirer")[ $("acquirer").selectedIndex].value ); } return getoption('acquirer', 'acq_'); },
@@ -167,6 +153,20 @@ var opts = {
 		},
 		def:""
 	},
+    'transactions': {
+		inactive:true,
+		type: "string",
+        get: function () { return getint('transactions'); },
+        set: function (v) { setint('transactions', v); },
+        def: 100
+    },
+    'average_value': {
+		inactive:true,
+		type: "string",
+        get: function () { return getcurrency('average_value'); },
+        set: function (v) { setcurrency('average_value', v); },
+        def: new Currency(450, 'DKK')
+    },
 	
 	//==========
 	// INACTIVE
