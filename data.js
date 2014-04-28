@@ -1,18 +1,21 @@
 var currency_value = {
     'DKK':    1,
     'SEK':    0.822,
-    'EUR':    7.4665,
-    'BTC': 2631.135
+    'EUR':    7.464,
+    'BTC': 2631.135,
+    'USD': 5.392
 }
 
 var currency_map = {
     'DKK': 'kr',
-    'EUR': '€'
+    'EUR': '€',
+    'USD': '$'
 }
 
 var currency_rmap = {
     'kr': 'DKK',
-    '€': 'EUR'
+    '€': 'EUR',
+    '$': 'USD'
 }
 
 function Currency(amt, code)
@@ -556,7 +559,7 @@ var psps = {
             return {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trans: o.avgvalue.scale(2.5 / 100).add(new Currency(1.9, 'DKK')).scale(o.n)
+                trans: o.avgvalue.scale(2.9 / 100).add(new Currency(0.3, 'USD')).scale(o.n)
             };
         }
     },
