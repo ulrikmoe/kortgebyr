@@ -24,6 +24,8 @@ function Currency(amt, code)
     this.amounts[code] = amt;
 }
 
+Currency.prototype.type = "currency";
+
 Currency.prototype.print = function () {
     var number = Math.round(this.dkk() * 100) / 100;
     var parts = number.toString().split(".");
@@ -71,6 +73,17 @@ Currency.prototype.add = function (rhs) {
         }
     }
     return n;
+}
+
+Currency.prototype.is_equal_to = function( other_currency_object ){
+    for (var code in this.amounts) {
+        if (this.amounts.hasOwnProperty(code)) {
+			if(this.amounts[code] !== other_currency_object.amounts[code]){
+				return false;
+			}		
+        }
+    }
+	return true;
 }
 
 Currency.prototype.scale = function (rhs) {
