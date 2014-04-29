@@ -798,7 +798,7 @@ function load_url(url_query)
 		}
 
     }
-	
+
 	var selected_acquirer = opts["acquirer"].get();
 	if( selected_acquirer !== "auto"  ){
 		sopts['acquirer_fee_fixed'].show();
