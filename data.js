@@ -1,18 +1,21 @@
 var currency_value = {
     'DKK':    1,
     'SEK':    0.822,
-    'EUR':    7.4665,
-    'BTC': 2631.135
+    'EUR':    7.464,
+    'BTC': 2631.135,
+    'USD': 5.392
 }
 
 var currency_map = {
     'DKK': 'kr',
-    'EUR': '€'
+    'EUR': '€',
+    'USD': '$'
 }
 
 var currency_rmap = {
     'kr': 'DKK',
-    '€': 'EUR'
+    '€': 'EUR',
+    '$': 'USD'
 }
 
 function Currency(amt, code)
@@ -20,6 +23,8 @@ function Currency(amt, code)
     this.amounts = {};
     this.amounts[code] = amt;
 }
+
+Currency.prototype.type = "currency";
 
 Currency.prototype.print = function () {
     var number = Math.round(this.dkk() * 100) / 100;
@@ -68,6 +73,17 @@ Currency.prototype.add = function (rhs) {
         }
     }
     return n;
+}
+
+Currency.prototype.is_equal_to = function( other_currency_object ){
+    for (var code in this.amounts) {
+        if (this.amounts.hasOwnProperty(code)) {
+			if(this.amounts[code] !== other_currency_object.amounts[code]){
+				return false;
+			}		
+        }
+    }
+	return true;
 }
 
 Currency.prototype.scale = function (rhs) {
@@ -479,7 +495,6 @@ var psps = {
         acquirers: [],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
-            if (o.antifraud) { return null; }
 
             return {
                 setup: new Currency(0, 'EUR'),
@@ -556,7 +571,7 @@ var psps = {
             return {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trans: o.avgvalue.scale(2.5 / 100).add(new Currency(1.9, 'DKK')).scale(o.n)
+                trans: o.avgvalue.scale(2.9 / 100).add(new Currency(0.3, 'USD')).scale(o.n)
             };
         }
     },
@@ -673,6 +688,21 @@ var psps = {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
                 trans: o.avgvalue.scale(fee / 100).scale(Math.max(o.n - nfree, 0))
+            };
+        }
+    },
+    "braintree": {
+        name: "braintree",
+        logo: "braintree.png",
+        link: "https://www.braintreepayments.com",
+        is_acquirer: true,
+        acquirers: [],
+        cards: ["visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            return {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(0, 'DKK'),
+                trans: o.avgvalue.scale(2.9 / 100).add(new Currency(2.25, 'DKK')).scale(o.n)
             };
         }
     }
