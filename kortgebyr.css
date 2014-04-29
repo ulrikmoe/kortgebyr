@@ -8,7 +8,7 @@ body, div, ul, p {
 }
 
 body {
-	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+	font-family: 'Open Sans','Helvetica Neue', Helvetica, sans-serif;
 	line-height: 23px;
 	font-size: 14px;
 	padding-bottom: 50px
@@ -25,14 +25,21 @@ a {
 }
 
 hr {
-	margin: 35px 0;
-	border: 0;
-    height: 1px;
-    background: #bbb;
-    background-image: -webkit-linear-gradient(left, #ccc, #bbb, #ccc); 
-    background-image:    -moz-linear-gradient(left, #ccc, #bbb, #ccc); 
-    background-image:     -ms-linear-gradient(left, #ccc, #bbb, #ccc); 
-    background-image:      -o-linear-gradient(left, #ccc, #bbb, #ccc); 
+	border: solid #dddddd;
+	border-width: 1px 0 0;
+	clear: both;
+	margin: 1.7em 0 1.5em;
+	height: 0;
+}
+
+.nav, .footer, .sidebar {
+	
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-ms-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	
 }
 
 
@@ -53,14 +60,6 @@ img { border:0 }
 	position: relative;
 }
 
-
-.nav, .options {
-	
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
-	text-rendering: optimizeLegibility;
-	
-}
 
 
 
@@ -101,8 +100,6 @@ img { border:0 }
 		
 	}
 
-
-
 	.nav .logo {
 		z-index: 10;
 		background: #C7CEDA;
@@ -137,7 +134,6 @@ img { border:0 }
 		font-weight: 600;
 		padding: 0 16px;
 		border-right: 1px solid #dfdfdf;
-		font-family: Helvetica;
 		font-size: 13px;
 		display: block;
 		float: left

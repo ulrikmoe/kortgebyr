@@ -6,7 +6,6 @@ canonical: http://kortgebyr.dk/forklaring.html
 description:
 ---
 
-
 <script>
 
 function initialize() {
@@ -57,37 +56,109 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
 	border-bottom-left-radius: 4px;
 }
 
+.forklaring {
+	
+	font-family: 'Open Sans';
+	font-weight: 400;
+	color: #414141;
+	font-size: 17px;
+	line-height: 32px;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-ms-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+.forklaring a {
+	-webkit-transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
+	-moz-transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
+	-o-transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
+	transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
+	color: #ff8833;
+	font-weight: 400;
+}
+
+
+h1 {
+	
+	font-family: 'ubuntu', Arial;
+	font-weight: 700;
+	font-size: 43px;
+	color: #3E79BB;
+	margin-bottom: 45px;
+	
+}
+
+h2 {
+	
+	font-size: 27px;
+	line-height: 38px;
+	color: #444;
+	font-weight: 600;
+	margin: 40px 0 22px;
+	font-family: "ubuntu"
+	
+}
+
+h3 {
+	
+	font-family: 'Open Sans';
+	font-weight: 400;
+	font-size: 25px;
+	color: #414141;
+	line-height: 40px;
+	
+}
+
 </style>
 
-<div class="container" style="margin-top:90px">
-	<div class="sidebar">
-		<div style="width:230px" class="list-group">
-			<a href="#" class="list-group-item active">Introduktion</a>
-			<a href="#" class="list-group-item">Betalingsgateway</a>
-			<a href="#" class="list-group-item">Betalingsløsning</a>
-			<a href="#" class="list-group-item">Beregningsmetoden</a>
-			<a href="#" class="list-group-item">Regneeksempel</a>
-			<a href="#" class="list-group-item">Om os</a>
-		</div>
-	</div>
 
-	<div style="margin: 0 0 0 276px; padding-top: 1px">
-		<h2 style="margin-top:0">Introduktion til kortgebyr</h2>
+
+
+
+<div class="container forklaring" style="margin-top:130px;">
+
+	<div style="max-width:910px;">
+		<h1 style="margin-top:0">Introduktion til kortgebyr</h1>
+		
+		<h3>
+Kortgebyr.dk er en prissammenligningside for betalingsløsninger og betalingsgateways. Siden er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede i 2012 og er fortsat under udvikling.
+		</h3>
+		
+		<hr>
 		<div>
-			Kortgebyr er en prissammenligningside for betalingsløsninger og betalingsgateways. Siden er udviklet af <a href="https://twitter.com/ulrikmoe">@ulrikmoe</a>, <a href="https://twitter.com/christianblach">@christianblach</a> og <a href="https://github.com/zhasha">@joakimsindholt</a>. Kortgebyr er uafhængig, non-profit og open source under <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>. Udvikling foregår via Github og alle er velkommen til at bidrage til projektet.<br /><br />
+
+			Kortgebyr.dk er udviklet af <a href="https://twitter.com/ulrikmoe">@ulrikmoe</a>, <a href="https://twitter.com/christianblach">@christianblach</a> og <a href="https://github.com/zhasha">@joakimsindholt</a>. Formålet med siden er at skabe klarhed på et yderst komplekst marked.
+			
+			
+			Tak til alle som har bidraget eller delt projektet.
+
+			<br /><br />
+
+
+			Kontakt: <a href="mailto:ulrik.moe@gmail.com">ulrik.moe@gmail.com</a><br />
 			Kildekode: <a href="https://github.com/ulrikmoe/kortgebyr">https://github.com/ulrikmoe/kortgebyr</a> <br />
-			Amino tråd: <a href="http://www.amino.dk/forums/t/208824.aspx">http://www.amino.dk/forums/t/208824.aspx</a><br /><br />
-			<p style="text-decoration:underline">Kortgebyr og personerne bag modtager ikke penge eller gaver fra nogen af de listede virksomheder.</p>
+			Amino tråd: <a href="http://www.amino.dk/forums/t/208824.aspx">http://www.amino.dk/forums/t/208824.aspx</a><br />
 		</div>
+
 		<hr>
-		<h2>Hvad er en betalingsgateway</h2>
+		<h2>Hvad er en betalingsgateway?</h2>
 		<div class="">
-			Hvis man vil tage mod betaling på nettet er første skridt at oprette sig hos en betaligsgateway. En betalingsgateway (fx Quickpay eller Epay) er ligesom en betalingsterminal på nettet og sender kort-betalinger videre til en eller flere indløsere (en slags banker). For at kunne fuldføre en betaling med kort er man nødt til at have en indløseraftale med mindst en af disse såkaldte indløsere. Visa og mastercard udbydes af de fleste indløsere, men Dankort udbydes kun af NETS.
-		<br>
-		En betalingsgateway kan modsat en fysik betalingsterminal også udbyde alternative betalingsmetoder som fakturabetalings eller måske endda betaling i bitcoin.
+		En betalingsgateway, på engelsk <a href="http://en.wikipedia.org/wiki/Payment_gateway">payment gateway</a>, er en online løsning som bedst kan beskrives som en dankortterminal - bare på internettet. En betalingsgateway tilkobler din virksomhed til en lang række betalingstjenester.		
+			<br><br>
+		</div>
+		
+		<hr>
+		<h2>Hvad er en indløsningsaftale?</h2>
+		<div class="">
+		
+		En indløsningsaftale, på engelsk <a href="#">Merchant Account</a>,
+		
+
 		</div>
 		<hr>
-		<h2>Hvad er en betalingsløsning</h2>
+		<h2>Hvad er en betalingsløsning?</h2>
 			En betalingsløsning er sammensætningen af betalingsgateway og bank (f.eks. Quickpay + NETS + Teller). Nogle betalingsløsninger kræver ikke, at man laver en separat indløsningsaftale med en bank. Dette gælder for eksempel PayPal og Paymill. Til gengæld tager de en relativt høj procentsats for ulejligheden.
 		<div class="">
 		</div>
