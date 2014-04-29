@@ -256,7 +256,7 @@ var opts = {
 					}
 					i++;
 					if(get_bit_range(bits,i,i, this.dirty_bits )){
-						acqs[k].fee_variable = parseFloat( value_array[array_position] );
+						acqs[k].fee_variable = parseFloat( value_array[array_position].replace(',', '.') );
 						array_position++;
 					}
 					i++;
