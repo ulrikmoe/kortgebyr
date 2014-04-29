@@ -245,9 +245,7 @@ var opts = {
 		set: function(v,bits){
 			var i = 0, array_position = 0;
 			var value_array = v.split(",");
-			console.log("====ARRAY====")
-			console.log(value_array);
-			console.log("bits = " +bits);
+
 			for(var k in acqs){
 				if( acqs.hasOwnProperty(k) && k !== "nets"){
 					if(get_bit_range(bits,i,i, this.dirty_bits )){
@@ -772,7 +770,6 @@ function load_url(url_query)
 			}
 		}
 		else{
-			console.log(i+":"+"db = " + dirty_bits_current);
 			if(first_bit > 0){
 				first_bit = 0;
 				current_char_num ++;
