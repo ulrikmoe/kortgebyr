@@ -782,7 +782,7 @@ function load_url(url_query)
 				next_separator_index = url_query.length;
 			}
 			var str = url_query.substring(current_char_num, next_separator_index );
-			
+			current_char_num += str.length;
 			
 			if(obj.type === "string"){
 				if(i === "acquirer_opts"){
