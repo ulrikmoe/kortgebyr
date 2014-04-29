@@ -495,7 +495,6 @@ var psps = {
         acquirers: [],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
-            if (o.antifraud) { return null; }
 
             return {
                 setup: new Currency(0, 'EUR'),
@@ -689,6 +688,21 @@ var psps = {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
                 trans: o.avgvalue.scale(fee / 100).scale(Math.max(o.n - nfree, 0))
+            };
+        }
+    },
+    "braintree": {
+        name: "braintree",
+        logo: "braintree.png",
+        link: "https://www.braintreepayments.com",
+        is_acquirer: true,
+        acquirers: [],
+        cards: ["visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            return {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(0, 'DKK'),
+                trans: o.avgvalue.scale(2.9 / 100).add(new Currency(2.25, 'DKK')).scale(o.n)
             };
         }
     }
