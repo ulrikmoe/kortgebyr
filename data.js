@@ -153,7 +153,18 @@ function acq_cost_default(o)
     };
 }
 
-var acqs = {
+var acqs = { // alfabetisk rækkefølge
+
+    "handelsbanken": {
+        name: "Handelsbanken",
+        logo: "handelsbanken.png",
+        cards: ["visa", "mastercard", "maestro"],
+        fee_setup: new Currency(1900, 'DKK'),
+        fee_monthly: new Currency(100, 'DKK'),
+        fee_fixed: new Currency(0, 'DKK'),
+        fee_variable: 1.5,
+        costfn: acq_cost_default
+    },
     "nets": {
         name: "nets",
         logo: "nets.png",
@@ -171,6 +182,26 @@ var acqs = {
                 trans: (new Currency(fee, 'DKK')).scale(o.n)
             };
         }
+    },
+    "nordea": {
+        name: "Nordea",
+        logo: "nordea.png",
+        cards: ["visa", "mastercard", "maestro"],
+        fee_setup: new Currency(0, 'DKK'),
+        fee_monthly: new Currency(0, 'DKK'),
+        fee_fixed: new Currency(0, 'DKK'),
+        fee_variable: 1.5,
+        costfn: acq_cost_default
+    },
+    "swedbank": {
+        name: "Swedbank",
+        logo: "swedbank.png",
+        cards: ["visa", "mastercard", "maestro"],
+        fee_setup: new Currency(1900, 'DKK'),
+        fee_monthly: new Currency(100, 'DKK'),
+        fee_fixed: new Currency(0, 'DKK'),
+        fee_variable: 1.5,
+        costfn: acq_cost_default
     },
     "teller": {
         name: "Teller",
@@ -191,26 +222,6 @@ var acqs = {
             };
         }
     },
-    "swedbank": {
-        name: "Swedbank",
-        logo: "swedbank.png",
-        cards: ["visa", "mastercard", "maestro"],
-        fee_setup: new Currency(1900, 'DKK'),
-        fee_monthly: new Currency(100, 'DKK'),
-        fee_fixed: new Currency(0, 'DKK'),
-        fee_variable: 1.5,
-        costfn: acq_cost_default
-    },
-    "handelsbanken": {
-        name: "Handelsbanken",
-        logo: "handelsbanken.png",
-        cards: ["visa", "mastercard", "maestro"],
-        fee_setup: new Currency(1900, 'DKK'),
-        fee_monthly: new Currency(100, 'DKK'),
-        fee_fixed: new Currency(0, 'DKK'),
-        fee_variable: 1.5,
-        costfn: acq_cost_default
-    },
     "valitor": {
         name: "Valitor",
         logo: "valitor.png",
@@ -220,73 +231,131 @@ var acqs = {
         fee_fixed: new Currency(0, 'DKK'),
         fee_variable: 1.5,
         costfn: acq_cost_default
-    },
-    "nordea": {
-        name: "Nordea",
-        logo: "nordea.png",
-        cards: ["visa", "mastercard", "maestro"],
-        fee_setup: new Currency(0, 'DKK'),
-        fee_monthly: new Currency(0, 'DKK'),
-        fee_fixed: new Currency(0, 'DKK'),
-        fee_variable: 1.5,
-        costfn: acq_cost_default
     }
 };
 
-var psps = {
-    "paypal": {
-        name: "paypal",
-        logo: "paypal.png",
-        link: "https://paypal.com",
+var psps = { // alfabetisk rækkefølge
+
+    "braintree": {
+        name: "braintree",
+        logo: "braintree.png",
+        link: "https://www.braintreepayments.com",
         is_acquirer: true,
         acquirers: [],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
-            if (o.antifraud) { return null; }
-
-            var oms = o.n * o.avgvalue.dkk();
-            var fee = 1.9;
-            if (oms <= 800000) { fee = 2.4; }
-            if (oms <= 400000) { fee = 2.7; }
-            if (oms <=  80000) { fee = 2.9; }
-            if (oms <=  20000) { fee = 3.4; }
-
             return {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trans: o.avgvalue.scale(fee / 100).add(new Currency(2.6, 'DKK')).scale(o.n)
+                trans: o.avgvalue.scale(2.9 / 100).add(new Currency(2.25, 'DKK')).scale(o.n)
             };
         }
     },
-    "quickpay": {
-        name: "quickpay",
-        logo: "quickpay.png",
-        link: "http://quickpay.dk",
+    "certitrade": {
+        name: "Certitrade",
+        logo: "certitrade.png",
+        link: "http://www.certitrade.net/kortbetalning.php",
         is_acquirer: false,
-        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "Elavon", "Handelsbanken"],
+        acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
+        cards: ["visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            if (o.antifraud) { return null; }
+
+            return {
+                setup: new Currency(0, 'SEK'),
+                monthly: new Currency(192, 'SEK'),
+                trans: o.avgvalue.scale(0.9 / 100).add(new Currency(1.5, 'SEK')).scale(o.n)
+            };
+        }
+    },
+    "dandomain": {
+        name: "DanDomain",
+        logo: "dandomain.png",
+        link: "http://dandomain.dk/produkter/betalingssystem.html",
+        is_acquirer: false,
+        acquirers: ["nets", "teller"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
-            var limits = [500, 600, 1000, 3000, 10000, 30000, 30000];
-            var fees   = [     0.5,  0.4,  0.3,  0.25,  0.15, 0.1];
-            var price = 0;
-            var accum = 0;
+            if (o.antifraud) { return null; }
 
-            for (var i = 0; i < limits.length-1; ++i) {
-                if (o.n <= limits[i]) { break; }
-
-                var delta = parseInt(limits[i+1] - limits[i])
-                if (delta == 0) {
-                    price += (o.n - accum) * fees[i];
-                } else {
-                    price += Math.min(o.n - accum, delta) * fees[i];
-                }
-                accum += limits[i];
+            var s = 199;
+            var m = 149;
+            if (o.visasecure) {
+                s += 99;
+                m += 49;
             }
 
             return {
+                setup: new Currency(s, 'DKK'),
+                monthly: new Currency(m, 'DKK'),
+                trans: new Currency(0, 'DKK')
+            };
+        }
+    },
+	"dibsbusiness": {
+        name: "DIBS Business",
+        logo: "dibs.png",
+        link: "http://dibs.dk",
+        is_acquirer: false,
+        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "Elavon"],
+        cards: ["dankort", "visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            return {
                 setup: new Currency(0, 'DKK'),
-                monthly: new Currency(150, 'DKK'),
-                trans: new Currency(price, 'DKK')
+                monthly: new Currency(249, 'DKK'),
+                trans: (new Currency(3, 'DKK')).scale(Math.max(o.n - 500, 0))
+            };
+        }
+    },
+	"dibsenterprise": {
+        name: "DIBS Entreprise",
+        logo: "dibs.png",
+        link: "http://dibs.dk",
+        is_acquirer: false,
+        acquirers: ["nets"],
+        cards: ["dankort"],
+        costfn: function (o) {
+            return {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(149, 'DKK'),
+                trans: (new Currency(3, 'DKK')).scale(Math.max(o.n - 250, 0))
+            };
+        }
+    },
+    "dibsprofessional": {
+        name: "DIBS Professional",
+        logo: "dibs.png",
+        link: "http://dibs.dk",
+        is_acquirer: false,
+        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "Elavon"],
+        cards: ["dankort", "visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            return {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(449, 'DKK'),
+                trans: (new Currency(1.5, 'DKK')).scale(Math.max(o.n - 500, 0))
+            };
+        }
+    },
+	"epaybusiness": {
+        name: "ePay Business",
+        logo: "epay.png",
+        link: "http://epay.dk",
+        is_acquirer: false,
+        acquirers: ["nets", "euroline", "teller", "swedbank", "handelsbanken", "valitor"],
+        cards: ["dankort", "visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            var fee = 0.25;
+            var ff = new Currency(0, 'DKK');
+            if (o.antifraud) {
+                fee += 0.30;
+                ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
+            }
+
+            return {
+                setup: new Currency(999, 'DKK'),
+                monthly: new Currency(299, 'DKK'),
+                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0)).add(ff)
             };
         }
     },
@@ -334,85 +403,18 @@ var psps = {
             };
         }
     },
-    "epaybusiness": {
-        name: "ePay Business",
-        logo: "epay.png",
-        link: "http://epay.dk",
-        is_acquirer: false,
-        acquirers: ["nets", "euroline", "teller", "swedbank", "handelsbanken", "valitor"],
-        cards: ["dankort", "visa", "mastercard", "maestro"],
-        costfn: function (o) {
-            var fee = 0.25;
-            var ff = new Currency(0, 'DKK');
-            if (o.antifraud) {
-                fee += 0.30;
-                ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
-            }
-
-            return {
-                setup: new Currency(999, 'DKK'),
-                monthly: new Currency(299, 'DKK'),
-                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0)).add(ff)
-            };
-        }
-    },
-    "dibsenterprise": {
-        name: "DIBS Entreprise",
-        logo: "dibs.png",
-        link: "http://dibs.dk",
-        is_acquirer: false,
-        acquirers: ["nets"],
-        cards: ["dankort"],
-        costfn: function (o) {
-            return {
-                setup: new Currency(0, 'DKK'),
-                monthly: new Currency(149, 'DKK'),
-                trans: (new Currency(3, 'DKK')).scale(Math.max(o.n - 250, 0))
-            };
-        }
-    },
-    "dibsbusiness": {
-        name: "DIBS Business",
-        logo: "dibs.png",
-        link: "http://dibs.dk",
-        is_acquirer: false,
-        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "Elavon"],
-        cards: ["dankort", "visa", "mastercard", "maestro"],
-        costfn: function (o) {
-            return {
-                setup: new Currency(0, 'DKK'),
-                monthly: new Currency(249, 'DKK'),
-                trans: (new Currency(3, 'DKK')).scale(Math.max(o.n - 500, 0))
-            };
-        }
-    },
-    "dibsprofessional": {
-        name: "DIBS Professional",
-        logo: "dibs.png",
-        link: "http://dibs.dk",
-        is_acquirer: false,
-        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "Elavon"],
-        cards: ["dankort", "visa", "mastercard", "maestro"],
-        costfn: function (o) {
-            return {
-                setup: new Currency(0, 'DKK'),
-                monthly: new Currency(449, 'DKK'),
-                trans: (new Currency(1.5, 'DKK')).scale(Math.max(o.n - 500, 0))
-            };
-        }
-    },
-    "netaxeptstart": {
-        name: "Netaxept Start",
+    "netaxeptadvanced": {
+        name: "Netaxept Advanced",
         logo: "nets.png",
         link: "https://www.terminalshop.dk/Netaxept/",
         is_acquirer: false,
-        acquirers: ["nets", "teller"],
+        acquirers: ["nets", "teller", "elavon", "euroline", "swedbank", "nordea"],
         cards: ["dankort", "visa", "mastercard"],
         costfn: function (o) {
             return {
-                setup: new Currency(1005, 'DKK'),
-                monthly: new Currency(180, 'DKK'),
-                trans: (new Currency(1.5, 'DKK')).scale(o.n)
+                setup: new Currency(7540, 'DKK'),
+                monthly: new Currency(703, 'DKK'),
+                trans: (new Currency(0.7, 'DKK')).scale(o.n)
             };
         }
     },
@@ -431,59 +433,35 @@ var psps = {
             };
         }
     },
-    "netaxeptadvanced": {
-        name: "Netaxept Advanced",
+    "netaxeptstart": {
+        name: "Netaxept Start",
         logo: "nets.png",
         link: "https://www.terminalshop.dk/Netaxept/",
         is_acquirer: false,
-        acquirers: ["nets", "teller", "elavon", "euroline", "swedbank", "nordea"],
+        acquirers: ["nets", "teller"],
         cards: ["dankort", "visa", "mastercard"],
         costfn: function (o) {
             return {
-                setup: new Currency(7540, 'DKK'),
-                monthly: new Currency(703, 'DKK'),
-                trans: (new Currency(0.7, 'DKK')).scale(o.n)
+                setup: new Currency(1005, 'DKK'),
+                monthly: new Currency(180, 'DKK'),
+                trans: (new Currency(1.5, 'DKK')).scale(o.n)
             };
         }
     },
-    "dandomain": {
-        name: "DanDomain",
-        logo: "dandomain.png",
-        link: "http://dandomain.dk/produkter/betalingssystem.html",
+	"payer": {
+        name: "Payer.se",
+        logo: "payer.png",
+        link: "http://payer.se/betallosning/",
         is_acquirer: false,
-        acquirers: ["nets", "teller"],
-        cards: ["dankort", "visa", "mastercard", "maestro"],
-        costfn: function (o) {
-            if (o.antifraud) { return null; }
-
-            var s = 199;
-            var m = 149;
-            if (o.visasecure) {
-                s += 99;
-                m += 49;
-            }
-
-            return {
-                setup: new Currency(s, 'DKK'),
-                monthly: new Currency(m, 'DKK'),
-                trans: new Currency(0, 'DKK')
-            };
-        }
-    },
-    "wannafind": {
-        name: "Wannafind",
-        logo: "wannafind.png",
-        link: "https://wannafind.dk/betalingsgateway/",
-        is_acquirer: false,
-        acquirers: ["nets", "teller"],
-        cards: ["dankort", "visa", "mastercard", "maestro"],
+        acquirers: ["handelsbanken", "euroline", "swedbank", "nordea"],
+        cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
             if (o.antifraud) { return null; }
 
             return {
-                setup: new Currency(0, 'DKK'),
-                monthly: new Currency(198 + (o.visasecure ? 49 : 0), 'DKK'),
-                trans: new Currency(0, 'DKK')
+                setup: new Currency(1400, 'SEK'),
+                monthly: new Currency(400, 'SEK'),
+                trans: (new Currency(2, 'SEK')).scale(o.n)
             };
         }
     },
@@ -500,6 +478,30 @@ var psps = {
                 setup: new Currency(0, 'EUR'),
                 monthly: new Currency(0, 'EUR'),
                 trans: o.avgvalue.scale(2.95 / 100).add(new Currency(0.28, 'EUR')).scale(o.n)
+            };
+        }
+    },
+	"paypal": {
+        name: "paypal",
+        logo: "paypal.png",
+        link: "https://paypal.com",
+        is_acquirer: true,
+        acquirers: [],
+        cards: ["visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            if (o.antifraud) { return null; }
+
+            var oms = o.n * o.avgvalue.dkk();
+            var fee = 1.9;
+            if (oms <= 800000) { fee = 2.4; }
+            if (oms <= 400000) { fee = 2.7; }
+            if (oms <=  80000) { fee = 2.9; }
+            if (oms <=  20000) { fee = 3.4; }
+
+            return {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(0, 'DKK'),
+                trans: o.avgvalue.scale(fee / 100).add(new Currency(2.6, 'DKK')).scale(o.n)
             };
         }
     },
@@ -520,47 +522,7 @@ var psps = {
             };
         }
     },
-    "scannet": {
-        name: "Scannet",
-        logo: "scannet.png",
-        link: "http://www.scannet.dk/hosting/betalingsloesning/",
-        is_acquirer: false,
-        acquirers: ["nets", "teller"],
-        cards: ["dankort", "visa", "mastercard", "maestro"],
-        costfn: function (o) {
-            if (o.antifraud) { return null; }
-
-            return {
-                setup: new Currency(950, 'DKK'),
-                monthly: new Currency(399, 'DKK'),
-                trans: new Currency(0, 'DKK')
-            };
-        }
-    },
-    "skrill": {
-        name: "Skrill",
-        logo: "skrill.png",
-        link: "https://skrill.com",
-        is_acquirer: true,
-        acquirers: [],
-        cards: ["visa", "mastercard", "maestro"],
-        costfn: function (o) {
-            if (o.antifraud) { return null; }
-
-            var oms = o.n * o.avgvalue.dkk();
-            var fee = 1.9;
-            if (oms <= (new Currency(50000, 'EUR')).dkk()) { fee = 2.1; }
-            if (oms <= (new Currency(25000, 'EUR')).dkk()) { fee = 2.5; }
-            if (oms <= (new Currency( 2500, 'EUR')).dkk()) { fee = 2.9; }
-
-            return {
-                setup: new Currency(0, 'EUR'),
-                monthly: new Currency(0, 'EUR'),
-                trans: o.avgvalue.scale(fee / 100).add(new Currency(0.25, 'EUR')).scale(o.n)
-            };
-        }
-    },
-    "payza": {
+	"payza": {
         name: "Payza",
         logo: "payza.png",
         link: "https://payza.com",
@@ -572,23 +534,6 @@ var psps = {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
                 trans: o.avgvalue.scale(2.5 / 100).add(new Currency(1.9, 'DKK')).scale(o.n)
-            };
-        }
-    },
-    "payer": {
-        name: "Payer.se",
-        logo: "payer.png",
-        link: "http://payer.se/betallosning/",
-        is_acquirer: false,
-        acquirers: ["handelsbanken", "euroline", "swedbank", "nordea"],
-        cards: ["visa", "mastercard", "maestro"],
-        costfn: function (o) {
-            if (o.antifraud) { return null; }
-
-            return {
-                setup: new Currency(1400, 'SEK'),
-                monthly: new Currency(400, 'SEK'),
-                trans: (new Currency(2, 'SEK')).scale(o.n)
             };
         }
     },
@@ -643,20 +588,92 @@ var psps = {
             };
         }
     },
-    "certitrade": {
-        name: "Certitrade",
-        logo: "certitrade.png",
-        link: "http://www.certitrade.net/kortbetalning.php",
+    "quickpay": {
+        name: "quickpay",
+        logo: "quickpay.png",
+        link: "http://quickpay.dk",
         is_acquirer: false,
-        acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
-        cards: ["visa", "mastercard", "maestro"],
+        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "Elavon", "Handelsbanken"],
+        cards: ["dankort", "visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            var limits = [500, 600, 1000, 3000, 10000, 30000, 30000];
+            var fees   = [     0.5,  0.4,  0.3,  0.25,  0.15, 0.1];
+            var price = 0;
+            var accum = 0;
+
+            for (var i = 0; i < limits.length-1; ++i) {
+                if (o.n <= limits[i]) { break; }
+
+                var delta = parseInt(limits[i+1] - limits[i])
+                if (delta == 0) {
+                    price += (o.n - accum) * fees[i];
+                } else {
+                    price += Math.min(o.n - accum, delta) * fees[i];
+                }
+                accum += limits[i];
+            }
+
+            return {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(150, 'DKK'),
+                trans: new Currency(price, 'DKK')
+            };
+        }
+    },
+    "scannet": {
+        name: "Scannet",
+        logo: "scannet.png",
+        link: "http://www.scannet.dk/hosting/betalingsloesning/",
+        is_acquirer: false,
+        acquirers: ["nets", "teller"],
+        cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             if (o.antifraud) { return null; }
 
             return {
-                setup: new Currency(0, 'SEK'),
-                monthly: new Currency(192, 'SEK'),
-                trans: o.avgvalue.scale(0.9 / 100).add(new Currency(1.5, 'SEK')).scale(o.n)
+                setup: new Currency(950, 'DKK'),
+                monthly: new Currency(399, 'DKK'),
+                trans: new Currency(0, 'DKK')
+            };
+        }
+    },
+    "skrill": {
+        name: "Skrill",
+        logo: "skrill.png",
+        link: "https://skrill.com",
+        is_acquirer: true,
+        acquirers: [],
+        cards: ["visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            if (o.antifraud) { return null; }
+
+            var oms = o.n * o.avgvalue.dkk();
+            var fee = 1.9;
+            if (oms <= (new Currency(50000, 'EUR')).dkk()) { fee = 2.1; }
+            if (oms <= (new Currency(25000, 'EUR')).dkk()) { fee = 2.5; }
+            if (oms <= (new Currency( 2500, 'EUR')).dkk()) { fee = 2.9; }
+
+            return {
+                setup: new Currency(0, 'EUR'),
+                monthly: new Currency(0, 'EUR'),
+                trans: o.avgvalue.scale(fee / 100).add(new Currency(0.25, 'EUR')).scale(o.n)
+            };
+        }
+    },
+	"wannafind": {
+        name: "Wannafind",
+        logo: "wannafind.png",
+        link: "https://wannafind.dk/betalingsgateway/",
+        is_acquirer: false,
+        acquirers: ["nets", "teller"],
+        cards: ["dankort", "visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            if (o.antifraud) { return null; }
+
+            return {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(198 + (o.visasecure ? 49 : 0), 'DKK'),
+                trans: new Currency(0, 'DKK')
             };
         }
     },
@@ -688,21 +705,6 @@ var psps = {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
                 trans: o.avgvalue.scale(fee / 100).scale(Math.max(o.n - nfree, 0))
-            };
-        }
-    },
-    "braintree": {
-        name: "braintree",
-        logo: "braintree.png",
-        link: "https://www.braintreepayments.com",
-        is_acquirer: true,
-        acquirers: [],
-        cards: ["visa", "mastercard", "maestro"],
-        costfn: function (o) {
-            return {
-                setup: new Currency(0, 'DKK'),
-                monthly: new Currency(0, 'DKK'),
-                trans: o.avgvalue.scale(2.9 / 100).add(new Currency(2.25, 'DKK')).scale(o.n)
             };
         }
     }
