@@ -571,7 +571,7 @@ var psps = {
             return {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trans: o.avgvalue.scale(2.9 / 100).add(new Currency(0.3, 'USD')).scale(o.n)
+                trans: o.avgvalue.scale(2.5 / 100).add(new Currency(1.9, 'DKK')).scale(o.n)
             };
         }
     },
