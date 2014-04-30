@@ -32,7 +32,7 @@ hr {
 	height: 0;
 }
 
-.nav, .footer, .sidebar {
+.nav, .sidebar {
 	
 	-webkit-font-smoothing: antialiased;
 	-moz-font-smoothing: antialiased;
@@ -567,7 +567,8 @@ h2 {
 	text-align: center;
 	margin-top: 50px;
 	color: #aaa;
-	line-height: 28px
+	line-height: 28px;
+	font-size: 13px
 
 }
 
