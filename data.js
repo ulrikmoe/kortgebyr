@@ -229,7 +229,7 @@ var acqs = { // alfabetisk rækkefølge
         fee_setup: new Currency(0, 'DKK'),
         fee_monthly: new Currency(0, 'DKK'),
         fee_fixed: new Currency(0, 'DKK'),
-        fee_variable: 1.5,
+        fee_variable: 1.7,
         costfn: acq_cost_default
     }
 };
@@ -593,7 +593,7 @@ var psps = { // alfabetisk rækkefølge
         logo: "quickpay.png",
         link: "http://quickpay.dk",
         is_acquirer: false,
-        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "Elavon", "Handelsbanken"],
+        acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "Handelsbanken"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             var limits = [500, 600, 1000, 3000, 10000, 30000, 30000];
