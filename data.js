@@ -297,7 +297,7 @@ var psps = { // alfabetisk rækkefølge
         logo: "dibs.png",
         link: "http://dibs.dk",
         is_acquirer: false,
-        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "Elavon"],
+        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "elavon"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             return {
@@ -327,7 +327,7 @@ var psps = { // alfabetisk rækkefølge
         logo: "dibs.png",
         link: "http://dibs.dk",
         is_acquirer: false,
-        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "Elavon"],
+        acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "elavon"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             return {
@@ -593,7 +593,7 @@ var psps = { // alfabetisk rækkefølge
         logo: "quickpay.png",
         link: "http://quickpay.dk",
         is_acquirer: false,
-        acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "Handelsbanken"],
+        acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "handelsbanken"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
             var limits = [500, 600, 1000, 3000, 10000, 30000, 30000];
