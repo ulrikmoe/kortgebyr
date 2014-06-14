@@ -596,23 +596,21 @@ var psps = { // alfabetisk rækkefølge
         acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "handelsbanken"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
-            var limits = [500, 600, 1000, 3000, 10000, 30000, 30000];
-            var fees   = [     0.5,  0.4,  0.3,  0.25,  0.15, 0.1];
+            var limits = [ 0 , 500 , 600 , 1000 , 3000  , 10000 ,  30000 ];
+            var fees   = [   0 ,  0.5 , 0.4 ,  0.3 ,  0.25 ,   0.15 ,   0.1];
             var price = 0;
             var accum = 0;
-
-            for (var i = 0; i < limits.length-1; ++i) {
-                if (o.n <= limits[i]) { break; }
-
-                var delta = parseInt(limits[i+1] - limits[i])
-                if (delta == 0) {
-                    price += (o.n - accum) * fees[i];
-                } else {
-                    price += Math.min(o.n - accum, delta) * fees[i];
+		    for (var i = 0; i < limits.length; i++) {
+		        var delta;
+		        if( i < limits.length-1){
+		            delta = Math.min( limits[i+1] - limits[i] , o.n - accum);
                 }
-                accum += limits[i];
-            }
-
+		        else{
+                    delta =  o.n - accum;
+                }
+                price += delta * fees[i];
+                accum += delta;
+		     }
             return {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(150, 'DKK'),
