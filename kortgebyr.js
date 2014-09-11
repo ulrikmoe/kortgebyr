@@ -192,7 +192,7 @@ var opts = {
 		get_dirty_bits: function(){return + (this.get() !== this.def) },
         get: function () { return getint('transactions'); },
         set: function (v) {setint('transactions', v); },
-        def: 100
+        def: 500
     },
     'average_value': {
 		type: "currency",
