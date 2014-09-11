@@ -1,3 +1,5 @@
+// Valutakurser opdateret d. 11/09/2014
+
 var currency_value = {
     'DKK':    1,
     'SEK':    0.8107,
