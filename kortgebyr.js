@@ -581,8 +581,7 @@ function build(action)
         var totalmonth_cell = row.insertCell(5);
         var trans_cell = row.insertCell(6);
 
-        logo_cell.innerHTML = '<div class="psp"><a href=' + psps[k].link +
-            '><img src="psp/' + psps[k].logo + '" alt="' + psps[k].name +
+        logo_cell.innerHTML = '<div class="psp"><a target="_blank" href=' + psps[k].link +'><img src="psp/' + psps[k].logo + '" alt="' + psps[k].name +
             '" title="' + psps[k].name + '" /><br>' + psps[k].name +
             '</a></div>';
         acq_cell.innerHTML = h_acqs;

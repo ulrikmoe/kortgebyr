@@ -1,9 +1,8 @@
 var currency_value = {
     'DKK':    1,
-    'SEK':    0.822,
-    'EUR':    7.464,
-    'BTC': 2631.135,
-    'USD': 5.392
+    'SEK':    0.8107,
+    'EUR':    7.4441,
+    'USD': 5.7577
 }
 
 var currency_map = {
@@ -337,6 +336,50 @@ var psps = { // alfabetisk rækkefølge
             };
         }
     },
+    "epaylight": {
+        name: "ePay Light",
+        logo: "epay.png",
+        link: "http://epay.dk",
+        is_acquirer: false,
+        acquirers: ["nets"],
+        cards: ["dankort"],
+        costfn: function (o) {
+            var fee = 0.25;
+            var ff = new Currency(0, 'DKK');
+            if (o.antifraud) {
+                fee += 0.30;
+                ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
+            }
+
+            return {
+                setup: new Currency(399, 'DKK'),
+                monthly: new Currency(99, 'DKK'),
+                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 250, 0)).add(ff)
+            };
+        }
+    },
+    "epaypro": {
+        name: "ePay Pro",
+        logo: "epay.png",
+        link: "http://epay.dk",
+        is_acquirer: false,
+        acquirers: ["nets", "teller"],
+        cards: ["dankort", "visa", "mastercard", "maestro"],
+        costfn: function (o) {
+            var fee = 0.25;
+            var ff = new Currency(0, 'DKK');
+            if (o.antifraud) {
+                fee += 0.30;
+                ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
+            }
+
+            return {
+                setup: new Currency(599, 'DKK'),
+                monthly: new Currency(199, 'DKK'),
+                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 250, 0)).add(ff)
+            };
+        }
+    },
 	"epaybusiness": {
         name: "ePay Business",
         logo: "epay.png",
@@ -359,62 +402,18 @@ var psps = { // alfabetisk rækkefølge
             };
         }
     },
-    "epaylight": {
-        name: "ePay Light",
-        logo: "epay.png",
-        link: "http://epay.dk",
-        is_acquirer: false,
-        acquirers: ["nets"],
-        cards: ["dankort"],
-        costfn: function (o) {
-            var fee = 0.25;
-            var ff = new Currency(0, 'DKK');
-            if (o.antifraud) {
-                fee += 0.30;
-                ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
-            }
-
-            return {
-                setup: new Currency(399, 'DKK'),
-                monthly: new Currency(99, 'DKK'),
-                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0)).add(ff)
-            };
-        }
-    },
-    "epaypro": {
-        name: "ePay Pro",
-        logo: "epay.png",
-        link: "http://epay.dk",
-        is_acquirer: false,
-        acquirers: ["nets", "teller"],
-        cards: ["dankort", "visa", "mastercard", "maestro"],
-        costfn: function (o) {
-            var fee = 0.25;
-            var ff = new Currency(0, 'DKK');
-            if (o.antifraud) {
-                fee += 0.30;
-                ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
-            }
-
-            return {
-                setup: new Currency(599, 'DKK'),
-                monthly: new Currency(199, 'DKK'),
-                trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0)).add(ff)
-            };
-        }
-    },
-    "netaxeptadvanced": {
-        name: "Netaxept Advanced",
+    "netaxeptstart": {
+        name: "Netaxept Start",
         logo: "nets.png",
         link: "https://www.terminalshop.dk/Netaxept/",
         is_acquirer: false,
-        acquirers: ["nets", "teller", "elavon", "euroline", "swedbank", "nordea"],
+        acquirers: ["nets", "teller"],
         cards: ["dankort", "visa", "mastercard"],
         costfn: function (o) {
             return {
-                setup: new Currency(7540, 'DKK'),
-                monthly: new Currency(703, 'DKK'),
-                trans: (new Currency(0.7, 'DKK')).scale(o.n)
+                setup: new Currency(1005, 'DKK'),
+                monthly: new Currency(180, 'DKK'),
+                trans: (new Currency(1.5, 'DKK')).scale(o.n)
             };
         }
     },
@@ -433,18 +432,18 @@ var psps = { // alfabetisk rækkefølge
             };
         }
     },
-    "netaxeptstart": {
-        name: "Netaxept Start",
+    "netaxeptadvanced": {
+        name: "Netaxept Advanced",
         logo: "nets.png",
         link: "https://www.terminalshop.dk/Netaxept/",
         is_acquirer: false,
-        acquirers: ["nets", "teller"],
+        acquirers: ["nets", "teller", "elavon", "euroline", "swedbank", "nordea"],
         cards: ["dankort", "visa", "mastercard"],
         costfn: function (o) {
             return {
-                setup: new Currency(1005, 'DKK'),
-                monthly: new Currency(180, 'DKK'),
-                trans: (new Currency(1.5, 'DKK')).scale(o.n)
+                setup: new Currency(7540, 'DKK'),
+                monthly: new Currency(703, 'DKK'),
+                trans: (new Currency(0.7, 'DKK')).scale(o.n)
             };
         }
     },
@@ -523,6 +522,10 @@ var psps = { // alfabetisk rækkefølge
         }
     },
 	"payza": {
+	
+		// Hvad med Foreign exchange gebyr (2,5%)?
+		// https://www.payza.com/support/payza-transaction-fees
+	
         name: "Payza",
         logo: "payza.png",
         link: "https://payza.com",
@@ -588,6 +591,24 @@ var psps = { // alfabetisk rækkefølge
             };
         }
     },
+	
+	"stripe": {
+        name: "Stripe",
+        logo: "stripe.png",
+        link: "https://stripe.com",
+        is_acquirer: true,
+        acquirers: [],
+        cards: ["visa", "mastercard", "maestro"],
+        costfn: function (o) {
+
+            return {
+                setup: new Currency(0, 'USD'),
+                monthly: new Currency(0, 'USD'),
+                trans: o.avgvalue.scale(2.9 / 100).add(new Currency(0.30, 'USD')).scale(o.n)
+            };
+        }
+    },
+    
     "quickpay": {
         name: "quickpay",
         logo: "quickpay.png",
@@ -643,7 +664,6 @@ var psps = { // alfabetisk rækkefølge
         acquirers: [],
         cards: ["visa", "mastercard", "maestro"],
         costfn: function (o) {
-            if (o.antifraud) { return null; }
 
             var oms = o.n * o.avgvalue.dkk();
             var fee = 1.9;
@@ -666,11 +686,10 @@ var psps = { // alfabetisk rækkefølge
         acquirers: ["nets", "teller"],
         cards: ["dankort", "visa", "mastercard", "maestro"],
         costfn: function (o) {
-            if (o.antifraud) { return null; }
 
             return {
                 setup: new Currency(0, 'DKK'),
-                monthly: new Currency(198 + (o.visasecure ? 49 : 0), 'DKK'),
+                monthly: new Currency(149 + (o.visasecure ? 49 : 0), 'DKK'),
                 trans: new Currency(0, 'DKK')
             };
         }
@@ -685,19 +704,8 @@ var psps = { // alfabetisk rækkefølge
         costfn: function (o) {
             if (o.antifraud) { return null; }
 
-            var fee;
-            var nfree;
-
-            if (o.n <= 2500) {
-                fee = 2;
-                nfree = 25;
-            } else if (o.n <= 5000) {
-                fee = 1.75;
-                nfree = 25;
-            } else {
-                fee = 1.5;
-                nfree = 50;
-            }
+            var fee = 2.25;
+            var nfree = 25;
 
             return {
                 setup: new Currency(0, 'DKK'),
