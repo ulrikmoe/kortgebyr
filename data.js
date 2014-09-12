@@ -704,15 +704,13 @@ var psps = { // alfabetisk rækkefølge
         acquirers: [],
         cards: ["visa", "mastercard"],
         costfn: function (o) {
-            if (o.antifraud) { return null; }
 
             var fee = 2.25;
-            var nfree = 25;
 
             return {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trans: o.avgvalue.scale(fee / 100).scale(Math.max(o.n - nfree, 0))
+                trans: o.avgvalue.scale(fee / 100).scale(Math.max(o.n, 0))
             };
         }
     }
