@@ -11,23 +11,41 @@
 	<meta name="description" content="{{ page.description }}">
 
 	{% if page.index == false %}<meta name="robots" content="noindex">{% endif %}
-	<link href="kortgebyr.css?v4" rel="stylesheet" type="text/css" />
+	<link href="/css/global.css?v4" rel="stylesheet" type="text/css" />
 	
 	{% if page.canonical == "http://kortgebyr.dk" %}
 	<script type="text/javascript" src="data.js?v5"></script>
 	<script type="text/javascript" src="kortgebyr.js?v5"></script>
 	{% endif %}
-	
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,600' rel='stylesheet' type='text/css'>
-	
-</head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,800,400' rel='stylesheet' type='text/css'></head>
 <body>
 
+<div id="fb-root"></div>
+
+<div class="social">
+
+    <div class="amino">
+        <a target="_blank" title="Kortgebyr diskussion på Amino" href="http://www.amino.dk/forums/t/208824.aspx">
+            <img src="/amino.png" />
+            Tråd på Amino</a>
+    </div>
+
+	<span class="twitter">
+		<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://kortgebyr.dk" data-lang="da">Tweet</a>
+	</span>
+	<span class="google">
+		<div class="g-plusone" data-size="medium" data-href="http://kortgebyr.dk"></div>
+	</span>
+	<span class="fb-share-button" data-href="http://kortgebyr.dk" data-type="button_count"></span>
+</div>
+
+
+<div class="wrap">
 	{% include header.html %}
 
 	{{ content }}
 
 	{% include footer.html %}
+</div>
 
 </body></html>

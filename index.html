@@ -1,95 +1,101 @@
 ---
 layout: default
-title: Betalingsløsninger - kortgebyr
+title: "Kortgebyr - sammenlign betalingsløsninger og gateways"
 canonical: "http://kortgebyr.dk"
 description: "Kortgebyr er en prissammenligning af betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr."
 index: true
 ---
 
 <script>
-
 function initialize() {
 	build('init');
-
 	var element = document.createElement("script");
 	element.src = "defer.js";
 	document.body.appendChild(element);
 }
 window.onload = initialize;
-
 </script>
 
+<main role="main" style="padding-top:40px;">
 
-<div class="container" style="margin-top:70px">
-	<div class="sidebar">
-		<div class="options">
-			<div class="options-header">
-				<p class="right"><span id="psp_count"></span>/<span id="psp_size"></span></p>
-				<span class="title">Kontrolpanel</span>
-				<div class="">
-					<span onclick="build('init')" class="reset";>Reset</span>
-				</div>
-			</div>
-			<ul style="padding: 10px">
-				<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup="build('keyup');" onblur="save_url();"></label></li>
-				<li><label>Gns. ordreværdi: <input type="text" class="input" id="average_value" value="500" onkeyup="build('keyup');" onblur="save_url();"></label></li>
-				<li>
-					<label>
-						Indløsning:
-						<select id="acquirer" onchange="build();">
-						</select>
-					</label>
-				</li>
-				<li>
-					<label>Fast indløsergebyr pr. transaktion: <input type="text" class="input" value="0" id="acquirer_fee_fixed" onkeyup="build('keyup');" onblur="save_url();"></label>
-				</li>
-				<li>
-				<label>Variabelt indløsergebyr pr. transaktion: <input type="text" class="input" value="0%" id="acquirer_fee_variable" onkeyup="build('keyup');" onblur="save_url();"></label>
-				</li>
-				<li>
-					<label style="margin-right:20px">Dankort (nets aftale): <input type="checkbox" checked="" id="dankort" onchange="build();"/></label>
-				</li>
-				<li>
-					<label>Visa/MasterCard: <input type="checkbox" checked="" id="visa_mastercard" onchange="build();"/></label>
-				</li>
-				<li>
-					<label>Paii: <input disabled="" type="checkbox" id="paii" onchange="build();"/></label>
-					<label>Bitcoin: <input disabled="" type="checkbox" id="bitcoin" onchange="build();"/></label>
-				</li>
-				<li>
-					<label>Svindelkontrol: <input type="checkbox" id="fraud_fighter" onchange="build();"/></label>
-				</li>
-			</ul>
-		</div><!-- /options -->
-	</div>
-	<div style="margin-left:247px;">
-		<table class="table">
-			<thead>
-				<tr>
-					<th style="text-align:left; padding-left:12px">
-						Betalingsløsning
-					</th>
-					<th>
-						Indløsere
-					</th>
-					<th>
-						Betalingsmuligheder
-					</th>
-					<th>
-						Oprettelse
-					</th>
-					<th>
-						Abonnement<br /> per måned
-					</th>
-					<th>
-						Samlet <br />per måned
-					</th>
-					<th>
-						Kortgebyr per<br />transaktion
-					</th>
-				</tr>
-			</thead>
-			<tbody id="data"></tbody>
-		</table>
-	</div>
-</div>
+    <article class="container">
+    
+        <section class="about">
+    
+        </section>
+    
+    
+        <menu type="toolbar">
+        
+    		<div class="options-header">
+    			<p class="right"><span id="psp_count"></span>/<span id="psp_size"></span></p>
+    			<span class="title">Kontrolpanel</span>
+    			<div class="">
+    				<span onclick="build('init')" class="reset";>Reset</span>
+    			</div>
+    		</div>
+    		<ul style="padding: 10px">
+    			<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup="build('keyup');" onblur="save_url();"></label></li>
+    			<li><label>Gns. ordreværdi: <input type="text" class="input" id="average_value" value="500" onkeyup="build('keyup');" onblur="save_url();"></label></li>
+    			<li>
+    				<label>
+    					Indløsning:
+    					<select id="acquirer" onchange="build();">
+    					</select>
+    				</label>
+    			</li>
+    			<li>
+    				<label>Fast indløsergebyr pr. transaktion: <input type="text" class="input" value="0" id="acquirer_fee_fixed" onkeyup="build('keyup');" onblur="save_url();"></label>
+    			</li>
+    			<li>
+    			<label>Variabelt indløsergebyr pr. transaktion: <input type="text" class="input" value="0%" id="acquirer_fee_variable" onkeyup="build('keyup');" onblur="save_url();"></label>
+    			</li>
+    			<li>
+    				<label style="margin-right:20px">Dankort (nets aftale): <input type="checkbox" checked="" id="dankort" onchange="build();"/></label>
+    			</li>
+    			<li>
+    				<label>Visa/MasterCard: <input type="checkbox" checked="" id="visa_mastercard" onchange="build();"/></label>
+    			</li>
+    			<li>
+    				<label>Paii: <input disabled="" type="checkbox" id="paii" onchange="build();"/></label>
+    				<label>Bitcoin: <input disabled="" type="checkbox" id="bitcoin" onchange="build();"/></label>
+    			</li>
+    			<li>
+    				<label>Svindelkontrol: <input type="checkbox" id="fraud_fighter" onchange="build();"/></label>
+    			</li>
+    		</ul>
+        
+        </menu>
+    
+    </article>
+    
+	<table class="table container" style="margin-top:30px">
+		<thead>
+			<tr>
+				<th style="text-align:left; padding-left:12px">
+					Betalingsløsning
+				</th>
+				<th>
+					Indløsere
+				</th>
+				<th>
+					Betalingsmuligheder
+				</th>
+				<th>
+					Oprettelse
+				</th>
+				<th>
+					Abonnement<br /> per måned
+				</th>
+				<th>
+					Samlet <br />per måned
+				</th>
+				<th>
+					Kortgebyr per<br />transaktion
+				</th>
+			</tr>
+		</thead>
+		<tbody id="data"></tbody>
+	</table>
+
+</main>

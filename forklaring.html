@@ -7,157 +7,69 @@ description:
 ---
 
 <script>
-
 function initialize() {
 	var element = document.createElement("script");
 	element.src = "defer.js";
 	document.body.appendChild(element);
 }
 window.onload = initialize;
-
 </script>
-
-
-<style>
-
-.list-group {
-	max-width: 250px;
-}
-
-.list-group a {
-	display: block;
-}
-
-.list-group a {
-	position: relative;
-	display: block;
-	padding: 10px 15px;
-	margin-bottom: -1px;
-	background-color: #FFF;
-	border: 1px solid #DDD;
-}
-
-a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
-	z-index: 2;
-	color: #FFF;
-	background-color: #428BCA;
-	border-color: #428BCA;
-}
-
-.list-group-item:first-child {
-	border-top-right-radius: 4px;
-	border-top-left-radius: 4px;
-}
-
-
-.list-group-item:last-child {
-	margin-bottom: 0;
-	border-bottom-right-radius: 4px;
-	border-bottom-left-radius: 4px;
-}
-
-.forklaring {
-	
-	font-family: 'Open Sans';
-	font-weight: 400;
-	color: #414141;
-	font-size: 17px;
-	line-height: 32px;
-	-webkit-font-smoothing: antialiased;
-	-moz-font-smoothing: antialiased;
-	-ms-font-smoothing: antialiased;
-	font-smoothing: antialiased;
-	text-rendering: optimizeLegibility;
-}
-
-.forklaring a {
-	-webkit-transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
-	-moz-transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
-	-o-transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
-	transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
-	color: #ff8833;
-	font-weight: 400;
-}
-
-
-h1 {
-	
-	font-family: 'ubuntu', Arial;
-	font-weight: 700;
-	font-size: 43px;
-	color: #333;
-	margin-bottom: 45px;
-	
-}
-
-h2 {
-	
-	font-size: 27px;
-	line-height: 38px;
-	color: #444;
-	font-weight: 600;
-	margin: 40px 0 22px;
-	font-family: "ubuntu"
-	
-}
-
-h3 {
-	
-	font-family: 'Open Sans';
-	font-weight: 400;
-	font-size: 25px;
-	color: #414141;
-	line-height: 40px;
-	
-}
-
-</style>
-
-
-
 
 
 <div class="container" style="margin-top:130px">
 
 
-	<div class="forklaring" style="max-width:930px;margin:0 auto">
+    <aside class="nav">
+
+        <h1>Forklaring</h1>
+        <ul>
+            <li><a href="#introduktion">Introduktion</a></li>
+            <li><a href="#om-os">Om os</a></li>
+            <li><a href="#betalingsgateway">Betalingsgateway</a></li>
+            <li><a href="#betalingslsning1">Betalingsløsning</a></li>
+        </ul>
+
+
+
+    </aside>
+
+
+
+
+	<div class="forklaring">
 		<h1 id="introduktion" style="margin-top:0">Introduktion til kortgebyr</h1>
-		
-		<h3>
-Kortgebyr.dk er en prissammenligningside for betalingsløsninger og betalingsgateways. Siden er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede i 2012 og er fortsat under udvikling.
-		</h3>
-		
+
+        <strong>Kortgebyr</strong> er en prissammenligningside for betalingsløsninger og betalingsgateways. Siden er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede i 2012 og er fortsat under udvikling.
+
 		<hr>
-		
-		
+
 		<h2>Indholdsfortegnelse:</h2>
-		
+
 			<a href="#introduktion" class="list-group-item active">Introduktion</a>
 			<a href="#betalingsgateway" class="list-group-item">Betalingsgateway</a>
-			<a href="#betalingsløsning" class="list-group-item">Betalingsløsning</a>
+			<a href="#betalingslsning" class="list-group-item">Betalingsløsning</a>
 			<a href="#beregningsmetoden" class="list-group-item">Beregningsmetoden</a>
 			<a href="#regneeksempel" class="list-group-item">Regneeksempel</a>
-			<a href="#regneeksempel" class="list-group-item">Changelog</a>		
+			<a href="#regneeksempel" class="list-group-item">Changelog</a>
 			<a href="#regneeksempel" class="list-group-item">Hall of Fame</a>
 			<a href="#om" class="list-group-item">Om os</a>
-		
-		
+
 		<hr>
 		<h2 id="betalingsgateway">Hvad er en betalingsgateway?</h2>
 		<div class="">
 		En betalingsgateway, på engelsk <a href="http://en.wikipedia.org/wiki/Payment_gateway">payment gateway</a>, er en løsning der bedst kan beskrives som en online dankortterminal. En betalingsgateway tilkobler din virksomhed til et netværk af banker og betalingsløsninger og gør det nemt for dig at integrere dem i din e-business (typisk med shopmoduler ellet et simpelt API).
 			<br><br>
-			
-			
-			
+
+
+
 		</div>
-		
+
 		<hr>
 		<h2 id="indløsning">Hvad er en indløsningsaftale?</h2>
 		<div>
-		
+
 		En indløsningsaftale, på engelsk <a href="#">Merchant Account</a>,
-		
+
 
 		</div>
 		<hr>
@@ -208,19 +120,19 @@ Kortgebyr.dk er en prissammenligningside for betalingsløsninger og betalingsgat
 				<div>
 					<h4>Korrigering for Epays oprettelsesgebyr:</h4>
 					Epay Pro har et oprettelsesgebyr på 599kr
-					<br>Korrigerede Epay-omkostninger = Månedlige Epay-omkostninger + Oprettelsesgebyr * intern rente per år / 12 = 
+					<br>Korrigerede Epay-omkostninger = Månedlige Epay-omkostninger + Oprettelsesgebyr * intern rente per år / 12 =
 					<br>= 449 kr + 599kr * 0.16 / 12 = 456.99 kr
 				</div>
 				<div>
 					<h4>Korrigering for NETS' oprettelsesgebyr:</h4>
 					NETS har et oprettelsesgebyr på 250kr
-					<br>Korrigerede NETS-omkostninger = Månedlige Epay-omkostninger + Oprettelsesgebyr * intern rente per år / 12 = 
+					<br>Korrigerede NETS-omkostninger = Månedlige Epay-omkostninger + Oprettelsesgebyr * intern rente per år / 12 =
 					<br>= 1793.03 + 250kr * 0.16 / 12 = 1796.37kr
 				</div>
 				<div>
 					<h4>Korrigering for Tellers oprettelsesgebyr:</h4>
 					Teller har et oprettelsesgebyr på 1000kr
-					<br>Korrigerede Teller-omkostninger = Månedlige Teller-omkostninger + Oprettelsesgebyr * intern rente per år / 12 = 
+					<br>Korrigerede Teller-omkostninger = Månedlige Teller-omkostninger + Oprettelsesgebyr * intern rente per år / 12 =
 					<br>= 2530 + 1000 * 0.16 / 12 = 2543.33kr
 				</div>
 				De totale månedlige omkostninger er da:
@@ -233,14 +145,14 @@ Kortgebyr.dk er en prissammenligningside for betalingsløsninger og betalingsgat
 					<br>= 4796.69kr / 1500 = 3.20kr
 			</li>
 		</ul>
-		
+
 		<h2 id="om">Om os</h2>
-		
+
 			<div>
 
 			Kortgebyr.dk er udviklet af <a href="https://twitter.com/ulrikmoe">@ulrikmoe</a>, <a href="https://twitter.com/christianblach">@christianblach</a> og <a href="https://github.com/zhasha">@joakimsindholt</a>. Formålet med siden er at skabe klarhed på et yderst komplekst marked.
-			
-			
+
+
 			Tak til alle som har bidraget eller delt projektet.
 
 			<br /><br />
