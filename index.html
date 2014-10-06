@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Kortgebyr - sammenlign betalingsløsninger og gateways"
+title: "Kortgebyr - sammenlign betalingsløsninger"
 canonical: "http://kortgebyr.dk"
 description: "Kortgebyr er en prissammenligning af betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr."
 index: true
@@ -16,23 +16,19 @@ function initialize() {
 window.onload = initialize;
 </script>
 
-<main role="main" style="padding-top:40px;">
+<main role="main" style="padding-top:10px;">
 
     <article class="container">
-    
+
         <section class="about">
-    
+
         </section>
-    
-    
+
         <menu type="toolbar">
-        
+
     		<div class="options-header">
     			<p class="right"><span id="psp_count"></span>/<span id="psp_size"></span></p>
-    			<span class="title">Kontrolpanel</span>
-    			<div class="">
-    				<span onclick="build('init')" class="reset";>Reset</span>
-    			</div>
+    			<span class="title">Kontrolpanel</span> <span onclick="build('init')" class="reset";>Reset</span>
     		</div>
     		<ul style="padding: 10px">
     			<li><label>Transaktioner pr. måned: <input type="text" class="input" id="transactions" value="100" onkeyup="build('keyup');" onblur="save_url();"></label></li>
@@ -57,18 +53,14 @@ window.onload = initialize;
     				<label>Visa/MasterCard: <input type="checkbox" checked="" id="visa_mastercard" onchange="build();"/></label>
     			</li>
     			<li>
-    				<label>Paii: <input disabled="" type="checkbox" id="paii" onchange="build();"/></label>
-    				<label>Bitcoin: <input disabled="" type="checkbox" id="bitcoin" onchange="build();"/></label>
-    			</li>
-    			<li>
     				<label>Svindelkontrol: <input type="checkbox" id="fraud_fighter" onchange="build();"/></label>
     			</li>
     		</ul>
-        
+
         </menu>
-    
+
     </article>
-    
+
 	<table class="table container" style="margin-top:30px">
 		<thead>
 			<tr>

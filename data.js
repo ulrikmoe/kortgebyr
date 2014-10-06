@@ -742,7 +742,7 @@ var psps = { // alfabetisk rækkefølge
     link: "http://yourpay.dk",
     is_acquirer: true,
     acquirers: [],
-    cards: ["visa", "mastercard"],
+    cards: ["dankort", "visa", "mastercard"],
     costfn: function(o) {
 
       var fee = 2.25;
