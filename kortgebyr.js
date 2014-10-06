@@ -558,16 +558,14 @@ function build(action) {
     i_fixedmonth[psps[k].name] = c_psp.monthly;
     i_totalmonth[psps[k].name] = price_total(c_psp, psps[k].is_acquirer ? visamc_scale : 1, newstate['setup_loss']);
 
-    if (use_dankort) {
-      if( psps[k].acquirers.indexOf( "nets" ) >= 0 ){
-        var c_nets = acqs['nets'].costfn(tmpo);
-        var netsname = 'nets (' + dankort_scale * 100 + '% tr.)';
+    if (use_dankort && psps[k].acquirers.indexOf( "nets" ) >= 0 ) {
+      var c_nets = acqs['nets'].costfn(tmpo);
+      var netsname = 'nets (' + dankort_scale * 100 + '% tr.)';
 
-        i_setup['nets'] = c_nets.setup;
-        i_fixedmonth['nets'] = c_nets.monthly;
-        i_totalmonth[netsname] = price_total(c_nets, dankort_scale, newstate['setup_loss']);
-        n_acqs.push('nets');
-      }
+      i_setup['nets'] = c_nets.setup;
+      i_fixedmonth['nets'] = c_nets.monthly;
+      i_totalmonth[netsname] = price_total(c_nets, dankort_scale, newstate['setup_loss']);
+      n_acqs.push('nets');
       n_cards.push('dankort');
     }
 
