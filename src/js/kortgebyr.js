@@ -3,10 +3,14 @@ function $(s) {
 }
 
 var default_acquirer_fees = {};
+var default_currency = "DKK";
+var default_transactions = 250;
+var default_amount = 500;
 var color_error = "#f88";
 var color_good = null;
 
-function getint(k) {
+
+function getInt(k) {
   var elem = $(k);
   var str = elem.value.trim();
   if (!isNaN(parseFloat(str)) && isFinite(str) &&
@@ -18,7 +22,7 @@ function getint(k) {
   return null;
 }
 
-function setint(k, v) {
+function setInt(k, v) {
   $(k).value = parseInt(v, 10);
   $(k).style.background = color_good;
 }
@@ -37,7 +41,7 @@ function mkcurregex() {
 
 var curregex = mkcurregex();
 
-function getcurrency(currency) {
+function getCurrency(currency) {
   var a = $(currency).value.match(curregex);
   if (a === null) {
     $(k).style.background = color_error;
@@ -56,7 +60,7 @@ function getcurrency(currency) {
   return new Currency(parseFloat(a[1].replace('.', '').replace(',', '.')), c);
 }
 
-function getcurrencystring(string) {
+function getCurrencystring(string) {
   var a = string.match(curregex);
   if (a === null) {
     return null;
@@ -73,20 +77,28 @@ function getcurrencystring(string) {
   return new Currency(parseFloat(a[1].replace('.', '').replace(',', '.')), c);
 }
 
-function setcurrency(k, v) {
+
+function changeCurrency(select) {
+  // Når en user ændrer currency via select dropdown.
+  alert(select.value);
+
+}
+
+
+function setCurrency(k, v) {
   $(k).value = v.represent();
   $(k).style.background = color_good;
 }
 
-function getoption(k, prefix) {
+function getOption(k, prefix) {
   return $(k).options[$(k).selectedIndex].id.substr(prefix.length);
 }
 
-function setoption(v, prefix) {
+function setOption(v, prefix) {
   $(prefix + v).selected = true;
 }
 
-function getpercent(k) {
+function getPercent(k) {
   var elem = $(k);
   var str = elem.value.replace('%', '').replace(',', '.').trim();
   if (!isNaN(parseFloat(str)) && isFinite(str)) {
@@ -97,16 +109,16 @@ function getpercent(k) {
   return null;
 }
 
-function setpercent(k, v) {
+function setPercent(k, v) {
   $(k).value = (parseFloat(v) + "%").replace('.', ',');
   $(k).style.background = color_good;
 }
 
-function getbool(k) {
+function getBool(k) {
   return $(k).checked ? true : false;
 }
 
-function setbool(k, v) {
+function setBool(k, v) {
   if (typeof v === "number") {
     v = v && 1;
   }
@@ -117,13 +129,13 @@ var opts = {
   'acquirer': {
     type: "bits",
     bits: 4,
-    get: function(a) {
+    get: function (a) {
       if (a === "url") {
         return parseInt($("acquirer")[$("acquirer").selectedIndex].value);
       }
-      return getoption('acquirer', 'acq_');
+      return getOption('acquirer', 'acq_');
     },
-    set: function(v) {
+    set: function (v) {
       if (typeof v === "number") {
         for (var i = 0; i < $("acquirer").length; i++) {
           if (parseInt($("acquirer")[i].value) === v) {
@@ -132,7 +144,7 @@ var opts = {
         }
         return;
       }
-      setoption(v, 'acq_');
+      setOption(v, 'acq_');
     },
     def: 'auto'
   },
@@ -140,42 +152,42 @@ var opts = {
     inactive: true,
     type: "bits",
     bits: 1,
-    get: function() {
+    get: function () {
       return true;
     },
-    set: function(v) {},
+    set: function (v) {},
     def: true
   },
   'fraud_fighter': {
     type: "bits",
     bits: 1,
-    get: function() {
-      return +getbool('fraud_fighter');
+    get: function () {
+      return +getBool('fraud_fighter');
     },
-    set: function(v) {
-      setbool('fraud_fighter', v);
+    set: function (v) {
+      setBool('fraud_fighter', v);
     },
     def: false
   },
   'dankort': {
     type: "bits",
     bits: 1,
-    get: function() {
-      return +getbool('dankort');
+    get: function () {
+      return +getBool('dankort');
     },
-    set: function(v) {
-      setbool('dankort', v);
+    set: function (v) {
+      setBool('dankort', v);
     },
     def: true
   },
   'visa_mastercard': {
     type: "bits",
     bits: 1,
-    get: function() {
-      return +getbool('visa_mastercard');
+    get: function () {
+      return +getBool('visa_mastercard');
     },
-    set: function(v) {
-      setbool('visa_mastercard', v);
+    set: function (v) {
+      setBool('visa_mastercard', v);
     },
     def: true
   },
@@ -183,7 +195,7 @@ var opts = {
   'dirty_bits': {
     type: "bits",
     bits: 0, //sættes on the fly
-    get: function() {
+    get: function () {
       var sum = 0;
       for (var k in opts) {
         if (opts.hasOwnProperty(k) && opts[k].dirty_bits) {
@@ -193,7 +205,7 @@ var opts = {
       return sum; //17;// detect de acquirers der er ændret i og konverter til binary
       // 17 => nummber 1 og nummer 5
     },
-    set: function(i) {
+    set: function (i) {
 
     },
     def: ""
@@ -201,35 +213,35 @@ var opts = {
   'transactions': {
     type: "string",
     dirty_bits: 1,
-    get_dirty_bits: function() {
+    get_dirty_bits: function () {
       return +(this.get() !== this.def);
     },
-    get: function() {
-      return getint('transactions');
+    get: function () {
+      return getInt('transactions');
     },
-    set: function(v) {
-      setint('transactions', v);
+    set: function (v) {
+      setInt('transactions', v);
     },
-    def: 500
+    def: default_transactions
   },
   'average_value': {
     type: "currency",
     dirty_bits: 1,
-    get_dirty_bits: function() {
+    get_dirty_bits: function () {
       return +!this.get().is_equal_to(this.def);
     },
-    get: function() {
-      return getcurrency('average_value');
+    get: function () {
+      return getCurrency('average_value');
     },
-    set: function(v) {
-      setcurrency('average_value', v);
+    set: function (v) {
+      setCurrency('average_value', v);
     },
-    def: new Currency(450, 'DKK')
+    def: new Currency(default_amount, default_currency)
   },
   'acquirer_opts': {
     type: "string",
     dirty_bits: undefined, // sættes af init_acqs()
-    get_dirty_bits: function() {
+    get_dirty_bits: function () {
       var sum = 0,
         i = 0;
       for (var k in acqs) {
@@ -247,7 +259,7 @@ var opts = {
       }
       return sum;
     },
-    get: function() {
+    get: function () {
       var str = "";
       for (var k in acqs) {
         if (acqs.hasOwnProperty(k) && k !== "nets") {
@@ -267,7 +279,7 @@ var opts = {
       }
       return str;
     },
-    set: function(v, bits) {
+    set: function (v, bits) {
       var i = 0,
         array_position = 0;
       var value_array = v.split(",");
@@ -275,7 +287,7 @@ var opts = {
       for (var k in acqs) {
         if (acqs.hasOwnProperty(k) && k !== "nets") {
           if (get_bit_range(bits, i, i, this.dirty_bits)) {
-            acqs[k].fee_fixed = getcurrencystring(value_array[array_position]);
+            acqs[k].fee_fixed = getCurrencystring(value_array[array_position]);
             array_position++;
           }
           i++;
@@ -295,66 +307,66 @@ var opts = {
     inactive: true,
     type: "bits",
     bits: 1,
-    get: function() {
+    get: function () {
       return false;
     },
-    set: function(v) {},
+    set: function (v) {},
     def: false
   },
   'bitcoin': {
     inactive: true,
     type: "bits",
     bits: 1,
-    get: function() {
+    get: function () {
       return false;
     },
-    set: function(v) {},
+    set: function (v) {},
     def: false
   },
   'setup_loss': {
     inactive: true,
     type: "bits",
     bits: 1,
-    get: function() {
+    get: function () {
       return 0.16;
     },
-    set: function(v) {},
+    set: function (v) {},
     def: 0.16
   }
 };
 
 var sopts = {
   'acquirer_fee_fixed': {
-    get: function() {
-      return getcurrency('acquirer_fee_fixed');
+    get: function () {
+      return getCurrency('acquirer_fee_fixed');
     },
-    set: function(v) {
-      setcurrency('acquirer_fee_fixed', v);
+    set: function (v) {
+      setCurrency('acquirer_fee_fixed', v);
     },
-    hide: function() {
+    hide: function () {
       $('acquirer_fee_fixed').parentNode.style.display = 'none';
     },
-    show: function() {
+    show: function () {
       $('acquirer_fee_fixed').parentNode.style.display = 'block';
     },
-    def: function() {
+    def: function () {
       return acqs[opts['acquirer'].get()].fee_fixed;
     }
   },
   'acquirer_fee_variable': {
-    get: function() {
-      return getpercent('acquirer_fee_variable');
+    get: function () {
+      return getPercent('acquirer_fee_variable');
     },
-    set: function(v) {
-      setpercent('acquirer_fee_variable', v);
+    set: function (v) {
+      setPercent('acquirer_fee_variable', v);
     },
-    hide: function() {
+    hide: function () {
       $('acquirer_fee_variable').parentNode.style.display = 'none';
     },
-    show: function() {
+    show: function () {
       $('acquirer_fee_variable').parentNode.style.display = 'block';
     },
-    def: function() {
+    def: function () {
       return acqs[opts['acquirer'].get()].fee_variable;
     }
   }
@@ -467,7 +479,7 @@ function build(action) {
   var rows = [];
   var dkpoffset = 0;
 
-  var info_icon = '<p class="tooltip"><img src="tooltip.gif"><span>';
+  var info_icon = '<p class="tooltip"><img src="/img/tooltip.gif"><span>';
   var info_icon_end = '</span></p>';
 
   for (k in psps) {
@@ -479,8 +491,8 @@ function build(action) {
         (psps[k].acquirers.indexOf('nets') < 0 &&
           !psps[k].is_acquirer)) {
         continue; // disable penalty for now
-        dankort_penalty = true;
-        use_dankort = false;
+        //dankort_penalty = true;
+        //use_dankort = false;
       }
     }
 
@@ -509,9 +521,9 @@ function build(action) {
       dankort_scale = 1;
       tmpo.visasecure = false;
     }
-    if( k === "yourpay" ){
-        visamc_scale = 1;
-        dankort_scale = 0;
+    if (k === "yourpay") {
+      visamc_scale = 1;
+      dankort_scale = 0;
     }
 
     if (tmpacq == "auto") {
@@ -558,7 +570,7 @@ function build(action) {
     i_fixedmonth[psps[k].name] = c_psp.monthly;
     i_totalmonth[psps[k].name] = price_total(c_psp, psps[k].is_acquirer ? visamc_scale : 1, newstate['setup_loss']);
 
-    if (use_dankort && psps[k].acquirers.indexOf( "nets" ) >= 0 ) {
+    if (use_dankort && psps[k].acquirers.indexOf("nets") >= 0) {
       var c_nets = acqs['nets'].costfn(tmpo);
       var netsname = 'nets (' + dankort_scale * 100 + '% tr.)';
 
@@ -620,7 +632,7 @@ function build(action) {
     for (var l in n_cards) {
       var logo = cards[n_cards[l]].logo;
       var name = cards[n_cards[l]].name;
-      h_cards += '<img src="cards/' + logo + '" alt="' + name +
+      h_cards += '<img src="/img/cards/' + logo + '" alt="' + name +
         '" title="' + name + '" />';
     }
 
@@ -628,10 +640,16 @@ function build(action) {
     for (var l in n_acqs) {
       var logo = acqs[n_acqs[l]].logo;
       var name = acqs[n_acqs[l]].name;
-      h_acqs.push('<img src="acquirer/' + logo + '" alt="' + name +
+      h_acqs.push('<img src="/img/acquirer/' + logo + '" alt="' + name +
         '" title="' + name + '" />');
     }
     h_acqs = h_acqs.join("<br />");
+
+    // Safari har en bug hvor empty cells ikke bliver vist, selv
+    // med [empty-cells: show;]. Derfor indsætter vi et nb-space.
+    if (h_acqs.length === 0) {
+      var h_acqs = "&nbsp;"
+    };
 
     var i;
     if (dankort_penalty) {
@@ -660,7 +678,7 @@ function build(action) {
     var totalmonth_cell = row.insertCell(5);
     var trans_cell = row.insertCell(6);
 
-    logo_cell.innerHTML = '<div class="psp"><a target="_blank" href=' + psps[k].link + '><img src="psp/' + psps[k].logo + '" alt="' + psps[k].name +
+    logo_cell.innerHTML = '<div class="psp"><a target="_blank" href=' + psps[k].link + '><img src="/img/psp/' + psps[k].logo + '" alt="' + psps[k].name +
       '" title="' + psps[k].name + '" /><br>' + psps[k].name +
       '</a></div>';
     acq_cell.innerHTML = h_acqs;
@@ -684,7 +702,7 @@ function build(action) {
   }
 }
 
-Object.size = function(obj) {
+Object.size = function (obj) {
   var size = 0,
     key;
   for (key in obj) {
@@ -882,7 +900,7 @@ function load_url(url_query) {
           opts[i].set(str);
         }
       } else if (obj.type === "currency") {
-        opts[i].set(getcurrencystring(str));
+        opts[i].set(getCurrencystring(str));
       }
     }
 

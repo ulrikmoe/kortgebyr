@@ -1,0 +1,738 @@
+/**
+ * 1. Default font
+ * 2. Prevent iOS text size adjust after orientation change (normalize.css)
+ * 3. Needed for footer.
+ * 4. Border-box: width/height include padding/border.
+ */
+html {
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 1 */
+  line-height: 23px;
+  font-size: 14px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #2c2c2c;
+  -ms-text-size-adjust: 100%;
+  /* 3 */
+  -webkit-text-size-adjust: 100%;
+  /* 3 */
+  position: relative;
+  /* 4 */
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  /* 5 */
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  background: #fff;
+  overflow-x: hidden;
+}
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: inherit;
+}
+/**
+ * 1. Remove the gray background color from active links in IE 10
+ * 2. Avoid image resizing when border is applied.
+ * 3. Improve readability when focused and also mouse hovered in all browsers.
+ * 4. Address style set to `bolder` in Firefox 4+, Safari, and Chrome
+ * 5. Input fields should inherit font/color
+ */
+a {
+  background: transparent;
+}
+/* 1 */
+ul,
+ol {
+  list-style: none;
+}
+img {
+  box-sizing: content-box;
+  border: 0px;
+}
+/* 2 */
+a:active,
+a:hover {
+  outline: 0;
+}
+/* 3 */
+b,
+strong {
+  font-weight: bold;
+}
+/* 4 */
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  color: inherit;
+}
+/* 5 */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+:focus {
+  outline-color: transparent;
+  outline-style: none;
+}
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+a {
+  color: inherit;
+}
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+audio,
+canvas,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+:focus {
+  outline: none;
+}
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+}
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+input {
+  line-height: normal;
+}
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+a {
+  color: #36b;
+  -webkit-transition: all 0.1s ease-in;
+  -moz-transition: all 0.1s ease-in;
+  -ms-transition: all 0.1s ease-in;
+  -o-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in;
+  text-decoration: none;
+}
+.container {
+  width: 96%;
+  max-width: 1040px;
+  padding: 0;
+  margin: auto;
+  position: relative;
+}
+header {
+  display: block;
+  margin-top: 20px !important;
+  border: 1px solid #dbdbdb;
+}
+nav {
+  font-size: 13px;
+  border-bottom: 1px solid #ddd;
+  height: 42px;
+  background-color: #f0f0f0;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 25%, rgba(255, 255, 255, 0.1) 100%);
+}
+nav > * {
+  display: inline-block;
+  vertical-align: top;
+}
+nav .logo {
+  display: inline-block;
+  margin: 5px 20px 0 17px;
+  color: #204499;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: #fff 0px 1px 1px;
+}
+nav .logo:hover {
+  color: #3E79BB;
+}
+nav .contact {
+  float: right;
+  margin-right: 18px;
+  line-height: 44px;
+}
+nav .language,
+nav .currency {
+  float: right;
+  height: 100%;
+  border-left: 1px solid #ddd;
+  cursor: pointer;
+}
+nav .language:hover,
+nav .currency:hover {
+  background-color: #e9e9e9;
+}
+nav .currency {
+  width: 60px;
+  position: relative;
+}
+nav .currency select {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  padding: 0 22px 0 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+nav .currency,
+nav .language {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAABuCAMAAAAd8LPfAAAADFBMVEUAAAD///8AAAC+vr5RhLmsAAAAAXRSTlMAQObYZgAAADZJREFUeNrt1MENACAMw0AH9t8ZqX2kjADKPT2AYTcGVRGTXNxc3IiI+NZqDKoi7ubilmPGkw4zrgBfaUnn4AAAAABJRU5ErkJggg==);
+  background-position: right 20px;
+  background-repeat: no-repeat;
+}
+nav .language {
+  width: 58px;
+}
+nav .language img {
+  margin: 12px 0 0 11px;
+}
+main {
+  margin-top: 20px;
+}
+.info {
+  padding: 20px 0 0 0;
+}
+h2 {
+  font-size: 24px;
+  color: #444;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+
+	O P T I O N S
+
+*/
+menu {
+  width: 100%;
+  display: -webkit-flex;
+  /* Safari */
+  display: flex;
+  flex-wrap: nowrap;
+  font-size: 14px;
+}
+menu > * {
+  padding: 7px 30px 7px;
+  margin: 12px 0;
+  border-left: 1px solid #dfdfdf;
+}
+menu > * input {
+  margin-right: 6px;
+  font-size: 15px;
+}
+menu > * p {
+  margin: 3px 0;
+}
+menu .field {
+  width: 57px;
+  margin: 4px 7px 4px 0;
+  padding-left: 5px;
+  font-size: 15px;
+  line-height: 22px;
+  color: #555;
+  border-radius: 3px;
+  background-color: #fff;
+  border: 1px solid #bbb;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+menu .acquirer {
+  width: 230px;
+}
+menu .acquirer select {
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+menu .acquirer_description {
+  font-size: 14px;
+  margin-top: 16px;
+}
+menu .acquirer_options {
+  display: none;
+}
+menu h2 {
+  font-size: 15px;
+  margin-bottom: 7px;
+}
+menu .first {
+  border-left: 0;
+  -webkit-flex: 1;
+  flex: 1 auto;
+}
+.options {
+  display: block;
+  background: #F9F9F9;
+  border: 1px solid #ddd;
+  position: relative;
+  min-height: 460px;
+}
+.options li {
+  line-height: 35px;
+}
+.amino-extension {
+  margin-top: 20px;
+}
+.mid ul {
+  margin-left: 30px;
+  line-height: 36px;
+}
+.left {
+  border-right: 1px solid #ccc;
+  padding: 8px 20px 0 25px;
+}
+.right {
+  float: right;
+}
+.email {
+  display: inline-block;
+  vertical-align: top;
+  height: 20px;
+  width: 160px;
+  padding: 4px 6px;
+  margin: 10px 5px 0 0;
+}
+.left button {
+  display: inline-block;
+  vertical-align: top;
+  padding: 4px 12px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333333;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  border: 1px solid #cccccc;
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  border-bottom-color: #b3b3b3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.right button {
+  cursor: pointer;
+  float: right;
+  font-size: 13px;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+  color: #f9f9f9;
+  padding: 7px 18px;
+  margin: 9px 23px 0;
+  border-radius: 4px;
+  background-origin: border-box;
+  background-color: #4588C1;
+  /* fallback color */
+  background-image: -moz-linear-gradient(100% 100% 90deg, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 0.1)), to(rgba(0, 0, 0, 0.1)));
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+.right button:hover {
+  background-image: -moz-linear-gradient(100% 100% 90deg, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 0.2)), to(rgba(0, 0, 0, 0.2)));
+}
+.right ul {
+  margin: 0 20px 0 0;
+}
+.right .input {
+  margin-left: 8px;
+}
+.right label {
+  margin-left: 8px;
+}
+/*
+
+	T A B L E
+
+*/
+.psp {
+  text-align: left;
+  padding-left: 9px;
+  font-size: 12px;
+}
+.psp img {
+  margin: 6px 0 3px;
+}
+.kort {
+  width: 95px;
+  padding-top: 13px !important;
+  text-align: center;
+  margin: auto;
+}
+.kort img {
+  margin: 4px;
+}
+.acquirer {
+  text-align: center;
+  width: 90px;
+}
+.acquirer img {
+  margin: 6px 0;
+}
+.table {
+  background: #fff;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #d9d9d9;
+  border-left: 0;
+  font-weight: 400;
+  font-size: 14px;
+  color: #444;
+  empty-cells: show;
+}
+.table tr td:first-child {
+  width: 16%;
+  min-width: 150px;
+  max-width: 180px;
+}
+.table th,
+.table td {
+  text-align: center;
+  position: relative;
+}
+.table > tbody > tr > td,
+.table > thead > tr > th {
+  border-left: 1px solid #dcdcdc;
+  border-top: 1px solid #dcdcdc;
+  padding: 11px 6px 8px;
+}
+.table > thead > tr > th {
+  padding: 5px 0 4px;
+  -webkit-font-smoothing: antialiased;
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 600;
+  background-color: #f0f0f0;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 25%, rgba(255, 255, 255, 0.1) 100%);
+  border-top: 0;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  color: #444;
+}
+.table td {
+  height: 70px;
+}
+.table tbody img {
+  vertical-align: middle;
+}
+.tooltip {
+  outline: none;
+  cursor: help;
+  display: inline-block;
+  position: relative;
+}
+.tooltip img {
+  margin: -2px 0 0 6px;
+  opacity: 0.7;
+}
+.tooltip strong {
+  line-height: 30px;
+}
+.tooltip:hover {
+  text-decoration: none;
+}
+.tooltip span {
+  z-index: 10;
+  display: none;
+  position: absolute;
+  padding: 14px 20px;
+  top: -80px;
+  margin-left: -88px;
+  width: 160px;
+  line-height: 16px;
+  font-size: 12px;
+  background: #2C3843;
+  color: #f4f4f4;
+  border: 1px solid #000;
+  border-radius: 3px;
+}
+.tooltip:hover span {
+  display: block;
+}
+.tooltip:hover span:after,
+.tooltip:hover span:before {
+  top: 100%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+.tooltip:hover span:before {
+  border-color: rgba(136, 183, 213, 0);
+  border-top-color: #000;
+  border-width: 8px;
+  left: 50%;
+  margin-left: -8px;
+}
+.tooltip:hover span:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-top-color: #2C3843;
+  border-width: 7px;
+  left: 50%;
+  margin-left: -7px;
+}
+#medregnopretgebyrinfo span {
+  width: 360px;
+  margin-left: -186px;
+  top: -118px;
+}
+#kortfordelinginfo span {
+  text-align: left;
+  width: 300px;
+  margin-left: -350px;
+  top: -60px;
+}
+#kortfordelinginfo:hover span:after {
+  border-width: 8px 0 8px 16px;
+  /*10px;*/
+  border-color: transparent;
+  border-left-color: #2C3843;
+  margin-left: 0px;
+  left: 100%;
+  top: 46%;
+}
+#kortfordelinginfo:hover span:before {
+  border-color: rgba(136, 183, 213, 0);
+  border-left-color: #000;
+  border-width: 8px 0 8px 17px;
+  margin-left: 1px;
+  left: 100%;
+  top: 46%;
+}
+footer {
+  background: #fff;
+  text-align: center;
+  padding: 40px 0 70px;
+  color: #777;
+  line-height: 27px;
+  font-size: 14px;
+}
+footer .social {
+  position: relative;
+  padding: 0px 0 10px;
+  height: 58px;
+  text-align: center;
+}
+footer .social span {
+  font-size: 1px;
+  display: inline-block;
+  vertical-align: baseline !important;
+}
+footer .social .google {
+  width: 80px;
+}
+footer .social .twitter {
+  width: 99px;
+}
+footer .social .linkedin {
+  width: 64px;
+}
+/*
+*   /forklaring/
+*/
+.forklaring .list-group {
+  max-width: 250px;
+}
+.forklaring .list-group a {
+  display: block;
+}
+.forklaring .list-group a {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  background-color: #FFF;
+  border: 1px solid #DDD;
+}
+.forklaring a.list-group-item.active,
+.forklaring a.list-group-item.active:hover,
+.forklaring a.list-group-item.active:focus {
+  z-index: 2;
+  color: #FFF;
+  background-color: #428BCA;
+  border-color: #428BCA;
+}
+.forklaring .list-group-item:first-child {
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+.forklaring .list-group-item:last-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.forklaring .forklaring {
+  font-family: 'Open Sans';
+  font-weight: 400;
+  color: #565a5f;
+  font-size: 16px;
+  line-height: 1.7em;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.forklaring .forklaring a {
+  -webkit-transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
+  -moz-transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
+  -o-transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
+  transition: all 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75);
+  color: #ff8833;
+  font-weight: 400;
+}
+.forklaring h1 {
+  font-family: 'ubuntu', Arial;
+  font-weight: 700;
+  font-size: 43px;
+  color: #333;
+  margin-bottom: 45px;
+}
+.forklaring h2 {
+  font-size: 24px;
+  line-height: 35px;
+  color: #444;
+  font-weight: 600;
+  margin: 40px 0 22px;
+  font-family: "ubuntu";
+}
+.forklaring h3 {
+  font-family: 'Open Sans';
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 1.2em;
+  line-height: 1.8em;
+  color: #666666;
+  font-weight: 300;
+}
+.forklaring aside.nav {
+  width: 200px;
+  border-right: 1px solid #D6D6D6;
+}
