@@ -344,7 +344,7 @@ var sopts = {
       setCurrency('acquirer_fee_fixed', v);
     },
     hide: function () {
-      $('acquirer_fee_fixed').parentNode.style.display = 'none';
+      $('acquirer_fee_fixed').style.display = 'none';
     },
     show: function () {
       $('acquirer_fee_fixed').parentNode.style.display = 'block';
@@ -381,6 +381,7 @@ function init_acqs() {
   var i = 0;
   for (var k in acqs) {
     if (acqs.hasOwnProperty(k) && k !== 'nets') {
+
       i++;
       s += '<option id="acq_' + k + '" value="' + i + '">' + acqs[k].name + '</option>';
       default_acquirer_fees[k] = {};
@@ -392,8 +393,8 @@ function init_acqs() {
   opts.acquirer_opts.dirty_bits = 2 * i;
   $('acquirer').innerHTML = s;
 
-  sopts['acquirer_fee_fixed'].hide();
-  sopts['acquirer_fee_variable'].hide();
+  //sopts['acquirer_fee_fixed'].hide();
+  //sopts['acquirer_fee_variable'].hide();
 }
 
 function init_defaults() {
@@ -643,7 +644,7 @@ function build(action) {
       h_acqs.push('<img src="/img/acquirer/' + logo + '" alt="' + name +
         '" title="' + name + '" />');
     }
-    h_acqs = h_acqs.join("<br />");
+    h_acqs = h_acqs.join("");
 
     // Safari har en bug hvor empty cells ikke bliver vist, selv
     // med [empty-cells: show;]. Derfor indsætter vi et nb-space.
@@ -678,13 +679,11 @@ function build(action) {
     var totalmonth_cell = row.insertCell(5);
     var trans_cell = row.insertCell(6);
 
-    logo_cell.innerHTML = '<div class="psp"><a target="_blank" href=' + psps[k].link + '><img src="/img/psp/' + psps[k].logo + '" alt="' + psps[k].name +
-      '" title="' + psps[k].name + '" /><br>' + psps[k].name +
-      '</a></div>';
+    logo_cell.innerHTML = '<a target="_blank" href=' + psps[k].link + '><img src="/img/psp/' + psps[k].logo + '" alt="' + psps[k].name +
+      '" title="' + psps[k].name + '" />' + psps[k].name +
+      '</a>';
     acq_cell.innerHTML = h_acqs;
-    acq_cell.className = 'acquirer';
     card_cell.innerHTML = h_cards;
-    card_cell.className = 'kort';
     setup_cell.innerHTML = t_setup.print() + info_icon + s_setup.join("<br />") + info_icon_end;
     fixedmonth_cell.innerHTML = t_fixedmonth.print() + info_icon + s_fixedmonth.join("<br />") + info_icon_end;
     totalmonth_cell.innerHTML = t_totalmonth.print() + info_icon + s_totalmonth.join("<br />") + info_icon_end;
@@ -695,8 +694,6 @@ function build(action) {
 
   prevstate = newstate;
 
-  document.getElementById('psp_count').innerHTML = counter;
-  document.getElementById('psp_size').innerHTML = Object.size(psps);
   if (action !== "init") {
     save_url();
   }

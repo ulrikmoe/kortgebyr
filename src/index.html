@@ -9,7 +9,6 @@
   <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
   <meta http-equiv="pragma" content="no-cache" />
   <title>Kortgebyr - sammenlign betalingsløsninger</title>
-  <link rel="canonical" href="http://kortgebyr.dk">
   <meta name="description" content="Kortgebyr er en prissammenligning af betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr.">
 
   <link href="/css/global.css" rel="stylesheet" type="text/css" />
@@ -17,19 +16,15 @@
   <script type="text/javascript" src="/js/kortgebyr.js"></script>
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic' rel='stylesheet' type='text/css'>
+
+  <link rel="alternate" href="http://kortgebyr.dk" hreflang="da-dk" />
+  <link rel="alternate" href="http://kortgebyr.dk/sv/" hreflang="" />
+  <link rel="alternate" href="http://kortgebyr.dk/no/" hreflang="" />
+  <link rel="canonical" href="http://kortgebyr.dk">
+
 </head>
 
 <body>
-
-  <script>
-    function initialize() {
-      build('init');
-      var element = document.createElement("script");
-      element.src = "defer.js";
-      document.body.appendChild(element);
-    }
-    window.onload = initialize;
-  </script>
 
   <header class="container">
 
@@ -59,12 +54,14 @@
 
     <menu class="flex" type="toolbar">
 
-      <section class="first">
+      <section>
         <h2>Indløsning</h2>
         <p>
           <label>
-            <div class="acquirer">
-              <select id="acquirer" onchange="build();"></select>
+            <div class="acquirer_field">
+              <select id="acquirer" onchange="build();">
+                <option>Automatisk</option>
+              </select>
             </div>
           </label>
         </p>
@@ -95,7 +92,6 @@
           Priser tager udgangspunkt i listepriser eller <a href="#">stikprøver</a>. Indløsningsaftaler skal forhandles, bagefter kan du indtaste den og beregne dit kortgebyr. <a href="#">Læs forklaring her</a>.
         </div>
 
-
       </section>
 
       <section style="min-width:300px">
@@ -104,12 +100,12 @@
 
         <p>
           <label>
-            <input autocomplete="off" type="text" class="field" id="transactions" value="100" onkeyup="build('keyup');" onblur="save_url();"> Transaktioner pr. måned
+            <input autocomplete="off" type="text" class="field" id="transactions" value="250" onkeyup="build('keyup');" onblur="save_url();"> Transaktioner pr. måned
           </label>
         </p>
         <p>
           <label>
-            <input autocomplete="off" type="text" class="field" id="average_value" value="" onkeyup="build('keyup');" onblur="save_url();"> Gennemsnits ordreværdi:
+            <input autocomplete="off" type="text" class="field" id="average_value" value="500" onkeyup="build('keyup');" onblur="save_url();"> Gennemsnits ordreværdi:
           </label>
         </p>
         <p>
@@ -224,14 +220,24 @@
       <span class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://kortgebyr.dk" data-lang="da">Tweet</a></span>
       <span class="google"><div class="g-plusone" data-size="medium" data-href="http://kortgebyr.dk"></div></span>
       <span class="Facebook fb-share-button" data-href="http://kortgebyr.dk" data-type="button_count"></span>
+      <script type="IN/Share" data-url="http://kortgebyr.dk" data-counter="right"></script>
     </div>
-
 
     Kortgebyr er udviklet af <a href="https://twitter.com/ulrikmoe">Ulrik Moe</a>, <a href="https://twitter.com/christianblach">Christian Blach</a> og <a href="https://github.com/zhasha">Joakim Sindholt</a> som et værktøj
     <br />til at sammenligne betalingsløsninger. Kortgebyr er uafhængig, non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small><a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a></small>).
-
-
   </footer>
-</body>
 
-</html>
+  <script>
+    function initialize() {
+
+      var element = document.createElement("script");
+      element.src = "js/defer.js";
+      document.body.appendChild(element);
+
+      build('init');
+    }
+    window.onload = initialize;
+  </script>
+
+
+</body></html>
