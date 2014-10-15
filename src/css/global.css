@@ -301,7 +301,7 @@ menu > * input {
   font-size: 15px;
 }
 menu > * p {
-  margin: 3px 0;
+  margin: 4px 0;
 }
 menu h2 {
   font-size: 24px;
@@ -314,7 +314,7 @@ menu h2 {
 }
 menu .field {
   width: 57px;
-  margin: 4px 7px 4px 0;
+  margin: 4px 7px 5px 0;
   padding-left: 5px;
   font-size: 15px;
   line-height: 22px;
@@ -332,7 +332,8 @@ menu .acquirer_field select {
   display: block;
   width: 100%;
   height: 30px;
-  padding: 0 12px;
+  padding: 0 11px;
+  margin-bottom: 13px;
   font-size: 14px;
   line-height: 1.42857143;
   color: #555;
@@ -345,6 +346,9 @@ menu .acquirer_field select {
   -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
   -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+menu .acquirer_field .field {
+  margin-left: 1px;
 }
 menu .acquirer_description {
   font-size: 14px;
@@ -492,7 +496,7 @@ menu > :first-child {
 footer {
   background: #fff;
   text-align: center;
-  padding: 40px 0 45px;
+  padding: 40px 0;
   color: #777;
   line-height: 27px;
   font-size: 14px;
