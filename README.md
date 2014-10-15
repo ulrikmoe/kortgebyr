@@ -15,7 +15,7 @@ Det er nemt at bidrage til projektet. Du skal blot installere Grunt via npm, som
 npm install -g grunt-cli
 </pre>
 
-Når GruntJS er installeret skal du blot, udgangspunkt fra folder <code>cd kortgebyr</code>, køre følgende komando:
+Når GruntJS er installeret skal du blot, med udgangspunkt fra folder <code>cd kortgebyr</code>, køre følgende komando:
 
 <pre>
 npm install
@@ -29,4 +29,4 @@ grunt server watch
 
 LICENSE
 ============
-Koden er udgivet under [a relative link](GPLv3.md). Alle logoer og kortikoner tilhører de respektive ejere.
+Koden er udgivet under [GPLv3](GPLv3.md). Alle logoer og kortikoner tilhører de respektive ejere.
