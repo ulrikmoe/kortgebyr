@@ -21,7 +21,6 @@
   <link rel="alternate" href="http://kortgebyr.dk/sv/" hreflang="" />
   <link rel="alternate" href="http://kortgebyr.dk/no/" hreflang="" />
   <link rel="canonical" href="http://kortgebyr.dk">
-
 </head>
 
 <body>
@@ -66,30 +65,31 @@
           </label>
         </p>
         <div class="acquirer_options">
+
           <p>
             <label>
-              <input type="text" class="field" value="0 kr" id="acquirer_fee_fixed" onkeyup="build('keyup');" onblur="save_url();"> Fast indløsergebyr pr. transaktion
+              <input type="text" class="field" value="0 kr" id="acquirer_setup" onkeyup="build('keyup');" onblur="save_url();"> Oprettelsesgebyr
             </label>
           </p>
           <p>
             <label>
-              <input type="text" class="field" value="0%" id="acquirer_fee_variable" onkeyup="build('keyup');" onblur="save_url();"> Variabelt indløsergebyr pr. transaktion
+              <input type="text" class="field" value="0 kr" id="acquirer_monthly" onkeyup="build('keyup');" onblur="save_url();"> Abonnement pr. måned
             </label>
           </p>
           <p>
             <label>
-              <input type="text" class="field" value="0 kr" id="acquirer_fee_variable" onkeyup="build('keyup');" onblur="save_url();"> Oprettelse
+              <input type="text" class="field" value="0%" id="acquirer_variable" onkeyup="build('keyup');" onblur="save_url();">
             </label>
-          </p>
-          <p>
-            <label>
-              <input type="text" class="field" value="0 kr" id="acquirer_fee_variable" onkeyup="build('keyup');" onblur="save_url();"> Abonnement
+            +
+            <label style="margin-left: 7px">
+              <input type="text" class="field" value="0 kr" id="acquirer_fixed" onkeyup="build('keyup');" onblur="save_url();">
             </label>
+            pr. transaktion
           </p>
         </div>
 
         <div class="acquirer_description">
-          Priser tager udgangspunkt i listepriser eller <a href="#">stikprøver</a>. Indløsningsaftaler skal forhandles, bagefter kan du indtaste den og beregne dit kortgebyr. <a href="#">Læs forklaring her</a>.
+          Priser tager udgangspunkt i listepriser eller <a href="#">stikprøver</a>. Vi anbefaler at du starter med at læse vores <a href="#">forklaring her</a>.
         </div>
 
       </section>
@@ -110,22 +110,23 @@
         </p>
         <p>
           <label>
+            <input type="checkbox" id="visasecure" onchange="build();" /> 3D-Secure
+          </label>
+        </p>
+        <p>
+          <label>
             <input type="checkbox" id="fraud_fighter" onchange="build();" /> Svindelkontrol
           </label>
         </p>
         <p>
           <label>
-            <input type="checkbox" id="re" onchange="build();" /> Abonnementsbetalinger</label>
+            <input type="checkbox" id="recurring" onchange="build();" /> Abonnementsbetalinger
+          </label>
         </p>
-
         <p>
           <label>
-            <input type="checkbox" id="" onchange="build();" /> Multi-indløser</label>
-        </p>
-
-        <p>
-          <label>
-            <input type="checkbox" id="" onchange="build();" /> 3D-Secure</label>
+            <input type="checkbox" id="multiacquirer" onchange="build();" /> Multi-indløser
+          </label>
         </p>
 
       </section>
@@ -143,7 +144,7 @@
         </p>
         <p>
           <label>
-            <input type="checkbox" disabled="" id="" onchange="build();" /> Forbrugsforening</label>
+            <input type="checkbox" disabled="" id="forbrugsforeningen" onchange="build();" /> Forbrugsforening</label>
         </p>
         <p>
           <label>
@@ -157,16 +158,11 @@
       -->
         <p>
           <label>
-            <input type="checkbox" disabled="" id="" onchange="build();" /> MobilePay</label>
+            <input type="checkbox" disabled="" id="mobilepay" onchange="build();" /> MobilePay</label>
         </p>
         <p>
           <label>
-            <input type="checkbox" disabled="" id="" onchange="build();" /> Paii</label>
-        </p>
-        <p>
-          <label>
-            <input type="checkbox" disabled="" id="" onchange="build();" /> Swipp
-          </label>
+            <input type="checkbox" disabled="" id="paii" onchange="build();" /> Paii</label>
         </p>
       </section>
 
@@ -223,7 +219,7 @@
       <script type="IN/Share" data-url="http://kortgebyr.dk" data-counter="right"></script>
     </div>
 
-    Kortgebyr er udviklet af <a href="https://twitter.com/ulrikmoe">Ulrik Moe</a>, <a href="https://twitter.com/christianblach">Christian Blach</a> og <a href="https://github.com/zhasha">Joakim Sindholt</a> som et værktøj
+    Kortgebyr er udviklet af <a href="https://twitter.com/ulrikmoe">Ulrik Moe</a>, <a href="https://github.com/cblach">Christian Blach</a> og <a href="https://github.com/zhasha">Joakim Sindholt</a> som et værktøj
     <br />til at sammenligne betalingsløsninger. Kortgebyr er uafhængig, non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small><a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a></small>).
   </footer>
 

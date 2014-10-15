@@ -1,6 +1,13 @@
+// $('html-id');
 function $(s) {
   return document.getElementById(s);
 }
+
+// $('html-className');
+function C(s) {
+  return document.getElementsByClassName(s);
+}
+
 
 var default_acquirer_fees = {};
 var default_currency = "DKK";
@@ -8,7 +15,6 @@ var default_transactions = 250;
 var default_amount = 500;
 var color_error = "#f88";
 var color_good = null;
-
 
 function getInt(k) {
   var elem = $(k);
@@ -148,14 +154,15 @@ var opts = {
     },
     def: 'auto'
   },
-  '3dsecure': {
-    inactive: true,
+  'visasecure': {
     type: "bits",
     bits: 1,
     get: function () {
-      return true;
+      return +getBool('visasecure');
     },
-    set: function (v) {},
+    set: function (v) {
+      setBool('visasecure', v);
+    },
     def: true
   },
   'fraud_fighter': {
@@ -166,6 +173,28 @@ var opts = {
     },
     set: function (v) {
       setBool('fraud_fighter', v);
+    },
+    def: false
+  },
+  'recurring': {
+    type: "bits",
+    bits: 1,
+    get: function () {
+      return +getBool('recurring');
+    },
+    set: function (v) {
+      setBool('recurring', v);
+    },
+    def: false
+  },
+  'multiacquirer': {
+    type: "bits",
+    bits: 1,
+    get: function () {
+      return +getBool('multiacquirer');
+    },
+    set: function (v) {
+      setBool('multiacquirer', v);
     },
     def: false
   },
@@ -335,42 +364,58 @@ var opts = {
   }
 };
 
+
+/*
+Acquirer options panel.
+*/
 var sopts = {
-  'acquirer_fee_fixed': {
+  'acquirer_fixed': {
     get: function () {
-      return getCurrency('acquirer_fee_fixed');
+      return getCurrency('acquirer_fixed');
     },
     set: function (v) {
-      setCurrency('acquirer_fee_fixed', v);
-    },
-    hide: function () {
-      $('acquirer_fee_fixed').style.display = 'none';
-    },
-    show: function () {
-      $('acquirer_fee_fixed').parentNode.style.display = 'block';
+      setCurrency('acquirer_fixed', v);
     },
     def: function () {
       return acqs[opts['acquirer'].get()].fee_fixed;
     }
   },
-  'acquirer_fee_variable': {
+  'acquirer_variable': {
     get: function () {
-      return getPercent('acquirer_fee_variable');
+      return getPercent('acquirer_variable');
     },
     set: function (v) {
-      setPercent('acquirer_fee_variable', v);
-    },
-    hide: function () {
-      $('acquirer_fee_variable').parentNode.style.display = 'none';
-    },
-    show: function () {
-      $('acquirer_fee_variable').parentNode.style.display = 'block';
+      setPercent('acquirer_variable', v);
     },
     def: function () {
       return acqs[opts['acquirer'].get()].fee_variable;
     }
+  },
+  'acquirer_setup': {
+    get: function () {
+      return getCurrency('acquirer_setup');
+    },
+    set: function (v) {
+      setCurrency('acquirer_setup', v);
+    },
+    def: function () {
+      return acqs[opts['acquirer'].get()].fee_setup;
+    }
+  },
+  'acquirer_monthly': {
+    get: function () {
+      return getCurrency('acquirer_monthly');
+    },
+    set: function (v) {
+      setCurrency('acquirer_monthly', v);
+    },
+    def: function () {
+      return acqs[opts['acquirer'].get()].fee_monthly;
+    }
   }
 };
+
+
 
 function rnf(n) {
   return (typeof n == 'function') ? n() : n;
@@ -387,14 +432,16 @@ function init_acqs() {
       default_acquirer_fees[k] = {};
       default_acquirer_fees[k].fee_fixed = acqs[k].fee_fixed;
       default_acquirer_fees[k].fee_variable = acqs[k].fee_variable;
+      default_acquirer_fees[k].fee_monthly = acqs[k].fee_monthly;
+      default_acquirer_fees[k].fee_setup = acqs[k].fee_setup;
     }
-
   }
   opts.acquirer_opts.dirty_bits = 2 * i;
   $('acquirer').innerHTML = s;
 
-  //sopts['acquirer_fee_fixed'].hide();
-  //sopts['acquirer_fee_variable'].hide();
+  // C('acquirer_description')[0].style.display = 'block';
+  // C('acquirer_options')[0].style.display = 'none';
+
 }
 
 function init_defaults() {
@@ -453,27 +500,20 @@ function build(action) {
 
   var acq = newstate['acquirer'];
   if (newstate['acquirer'] != prevstate['acquirer']) {
-    if (acq == "auto") {
-      sopts['acquirer_fee_fixed'].hide();
-      sopts['acquirer_fee_variable'].hide();
-    } else {
-      sopts['acquirer_fee_fixed'].show();
-      sopts['acquirer_fee_variable'].show();
 
-      sopts['acquirer_fee_fixed'].set(acqs[acq].fee_fixed);
-      sopts['acquirer_fee_variable'].set(acqs[acq].fee_variable);
-    }
+    setAcquirerPanel();
+
   } else if (acq != "auto") {
-    if (newstate['acquirer_fee_fixed'] != prevstate['acquirer_fee_fixed']) {
-      acqs[acq].fee_fixed = newstate['acquirer_fee_fixed'];
-    }
-    if (newstate['acquirer_fee_variable'] != prevstate['acquirer_fee_variable']) {
-      acqs[acq].fee_variable = newstate['acquirer_fee_variable'];
-    }
+
+    // Denne skal gerne slås sammen med setAcquirerPanel();
+    acqs[acq].fee_fixed = newstate['acquirer_fixed'];
+    acqs[acq].fee_variable = newstate['acquirer_variable'];
+    acqs[acq].fee_monthly = newstate['acquirer_monthly'];
+    acqs[acq].fee_setup = newstate['acquirer_setup'];
   }
 
   var o = new Options(newstate['transactions'], newstate['average_value'],
-    newstate['fraud_fighter'], newstate['visa_mastercard']);
+    newstate['fraud_fighter'], newstate['visasecure'], newstate['recurring'], newstate['multiacquirer']);
 
   var table = $("data");
   table.innerHTML = "";
@@ -486,14 +526,15 @@ function build(action) {
   for (k in psps) {
     var use_dankort = newstate['dankort'];
     var use_visamc = newstate['visa_mastercard'];
+    var forbrugsforeningen = newstate['forbrugsforeningen'];
+    var diners_amex_jcb = newstate['diners_amex_jcb'];
+    var mobilepay = newstate['mobilepay'];
+    var paii = newstate['paii'];
+
     var dankort_penalty = false;
     if (use_dankort) {
-      if (psps[k].cards.indexOf('dankort') < 0 ||
-        (psps[k].acquirers.indexOf('nets') < 0 &&
-          !psps[k].is_acquirer)) {
-        continue; // disable penalty for now
-        //dankort_penalty = true;
-        //use_dankort = false;
+      if (psps[k].cards.indexOf('dankort') < 0 || (psps[k].acquirers.indexOf('nets') < 0 && !psps[k].is_acquirer)) {
+        continue;
       }
     }
 
@@ -627,9 +668,6 @@ function build(action) {
     }
 
     var h_cards = "";
-    if (dankort_penalty) {
-      //h_cards += '<img src="cards/dankortCrossed.png" />';
-    }
     for (var l in n_cards) {
       var logo = cards[n_cards[l]].logo;
       var name = cards[n_cards[l]].name;
@@ -903,13 +941,33 @@ function load_url(url_query) {
 
   }
 
+  /*
+    On page refresh, check if acquirer != automatisk. If this is the case
+    then hide .acquirer_description, show .acquirer_options and reset
+    fields to default values.
+  */
+
+  setAcquirerPanel();
+
+}
+
+function setAcquirerPanel() {
+
   var selected_acquirer = opts["acquirer"].get();
   if (selected_acquirer !== "auto") {
-    sopts['acquirer_fee_fixed'].show();
-    sopts['acquirer_fee_fixed'].set(acqs[selected_acquirer].fee_fixed);
-    sopts['acquirer_fee_variable'].show();
-    sopts['acquirer_fee_variable'].set(acqs[selected_acquirer].fee_variable);
-  }
 
+    C('acquirer_description')[0].style.display = 'none';
+    C('acquirer_options')[0].style.display = 'block';
+
+    sopts['acquirer_fixed'].set(acqs[selected_acquirer].fee_fixed);
+    sopts['acquirer_variable'].set(acqs[selected_acquirer].fee_variable);
+    sopts['acquirer_setup'].set(acqs[selected_acquirer].fee_setup);
+    sopts['acquirer_monthly'].set(acqs[selected_acquirer].fee_monthly);
+
+    // return getCurrency('acquirer_fixed');
+  } else {
+    C('acquirer_description')[0].style.display = 'block';
+    C('acquirer_options')[0].style.display = 'none';
+  }
 
 }

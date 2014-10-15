@@ -108,11 +108,13 @@ Currency.prototype.scale = function (rhs) {
   return n;
 };
 
-function Options(n, avgvalue, antifraud, visasecure) {
+function Options(n, avgvalue, antifraud, visasecure, recurring, multiacquirer) {
   this.n = n;
   this.avgvalue = avgvalue;
   this.antifraud = antifraud;
   this.visasecure = visasecure;
+  this.recurring = recurring;
+  this.multiacquirer = multiacquirer;
 }
 
 var cards = {
@@ -163,7 +165,6 @@ function acq_cost_default(o) {
 }
 
 var acqs = { // alfabetisk rækkefølge
-
 
   "teller": {
     name: "Teller",
@@ -256,6 +257,16 @@ var acqs = { // alfabetisk rækkefølge
     fee_fixed: new Currency(0, 'DKK'),
     fee_variable: 1.6,
     costfn: acq_cost_default
+  },
+  "clearhaus": {
+    name: "Clearhaus",
+    logo: "clearhaus.png",
+    cards: ["visa", "mastercard", "maestro"],
+    fee_setup: new Currency(0, 'DKK'),
+    fee_monthly: new Currency(0, 'DKK'),
+    fee_fixed: new Currency(0, 'DKK'),
+    fee_variable: 1.5,
+    costfn: acq_cost_default
   }
 };
 
@@ -269,6 +280,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: [],
     cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
+      if (o.multiacquirer) { return null; }
       return {
         setup: new Currency(0, 'DKK'),
         monthly: new Currency(0, 'DKK'),
@@ -284,9 +296,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
     cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
-      if (o.antifraud) {
-        return null;
-      }
+      if (o.antifraud || o.recurring || o.multiacquirer) { return null; }
       return {
         setup: new Currency(0, 'SEK'),
         monthly: new Currency(192, 'SEK'),
@@ -302,15 +312,20 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "teller"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
-      if (o.antifraud) {
-        return null;
-      }
+      if (o.multiacquirer) { return null; }
 
       var s = 199;
       var m = 149;
       if (o.visasecure) {
         s += 99;
         m += 49;
+      }
+
+      if (o.recurring) {
+        s += 299;
+        if (o.n < 100) m += 99;
+        else if (o.n < 1000) m += 149;
+        else m += 399;
       }
 
       return {
@@ -328,7 +343,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "elavon"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
-      if (o.antifraud) {
+      if (o.antifraud || o.recurring || o.visasecure || o.multiacquirer) {
         return null;
       }
       return {
@@ -346,7 +361,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "elavon"],
     cards: ["dankort", "visa", "mastercard", "maestro", "diners", "amex"],
     costfn: function (o) {
-      if (o.antifraud) {
+      if (o.antifraud || o.recurring || o.multiacquirer) {
         return null;
       }
       return {
@@ -379,17 +394,18 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets"],
     cards: ["dankort"],
     costfn: function (o) {
-      var fee = 0.25;
-      var ff = new Currency(0, 'DKK');
-      if (o.antifraud) {
-        fee += 0.30;
-        ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
+      if ( o.recurring || o.visasecure || o.multiacquirer) {
+        return null;
       }
+
+      var fee = 0.25;
+      var antifraud = 0;
+      if (o.antifraud) { antifraud = (new Currency(0.3, 'DKK')).scale(o.n); }
 
       return {
         setup: new Currency(399, 'DKK'),
         monthly: new Currency(99, 'DKK'),
-        trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 250, 0)).add(ff)
+        trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 250, 0)).add(antifraud)
       };
     }
   },
@@ -401,17 +417,16 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "teller"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
+      if (o.recurring || o.multiacquirer) {return null;}
+
       var fee = 0.25;
-      var ff = new Currency(0, 'DKK');
-      if (o.antifraud) {
-        fee += 0.30;
-        ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
-      }
+      var antifraud = 0;
+      if (o.antifraud) { antifraud = (new Currency(0.3, 'DKK')).scale(o.n); }
 
       return {
         setup: new Currency(599, 'DKK'),
         monthly: new Currency(199, 'DKK'),
-        trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 250, 0)).add(ff)
+        trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 250, 0)).add(antifraud)
       };
     }
   },
@@ -423,17 +438,16 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "euroline", "teller", "swedbank", "handelsbanken", "valitor"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
-      var fee = 0.25;
-      var ff = new Currency(0, 'DKK');
-      if (o.antifraud) {
-        fee += 0.30;
-        ff = (new Currency(0.30, 'DKK')).scale(Math.min(o.n, 500));
-      }
+
+      var fee = 0.25, antifraud = 0, recurring = 0;
+
+      if (o.antifraud) { antifraud = (new Currency(0.3, 'DKK')).scale(o.n); }
+      if (o.recurring) { recurring = (new Currency(1, 'DKK')).scale(o.n); }
 
       return {
-        setup: new Currency(999, 'DKK'),
+        setup: new Currency(999, 'DKK').add(recurring),
         monthly: new Currency(299, 'DKK'),
-        trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0)).add(ff)
+        trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 500, 0)).add(antifraud)
       };
     }
   },
@@ -445,6 +459,10 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "teller"],
     cards: ["dankort", "visa", "mastercard"],
     costfn: function (o) {
+      if ( o.recurring || o.multiacquirer ) {
+        return null;
+      }
+
       return {
         setup: new Currency(1005, 'DKK'),
         monthly: new Currency(180, 'DKK'),
@@ -460,6 +478,10 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "teller", "elavon", "euroline", "swedbank", "nordea"],
     cards: ["dankort", "visa", "mastercard"],
     costfn: function (o) {
+      if ( o.recurring || o.multiacquirer ) {
+        return null;
+      }
+
       return {
         setup: new Currency(3016, 'DKK'),
         monthly: new Currency(502, 'DKK'),
@@ -475,9 +497,14 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "teller", "elavon", "euroline", "swedbank", "nordea"],
     cards: ["dankort", "visa", "mastercard"],
     costfn: function (o) {
+      if (o.multiacquirer) { return null; }
+
+      var recurring = 0;
+      if (o.recurring || o.multiacquirer) { recurring = (new Currency(250, 'DKK')); }
+
       return {
         setup: new Currency(7540, 'DKK'),
-        monthly: new Currency(703, 'DKK'),
+        monthly: new Currency(703, 'DKK').add(recurring),
         trans: (new Currency(0.7, 'DKK')).scale(o.n)
       };
     }
@@ -490,7 +517,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["handelsbanken", "euroline", "swedbank", "nordea"],
     cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
-      if (o.antifraud) {
+      if (o.antifraud || o.recurring || o.multiacquirer) {
         return null;
       }
 
@@ -510,6 +537,10 @@ var psps = { // alfabetisk rækkefølge
     cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
 
+      if (o.antifraud || o.multiacquirer) {
+        return null;
+      }
+
       return {
         setup: new Currency(0, 'EUR'),
         monthly: new Currency(0, 'EUR'),
@@ -525,7 +556,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: [],
     cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
-      if (o.antifraud) {
+      if (o.antifraud || o.multiacquirer) {
         return null;
       }
 
@@ -559,7 +590,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: [],
     cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
-      if (o.antifraud) {
+      if (o.antifraud || o.recurring || o.multiacquirer) {
         return null;
       }
 
@@ -574,7 +605,6 @@ var psps = { // alfabetisk rækkefølge
 
     // Hvad med Foreign exchange gebyr (2,5%)?
     // https://www.payza.com/support/payza-transaction-fees
-
     name: "Payza",
     logo: "payza.png",
     link: "https://payza.com",
@@ -582,6 +612,10 @@ var psps = { // alfabetisk rækkefølge
     acquirers: [],
     cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
+      if (o.antifraud || o.multiacquirer) {
+        return null;
+      }
+
       return {
         setup: new Currency(0, 'DKK'),
         monthly: new Currency(0, 'DKK'),
@@ -597,7 +631,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
     cards: ["visa", "mastercard", "diners", "amex"],
     costfn: function (o) {
-      if (o.antifraud) {
+      if (o.recurring || o.multiacquirer || o.multiacquirer) {
         return null;
       }
 
@@ -616,7 +650,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
     cards: ["visa", "mastercard", "diners", "amex"],
     costfn: function (o) {
-      if (o.antifraud) {
+      if (o.recurring || o.multiacquirer) {
         return null;
       }
 
@@ -633,9 +667,9 @@ var psps = { // alfabetisk rækkefølge
     link: "http://www.point.se/sv/Sweden/Start/E-handel/",
     is_acquirer: false,
     acquirers: ["nets", "handelsbanken", "nordea", "euroline", "swedbank"],
-    cards: ["dankort", "visa", "mastercard", "diners", "amex", "jcb", "forbrugsforeningen"],
+    cards: ["dankort", "visa", "mastercard", "diners", "amex", "jcb"],
     costfn: function (o) {
-      if (o.antifraud) {
+      if (o.recurring || o.multiacquirer) {
         return null;
       }
 
@@ -655,6 +689,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: [],
     cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
+      if (o.multiacquirer) { return null; }
 
       return {
         setup: new Currency(0, 'USD'),
@@ -672,6 +707,9 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "handelsbanken"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
+
+      if (o.multiacquirer) { return null; }
+
       var limits = [0, 500, 600, 1000, 3000, 10000, 30000];
       var fees = [0, 0.5, 0.4, 0.3, 0.25, 0.15, 0.1];
       var price = 0;
@@ -701,7 +739,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "teller"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
-      if (o.antifraud) {
+      if (o.antifraud || o.recurring || o.visasecure || o.multiacquirer) {
         return null;
       }
 
@@ -720,6 +758,9 @@ var psps = { // alfabetisk rækkefølge
     acquirers: [],
     cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
+      if (o.antifraud || o.multiacquirer) {
+        return null;
+      }
 
       var oms = o.n * o.avgvalue.dkk();
       var fee = 1.9;
@@ -748,10 +789,16 @@ var psps = { // alfabetisk rækkefølge
     acquirers: ["nets", "teller"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
+      if (o.multiacquirer) { return null; }
+
+      var recurring = 0, visasecure = 0;
+
+      if (o.visasecure) { visasecure = (new Currency(49, 'DKK')); }
+      if (o.recurring) { recurring = (new Currency(99, 'DKK')); }
 
       return {
         setup: new Currency(0, 'DKK'),
-        monthly: new Currency(149 + (o.visasecure ? 49 : 0), 'DKK'),
+        monthly: new Currency(149, 'DKK').add(recurring).add(visasecure),
         trans: new Currency(0, 'DKK')
       };
     }
@@ -764,6 +811,9 @@ var psps = { // alfabetisk rækkefølge
     acquirers: [],
     cards: ["dankort", "visa", "mastercard", "maestro", "diners", "amex"],
     costfn: function (o) {
+      if (o.antifraud || o.multiacquirer || o.recurring) {
+        return null;
+      }
 
       var fee = 2.25;
 
@@ -782,6 +832,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: [],
     cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
+      if (o.multiacquirer) { return null; }
 
       var fee = 2.95;
 
@@ -800,6 +851,7 @@ var psps = { // alfabetisk rækkefølge
     acquirers: [],
     cards: ["visa", "mastercard", "maestro", "amex", "jcb", "diners"],
     costfn: function (o) {
+      if (o.multiacquirer) { return null; }
 
       var fee = 5.5;
 
