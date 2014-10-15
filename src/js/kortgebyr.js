@@ -220,6 +220,18 @@ var opts = {
     },
     def: true
   },
+  'mobilepay': {
+    type: "bits",
+    bits: 1,
+    get: function () {
+      return +getBool('mobilepay');
+    },
+    set: function (v) {
+      setBool('mobilepay', v);
+    },
+    def: false
+  },
+
   // Dirty bits: bit0 = er der ændret i antal/gns, bit 1..N_acquirers+1 er der ændret i acquirer costs?  --- Objekter der bruger dirty-bits skal være EFTER
   'dirty_bits': {
     type: "bits",
@@ -513,7 +525,7 @@ function build(action) {
   }
 
   var o = new Options(newstate['transactions'], newstate['average_value'],
-    newstate['fraud_fighter'], newstate['visasecure'], newstate['recurring'], newstate['multiacquirer']);
+    newstate['fraud_fighter'], newstate['visasecure'], newstate['recurring'], newstate['multiacquirer'], newstate['mobilepay']);
 
   var table = $("data");
   table.innerHTML = "";
