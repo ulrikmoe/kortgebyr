@@ -1,5 +1,5 @@
 KORTGEBYR
-============
+================
 
 Udviklet af Ulrik Moe, Christian Blach og Joakim Sindholt.
 
@@ -7,23 +7,24 @@ Kortgebyr er en dansk prissammenligningsside for betalingsløsninger og betaling
 
 
 Installer lokalt
-============
+=================
 
-Det er nemt at bidrage til projektet. Du skal blot installere Grunt via npm, som er en package manager der følger med <a href="http://nodejs.org/download/">Node.Js</a>.
+Det er nemt at bidrage til projektet. Du skal blot installere <a href="http://gruntjs.com">Grunt</a> via npm, som er en package manager der følger med <a href="http://nodejs.org/download/">Node.Js</a>.
 
 <pre>
 npm install -g grunt-cli
 </pre>
 
-Når GruntJS er installeret skal du blot, med udgangspunkt fra folder <code>cd kortgebyr</code>, køre følgende komando:
+Når GruntJS er installeret skal du blot, med udgangspunkt fra den folder hvor du gemmer kortgebyr <code>cd kortgebyr</code>, køre følgende komando:
 
 <pre>
 npm install
 </pre>
 
-npm installerer alle nødvendige pakker (devDependencies i Package.json). Nu skal du bare køre følgende og så skulle din browser gerne åbne en side til webserven med autoreload (livereload) enabled.
+npm installerer alle nødvendige pakker (devDependencies i Package.json).
+For at starte grunt skal du blot køre komandoen:
 <pre>
-grunt server watch
+grunt dev
 </pre>
 
 

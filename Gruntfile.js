@@ -1,63 +1,117 @@
 module.exports = function (grunt) {
 
-  // Load Grunt tasks declared in the package.json file
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+   // Load Grunt tasks declared in the package.json file
+   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-  // Configure Grunt
-  grunt.initConfig({
+   // Configure Grunt
+   grunt.initConfig({
 
-    // grunt-express will serve the files
-    express: {
-      all: {
-        options: {
-          port: 9000,
-          debug: true,
-          hostname: "0.0.0.0",
-          bases: ['src'],
-          livereload: true
-        }
-      }
-    },
-
-    less: {
-      compile: {
-        options: {
-          compress: false
-        },
-        files: {
-          'src/css/global.css': 'src/css/global.less'
-        }
-      }
-    },
-
-    // grunt-watch will monitor the projects files
-    watch: {
+      // grunt-express will serve the files
+      express: {
+         all: {
+            options: {
+               port: 9000,
+               hostname: "*",
+               bases: ['_site'],
+               livereload: true
+            }
+         }
+      },
 
       less: {
-        files: ['src/css/*.less'],
-        tasks: ['less:compile']
+         build: {
+            options: {
+               cleancss: true
+            },
+            files: [{
+               expand: true,
+               cwd: 'source/less/',
+               src: ['*.less'],
+               dest: '_site/css/',
+               ext: '.css'
+            }]
+         }
       },
-      scripts: {
-        files: ['src/js/*.js']
+
+      uglify: {
+         my_target: {
+
+            files: [{
+               expand: true,
+               cwd: 'source/js/',
+               src: '*.js',
+               dest: '_site/js/'
+            }]
+         }
       },
-      html: {
-        files: ['src/index.html']
+
+      htmlmin: {
+         dist: {
+            options: {
+               removeComments: true,
+               collapseWhitespace: true,
+               conservativeCollapse: true,
+               preserveLineBreaks: false,
+               removeScriptTypeAttributes: true,
+               removeEmptyAttributes: true,
+               removeEmptyElements: false // Fjernede #data :/
+            },
+            expand: true,
+            cwd: 'source/',
+            src: ['*.html', '**/*.html'],
+            dest: '_site/'
+         }
+      },
+
+      copy: {
+         files: {
+            expand: true,
+            cwd: 'source/',
+            src: ['img/**', 'favicon.ico'],
+            dest: '_site/'
+         }
+      },
+
+      // grunt-watch will monitor the projects files
+      watch: {
+         less: {
+            files: ['source/less/*.less'],
+            tasks: ['less:build']
+         },
+         scripts: {
+            files: ['source/js/*.js'],
+            tasks: ['uglify']
+         },
+         html: {
+            files: ['source/*.html', 'source/**/*.html'],
+            tasks: ['htmlmin']
+         },
+         images: {
+            files: ['source/img/**'],
+            tasks: ['copy']
+         }
+      },
+
+      clean: {
+         src: ['_site/']
+      },
+
+      open: {
+         all: {
+            path: 'http://localhost:<%= express.all.options.port%>'
+         }
       }
-    },
+   });
 
-    open: {
-      all: {
-        path: 'http://localhost:<%= express.all.options.port%>'
-      }
-    }
-  });
-
-  grunt.loadNpmTasks('grunt-contrib-watch');
-
-  // Creates the `server` task
-  grunt.registerTask('server', [
-    'express',
-    'open',
-    'less'
-  ]);
+   // Creates the `server` task
+   grunt.registerTask('dev', [
+      'clean',
+      'htmlmin',
+      'less:build',
+      'copy',
+      'uglify',
+      'express',
+      'open',
+      'watch'
+   ]);
 };
