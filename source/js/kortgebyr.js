@@ -582,7 +582,7 @@ function build(action) {
       if (!use_visamc) {
          visamc_scale = 0;
          dankort_scale = 1;
-         tmpo.visasecure = false;
+         //tmpo.visasecure = false;
       }
       if (k === "yourpay") {
          visamc_scale = 1;
