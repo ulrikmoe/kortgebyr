@@ -1,6 +1,8 @@
 KORTGEBYR
 ================
 
+![Alt text](/screenshot.png?raw=true "kortgebyr screenshot")
+
 Udviklet af Ulrik Moe, Christian Blach og Joakim Sindholt.
 
 Kortgebyr er en dansk prissammenligningsside for betalingsløsninger og betalingsgateways. Siden er skrevet i Javascript og hostet på Amazon S3. Formålet med siden er at gøre markedet for betalingsløsninger overskueligt og forståeligt for den gennemsnitlige iværksætter.
@@ -9,7 +11,7 @@ Kortgebyr er en dansk prissammenligningsside for betalingsløsninger og betaling
 Installer lokalt
 =================
 
-Det er nemt at bidrage til projektet. Du skal blot installere <a href="http://gruntjs.com">Grunt</a> via npm, som er en package manager der følger med <a href="http://nodejs.org/download/">Node.Js</a>.
+Det er nemt at bidrage til projektet. Du skal blot installere <a href="http://gruntjs.com">Grunt</a> via npm, som er en package manager der følger med <a href="http://nodejs.org/download/">Node</a>.
 
 <pre>
 npm update
