@@ -1,5 +1,6 @@
 KORTGEBYR
 ================
+<a href="http://kortgebyr.dk">Kortgebyr</a> er en prissammenligningsside for betalingsløsninger og betalingsgateways. Projektet startede i 2012 og er stadig under udvikling.
 
 ![Alt text](/screenshot.png?raw=true "kortgebyr screenshot")
 
@@ -11,14 +12,14 @@ Kortgebyr er en dansk prissammenligningsside for betalingsløsninger og betaling
 Installer lokalt
 =================
 
-Det er nemt at bidrage til projektet. Du skal blot installere <a href="http://gruntjs.com">Grunt</a> via npm, som er en package manager der følger med <a href="http://nodejs.org/download/">Node</a>.
+Det er nemt at bidrage til projektet. Du skal blot installere <a href="http://gruntjs.com">Grunt</a> via npm, som er en package manager der følger med <a href="http://nodejs.org/download/">Node</a>. 
 
 <pre>
 npm update
 npm install -g grunt-cli
 </pre>
 
-Når GruntJS er installeret skal du blot, med udgangspunkt fra den folder hvor du gemmer kortgebyr <code>cd kortgebyr</code>, køre følgende komando:
+Når GruntJS er installeret skal du blot, med udgangspunkt i den folder hvor du har gemt kortgebyr (<code>cd kortgebyr</code>), køre følgende komando:
 
 <pre>
 npm install
