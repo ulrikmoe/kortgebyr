@@ -1,6 +1,4 @@
 // Valutakurser opdateret d. 08/10/2014
-var tmp;
-
 var currency_value = {
   'DKK': 1,
   'SEK': 0.821,
@@ -17,13 +15,11 @@ var currency_map = {
   'USD': '&#36;'
 };
 
-var currency_rmap = {
-  'kr': 'DKK',
-  '€': 'EUR',
-  '$': 'USD',
-  'sek': 'SEK',
-  'nok': 'NOK'
-};
+var gccode = 'DKK';
+
+function set_ccode(c) {
+    if (currency_map.hasOwnProperty(c)) { gccode = c; }
+}
 
 function Currency(amt, code) {
   this.amounts = {};
@@ -33,25 +29,17 @@ function Currency(amt, code) {
 Currency.prototype.type = "currency";
 
 Currency.prototype.print = function () {
-  var number = Math.round(this.dkk() * 100) / 100;
+  var number = Math.round((this.dkk() * 100) / currency_value[gccode]) / 100;
   var parts = number.toString().split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   if (parts.length == 2 && parts[1].length == 1) {
     parts[1] += "0";
   }
-  return parts.join(",") + " kr";
+  return parts.join(",") + " " + currency_map[gccode];
 };
 
 Currency.prototype.represent = function () {
-  if (this.amounts.length == 1) {
-    for (var code in this.amounts) {
-      if (currency_map.hasOwnProperty(code)) {
-        return this.amounts[code] + ' ' + currency_map[code];
-      }
-      return this.amounts[code] + ' ' + code;
-    }
-  }
-  return this.dkk() + ' kr';
+  return this.dkk() * currency_value[gccode] + ' ' + currency_map[gccode];
 };
 
 Currency.prototype.dkk = function () {
