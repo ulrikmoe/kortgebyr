@@ -239,6 +239,27 @@ var opts = {
       },
       def: ""
    },
+   'currency': {
+       type: "string",
+       dirty_bits: 1,
+       get_dirty_bits: function () {
+          return +(this.get() !== this.def);
+       },
+       get: function () {
+          return get_ccode();
+       },
+       set: function (v){
+          var select = $("currency").getElementsByTagName( "select" )[0];
+          for( var i = 0; i < select.length; i ++ ){
+              if( select.options[i].value === v){
+                  select.selectedIndex = i;
+                  break;
+              }
+          }
+          set_ccode( v );
+       },
+       def: "DKK"
+   },
    'transactions': {
       type: "string",
       dirty_bits: 1,

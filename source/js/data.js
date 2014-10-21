@@ -11,14 +11,18 @@ var currency_map = {
   'DKK': 'kr',
   'SEK': 'kr',
   'NOK': 'kr',
-  'EUR': '&#128;',
-  'USD': '&#36;'
+  'EUR': '\u20AC',
+  'USD': '$'
 };
 
 var gccode = 'DKK';
 
 function set_ccode(c) {
     if (currency_map.hasOwnProperty(c)) { gccode = c; }
+}
+
+function get_ccode(){
+    return gccode;
 }
 
 function Currency(amt, code) {
@@ -39,7 +43,7 @@ Currency.prototype.print = function () {
 };
 
 Currency.prototype.represent = function () {
-  return this.dkk() * currency_value[gccode] + ' ' + currency_map[gccode];
+  return this.dkk() / currency_value[gccode] + ' ' + currency_map[gccode];
 };
 
 Currency.prototype.dkk = function () {
