@@ -12,6 +12,7 @@ Installer lokalt
 Det er nemt at bidrage til projektet. Du skal blot installere <a href="http://gruntjs.com">Grunt</a> via npm, som er en package manager der følger med <a href="http://nodejs.org/download/">Node.Js</a>.
 
 <pre>
+npm update
 npm install -g grunt-cli
 </pre>
 
