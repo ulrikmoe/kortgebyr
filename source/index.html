@@ -22,17 +22,20 @@
             <img width="19" src="/img/dk1.png" alt="kortgebyr på dansk" />
          </div>
          <div id="currency" class="currency">
-            <select onchange="changeCurrency(this)">
-               <option value="DKK">DKK</option>
-               <option value="SEK">SEK</option>
-               <option value="NOK">NOK</option>
-               <option value="USD">USD</option>
-               <option value="EUR">EUR</option>
-            </select>
+            <label>
+               DKK
+               <select onchange="changeCurrency(this)">
+                  <option value="DKK">DKK</option>
+                  <option value="SEK">SEK</option>
+                  <option value="NOK">NOK</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+               </select>
+            </label>
          </div>
          <div class="contact"> <a href="mailto:ulrik.moe@gmail.com">Feedback</a></div>
       </nav>
-      <div class="menu flex">
+      <div class="menu clearfix">
          <section>
             <h2>Indløsning</h2>
             <div class="acquirer_field">
@@ -63,8 +66,7 @@
             </div>
             <div class="acquirer_description">Priser tager udgangspunkt i listepriser eller <a href="#">stikprøver</a>. Vi anbefaler at du starter med at læse vores <a href="#">forklaring her</a>.</div>
          </section>
-         <section style="min-width:300px">
-            <h2>Transaktioner:</h2>
+         <section>
             <p>
                <label>
                   <input autocomplete="off" type="text" class="field" id="transactions" value="250" onkeyup="build('keyup');" onblur="save_url();">Transaktioner pr. måned</label>
@@ -90,8 +92,7 @@
                   <input type="checkbox" id="multiacquirer" onchange="build();" />Multi-indløser</label>
             </p>
          </section>
-         <section style="min-width:270px">
-            <h2>Betalingsmidler:</h2>
+         <section>
             <p>
                <label>
                   <input type="checkbox" checked="" id="dankort" onchange="build();" />Dankort</label>

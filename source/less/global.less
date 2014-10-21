@@ -26,7 +26,7 @@ body {
 	margin: 0;
 	padding: 0;
 	border: 0;
-  box-sizing: inherit;
+   box-sizing: inherit;
 }
 
 /**
@@ -132,7 +132,7 @@ input[type="number"]::-webkit-outer-spin-button {
 button[disabled], html input[disabled] { cursor: default; }
 
 a {
-  color: #36b;
+   color: #36b;
 	-webkit-transition: all 0.1s ease-in;
 	-moz-transition: all 0.1s ease-in;
 	-ms-transition: all 0.1s ease-in;
@@ -144,6 +144,7 @@ a {
 .container {
 	width: 96%;
 	max-width: 1040px;
+	min-width: 860px;
 	padding: 0;
 	margin: auto;
 	position: relative;
@@ -154,16 +155,19 @@ header {
 	display:block;
 	margin-top: 20px !important;
 	border: 1px solid #dbdbdb;
+	border-radius: 2px;
+	overflow: hidden;
 }
 
 
 nav {
 
-	font-size: 13px;
+	font-size: 14px;
 	border-bottom: 1px solid #ddd;
 	height: 42px;
+	line-height: 41px;
 	background-color: #f0f0f0;
-	background-image: linear-gradient(to bottom,rgba(255,255,255,0.5) 25%,rgba(255,255,255,0.1) 100%);
+	background-image: linear-gradient(to bottom,#f4f4f4 25%,#f2f2f2 100%);
 
 	> * {
 		display:inline-block;
@@ -171,8 +175,7 @@ nav {
 	}
 
 	.logo {
-		display:inline-block;
-		margin: 5px 20px 0 17px;
+		margin-left: 17px;
 		color: #204499;
 		font-size:20px;
 		font-weight:bold;
@@ -189,7 +192,7 @@ nav {
 	.contact {
 		float:right;
 		margin-right:18px;
-		line-height:44px;
+		line-height: 43px;
 	}
 
 	.language, .currency {
@@ -197,6 +200,7 @@ nav {
 		height:100%;
 		border-left: 1px solid #ddd;
 		cursor: pointer;
+		line-height: 43px;
 	}
 
 	.language:hover, .currency:hover {
@@ -204,36 +208,30 @@ nav {
 	}
 
 	.currency {
-		width: 60px;
+		width: 70px;
 		position:relative;
 
+		label {
+			padding-left: 10px;
+		}
+
 		select {
+			opacity: 0;
 			position:absolute;
 			right: 0;
 			left: 0;
 			bottom:0;
 			top:0;
-			background: transparent;
-			-webkit-appearance: none;
-    	-moz-appearance: none;
-    	appearance: none;
 			width: 100%;
-			padding:0 22px 0 10px;
+			height: 100%;
 			font-size: 13px;
 			cursor:pointer
 		}
 
 	}
-
-	.currency, .language {
-		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAABuCAMAAAAd8LPfAAAADFBMVEUAAAD///8AAAC+vr5RhLmsAAAAAXRSTlMAQObYZgAAADZJREFUeNrt1MENACAMw0AH9t8ZqX2kjADKPT2AYTcGVRGTXNxc3IiI+NZqDKoi7ubilmPGkw4zrgBfaUnn4AAAAABJRU5ErkJggg==);
-		background-position: right 20px;
-		background-repeat: no-repeat;
-	}
-
 	.language {
 		width: 58px;
-		img { margin: 12px 0 0 11px; }
+		img { margin: 0px 0 0 11px; }
 	}
 }
 
@@ -248,26 +246,34 @@ nav {
 
 
 .menu {
-	width: 100%;
-	display: -webkit-flex; /* Safari */
-	display: flex;
-	flex-wrap: nowrap;
 	font-size: 14px;
 
-	> * {
-		padding: 6px 30px 7px;
-		margin: 11px 0 12px;
+	section {
+      display: block;
+   	width: 30%;
+   	float:left;
+		padding: 6px 2.5% 5px;
+		margin: 11px 0;
 		border-left: 1px solid #dfdfdf;
 
 		input {
 			margin-right: 6px;
 			font-size: 15px;
+			background-color:#fafafa;
 		}
 
 		p {
-			margin: 4px 0;
+			margin: 5px 0;
 		}
+	}
 
+	> :first-child {
+		border-left: 0;
+		padding-left: 20px;
+	}
+
+	> :last-child {
+		width: 40%;
 	}
 
 	h2 {
@@ -298,7 +304,7 @@ nav {
 
 	.acquirer_field
 	{
-		width: 230px;
+		width: 100%;
 
 		select {
 			display: block;
@@ -338,13 +344,6 @@ nav {
 		font-size: 15px;
 		margin-bottom: 7px;
 	}
-
-	> :first-child {
-		border-left: 0;
-		-webkit-flex: 1;
-		flex: 1 auto;
-		padding-left: 18px;
-	}
 }
 
 
@@ -367,6 +366,8 @@ nav {
 	color: #444;
 	empty-cells: show;
 	margin-top: 20px;
+	border-radius: 2px;
+	overflow: hidden;
 
 	td, th {
 		text-align: center;
@@ -394,10 +395,7 @@ nav {
 	}
 
 	td:first-child {
-		// Payments solution
-		width: 16%;
-		min-width: 150px;
-		max-width: 180px;
+		width: 165px;
 		text-align: left;
 		padding-left: 13px;
 		font-size: 12px;
@@ -410,7 +408,7 @@ nav {
 
 	td:nth-child(2) {
 		// Acquirer
-		width: 90px;
+		width: 100px;
 
 		img {
 			margin: 10px auto;
@@ -419,7 +417,7 @@ nav {
 	}
 
 	td:nth-child(3) {
-		width: 95px;
+		width: 160px;
 		padding-top: 13px;
 		text-align: center;
 		margin: auto;
