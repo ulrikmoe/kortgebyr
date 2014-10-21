@@ -33,62 +33,51 @@ function setInt(k, v) {
 }
 
 function mkcurregex() {
-   var a = [],
-      k;
-   for (k in currency_rmap) {
-      a.push(k);
-   }
-   for (k in currency_value) {
-      a.push(k);
-   }
+   var k, a = [];
+   for (k in currency_map) { a.push(currency_map[k]); }
+   for (k in currency_value) { a.push(k); }
    return RegExp("^ *([0-9][0-9., ]*)(" + a.join("|") + ")? *$", "i");
 }
 
 var curregex = mkcurregex();
 
+function _getCurrency(currency) {
+   var a = currency.match(curregex);
+   if (a === null) { return null; }
+
+   var c = a[2] ? a[2] : currency_map[gccode];
+   if (c.toLowerCase() === currency_map[gccode].toLowerCase()) {
+      /* there are a lot of currencies named kr and we should prefer the kr
+       * that has been selected */
+      c = gccode;
+   } else {
+      /* if that's not what's selected, find the currency */
+      for (var k in currency_map) {
+         if (currency_map[k].toLowerCase() === c.toLowerCase() ||
+             k.toLowerCase() === c.toLowerCase()) {
+            c = k;
+            break;
+         }
+      }
+   }
+
+   return new Currency(parseFloat(a[1].replace('.', '').replace(',', '.')), c);
+}
+
 function getCurrency(currency) {
-   var a = $(currency).value.match(curregex);
+   var a = _getCurrency($(currency).value);
    if (a === null) {
       $(k).style.background = color_error;
       return null;
    }
    $(currency).style.background = color_good;
-
-   var c = a[2] ? a[2] : 'DKK';
-   for (var k in currency_rmap) {
-      if (k.toLowerCase() == c.toLowerCase()) {
-         c = currency_rmap[k];
-         break;
-      }
-   }
-
-   return new Currency(parseFloat(a[1].replace('.', '').replace(',', '.')), c);
+   return a;
 }
-
-function getCurrencystring(string) {
-   var a = string.match(curregex);
-   if (a === null) {
-      return null;
-   }
-
-   var c = a[2] ? a[2] : 'DKK';
-   for (var k in currency_rmap) {
-      if (k.toLowerCase() == c.toLowerCase()) {
-         c = currency_rmap[k];
-         break;
-      }
-   }
-
-   return new Currency(parseFloat(a[1].replace('.', '').replace(',', '.')), c);
-}
-
 
 function changeCurrency(select) {
-   // Når en user ændrer currency via select dropdown.
-   alert(select.value);
-
+    set_ccode(select.value);
+    build();
 }
-
 
 function setCurrency(k, v) {
    $(k).value = v.represent();
@@ -250,6 +239,27 @@ var opts = {
       },
       def: ""
    },
+   'currency': {
+       type: "string",
+       dirty_bits: 1,
+       get_dirty_bits: function () {
+          return +(this.get() !== this.def);
+       },
+       get: function () {
+          return get_ccode();
+       },
+       set: function (v){
+          var select = $("currency").getElementsByTagName( "select" )[0];
+          for( var i = 0; i < select.length; i ++ ){
+              if( select.options[i].value === v){
+                  select.selectedIndex = i;
+                  break;
+              }
+          }
+          set_ccode( v );
+       },
+       def: "DKK"
+   },
    'transactions': {
       type: "string",
       dirty_bits: 1,
@@ -327,7 +337,7 @@ var opts = {
          for (var k in acqs) {
             if (acqs.hasOwnProperty(k) && k !== "nets") {
                if (get_bit_range(bits, i, i, this.dirty_bits)) {
-                  acqs[k].fee_fixed = getCurrencystring(value_array[array_position]);
+                  acqs[k].fee_fixed = _getCurrency(value_array[array_position]);
                   array_position++;
                }
                i++;
@@ -572,7 +582,7 @@ function build(action) {
       if (!use_visamc) {
          visamc_scale = 0;
          dankort_scale = 1;
-         tmpo.visasecure = false;
+         //tmpo.visasecure = false;
       }
       if (k === "yourpay") {
          visamc_scale = 1;
@@ -946,7 +956,7 @@ function load_url(url_query) {
                opts[i].set(str);
             }
          } else if (obj.type === "currency") {
-            opts[i].set(getCurrencystring(str));
+            opts[i].set(_getCurrency(str));
          }
       }
 
