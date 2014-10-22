@@ -1,10 +1,10 @@
 // Valutakurser opdateret d. 08/10/2014
 var currency_value = {
   'DKK': 1,
-  'SEK': 0.821,
-  'NOK': 0.912,
-  'EUR': 7.444,
-  'USD': 5.904
+  'SEK': 0.809,
+  'NOK': 0.890,
+  'EUR': 7.447,
+  'USD': 5.835
 };
 
 var currency_map = {
