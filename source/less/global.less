@@ -166,8 +166,8 @@ nav {
 	border-bottom: 1px solid #ddd;
 	height: 42px;
 	line-height: 41px;
-	background-color: #f0f0f0;
-	background-image: linear-gradient(to bottom,#f4f4f4 25%,#f2f2f2 100%);
+	background-color: #f5f5f5;
+	//background-image: linear-gradient(to bottom,#f4f4f4 25%,#f2f2f2 100%);
 
 	> * {
 		display:inline-block;
@@ -175,7 +175,7 @@ nav {
 	}
 
 	.logo {
-		margin-left: 17px;
+		margin-left: 20px;
 		color: #204499;
 		font-size:20px;
 		font-weight:bold;
@@ -210,6 +210,18 @@ nav {
 	.currency {
 		width: 70px;
 		position:relative;
+
+		.currency_code:after {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			content: "";
+			vertical-align: -2px;
+			border: 4px solid;
+			border-right-color: transparent;
+			border-left-color: transparent;
+			border-bottom-color: transparent;
+		}
 
 		label {
 			padding-left: 10px;
@@ -250,9 +262,9 @@ nav {
 
 	section {
       display: block;
-   	width: 31%;
+   	width: 32%;
    	float:left;
-		padding: 6px 2.5% 5px;
+		padding: 6px 0 5px 3%;
 		margin: 11px 0;
 
 		input {
@@ -267,7 +279,8 @@ nav {
 	}
 
 	> :first-child {
-		padding-left: 20px;
+		padding-left: 22px;
+		padding-right: 25px
 	}
 
 	h2 {
@@ -376,8 +389,7 @@ nav {
 		font-size: 13px;
 		line-height: 17px;
 		font-weight: 600;
-		background-color: #f0f0f0;
-		background-image: linear-gradient(to bottom,rgba(255,255,255,0.5) 25%,rgba(255,255,255,0.1) 100%);
+		background-color: #f5f5f5;
 		border-top:0;
 		text-shadow: 0 1px 0 rgba(255,255,255,.5);
 		color: #444;
@@ -402,7 +414,7 @@ nav {
 
 	td:nth-child(2) {
 		// Acquirer
-		width: 100px;
+		width: 105px;
 
 		img {
 			margin: 10px auto;

@@ -802,7 +802,7 @@ var psps = { // alfabetisk rækkefølge
     link: "http://yourpay.dk",
     is_acquirer: true,
     acquirers: [],
-    cards: ["dankort", "visa", "mastercard", "maestro", "diners", "amex"],
+    cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
       if (o.antifraud || o.multiacquirer || o.recurring || o.mobilepay) {
         return null;

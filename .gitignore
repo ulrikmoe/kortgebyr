@@ -1,3 +1,11 @@
 .DS_Store
 .gitignore
 node_modules
+_site
+_site/css/global.css
+
+_site/index.html
+
+_site/js/data.js
+
+_site/js/kortgebyr.js

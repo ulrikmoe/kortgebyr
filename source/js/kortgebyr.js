@@ -74,9 +74,10 @@ function getCurrency(currency) {
    return a;
 }
 
-function changeCurrency(select) {
-    set_ccode(select.value);
-    build();
+function changeCurrency(option) {
+   $('currency_code').innerHTML = option.value;
+   set_ccode(option.value);
+   build();
 }
 
 function setCurrency(k, v) {
