@@ -43,6 +43,14 @@ Currency.prototype.print = function () {
 };
 
 Currency.prototype.represent = function () {
+  if (this.amounts.length == 1) {
+    for (var code in this.amounts) {
+      if (currency_map.hasOwnProperty(code)) {
+        return this.amounts[code] + ' ' + currency_map[code];
+      }
+      return this.amounts[code] + ' ' + code;
+    }
+  }
   return this.dkk() / currency_value[gccode] + ' ' + currency_map[gccode];
 };
 
