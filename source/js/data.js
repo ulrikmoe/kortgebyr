@@ -45,13 +45,13 @@ Currency.prototype.print = function () {
 Currency.prototype.represent = function () {
   if (this.length() === 1) {
     for (var code in this.amounts) {
-      if (currency_map.hasOwnProperty(code)) {
-        return this.amounts[code] + ' ' + currency_map[code];
-      }
+      //if (currency_map.hasOwnProperty(code)) {
+    //    return this.amounts[code] + ' ' + currency_map[code];
+      //}
       return this.amounts[code] + ' ' + code;
     }
   }
-  return this.dkk() / currency_value[gccode] + ' ' + currency_map[gccode];
+  return this.dkk() / currency_value[gccode] + ' ' + gccode;//currency_map[gccode];
 };
 
 Currency.prototype.length = function () {
@@ -60,7 +60,7 @@ Currency.prototype.length = function () {
     if (this.amounts.hasOwnProperty(k)) { n++; }
   }
   return n;
-}
+};
 
 Currency.prototype.dkk = function () {
   var sum = 0;
