@@ -78,6 +78,7 @@ function changeCurrency(option) {
    $('currency_code').innerHTML = option.value;
    set_ccode(option.value);
    build();
+   save_url();
 }
 
 function setCurrency(k, v) {
