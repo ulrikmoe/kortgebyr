@@ -142,7 +142,7 @@ a {
 }
 
 .container {
-	width: 96%;
+	width: 97%;
 	max-width: 1040px;
 	min-width: 860px;
 	padding: 0;
@@ -373,8 +373,6 @@ nav {
 	color: #444;
 	empty-cells: show;
 	margin-top: 20px;
-	border-radius: 2px;
-	overflow: hidden;
 
 	td, th {
 		text-align: center;
@@ -398,12 +396,15 @@ nav {
 		-ms-font-smoothing: antialiased;
 		font-smoothing: antialiased;
 		text-rendering: optimizeLegibility;
+		overflow: hidden;
+		border-top-left-radius: 2px;
+		border-top-right-radius: 2px;
 	}
 
 	td:first-child {
 		width: 165px;
 		text-align: left;
-		padding-left: 13px;
+		padding-left: 14px;
 		font-size: 12px;
 
 		img {
