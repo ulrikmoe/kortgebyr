@@ -155,8 +155,6 @@ header {
 	display:block;
 	margin-top: 20px !important;
 	border: 1px solid #dbdbdb;
-	border-radius: 2px;
-	overflow: hidden;
 }
 
 
@@ -201,6 +199,22 @@ nav {
 		border-left: 1px solid #ddd;
 		cursor: pointer;
 		line-height: 43px;
+
+		&:after {
+			content: "";
+			position:absolute;
+			top: 20px;
+			right: 10px;
+			width: 0; 
+			height: 0; 
+			border-left: 4px solid transparent;
+			border-right: 4px solid transparent;
+			border-top: 4px solid #bbb;
+		}
+
+		&:hover:after {
+			border-top-color: #999;
+		}
 	}
 
 	.language:hover, .currency:hover {
@@ -210,9 +224,6 @@ nav {
 	.currency {
 		width: 62px;
 		position:relative;
-		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAABuCAMAAAAd8LPfAAAADFBMVEUAAAD///8AAAC+vr5RhLmsAAAAAXRSTlMAQObYZgAAADZJREFUeNrt1MENACAMw0AH9t8ZqX2kjADKPT2AYTcGVRGTXNxc3IiI+NZqDKoi7ubilmPGkw4zrgBfaUnn4AAAAABJRU5ErkJggg==);
-		background-position: right 20px;
-		background-repeat: no-repeat;
 
 		label {
 			padding-left: 10px;
@@ -233,7 +244,7 @@ nav {
 
 	}
 	.language {
-		width: 58px;
+		width: 56px;
 		img { margin: 0px 0 0 11px; }
 	}
 }
@@ -388,8 +399,6 @@ nav {
 		font-smoothing: antialiased;
 		text-rendering: optimizeLegibility;
 		overflow: hidden;
-		border-top-left-radius: 2px;
-		border-top-right-radius: 2px;
 	}
 
 	td:first-child {
