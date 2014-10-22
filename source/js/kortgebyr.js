@@ -251,10 +251,11 @@ var opts = {
           return get_ccode();
        },
        set: function (v){
-          var select = $("currency").getElementsByTagName( "select" )[0];
+          var select = $("currency_code_select");
           for( var i = 0; i < select.length; i ++ ){
               if( select.options[i].value === v){
                   select.selectedIndex = i;
+                  $('currency_code').innerHTML = v;
                   break;
               }
           }
