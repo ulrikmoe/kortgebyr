@@ -36,6 +36,10 @@ module.exports = function (grunt) {
       uglify: {
          my_target: {
 
+            options: {
+               //compress: false,
+               //mangle: false
+            },
             files: [{
                expand: true,
                cwd: 'source/js/',

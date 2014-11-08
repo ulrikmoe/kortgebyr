@@ -3,22 +3,17 @@
    <meta charset="utf-8">
    <title>Kortgebyr - sammenlign betalingsløsninger</title>
    <meta name="description" content="Kortgebyr er en prissammenligning af betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr.">
-   <script async src="js/data.js"></script>
-   <link href="css/global.css" rel="stylesheet" type="text/css" />
-   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic' rel='stylesheet' type='text/css'>
-   <!--
-   <link rel="alternate" href="http://kortgebyr.dk" hreflang="da-dk" />
-   <link rel="alternate" href="http://kortgebyr.dk/sv/" hreflang="" />
-   <link rel="alternate" href="http://kortgebyr.dk/no/" hreflang="" />
-   -->
+   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+   <meta http-equiv="Pragma" content="no-cache" />
+   <meta http-equiv="Expires" content="0" />
+   <link href="css/global.css?1" rel="stylesheet" type="text/css" />
+   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic' rel='stylesheet' type='text/css'>
    <link rel="canonical" href="http://kortgebyr.dk">
 </head>
-
-
 <body>
    <header class="container">
       <nav role="navigation"> <a class="logo" href="/">kortgebyr</a>
-         <div class="language">
+         <div class="language" onclick="alert('Denne funktion er midlertidigt disabled.')">
             <img width="19" src="/img/dk1.png" alt="kortgebyr på dansk" />
          </div>
          <div id="currency" class="currency">
@@ -95,43 +90,52 @@
          <section style="width:19%">
             <p>
                <label>
-                  <input type="checkbox" checked="" id="dankort" onchange="build();" />Dankort</label>
+                  <input type="checkbox" checked="" id="dankort" onchange="build();" />Dankort
+               </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" checked="" id="visa_mastercard" onchange="build();" />Visa, MasterCard</label>
+                  <input type="checkbox" checked="" id="visa_mastercard" onchange="build();" />Visa, MasterCard
+               </label>
             </p>
             <p>
-               <label>
-                  <input type="checkbox" disabled="" id="forbrugsforeningen" onchange="build();" />Forbrugsforening</label>
+               <label onclick="alert('Denne funktion er midlertidigt disabled.')">
+                  <input type="checkbox"  disabled="" id="forbrugsforeningen" onchange="build();" />Forbrugsforening
+               </label>
             </p>
             <p>
-               <label>
-                  <input type="checkbox" disabled="" id="diners" onchange="build();" />Diners</label>
+               <label onclick="alert('Denne funktion er midlertidigt disabled.')">
+                  <input type="checkbox" disabled="" id="diners" onchange="build();" />Diners
+               </label>
             </p>
             <p>
-               <label>
-                  <input type="checkbox" disabled="" id="amex" onchange="build();" />American Express</label>
+               <label onclick="alert('Denne funktion er midlertidigt disabled.')">
+                  <input type="checkbox" disabled="" id="amex" onchange="build();" />American Express
+               </label>
             </p>
             <p>
-               <label>
-                  <input type="checkbox" disabled="" id="jcb" onchange="build();" />JCB og UnionPay</label>
+               <label onclick="alert('Denne funktion er midlertidigt disabled.')">
+                  <input type="checkbox" disabled="" id="jcb" onchange="build();" />JCB og UnionPay
+               </label>
             </p>
 
          </section>
 
          <section style="width: 17%; border-left:0; padding-left:0; padding-right:0">
             <p>
-              <label>
-                <input type="checkbox" disabled="" id="" onchange="build();" /> Fakturabetaling</label>
+              <label onclick="alert('Denne funktion er midlertidigt disabled.')">
+                <input type="checkbox" disabled="" id="" onchange="build();" /> Fakturabetaling
+               </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" id="mobilepay" onchange="build();" />MobilePay</label>
+                  <input type="checkbox" id="mobilepay" onchange="build();" />MobilePay
+               </label>
             </p>
             <p>
-               <label>
-                  <input type="checkbox" disabled="" id="paii" onchange="build();" />Paii</label>
+               <label onclick="alert('Denne funktion er midlertidigt disabled.')">
+                  <input type="checkbox" disabled="" id="paii" onchange="build();" />Paii
+               </label>
             </p>
          </section>
       </div>
@@ -168,18 +172,17 @@
       <br />til at sammenligne betalingsløsninger. Kortgebyr er uafhængig, non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (
       <small><a href="https://github.com/ulrikmoe/kortgebyr/blob/master/GPLv3.md">GPLv3</a></small>).
 
-   </footer>
-
-
-   <script>
-      function initialize()
+      <script>function initialize()
       {
          var element = document.createElement("script");
          element.src = "js/defer.js";
          document.body.appendChild(element);
+
          build('init');
       }
-   </script>
-   <script async onload="initialize()" src="js/kortgebyr.js"></script>
-   
+      </script>
+
+      <script async onload="initialize()" src="js/kortgebyr.js?1"></script>
+
+   </footer>
 </body></html>
