@@ -447,7 +447,7 @@ var psps = { // alfabetisk rækkefølge
     logo: "epay.png",
     link: "http://epay.dk",
     is_acquirer: false,
-    acquirers: ["nets", "euroline", "teller", "swedbank", "handelsbanken", "valitor", "clearhaus"],
+    acquirers: ["nets", "teller"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
       if (o.recurring || o.multiacquirer) {return null;}
@@ -468,7 +468,7 @@ var psps = { // alfabetisk rækkefølge
     logo: "epay.png",
     link: "http://epay.dk",
     is_acquirer: false,
-    acquirers: ["nets", "euroline", "teller", "swedbank", "handelsbanken", "valitor", "clearhaus"],
+    acquirers: ["nets", "euroline", "teller", "swedbank", "handelsbanken", "valitor", "elavon", "clearhaus"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
 
