@@ -2,6 +2,8 @@ module.exports = function (grunt) {
 
    // Load Grunt tasks declared in the package.json file
    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+   var mozjpeg = require('imagemin-mozjpeg');
+
 
    // Configure Grunt
    grunt.initConfig({
@@ -19,13 +21,13 @@ module.exports = function (grunt) {
       },
 
       less: {
-         build: {
+         dev: {
             options: {
-               cleancss: true
+               cleancss: false
             },
             files: [{
                expand: true,
-               cwd: 'source/less/',
+               cwd: 'src/less/',
                src: ['*.less'],
                dest: '_site/css/',
                ext: '.css'
@@ -42,7 +44,7 @@ module.exports = function (grunt) {
             },
             files: [{
                expand: true,
-               cwd: 'source/js/',
+               cwd: 'src/js/',
                src: '*.js',
                dest: '_site/js/'
             }]
@@ -61,7 +63,7 @@ module.exports = function (grunt) {
                removeEmptyElements: false // Fjernede #data :/
             },
             expand: true,
-            cwd: 'source/',
+            cwd: 'src/',
             src: ['*.html', '**/*.html'],
             dest: '_site/'
          }
@@ -70,35 +72,49 @@ module.exports = function (grunt) {
       copy: {
          files: {
             expand: true,
-            cwd: 'source/',
+            cwd: 'src/',
             src: ['img/**', 'favicon.ico'],
             dest: '_site/'
+         }
+      },
+
+      imagemin: {            
+         live: {
+            options: { 
+               optimizationLevel: 4,
+               svgoPlugins: [{ removeUselessStrokeAndFill: false }],
+               use: [mozjpeg()]
+            },
+            files: [{
+               expand: true,
+               cwd: 'src/img/',
+               src: ['**/*.{png,jpg,gif,svg}'],
+               dest: 'src/img/'
+            }]
          }
       },
 
       // grunt-watch will monitor the projects files
       watch: {
          less: {
-            files: ['source/less/*.less'],
-            tasks: ['less:build']
+            files: ['src/less/*.less'],
+            tasks: ['less:dev']
          },
          scripts: {
-            files: ['source/js/*.js'],
+            files: ['src/js/*.js'],
             tasks: ['uglify']
          },
          html: {
-            files: ['source/*.html', 'source/**/*.html'],
+            files: ['src/*.html', 'source/**/*.html'],
             tasks: ['htmlmin']
          },
          images: {
-            files: ['source/img/**'],
+            files: ['src/img/**'],
             tasks: ['copy']
          }
       },
 
-      clean: {
-         src: ['_site/']
-      },
+      clean: { src: ['_site/'] },
 
       open: {
          all: {
@@ -111,11 +127,18 @@ module.exports = function (grunt) {
    grunt.registerTask('dev', [
       'clean',
       'htmlmin',
-      'less:build',
+      'less:dev',
       'copy',
       'uglify',
       'express',
       'open',
       'watch'
    ]);
+
+   // Creates the `server` task
+   grunt.registerTask('optimize', [
+      'imagemin:live'
+   ]);
+
+
 };

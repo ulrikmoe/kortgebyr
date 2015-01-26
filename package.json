@@ -16,6 +16,9 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-express": "^1.4.1",
     "grunt-open": "*",
-    "matchdep": "^0.3.0"
+    "matchdep": "^0.3.0",
+    "grunt-svgmin": "*",
+    "grunt-contrib-imagemin": "*",
+    "imagemin-mozjpeg": "*"
   }
 }
