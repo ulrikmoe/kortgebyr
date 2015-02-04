@@ -202,6 +202,7 @@ var acqs = { // alfabetisk rækkefølge
   "teller": {
     name: "Teller",
     logo: "teller.png",
+    link: "http://www.teller.com",
     cards: ["visa", "mastercard", "maestro"],
     fee_setup: new Currency(1000, 'DKK'),
     fee_monthly: new Currency(149, 'DKK'),
@@ -222,6 +223,7 @@ var acqs = { // alfabetisk rækkefølge
   "handelsbanken": {
     name: "Handelsbanken",
     logo: "handelsbanken.png",
+    link: "http://www.handelsbanken.dk",
     cards: ["visa", "mastercard", "maestro"],
     fee_setup: new Currency(0, 'DKK'),
     fee_monthly: new Currency(0, 'DKK'),
@@ -232,6 +234,7 @@ var acqs = { // alfabetisk rækkefølge
   "nets": {
     name: "nets",
     logo: "nets.png",
+    link: "http://www.nets.eu",
     cards: ["dankort"],
     fee_setup: new Currency(250, 'DKK'),
     fee_monthly: new Currency(1000 / 12, 'DKK'),
@@ -254,6 +257,7 @@ var acqs = { // alfabetisk rækkefølge
   "nordea": {
     name: "Nordea",
     logo: "nordea.png",
+    link: "http://www.nordea.dk",
     cards: ["visa", "mastercard", "maestro"],
     fee_setup: new Currency(0, 'DKK'),
     fee_monthly: new Currency(0, 'DKK'),
@@ -264,6 +268,7 @@ var acqs = { // alfabetisk rækkefølge
   "swedbank": {
     name: "Swedbank",
     logo: "swedbank.png",
+    link: "http://www.swedbank.dk",
     cards: ["visa", "mastercard", "maestro"],
     fee_setup: new Currency(1900, 'DKK'),
     fee_monthly: new Currency(100, 'DKK'),
@@ -274,6 +279,7 @@ var acqs = { // alfabetisk rækkefølge
   "valitor": {
     name: "Valitor",
     logo: "valitor.png",
+    link: "http://www.valitor.com",
     cards: ["visa", "mastercard", "maestro"],
     fee_setup: new Currency(0, 'DKK'),
     fee_monthly: new Currency(0, 'DKK'),
@@ -284,6 +290,7 @@ var acqs = { // alfabetisk rækkefølge
   "elavon": {
     name: "Elavon",
     logo: "elavon.png",
+    link: "http://www.elavon.com",
     cards: ["visa", "mastercard", "maestro"],
     fee_setup: new Currency(0, 'DKK'),
     fee_monthly: new Currency(0, 'DKK'),
@@ -294,6 +301,7 @@ var acqs = { // alfabetisk rækkefølge
   "clearhaus": {
     name: "Clearhaus",
     logo: "clearhaus.svg",
+    link: "https://www.clearhaus.com",
     cards: ["visa", "mastercard", "maestro"],
     fee_setup: new Currency(0, 'DKK'),
     fee_monthly: new Currency(0, 'DKK'),
@@ -1621,8 +1629,9 @@ function build(action) {
       for (l in n_acqs) {
          logo = acqs[n_acqs[l]].logo;
          name = acqs[n_acqs[l]].name;
-         h_acqs.push('<img src="/img/acquirer/' + logo + '" alt="' + name +
-            '" title="' + name + '" />');
+         link = acqs[n_acqs[l]].link;
+         h_acqs.push('<a href="' + link + '"><img src="/img/acquirer/' + logo + '" alt="' + name +
+            '" title="' + name + '" /></a>');
       }
       h_acqs = h_acqs.join("");
 
