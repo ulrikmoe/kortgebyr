@@ -1630,7 +1630,7 @@ function build(action) {
          logo = acqs[n_acqs[l]].logo;
          name = acqs[n_acqs[l]].name;
          link = acqs[n_acqs[l]].link;
-         h_acqs.push('<a href="' + link + '"><img src="/img/acquirer/' + logo + '" alt="' + name +
+         h_acqs.push('<a target="_blank" href="' + link + '"><img src="/img/acquirer/' + logo + '" alt="' + name +
             '" title="' + name + '" /></a>');
       }
       h_acqs = h_acqs.join("");
