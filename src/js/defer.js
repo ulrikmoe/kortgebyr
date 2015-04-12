@@ -24,12 +24,9 @@ var lnkdjs = "lang: da_DK";
   // Twitter
   load('https://platform.twitter.com/widgets.js', 'twjs');
   // LinedIn
-  load('https://platform.linkedin.com/in.js', 'lnkdjs', lnkdjs);
-  // Google Analytics, skal implementeres ved lejlighed
 
   fjs.parentNode.insertBefore(frag, fjs);
 }(document));
-
 
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
