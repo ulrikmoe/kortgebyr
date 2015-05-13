@@ -902,7 +902,25 @@ var psps = { // alfabetisk rækkefølge
         trans: o.avgvalue.scale(fee / 100).add(new Currency(0.45, 'USD')).scale(o.n)
       };
     }
-  }
+  },
+
+  "paylike": {
+    name: "Paylike",
+    logo: "paylike.png",
+    link: "https://paylike.io",
+    is_acquirer: true,
+    acquirers: [],
+    cards: ["visa", "mastercard", "maestro"],
+    costfn: function (o) {
+      if (o.multiacquirer || o.mobilepay) { return null; }
+
+      return {
+        setup: new Currency(0, 'DKK'),
+        monthly: new Currency(0, 'DKK'),
+        trans: o.avgvalue.scale(2.75 / 100).add(new Currency(0.25, 'EUR')).scale(o.n)
+      };
+    }
+  },
 
 };
 
