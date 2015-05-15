@@ -1,3 +1,41 @@
+
+// Source Sans Pro [SSP]
+@font-face {
+   font-family: 'SSP';
+   font-weight: 400;
+   font-style: normal;
+   src:
+      url("/fonts/SSP/regular.woff2") format('woff2'),
+      url("/fonts/SSP/regular.woff") format('woff');
+}
+
+@font-face {
+   font-family: 'SSP';
+   font-weight: 400;
+   font-style: italic;
+   src:
+      url("/fonts/SSP/italic.woff2") format('woff2'),
+      url("/fonts/SSP/italic.woff") format('woff');
+}
+
+@font-face {
+   font-family: 'SSP';
+   font-weight: 600;
+   font-style: normal;
+   src:
+      url("/fonts/SSP/semibold.woff2") format('woff2'),
+      url("/fonts/SSP/semibold.woff") format('woff');
+}
+
+@font-face {
+	font-family: 'SSP';
+	font-weight: 700;
+   font-style: normal;
+   src:
+      url("/fonts/SSP/bold.woff2") format('woff2'),
+      url("/fonts/SSP/bold.woff") format('woff');
+}
+
 /**
  * 1. Default font
  * 2. Prevent iOS text size adjust after orientation change (normalize.css)
@@ -5,7 +43,7 @@
  * 4. Border-box: width/height include padding/border.
  */
 html {
-	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 1 */
+	font-family: 'SSP', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 1 */
 	line-height: 23px;
 	font-size: 14px;
 	font-size: 15px;
@@ -30,7 +68,7 @@ body {
 }
 
 /**
- * 1. Remove the gray background color from active links in IE 10
+ * 1. Remove the grey background color from active links in IE 10
  * 2. Avoid image resizing when border is applied.
  * 3. Improve readability when focused and also mouse hovered in all browsers.
  * 4. Address style set to `bolder` in Firefox 4+, Safari, and Chrome
@@ -508,13 +546,11 @@ nav {
 }
 
 
-
-
 footer {
 
   background: #fff;
 	text-align: center;
-	padding: 40px 0;
+	padding: 30px 0 40px;
 	color: #777;
 	line-height: 27px;
 	font-size: 14px;

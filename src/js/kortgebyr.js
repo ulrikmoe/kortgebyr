@@ -24,10 +24,10 @@
 // Valutakurser opdateret d. 08/10/2014
 var currency_value = {
   'DKK': 1,
-  'SEK': 0.798,
-  'NOK': 0.876,
-  'EUR': 7.443,
-  'USD': 6.647
+  'SEK': 0.800,
+  'NOK': 0.893,
+  'EUR': 7.463,
+  'USD': 6.651
 };
 
 var currency_map = {
@@ -35,7 +35,7 @@ var currency_map = {
   'SEK': 'kr',
   'NOK': 'kr',
   'EUR': '\u20AC',
-  'USD': '$'
+  'USD': '\u0024'
 };
 
 var gccode = 'DKK';
@@ -347,7 +347,7 @@ var psps = { // alfabetisk rækkefølge
   "dandomain": {
     name: "DanDomain",
     logo: "dandomain.png",
-    link: "http://dandomain.dk/produkter/betalingssystem.html",
+    link: "http://www.dandomain.dk/e-handel/betalingssystem/overblik",
     is_acquirer: false,
     acquirers: ["nets", "teller"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
@@ -375,44 +375,44 @@ var psps = { // alfabetisk rækkefølge
       };
     }
   },
-  "dibsstartup": {
-    name: "DIBS Startup",
+  "dibsstart": {
+    name: "DIBS Start",
     logo: "dibs.png",
     link: "http://dibs.dk",
     is_acquirer: false,
     acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "elavon"],
-    cards: ["dankort", "visa", "mastercard", "maestro"],
+    cards: ["dankort", "visa"],
     costfn: function (o) {
-      if (o.antifraud || o.recurring || o.visasecure || o.multiacquirer || o.mobilepay) {
+      if (o.antifraud || o.recurring || o.visasecure || o.multiacquirer) {
         return null;
       }
       return {
         setup: new Currency(1495, 'DKK'),
-        monthly: new Currency(195, 'DKK'),
-        trans: (new Currency(1.5, 'DKK')).scale(o.n)
+        monthly: new Currency(149, 'DKK'),
+        trans: (new Currency(0.6, 'DKK')).scale(o.n)
       };
     }
   },
-  "dibspro": {
-    name: "DIBS Professional",
+  "dibsmedium": {
+    name: "DIBS Medium",
     logo: "dibs.png",
     link: "http://dibs.dk",
     is_acquirer: false,
     acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "elavon"],
     cards: ["dankort", "visa", "mastercard", "maestro", "diners", "amex"],
     costfn: function (o) {
-      if (o.antifraud || o.recurring || o.multiacquirer || o.mobilepay) {
+      if (o.antifraud || o.recurring || o.multiacquirer) {
         return null;
       }
       return {
-        setup: new Currency(2000, 'DKK'),
-        monthly: new Currency(395, 'DKK'),
-        trans: (new Currency(1.5, 'DKK')).scale(o.n)
+        setup: new Currency(4995, 'DKK'),
+        monthly: new Currency(499, 'DKK'),
+        trans: (new Currency(0.55, 'DKK')).scale(o.n)
       };
     }
   },
-  "dibsint": {
-    name: "DIBS International",
+  "dibspremium": {
+    name: "DIBS Premium",
     logo: "dibs.png",
     link: "http://dibs.dk",
     is_acquirer: false,
@@ -420,9 +420,9 @@ var psps = { // alfabetisk rækkefølge
     cards: ["dankort", "visa", "mastercard", "maestro", "diners", "amex"],
     costfn: function (o) {
       return {
-        setup: new Currency(5000, 'DKK'),
-        monthly: new Currency(795, 'DKK'),
-        trans: (new Currency(1, 'DKK')).scale(o.n)
+        setup: new Currency(10995, 'DKK'),
+        monthly: new Currency(899, 'DKK'),
+        trans: (new Currency(0.5, 'DKK')).scale(o.n)
       };
     }
   },
@@ -659,14 +659,14 @@ var psps = { // alfabetisk rækkefølge
       return {
         setup: new Currency(0, 'DKK'),
         monthly: new Currency(0, 'DKK'),
-        trans: o.avgvalue.scale(2.5 / 100).add(new Currency(1.9, 'DKK')).scale(o.n)
+        trans: o.avgvalue.scale(4.99 / 100).add(new Currency(0.59, 'USD')).scale(o.n)
       };
     }
   },
-  "pointbas": {
-    name: "Point Bas",
-    logo: "point.png",
-    link: "http://www.point.se/sv/Sweden/Start/E-handel/",
+  "verifonebas": {
+    name: "Verifone Bas",
+    logo: "verifone.png",
+    link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
     is_acquirer: false,
     acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
     cards: ["visa", "mastercard", "diners", "amex"],
@@ -682,10 +682,10 @@ var psps = { // alfabetisk rækkefølge
       };
     }
   },
-  "pointpremium": {
-    name: "Point Premium",
-    logo: "point.png",
-    link: "http://www.point.se/sv/Sweden/Start/E-handel/",
+  "verifonepremium": {
+    name: "Verifone Premium",
+    logo: "verifone.png",
+    link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
     is_acquirer: false,
     acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
     cards: ["visa", "mastercard", "diners", "amex"],
@@ -701,10 +701,10 @@ var psps = { // alfabetisk rækkefølge
       };
     }
   },
-  "pointpremiumplus": {
-    name: "Point PremiumPlus",
-    logo: "point.png",
-    link: "http://www.point.se/sv/Sweden/Start/E-handel/",
+  "verifonepremiumplus": {
+    name: "Verifone PremiumPlus",
+    logo: "verifone.png",
+    link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
     is_acquirer: false,
     acquirers: ["nets", "handelsbanken", "nordea", "euroline", "swedbank"],
     cards: ["dankort", "visa", "mastercard", "diners", "amex", "jcb"],
@@ -734,17 +734,17 @@ var psps = { // alfabetisk rækkefølge
       return {
         setup: new Currency(0, 'USD'),
         monthly: new Currency(0, 'USD'),
-        trans: o.avgvalue.scale(2.9 / 100).add(new Currency(0.30, 'USD')).scale(o.n)
+        trans: o.avgvalue.scale(2.9 / 100).add(new Currency(2.25, 'DKK')).scale(o.n)
       };
     }
   },
 
   "quickpay": {
-    name: "quickpay",
+    name: "quickpay (old platform)",
     logo: "quickpay.png",
-    link: "http://quickpay.dk",
+    link: "https://quickpay.net",
     is_acquirer: false,
-    acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "handelsbanken", "clearhaus"],
+    acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "handelsbanken"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
     costfn: function (o) {
 
@@ -768,6 +768,40 @@ var psps = { // alfabetisk rækkefølge
         setup: new Currency(0, 'DKK'),
         monthly: new Currency(150, 'DKK'),
         trans: new Currency(price, 'DKK')
+      };
+    }
+  },
+
+  "quickpaystandard": {
+    name: "QuickPay Standard",
+    logo: "quickpay.png",
+    link: "https://quickpay.net",
+    is_acquirer: false,
+    acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "handelsbanken", "clearhaus"],
+    cards: ["dankort", "visa", "mastercard", "maestro"],
+    costfn: function (o) {
+
+      return {
+        setup: new Currency(0, 'DKK'),
+        monthly: new Currency(49, 'DKK'),
+        trans: (new Currency(1, 'DKK')).scale(o.n)
+      };
+    }
+  },
+  "quickpaypro": {
+    name: "QuickPay Professional",
+    logo: "quickpay.png",
+    link: "https://quickpay.net",
+    is_acquirer: false,
+    acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "handelsbanken", "clearhaus"],
+    cards: ["dankort", "visa", "mastercard", "maestro"],
+    costfn: function (o) {
+
+      var fee = 0.25;
+      return {
+        setup: new Currency(0, 'DKK'),
+        monthly: new Currency(149, 'DKK'),
+        trans: (new Currency(fee, 'DKK')).scale(Math.max(o.n - 250, 0))
       };
     }
   },
@@ -817,7 +851,7 @@ var psps = { // alfabetisk rækkefølge
 
       return {
         setup: new Currency(0, 'EUR'),
-        monthly: new Currency(0, 'EUR'),
+        monthly: new Currency(19.95, 'EUR'),
         trans: o.avgvalue.scale(fee / 100).add(new Currency(0.25, 'EUR')).scale(o.n)
       };
     }
@@ -825,7 +859,7 @@ var psps = { // alfabetisk rækkefølge
   "wannafind": {
     name: "Wannafind",
     logo: "wannafind.png",
-    link: "https://wannafind.dk/betalingsgateway/",
+    link: "https://www.wannafind.dk/betalingsgateway/",
     is_acquirer: false,
     acquirers: ["nets", "teller"],
     cards: ["dankort", "visa", "mastercard", "maestro"],
@@ -850,7 +884,7 @@ var psps = { // alfabetisk rækkefølge
     link: "http://yourpay.dk",
     is_acquirer: true,
     acquirers: [],
-    cards: ["dankort", "visa", "mastercard", "maestro"],
+    cards: ["visa", "mastercard", "maestro"],
     costfn: function (o) {
       if (o.antifraud || o.multiacquirer || o.recurring || o.mobilepay) {
         return null;
@@ -920,22 +954,14 @@ var psps = { // alfabetisk rækkefølge
         trans: o.avgvalue.scale(2.75 / 100).add(new Currency(0.25, 'EUR')).scale(o.n)
       };
     }
-  },
-
+  }
 };
-
-
-
-
-
 
 
 
 /*----------------------------------------------------------------------
    Functions
 -----------------------------------------------------------------------*/
-
-
 
 
 // $('html-id');
@@ -1526,10 +1552,6 @@ function build(action) {
          visamc_scale = 0;
          dankort_scale = 1;
          //tmpo.visasecure = false;
-      }
-      if (k === "yourpay") {
-         visamc_scale = 1;
-         dankort_scale = 0;
       }
 
       if (tmpacq == "auto") {

@@ -23,7 +23,7 @@ module.exports = function (grunt) {
       less: {
          dev: {
             options: {
-               cleancss: false
+               cleancss: true
             },
             files: [{
                expand: true,
@@ -73,7 +73,7 @@ module.exports = function (grunt) {
          files: {
             expand: true,
             cwd: 'src/',
-            src: ['img/**', 'favicon.ico'],
+            src: ['fonts/**', 'img/**', 'favicon.ico'],
             dest: '_site/'
          }
       },
