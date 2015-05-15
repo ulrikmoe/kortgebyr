@@ -1,5 +1,7 @@
 KORTGEBYR
 ================
+
+[![Join the chat at https://gitter.im/ulrikmoe/kortgebyr](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ulrikmoe/kortgebyr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <a href="http://kortgebyr.dk">Kortgebyr</a> er en prissammenligningsside for betalingsløsninger og betalingsgateways. Projektet startede i 2012 og er stadig under udvikling.
 
 ![Alt text](/screenshot.png?raw=true "kortgebyr screenshot")
