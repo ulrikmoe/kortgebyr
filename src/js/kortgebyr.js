@@ -1466,6 +1466,7 @@ function build(action) {
       init_defaults();
       init_dirty_bits();
       load_url(location.search);
+      updateCommitDate();
    }
 
    var counter = 0;
@@ -1969,6 +1970,32 @@ function setAcquirerPanel() {
 
 }
 
+
+function fmtDate(d) { // force 2 digits
+   var months = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august",
+                 "september", "oktober", "november", "december"]
+   return d.getDate() + ". " + months[d.getMonth()] + " " + d.getFullYear();
+
+}
+
+function updateCommitDate() {
+   var linkurl = "https://github.com/ulrikmoe/kortgebyr";
+   var apiurl = "https://api.github.com/repos/ulrikmoe/kortgebyr/commits/master";
+   var req = new XMLHttpRequest();
+   req.onreadystatechange = function() {
+      if (req.readyState === 4 && req.status == 200) {
+         var obj = JSON.parse(req.responseText);
+         if (!obj || !obj.commit || !obj.commit.committer ||
+             !obj.commit.committer.date) return;
+         var d = new Date(Date.parse(obj.commit.committer.date));
+         document.getElementsByClassName("lastUpdate")[0].innerHTML = 
+            "<a href='" + linkurl + "'>Sidst opdateret d. " + fmtDate(d) + "</a>";
+         
+      }
+   };
+   req.open("GET", apiurl, true);
+   req.send();
+}
 
 
 
