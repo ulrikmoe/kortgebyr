@@ -17,7 +17,7 @@
    funtionNaming: camelCase
 
    Use JSHint or I will fart in your general direction! Your mother
-   was a hampster, and your father smelt of eldeberries!
+   was a hamster, and your father smelt of elderberries!
 
 -----------------------------------------------------------------------*/
 
@@ -1621,6 +1621,13 @@ function build(action) {
          n_acqs.push(tmpacq);
       } else if (use_visamc) {
          n_cards = n_cards.concat(psps[k].cards);
+      }
+      
+      // === Note that percentage of transactions that are done with Mobilepay
+      // === is unknown. Thus only the monthly fee has been added.
+      if (mobilepay) {
+         i_fixedmonth['MobilePay'] = new Currency(49, 'DKK');
+         i_totalmonth['MobilePay'] = new Currency(49, 'DKK');
       }
 
       var l;
