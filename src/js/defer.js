@@ -1,8 +1,4 @@
-/* Script for asynchronus load of sharing buttons */
-
-
 /*
-
 Temporarily disable social buttons...
 
 var lnkdjs = "lang: da_DK";
@@ -32,7 +28,6 @@ var lnkdjs = "lang: da_DK";
 
   fjs.parentNode.insertBefore(frag, fjs);
 }(document));
-
 */
 
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
