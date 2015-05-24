@@ -191,7 +191,7 @@ a {
 
 header {
 	display:block;
-	margin-top: 20px !important;
+	margin-top: 17px !important;
 	border: 1px solid #dbdbdb;
 }
 
@@ -203,14 +203,10 @@ nav {
 	height: 43px;
 	line-height: 41px;
 	background-color: #f5f5f5;
-	//background-image: linear-gradient(to bottom,#f4f4f4 25%,#f2f2f2 100%);
+	overflow: hidden;
 
-	> * {
-		display:inline-block;
-		vertical-align:top;
-	}
-
-	.logo {
+	.logo { float: left; }
+	.logo a {
 		margin-left: 20px;
 		color: #204499;
 		font-size:20px;
@@ -286,6 +282,13 @@ nav {
 		width: 56px;
 		img { margin: 0px 0 0 11px; }
 	}
+
+
+	.lastUpdate {
+		float: left;
+		margin: 3px 0 0 7px;
+	}
+
 }
 
 .info { padding: 20px 0 0 0; }
@@ -434,7 +437,7 @@ nav {
 	th {
 		padding: 5px 0 4px;
 		font-size: 13px;
-		line-height: 17px;
+		line-height: 16px;
 		font-weight: 600;
 		background-color: #f5f5f5;
 		border-top:0;
@@ -462,12 +465,12 @@ nav {
 
 	td:nth-child(2) {
 		// Acquirer
-		width: 105px;
+		width: 115px;
 
 		img {
 			margin: 10px auto;
 			display:block;
-			max-height: 14px;
+			max-height: 16px;
 		}
 	}
 
@@ -480,6 +483,14 @@ nav {
 		img {
 			margin: 4px
 		}
+	}
+
+	td:nth-child(6) {
+		width: 150px;
+	}
+
+	td:last-child {
+		width: 145px;
 	}
 
 }

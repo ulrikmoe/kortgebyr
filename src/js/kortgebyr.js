@@ -24,10 +24,10 @@
 // Valutakurser opdateret d. 08/10/2014
 var currency_value = {
   'DKK': 1,
-  'SEK': 0.800,
+  'SEK': 0.801,
   'NOK': 0.893,
-  'EUR': 7.463,
-  'USD': 6.651
+  'EUR': 7.459,
+  'USD': 6.672
 };
 
 var currency_map = {
@@ -1989,7 +1989,7 @@ function updateCommitDate() {
              !obj.commit.committer.date) return;
          var d = new Date(Date.parse(obj.commit.committer.date));
          document.getElementsByClassName("lastUpdate")[0].innerHTML = 
-            "<a href='" + linkurl + "'>Sidst opdateret d. " + fmtDate(d) + "</a>";
+            "<a href='"+ linkurl +"/commits/master'>Opdateret d. " + fmtDate(d) + "</a>";
          
       }
    };

@@ -3,13 +3,16 @@
    <meta charset="utf-8">
    <title>Kortgebyr - sammenlign betalingsløsninger</title>
    <meta name="description" content="Kortgebyr er en prissammenligning af betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr.">
-   <link href="/css/global.css?6" rel="stylesheet" type="text/css" />
+   <link href="/css/global.css?7" rel="stylesheet" type="text/css" />
    <link rel="canonical" href="https://kortgebyr.dk">
 </head>
 <body>
-   <span class=lastUpdate></span>
    <header class="container">
-      <nav role="navigation"> <a class="logo" href="/">kortgebyr</a>
+      <nav role="navigation">
+
+         <div class="logo"><a href="/">kortgebyr</a></div>
+         <div class=lastUpdate></div>
+
          <div class="language" onclick="alert('Denne funktion er midlertidigt disabled.')">
             <img width="19" src="/img/dk1.png" alt="kortgebyr på dansk" />
          </div>
@@ -71,7 +74,7 @@
                <label>
                   <input type="checkbox" id="visasecure" onchange="build();" /> 3D-Secure</label>
             </p>
-            <p>
+            <p style="display:none">
                <label>
                   <input type="checkbox" id="fraud_fighter" onchange="build();" /> Svindelkontrol</label>
             </p>
@@ -141,10 +144,10 @@
                <th>Betalingsmuligheder</th>
                <th>Oprettelse</th>
                <th>Abonnement
-                  <br />per måned</th>
+                  <br />pr. måned</th>
                <th>Samlet
-                  <br />per måned</th>
-               <th>Kortgebyr per
+                  <br />pr. måned</th>
+               <th>Samlet pr.
                   <br />transaktion</th>
             </tr>
          </thead>
@@ -166,7 +169,7 @@
       }
       </script>
 
-      <script async onload="initialize()" src="js/kortgebyr.js?6"></script>
+      <script async onload="initialize()" src="js/kortgebyr.js?7"></script>
 
    </footer>
 </body></html>
