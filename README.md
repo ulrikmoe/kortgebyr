@@ -15,7 +15,7 @@ Kortgebyr er en dansk prissammenligningsside for betalingsløsninger og betaling
 Installer lokalt
 =================
 
-Det er nemt at bidrage til projektet. Du skal blot installere <a href="http://gruntjs.com">Grunt</a> via npm, som er en package manager der følger med <a href="http://nodejs.org/download/">Node</a>. 
+Det er nemt at bidrage til projektet. Du skal blot installere <a href="http://gruntjs.com">Grunt</a> via npm, som er en package manager der følger med <a href="http://nodejs.org/download/">Node</a>. Det kræver npm > 2.0, du kan opgradere npm med: <code>npm install -g npm</code>.
 
 <pre>
 npm update
