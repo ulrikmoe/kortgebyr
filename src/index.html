@@ -28,7 +28,7 @@
                </select>
             </label>
          </div>
-         <div class="contact"> <a href="https://gitter.im/ulrikmoe/kortgebyr">Feedback</a></div>
+         <div class="contact"> <a href="mailto:ulrik.moe@gmail.com?Subject=Kortgebyr.dk">Feedback</a></div>
       </nav>
       <div class="menu clearfix">
          <section>
@@ -95,41 +95,52 @@
             </p>
             <p>
                <label>
-                  <input type="checkbox" checked="" id="visa_mastercard" onchange="build();" /> Visa, MasterCard
+                  <input type="checkbox" checked="" id="visa_mastercard" onchange="build();" /> Visa, Visa Electron
                </label>
             </p>
             <p>
-               <label onclick="alert('Denne funktion er midlertidigt disabled.')">
-                  <input type="checkbox"  disabled="" id="forbrugsforeningen" onchange="build();" /> Forbrugsforening
+               <label>
+                  <input type="checkbox" checked="" id="mastercard" onchange="build();" /> MasterCard, Maestro
                </label>
             </p>
             <p>
-               <label onclick="alert('Denne funktion er midlertidigt disabled.')">
-                  <input type="checkbox" disabled="" id="diners" onchange="build();" /> Diners
+               <label>
+                  <input type="checkbox" id="forbrugsforeningen" onchange="build();" /> Forbrugsforening
                </label>
             </p>
             <p>
-               <label onclick="alert('Denne funktion er midlertidigt disabled.')">
-                  <input type="checkbox" disabled="" id="amex" onchange="build();" /> American Express
+               <label>
+                  <input type="checkbox" id="diners" onchange="build();" /> Diners
                </label>
             </p>
             <p>
-               <label onclick="alert('Denne funktion er midlertidigt disabled.')">
-                  <input type="checkbox" disabled="" id="jcb" onchange="build();" /> JCB og UnionPay
+               <label>
+                  <input type="checkbox" id="amex" onchange="build();" /> American Express
                </label>
             </p>
 
          </section>
 
          <section style="width: 17%; border-left:0; padding-left:0; padding-right:0">
+
+            <p>
+               <label>
+                  <input type="checkbox" id="jcb" onchange="build();" /> JCB
+               </label>
+            </p>
+            <p>
+               <label>
+                  <input type="checkbox" id="unionpay" onchange="build();" /> UnionPay
+               </label>
+            </p>
             <p>
                <label>
                   <input type="checkbox" id="mobilepay" onchange="build();" /> MobilePay
                </label>
             </p>
             <p>
-               <label onclick="alert('Swipp til netbutikker kommer først i 2015')">
-                  <input type="checkbox" disabled="" id="paii" onchange="build();" /> Swipp
+               <label>
+                  <input type="checkbox" id="applepay" onchange="build();" /> Apple Pay
                </label>
             </p>
          </section>
