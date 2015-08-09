@@ -1,39 +1,32 @@
 KORTGEBYR
 ================
 
-[![Join the chat at https://gitter.im/ulrikmoe/kortgebyr](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ulrikmoe/kortgebyr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 <a href="https://kortgebyr.dk">Kortgebyr</a> er en prissammenligningsside for betalingsløsninger og betalingsgateways. Projektet startede i 2012 og er stadig under udvikling.
 
 ![Alt text](/screenshot.png?raw=true "kortgebyr screenshot")
 
-Udviklet af Ulrik Moe, Christian Blach og Joakim Sindholt.
+Kortgebyr er en dansk prissammenligningsside for betalingsløsninger og betalingsgateways. Siden er skrevet i Javascript og hostet på Amazon S3. Formålet med siden er at gøre markedet for betalingsløsninger overskueligt og forståeligt for iværksættere.
 
-Kortgebyr er en dansk prissammenligningsside for betalingsløsninger og betalingsgateways. Siden er skrevet i Javascript og hostet på Amazon S3. Formålet med siden er at gøre markedet for betalingsløsninger overskueligt og forståeligt for den gennemsnitlige iværksætter.
-
-
-Installer lokalt
+Bidrag til projektet
 =================
 
-Det er nemt at bidrage til projektet. Du skal blot installere <a href="http://gruntjs.com">Grunt</a> via npm, som er en package manager der følger med <a href="http://nodejs.org/download/">Node</a>. Det kræver npm > 2.0, du kan opgradere npm med: <code>npm install -g npm</code>.
+Det er nemt at bidrage til projektet. For at gøre det endnu nemmere har vi valgt at bruge <a href="http://gulpjs.com">Gulp</a>. Du kan installere gulp via npm (<a href="http://nodejs.org/download/">Node</a> Package Manager).
 
+#### 1. Installer gulp:
 <pre>
-npm update
-npm install -g grunt-cli
+npm install --global gulp
 </pre>
 
-Når GruntJS er installeret skal du blot, med udgangspunkt i den folder hvor du har gemt kortgebyr (<code>cd kortgebyr</code>), køre følgende komando:
-
+#### 2. Installer dependencies:
+Node Package Manager (npm) installerer alle nødvendige pakker (devDependencies i Package.json).
 <pre>
 npm install
 </pre>
 
-npm installerer alle nødvendige pakker (devDependencies i Package.json).
-For at starte grunt skal du blot køre komandoen:
+#### 3. Start web server:
 <pre>
-grunt dev
+gulp
 </pre>
-
 
 LICENSE
 ============

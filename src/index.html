@@ -3,7 +3,9 @@
    <meta charset="utf-8">
    <title>Kortgebyr - sammenlign betalingsløsninger</title>
    <meta name="description" content="Kortgebyr er en prissammenligning af betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr.">
-   <link href="/css/global.css?7" rel="stylesheet" type="text/css" />
+   <style>
+		{% include "global.css" %}
+	</style>
    <link rel="canonical" href="https://kortgebyr.dk">
 </head>
 <body>
@@ -14,7 +16,7 @@
          <div class=lastUpdate></div>
 
          <div class="language" onclick="alert('Denne funktion er midlertidigt disabled.')">
-            <img width="19" src="/img/dk1.png" alt="kortgebyr på dansk" />
+            <img width="19" src="/assets/img/dk1.png" alt="kortgebyr på dansk" />
          </div>
          <div id="currency" class="currency">
             <label>
@@ -95,12 +97,7 @@
             </p>
             <p>
                <label>
-                  <input type="checkbox" checked="" id="visa_mastercard" onchange="build();" /> Visa, Visa Electron
-               </label>
-            </p>
-            <p>
-               <label>
-                  <input type="checkbox" checked="" id="mastercard" onchange="build();" /> MasterCard, Maestro
+                  <input type="checkbox" checked="" id="visa_mastercard" onchange="build();" /> Visa / MasterCard
                </label>
             </p>
             <p>
@@ -138,11 +135,6 @@
                   <input type="checkbox" id="mobilepay" onchange="build();" /> MobilePay
                </label>
             </p>
-            <p>
-               <label>
-                  <input type="checkbox" id="applepay" onchange="build();" /> Apple Pay
-               </label>
-            </p>
          </section>
       </div>
    </header>
@@ -169,18 +161,10 @@
       Kortgebyr er udviklet af <a href="https://twitter.com/ulrikmoe">Ulrik Moe</a>, <a href="https://github.com/cblach">Christian Blach</a> og <a href="https://github.com/zhasha">Joakim Sindholt</a> som et værktøj
       <br />til at sammenligne betalingsløsninger. Kortgebyr er uafhængig, non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (
       <small><a href="https://github.com/ulrikmoe/kortgebyr/blob/master/GPLv3.md">GPLv3</a></small>).
-
-      <script>function initialize()
-      {
-         var element = document.createElement("script");
-         element.src = "js/defer.js?1";
-         document.body.appendChild(element);
-
-         build('init');
-      }
-      </script>
-
-      <script async onload="initialize()" src="js/kortgebyr.js?10"></script>
-
    </footer>
+
+   <script>
+      {% include "kortgebyr.js" %}
+   </script>
+
 </body></html>

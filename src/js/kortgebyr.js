@@ -1,32 +1,21 @@
-/*----------------------------------------------------------------------
-   First shalt thou take out the Holy Pin. Then...
-------------------------------------------------------------------------
-
-   1) Opdele i danske, svenske og norske priser.
-   2) Vise alle betalingskort, inkl. (JCB, AMEX, UnionPay, Diners)
-   3) Forbrugsforeningen
-   4) American Express
-   5) Swipp
-   6) Apple Pay / Samsung Pay / Android Pay
-   7) Forklaring
-   8) Løsninger uden priser: Wirecard, Payex, Worldpay
-   9) Authorize.net
-
-------------------------------------------------------------------------
-   The holy grail of JavaScript...
-------------------------------------------------------------------------
-
-   Indentation: 4 spaces
-
-   GLOBAL_CONSTANTS: UPPERCASE
-   GlobalVariables: PascalCase
-   localVariables: camelCase
-   funtionNaming: camelCase
-
-   Use JSHint or I will fart in your general direction! Your mother
-   was a hamster, and your father smelt of elderberries!
-
------------------------------------------------------------------------*/
+/**
+ *   First shalt thou take out the Holy Pin. Then...
+ *   @author Ulrik Moe, Christian Blach, Joakim Sindholt
+ *   @license GPLv3
+ *
+ *   Indentation: 3 spaces
+ *   Conventions: https://github.com/airbnb/javascript
+ *
+ *   1) Opdele i danske, svenske og norske priser.
+ *   2) Vise alle betalingskort, inkl. (JCB, AMEX, UnionPay, Diners)
+ *   3) Forbrugsforeningen
+ *   4) American Express
+ *   5) Swipp
+ *   6) Apple Pay / Samsung Pay / Android Pay
+ *   7) Forklaring
+ *   8) Løsninger uden priser: Wirecard, Payex, Worldpay
+ *   9) Authorize.net
+ **/
 
 var currency_value = {
    'DKK': 1,
@@ -212,7 +201,7 @@ var acqs = { // alfabetisk rækkefølge
       name: "Teller",
       logo: "teller.png",
       link: "http://www.teller.com",
-      cards: ["visa", "mastercard", "maestro"],
+      cards: ["visa", "mastercard", "maestro", "amex", "jcb", "unionpay"],
       fee_setup: new Currency(1000, 'DKK'),
       fee_monthly: new Currency(149, 'DKK'),
       fee_fixed: new Currency(0, 'DKK'),
@@ -761,7 +750,6 @@ var psps = { // alfabetisk rækkefølge
          if (o.recurring || o.multiacquirer || o.mobilepay) {
             return null;
          }
-
          return {
             setup: new Currency(4999, 'SEK'),
             monthly: new Currency(1999, 'SEK'),
@@ -781,7 +769,6 @@ var psps = { // alfabetisk rækkefølge
          if (o.multiacquirer || o.mobilepay) {
             return null;
          }
-
          return {
             setup: new Currency(0, 'USD'),
             monthly: new Currency(0, 'USD'),
@@ -795,10 +782,9 @@ var psps = { // alfabetisk rækkefølge
       logo: "quickpay.png",
       link: "https://quickpay.net",
       is_acquirer: false,
-      acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "handelsbanken", "clearhaus"],
+      acquirers: ["nets", "teller", "clearhaus"],
       cards: ["dankort", "visa", "mastercard", "maestro"],
       costfn: function(o) {
-
          return {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(49, 'DKK'),
@@ -811,7 +797,7 @@ var psps = { // alfabetisk rækkefølge
       logo: "quickpay.png",
       link: "https://quickpay.net",
       is_acquirer: false,
-      acquirers: ["nets", "euroline", "teller", "swedbank", "Elavon", "handelsbanken", "clearhaus"],
+      acquirers: ["nets", "teller", "clearhaus"],
       cards: ["dankort", "visa", "mastercard", "maestro"],
       costfn: function(o) {
 
@@ -1204,6 +1190,61 @@ var opts = {
       },
       def: true
    },
+   'forbrugsforeningen': {
+      type: "bits",
+      bits: 1,
+      get: function() {
+         return +getBool('forbrugsforeningen');
+      },
+      set: function(v) {
+         setBool('forbrugsforeningen', v);
+      },
+      def: false
+   },
+   'diners': {
+      type: "bits",
+      bits: 1,
+      get: function() {
+         return +getBool('diners');
+      },
+      set: function(v) {
+         setBool('diners', v);
+      },
+      def: false
+   },
+   'amex': {
+      type: "bits",
+      bits: 1,
+      get: function() {
+         return +getBool('amex');
+      },
+      set: function(v) {
+         setBool('amex', v);
+      },
+      def: false
+   },
+   'jcb': {
+      type: "bits",
+      bits: 1,
+      get: function() {
+         return +getBool('jcb');
+      },
+      set: function(v) {
+         setBool('jcb', v);
+      },
+      def: false
+   },
+   'unionpay': {
+      type: "bits",
+      bits: 1,
+      get: function() {
+         return +getBool('unionpay');
+      },
+      set: function(v) {
+         setBool('unionpay', v);
+      },
+      def: false
+   },
    'mobilepay': {
       type: "bits",
       bits: 1,
@@ -1539,7 +1580,7 @@ function build(action) {
    var rows = [];
    var dkpoffset = 0;
 
-   var info_icon = '<p class="tooltip"><img src="/img/tooltip.gif"><span>';
+   var info_icon = '<p class="tooltip"><img src="/assets/img/tooltip.gif"><span>';
    var info_icon_end = '</span></p>';
 
    for (k in psps) {
@@ -1555,6 +1596,10 @@ function build(action) {
          if (psps[k].cards.indexOf('dankort') < 0 || (psps[k].acquirers.indexOf('nets') < 0 && !psps[k].is_acquirer)) {
             continue;
          }
+      }
+
+      if (forbrugsforeningen) {
+         console.log("forbrugsforeningen");
       }
 
       if (!use_dankort && !use_visamc) {
@@ -1655,8 +1700,8 @@ function build(action) {
       // === Note that percentage of transactions that are done with Mobilepay
       // === is unknown. Thus only the monthly fee has been added.
       if (mobilepay) {
-         i_fixedmonth['MobilePay'] = new Currency(49, 'DKK');
-         i_totalmonth['MobilePay'] = new Currency(49, 'DKK');
+         i_fixedmonth.MobilePay = new Currency(49, 'DKK');
+         i_totalmonth.MobilePay = new Currency(49, 'DKK');
       }
 
       var l;
@@ -1696,7 +1741,7 @@ function build(action) {
       for (l in n_cards) {
          logo = cards[n_cards[l]].logo;
          name = cards[n_cards[l]].name;
-         h_cards += '<img src="/img/cards/' + logo + '" alt="' + name +
+         h_cards += '<img src="/assets/img/cards/' + logo + '" alt="' + name +
             '" title="' + name + '" />';
       }
 
@@ -1705,7 +1750,7 @@ function build(action) {
          logo = acqs[n_acqs[l]].logo;
          name = acqs[n_acqs[l]].name;
          link = acqs[n_acqs[l]].link;
-         h_acqs.push('<a target="_blank" href="' + link + '"><img src="/img/acquirer/' + logo + '" alt="' + name +
+         h_acqs.push('<a target="_blank" href="' + link + '"><img src="/assets/img/acquirer/' + logo + '" alt="' + name +
             '" title="' + name + '" /></a>');
       }
       h_acqs = h_acqs.join("");
@@ -1743,7 +1788,7 @@ function build(action) {
       var totalmonth_cell = row.insertCell(5);
       var trans_cell = row.insertCell(6);
 
-      logo_cell.innerHTML = '<a target="_blank" href=' + psps[k].link + '><img src="/img/psp/' + psps[k].logo + '" alt="' + psps[k].name +
+      logo_cell.innerHTML = '<a target="_blank" href=' + psps[k].link + '><img src="/assets/img/psp/' + psps[k].logo + '" alt="' + psps[k].name +
          '" title="' + psps[k].name + '" />' + psps[k].name +
          '</a>';
       acq_cell.innerHTML = h_acqs;
@@ -1823,7 +1868,7 @@ function save_url() {
       var obj = opts[i],
          dirty_bits_current = 0;
       if (obj.dirty_bits) {
-         dirty_bits_current = get_bit_range(dirty_bits_value, dirty_bits_position, dirty_bits_position + obj.dirty_bits - 1, opts["dirty_bits"].bits);
+         dirty_bits_current = get_bit_range(dirty_bits_value, dirty_bits_position, dirty_bits_position + obj.dirty_bits - 1, opts.dirty_bits.bits);
          dirty_bits_position += obj.dirty_bits;
       }
       if (obj.inactive === true || (obj.dirty_bits && dirty_bits_current === 0)) {
@@ -1897,7 +1942,7 @@ function load_url(url_query) {
          continue;
       }
       if (obj.dirty_bits) {
-         dirty_bits_current = get_bit_range(dirty_bits_value, dirty_bits_position, dirty_bits_position + obj.dirty_bits - 1, opts["dirty_bits"].bits);
+         dirty_bits_current = get_bit_range(dirty_bits_value, dirty_bits_position, dirty_bits_position + obj.dirty_bits - 1, opts.dirty_bits.bits);
          dirty_bits_position += obj.dirty_bits;
          if (dirty_bits_current === 0) {
             continue;
@@ -1995,14 +2040,12 @@ function setAcquirerPanel() {
       C('acquirer_description')[0].style.display = 'block';
       C('acquirer_options')[0].style.display = 'none';
    }
-
 }
-
 
 function fmtDate(d) { // force 2 digits
    var months = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august",
       "september", "oktober", "november", "december"
-   ]
+   ];
    return d.getDate() + ". " + months[d.getMonth()] + " " + d.getFullYear();
 
 }
@@ -2025,3 +2068,5 @@ function updateCommitDate() {
    req.open("GET", apiurl, true);
    req.send();
 }
+
+build('init');
