@@ -30,11 +30,12 @@ var paths = {
    rebuild: ['_site/kortgebyr.js', '_site/global.css']
 };
 
-// Options
-var nunjucksOpts = {
-   searchPaths: ['_site/']
-   // grunt -> options: { data: grunt.file.readJSON('i18n/da.json') },
-};
+var monthNames = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december"];
+var datetime = new Date();
+var day = datetime.getDate();
+var month = datetime.getMonth();
+var year = datetime.getFullYear();
+var lastUpdate = day + ". " + monthNames[month] + " " + year;
 
 var uglifyOpts = {
    mangle: {
@@ -96,7 +97,7 @@ gulp.task('less', function() {
 // Nunjucks -> HTML.
 gulp.task('html', function() {
    return gulp.src(paths.html)
-      .pipe(nunjucks(nunjucksOpts))
+      .pipe(nunjucks({searchPaths: ['_site/'], locals: { lastUpdate: lastUpdate }}))
       .pipe(htmlmin(htmlminOpts))
       .on('error', errorHandler)
       .pipe(gulp.dest(paths.dest));

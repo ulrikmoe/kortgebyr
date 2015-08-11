@@ -151,39 +151,39 @@ function Options(n, avgvalue, antifraud, visasecure, recurring, multiacquirer, m
 var cards = {
    "dankort": {
       name: "Dankort",
-      logo: "dankort.svg"
+      logo: "dankort.svgz"
    },
    "visa": {
       name: "Visa",
-      logo: "visa.svg"
+      logo: "visa.svgz"
    },
    "mastercard": {
       name: "MasterCard",
-      logo: "mastercard.svg"
+      logo: "mastercard.svgz"
    },
    "maestro": {
       name: "Maestro",
-      logo: "maestro.svg"
+      logo: "maestro.svgz"
    },
    "diners": {
       name: "Diners",
-      logo: "diners.svg"
+      logo: "diners.svgz"
    },
    "amex": {
       name: "American Express",
-      logo: "amex.svg"
+      logo: "amex.svgz"
    },
    "jcb": {
       name: "JCB",
-      logo: "jcb.svg"
+      logo: "jcb.svgz"
    },
    "unionpay": {
       name: "UnionPay",
-      logo: "unionpay.svg"
+      logo: "unionpay.svgz"
    },
    "forbrugsforeningen": {
       name: "Forbrugsforeningen",
-      logo: "forbrugsforeningen.svg"
+      logo: "forbrugsforeningen.svgz"
    }
 };
 
@@ -298,7 +298,7 @@ var acqs = { // alfabetisk rækkefølge
    },
    "clearhaus": {
       name: "Clearhaus",
-      logo: "clearhaus.svg",
+      logo: "clearhaus.svgz",
       link: "https://www.clearhaus.com",
       cards: ["visa", "mastercard", "maestro"],
       fee_setup: new Currency(0, 'DKK'),
@@ -1535,7 +1535,6 @@ function build(action) {
       init_defaults();
       init_dirty_bits();
       load_url(location.search);
-      updateCommitDate();
    }
 
    var counter = 0;
@@ -2064,25 +2063,6 @@ function fmtDate(d) { // force 2 digits
    ];
    return d.getDate() + ". " + months[d.getMonth()] + " " + d.getFullYear();
 
-}
-
-function updateCommitDate() {
-   var linkurl = "https://github.com/ulrikmoe/kortgebyr";
-   var apiurl = "https://api.github.com/repos/ulrikmoe/kortgebyr/commits/master";
-   var req = new XMLHttpRequest();
-   req.onreadystatechange = function() {
-      if (req.readyState === 4 && req.status == 200) {
-         var obj = JSON.parse(req.responseText);
-         if (!obj  || !obj.commit || !obj.commit.committer ||
-            !obj.commit.committer.date) return;
-         var d = new Date(Date.parse(obj.commit.committer.date));
-         document.getElementsByClassName("lastUpdate")[0].innerHTML =
-            "<a href='" + linkurl + "/commits/master'>Opdateret d. " + fmtDate(d) + "</a>";
-
-      }
-   };
-   req.open("GET", apiurl, true);
-   req.send();
 }
 
 build('init');

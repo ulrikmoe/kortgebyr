@@ -11,29 +11,11 @@
 
 @font-face {
    font-family: 'SSP';
-   font-weight: 400;
-   font-style: italic;
-   src:
-      url("/assets/fonts/SSP/italic.woff2") format('woff2'),
-      url("/assets/fonts/SSP/italic.woff") format('woff');
-}
-
-@font-face {
-   font-family: 'SSP';
    font-weight: 600;
    font-style: normal;
    src:
       url("/assets/fonts/SSP/semibold.woff2") format('woff2'),
       url("/assets/fonts/SSP/semibold.woff") format('woff');
-}
-
-@font-face {
-	font-family: 'SSP';
-	font-weight: 700;
-   font-style: normal;
-   src:
-      url("/assets/fonts/SSP/bold.woff2") format('woff2'),
-      url("/assets/fonts/SSP/bold.woff") format('woff');
 }
 
 /**
@@ -79,7 +61,6 @@ a { background: transparent; } /* 1 */
 ul, ol { list-style: none; }
 img { box-sizing: content-box; border:0px; } /* 2 */
 a:active, a:hover { outline: 0; } /* 3 */
-b, strong { font-weight: bold; } /* 4 */
 input, button, select, textarea { font-family: inherit; color: inherit; } /* 5 */
 ::-moz-selection { background: #b3d4fc; text-shadow: none; }
 ::selection { background: #b3d4fc; text-shadow: none; }
@@ -152,30 +133,9 @@ input[type="radio"] {
   padding: 0; /* 2 */
 }
 
-/**
- * Fix the cursor style for Chrome's increment/decrement buttons. For certain
- * `font-size` values of the `input`, it causes the cursor style of the
- * decrement button to change from `default` to `text`.
- */
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  height: auto;
-}
-
-/**
- * Re-set default cursor for disabled elements.
- */
-
-button[disabled], html input[disabled] { cursor: default; }
 
 a {
    color: #36b;
-	-webkit-transition: all 0.1s ease-in;
-	-moz-transition: all 0.1s ease-in;
-	-ms-transition: all 0.1s ease-in;
-	-o-transition: all 0.1s ease-in;
-	transition: all 0.1s ease-in;
 	text-decoration: none
 }
 
@@ -210,6 +170,7 @@ nav {
 		margin-left: 20px;
 		color: #204499;
 		font-size:20px;
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
 		font-weight:bold;
 		text-shadow: #fff 0px 1px 1px;
 		-webkit-font-smoothing: antialiased;
@@ -335,6 +296,7 @@ nav {
 	h2 {
 		font-size: 24px;
 		color: #444;
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-font-smoothing: antialiased;
 		-ms-font-smoothing: antialiased;
@@ -566,23 +528,4 @@ footer {
 	color: #777;
 	line-height: 27px;
 	font-size: 14px;
-
-	.social {
-			position: relative;
-			padding: 0px 0 10px;
-			height: 48px;
-			text-align: center;
-
-			span {
-				font-size: 1px;
-				display: inline-block;
-				vertical-align: baseline !important;
-			}
-
-			.g-plusone { width: 60px }
-			.twitter { width: 100px; }
-			.linkedin { width: 64px; }
-			.fb-share-button { width:auto; margin-right: 23px }
-	}
-
 }
