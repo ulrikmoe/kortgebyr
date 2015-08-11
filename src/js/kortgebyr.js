@@ -335,7 +335,7 @@ var psps = { // alfabetisk rækkefølge
       link: "http://www.certitrade.net/kortbetalning.php",
       is_acquirer: false,
       acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
-      cards: ["visa", "mastercard", "maestro"],
+      cards: ["visa", "mastercard", "maestro", "diners", "amex"],
       costfn: function(o) {
          if (o.antifraud || o.recurring || o.multiacquirer || o.mobilepay) {
             return null;
@@ -353,7 +353,7 @@ var psps = { // alfabetisk rækkefølge
       link: "https://www.checkout.com",
       is_acquirer: true,
       acquirers: [],
-      cards: ["visa", "mastercard", "maestro", "diners"],
+      cards: ["visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"],
       costfn: function(o) {
          if (o.multiacquirer || o.mobilepay) {
             return null;
@@ -371,7 +371,7 @@ var psps = { // alfabetisk rækkefølge
       link: "http://www.dandomain.dk/e-handel/betalingssystem/overblik",
       is_acquirer: false,
       acquirers: ["nets", "teller"],
-      cards: ["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen"],
+      cards: ["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen", "diners", "jcb", "amex", "unionpay"],
       costfn: function(o) {
          if (o.multiacquirer || o.mobilepay) {
             return null;
@@ -422,7 +422,7 @@ var psps = { // alfabetisk rækkefølge
       link: "http://dibs.dk",
       is_acquirer: false,
       acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "elavon"],
-      cards: ["dankort", "visa", "mastercard", "maestro", "diners", "amex"],
+      cards: ["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "diners"],
       costfn: function(o) {
          if (o.antifraud || o.recurring || o.multiacquirer) {
             return null;
@@ -440,7 +440,7 @@ var psps = { // alfabetisk rækkefølge
       link: "http://dibs.dk",
       is_acquirer: false,
       acquirers: ["nets", "euroline", "teller", "swedbank", "valitor", "handelsbanken", "elavon"],
-      cards: ["dankort", "visa", "mastercard", "maestro", "diners", "amex", "forbrugsforeningen"],
+      cards: ["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "diners"],
       costfn: function(o) {
          return {
             setup: new Currency(10995, 'DKK'),
@@ -480,7 +480,7 @@ var psps = { // alfabetisk rækkefølge
       link: "http://epay.dk",
       is_acquirer: false,
       acquirers: ["nets", "teller"],
-      cards: ["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen"],
+      cards: ["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen"],
       costfn: function(o) {
          if (o.recurring || o.multiacquirer) {
             return null;
@@ -505,7 +505,7 @@ var psps = { // alfabetisk rækkefølge
       link: "http://epay.dk",
       is_acquirer: false,
       acquirers: ["nets", "euroline", "teller", "swedbank", "handelsbanken", "valitor", "elavon", "clearhaus"],
-      cards: ["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen"],
+      cards: ["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen"],
       costfn: function(o) {
 
          var fee = 0.25,
@@ -551,7 +551,7 @@ var psps = { // alfabetisk rækkefølge
       link: "https://www.terminalshop.dk/Netaxept/",
       is_acquirer: false,
       acquirers: ["nets", "teller", "elavon", "euroline", "swedbank", "nordea"],
-      cards: ["dankort", "visa", "mastercard"],
+      cards: ["dankort", "visa", "mastercard", "diners", "jcb", "amex", "unionpay"],
       costfn: function(o) {
          if (o.recurring || o.multiacquirer || o.mobilepay) {
             return null;
@@ -570,7 +570,7 @@ var psps = { // alfabetisk rækkefølge
       link: "https://www.terminalshop.dk/Netaxept/",
       is_acquirer: false,
       acquirers: ["nets", "teller", "elavon", "euroline", "swedbank", "nordea"],
-      cards: ["dankort", "visa", "mastercard"],
+      cards: ["dankort", "visa", "mastercard", "diners", "jcb", "amex", "unionpay"],
       costfn: function(o) {
          if (o.multiacquirer) {
             return null;
@@ -594,7 +594,7 @@ var psps = { // alfabetisk rækkefølge
       link: "http://payer.se/betallosning/",
       is_acquirer: false,
       acquirers: ["handelsbanken", "euroline", "swedbank", "nordea"],
-      cards: ["visa", "mastercard", "maestro"],
+      cards: ["visa", "mastercard", "maestro", "diners", "amex"],
       costfn: function(o) {
          if (o.antifraud || o.recurring || o.multiacquirer || o.mobilepay) {
             return null;
@@ -613,7 +613,7 @@ var psps = { // alfabetisk rækkefølge
       link: "https://paymill.com",
       is_acquirer: true,
       acquirers: [],
-      cards: ["visa", "mastercard", "maestro"],
+      cards: ["visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"],
       costfn: function(o) {
 
          if (o.antifraud || o.multiacquirer || o.mobilepay) {
@@ -633,7 +633,7 @@ var psps = { // alfabetisk rækkefølge
       link: "https://paypal.com",
       is_acquirer: true,
       acquirers: [],
-      cards: ["visa", "mastercard", "maestro"],
+      cards: ["visa", "mastercard", "maestro", "diners", "jcb", "amex"],
       costfn: function(o) {
          if (o.antifraud || o.multiacquirer || o.mobilepay) {
             return null;
@@ -707,7 +707,7 @@ var psps = { // alfabetisk rækkefølge
       link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
       is_acquirer: false,
       acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
-      cards: ["visa", "mastercard", "diners", "amex"],
+      cards: ["visa", "mastercard", "diners", "jcb", "amex"],
       costfn: function(o) {
          if (o.recurring || o.multiacquirer || o.multiacquirer || o.mobilepay) {
             return null;
@@ -726,7 +726,7 @@ var psps = { // alfabetisk rækkefølge
       link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
       is_acquirer: false,
       acquirers: ["handelsbanken", "nordea", "euroline", "swedbank"],
-      cards: ["visa", "mastercard", "diners", "amex"],
+      cards: ["visa", "mastercard", "diners", "jcb", "amex"],
       costfn: function(o) {
          if (o.recurring || o.multiacquirer || o.mobilepay) {
             return null;
@@ -764,7 +764,7 @@ var psps = { // alfabetisk rækkefølge
       link: "https://stripe.com",
       is_acquirer: true,
       acquirers: [],
-      cards: ["visa", "mastercard", "maestro"],
+      cards: ["visa", "mastercard", "maestro", "amex"],
       costfn: function(o) {
          if (o.multiacquirer || o.mobilepay) {
             return null;
@@ -783,7 +783,7 @@ var psps = { // alfabetisk rækkefølge
       link: "https://quickpay.net",
       is_acquirer: false,
       acquirers: ["nets", "teller", "clearhaus"],
-      cards: ["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen"],
+      cards: ["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen"],
       costfn: function(o) {
          return {
             setup: new Currency(0, 'DKK'),
@@ -798,7 +798,7 @@ var psps = { // alfabetisk rækkefølge
       link: "https://quickpay.net",
       is_acquirer: false,
       acquirers: ["nets", "teller", "clearhaus"],
-      cards: ["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen"],
+      cards: ["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen"],
       costfn: function(o) {
 
          var fee = 0.25;
@@ -816,7 +816,7 @@ var psps = { // alfabetisk rækkefølge
       link: "http://www.scannet.dk/hosting/betalingsloesning/",
       is_acquirer: false,
       acquirers: ["nets", "teller"],
-      cards: ["dankort", "visa", "mastercard", "maestro"],
+      cards: ["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"],
       costfn: function(o) {
          if (o.antifraud || o.recurring || o.visasecure || o.multiacquirer || o.mobilepay) {
             return null;
@@ -835,7 +835,7 @@ var psps = { // alfabetisk rækkefølge
       link: "https://skrill.com",
       is_acquirer: true,
       acquirers: [],
-      cards: ["visa", "mastercard", "maestro"],
+      cards: ["visa", "mastercard", "maestro", "diners", "jcb", "amex"],
       costfn: function(o) {
          if (o.antifraud || o.multiacquirer || o.mobilepay) {
             return null;
@@ -857,7 +857,7 @@ var psps = { // alfabetisk rækkefølge
       link: "https://www.wannafind.dk/betalingsgateway/",
       is_acquirer: false,
       acquirers: ["nets", "teller"],
-      cards: ["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen"],
+      cards: ["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen", "diners", "jcb", "amex", "unionpay"],
       costfn: function(o) {
          if (o.multiacquirer || o.mobilepay) {
             return null;
@@ -1587,7 +1587,10 @@ function build(action) {
       var use_dankort = newstate.dankort;
       var use_visamc = newstate.visa_mastercard;
       var forbrugsforeningen = newstate.forbrugsforeningen;
-      var diners_amex_jcb = newstate.diners_amex_jcb;
+      var diners = newstate.diners;
+      var amex = newstate.amex;
+      var jcb = newstate.jcb;
+      var unionpay = newstate.unionpay;
       var mobilepay = newstate.mobilepay;
       var paii = newstate.paii;
 
@@ -1600,6 +1603,19 @@ function build(action) {
 
       if (forbrugsforeningen && psps[k].cards.indexOf('forbrugsforeningen') < 0) {
          continue;
+      }
+      if (diners && psps[k].cards.indexOf('diners') < 0) {
+         continue;
+      }
+      if (amex && psps[k].cards.indexOf('amex') < 0) {
+         continue;
+      }
+      if (jcb && psps[k].cards.indexOf('jcb') < 0) {
+         continue;
+      }
+      
+      if (unionpay && psps[k].cards.indexOf('unionpay') < 0) {
+          continue;
       }
 
       if (!use_dankort && !use_visamc) {
