@@ -19,10 +19,10 @@
 
 var currency_value = {
    'DKK': 1,
-   'SEK': 0.793,
-   'NOK': 0.839,
-   'EUR': 7.463,
-   'USD': 6.672
+   'SEK': 0.779,
+   'NOK': 0.822,
+   'EUR': 7.462,
+   'USD': 6.750
 };
 
 var currency_map = {
@@ -151,39 +151,39 @@ function Options(n, avgvalue, antifraud, visasecure, recurring, multiacquirer, m
 var cards = {
    "dankort": {
       name: "Dankort",
-      logo: "dankort.png"
+      logo: "dankort.svg"
    },
    "visa": {
       name: "Visa",
-      logo: "visa.png"
+      logo: "visa.svg"
    },
    "mastercard": {
       name: "MasterCard",
-      logo: "master.png"
+      logo: "mastercard.svg"
    },
    "maestro": {
       name: "Maestro",
-      logo: "maestro.png"
+      logo: "maestro.svg"
    },
    "diners": {
       name: "Diners",
-      logo: "diners.png"
+      logo: "diners.svg"
    },
    "amex": {
       name: "American Express",
-      logo: "amex.png"
+      logo: "amex.svg"
    },
    "jcb": {
       name: "JCB",
-      logo: "jcb.png"
+      logo: "jcb.svg"
    },
    "unionpay": {
       name: "UnionPay",
-      logo: "unionpay.png"
+      logo: "unionpay.svg"
    },
    "forbrugsforeningen": {
       name: "Forbrugsforeningen",
-      logo: "forbrugsforeningen.png"
+      logo: "forbrugsforeningen.svg"
    }
 };
 
@@ -1613,7 +1613,7 @@ function build(action) {
       if (jcb && psps[k].cards.indexOf('jcb') < 0) {
          continue;
       }
-      
+
       if (unionpay && psps[k].cards.indexOf('unionpay') < 0) {
           continue;
       }
@@ -1757,7 +1757,7 @@ function build(action) {
       for (l in n_cards) {
          logo = cards[n_cards[l]].logo;
          name = cards[n_cards[l]].name;
-         h_cards += '<img src="/assets/img/cards/' + logo + '" alt="' + name +
+         h_cards += '<img class="cards" src="/assets/img/cards/' + logo + '" alt="' + name +
             '" title="' + name + '" />';
       }
 

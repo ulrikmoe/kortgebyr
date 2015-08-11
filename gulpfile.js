@@ -18,7 +18,7 @@ var minifyCSS = require('gulp-minify-css');
 var runSequence = require('run-sequence');
 
 // Constants
-var compress = false;
+var compress = true;
 var localize = false;
 var i18n = ['da', 'sv', 'no', 'fi', 'ee', 'lv', 'lt'];
 var paths = {
@@ -38,8 +38,8 @@ var nunjucksOpts = {
 
 var uglifyOpts = {
    mangle: {
-      sort: compress,
-      toplevel: compress // shorten function names etc.
+      sort: compress
+      //toplevel: compress // shorten function names etc.
    },
    output: {
       beautify: !compress,
