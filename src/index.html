@@ -37,7 +37,14 @@
             <h2>Indløsning</h2>
             <div class="acquirer_field">
                <select id="acquirer" onchange="build();">
-                  <option>Automatisk</option>
+                  <option value="auto">Automatisk</option>
+                  <option value="teller">Teller</option>
+                  <option value="handelsbanken">Handelsbanken</option>
+                  <option value="nordea">Nordea</option>
+                  <option value="swedbank">Swedbank</option>
+                  <option value="valitor">Valitor</option>
+                  <option value="elavon">Elavon</option>
+                  <option value="clearhaus">Clearhaus</option>
                </select>
             </div>
             <div class="acquirer_options">
@@ -66,19 +73,19 @@
          <section style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
             <p>
                <label>
-                  <input autocomplete="off" type="text" class="field" id="transactions" value="250" onkeyup="build('keyup');" onblur="save_url();">Transaktioner pr. måned</label>
+                  <input autocomplete="off" type="text" class="field" id="transactions" value="500" onkeyup="build('keyup');" onblur="save_url();">Transaktioner pr. måned</label>
             </p>
             <p>
                <label>
-                  <input autocomplete="off" type="text" class="field" id="average_value" value="500" onkeyup="build('keyup');" onblur="save_url();">Gennemsnits ordreværdi:</label>
+                  <input autocomplete="off" type="text" class="field" id="avgvalue" value="450 DKK" onkeyup="build('keyup');" onblur="save_url();">Gennemsnits ordreværdi:</label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" id="visasecure" onchange="build();" /> 3D-Secure</label>
+                  <input checked="" type="checkbox" id="visasecure" onchange="build();" /> 3D-Secure</label>
             </p>
             <p style="display:none">
                <label>
-                  <input type="checkbox" id="fraud_fighter" onchange="build();" /> Svindelkontrol</label>
+                  <input type="checkbox" id="antifraud" onchange="build();" /> Svindelkontrol</label>
             </p>
             <p>
                <label>
@@ -92,27 +99,27 @@
          <section style="width:19%">
             <p>
                <label>
-                  <input type="checkbox" checked="" id="dankort" onchange="build();" /> Dankort
+                  <input checked="" type="checkbox" class="ocards" id="dankort" onchange="build();" /> Dankort
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" checked="" id="visa_mastercard" onchange="build();" /> Visa / MasterCard
+                  <input checked="" type="checkbox" class="ocards" id="visa" onchange="build();" /> Visa / MasterCard
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" id="forbrugsforeningen" onchange="build();" /> Forbrugsforening
+                  <input type="checkbox" class="ocards" id="forbrugsforeningen" onchange="build();" /> Forbrugsforening
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" id="diners" onchange="build();" /> Diners
+                  <input type="checkbox" class="ocards" id="diners" onchange="build();" /> Diners
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" id="amex" onchange="build();" /> American Express
+                  <input type="checkbox" class="ocards" id="amex" onchange="build();" /> American Express
                </label>
             </p>
 
@@ -122,39 +129,35 @@
 
             <p>
                <label>
-                  <input type="checkbox" id="jcb" onchange="build();" /> JCB
+                  <input type="checkbox" class="ocards" id="jcb" onchange="build();" /> JCB
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" id="unionpay" onchange="build();" /> UnionPay
+                  <input type="checkbox" class="ocards" id="unionpay" onchange="build();" /> UnionPay
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" id="mobilepay" onchange="build();" /> MobilePay
+                  <input type="checkbox" class="ocards" id="mobilepay" onchange="build();" /> MobilePay
                </label>
             </p>
          </section>
       </div>
    </header>
    <main role="main">
-      <table class="table container">
+      <table id="table" class="table container">
          <thead>
             <tr>
                <th style="text-align:left; padding-left:12px">Betalingsløsning</th>
                <th>Indløsere</th>
                <th>Betalingsmuligheder</th>
                <th>Oprettelse</th>
-               <th>Abonnement
-                  <br />pr. måned</th>
-               <th>Samlet
-                  <br />pr. måned</th>
-               <th>Samlet pr.
-                  <br />transaktion</th>
+               <th>Samlet <br />pr. måned</th>
+               <th>Samlet pr. <br />transaktion</th>
             </tr>
          </thead>
-         <tbody id="data"></tbody>
+         <tbody id="tbody"></tbody>
       </table>
    </main>
    <footer>
@@ -164,6 +167,7 @@
    </footer>
 
    <script>
+      {% include "data.js" %}
       {% include "kortgebyr.js" %}
    </script>
 

@@ -16,18 +16,19 @@ var del = require('del');
 var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css');
 var runSequence = require('run-sequence');
+var connect = require('gulp-connect');
 
 // Constants
-var compress = true;
+var compress = false;
 var localize = false;
 var i18n = ['da', 'sv', 'no', 'fi', 'ee', 'lv', 'lt'];
 var paths = {
    dest: '_site',
-   html: 'src/index.html',
-   scripts: 'src/js/kortgebyr.js',
+   html: 'src/*.html',
+   scripts: 'src/js/*.js',
    less: 'src/less/global.less',
    assets: 'src/assets/**',
-   rebuild: ['_site/kortgebyr.js', '_site/global.css']
+   rebuild: ['_site/kortgebyr.js', '_site/data.js', '_site/global.css']
 };
 
 var monthNames = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december"];
@@ -57,6 +58,15 @@ var htmlminOpts = {
    removeEmptyElements: false
 };
 
+var gzip = function (req, res, next) {
+   var url = req.url;
+   var ext = url.substr(url.lastIndexOf('.')+1);
+   if (ext == "svgz" || ext == "gz") {
+      res.setHeader('Content-Encoding', 'gzip');
+   }
+   next();
+};
+
 // Delete
 gulp.task('clean', function(callback) {
    del([paths.dest], callback);
@@ -64,23 +74,26 @@ gulp.task('clean', function(callback) {
 
 // Webserver at port 9000
 gulp.task('serve', ['build'], function() {
-   var server = gls.static(paths.dest, 9000);
-   server.start();
-
-   gulp.watch([paths.dest + '/index.html'], function() {
-      server.notify.apply(server, arguments);
+   connect.server({
+      root: paths.dest,
+      livereload: true,
+      port: 9000,
+      middleware: function () {
+         return [gzip];
+      }
    });
 });
 
 // Copy /assets/ folder to _site/
 gulp.task('assets', function() {
-   return gulp.src(paths.assets).pipe(gulp.dest(paths.dest + '/assets/'));
+   return gulp.src(paths.assets)
+      .pipe(gulp.dest(paths.dest + '/assets/'));
 });
 
 // Minify JavaScript and move to _site/
 gulp.task('scripts', function() {
    return gulp.src(paths.scripts)
-      .pipe(uglify(uglifyOpts))
+      //.pipe(uglify(uglifyOpts))
       .on('error', errorHandler)
       .pipe(gulp.dest(paths.dest));
 });
