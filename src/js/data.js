@@ -161,7 +161,7 @@
     },
     "payza": {
        name: "Payza",
-       logo: "payza.png",
+       logo: "payza.svg",
        link: "https://payza.com"
     },
     "verifone": {
@@ -206,7 +206,7 @@
     },
     "2checkout": {
        name: "2checkout",
-       logo: "2checkout.png",
+       logo: "2checkout.svg",
        link: "https://www.2checkout.com"
     },
     "paylike": {
