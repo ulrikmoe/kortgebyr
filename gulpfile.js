@@ -17,6 +17,8 @@ var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css');
 var runSequence = require('run-sequence');
 var connect = require('gulp-connect');
+var gzip = require('gulp-gzip');
+
 
 // Constants
 var compress = false;
@@ -27,7 +29,8 @@ var paths = {
    html: 'src/*.html',
    scripts: 'src/js/*.js',
    less: 'src/less/global.less',
-   assets: 'src/assets/**',
+   assets: ['src/assets/**', '!src/assets/img/{psp,psp/**.svg}'],
+   svgs: 'src/assets/img/psp/**.svg',
    rebuild: ['_site/kortgebyr.js', '_site/data.js', '_site/global.css']
 };
 
@@ -58,10 +61,10 @@ var htmlminOpts = {
    removeEmptyElements: false
 };
 
-var gzip = function (req, res, next) {
+var middleman = function (req, res, next) {
    var url = req.url;
    var ext = url.substr(url.lastIndexOf('.')+1);
-   if (ext == "svgz" || ext == "gz") {
+   if (ext == "svg" || ext == "gz" || ext == "svgz") {
       res.setHeader('Content-Encoding', 'gzip');
    }
    next();
@@ -79,7 +82,7 @@ gulp.task('serve', ['build'], function() {
       livereload: true,
       port: 9000,
       middleware: function () {
-         return [gzip];
+         return [middleman];
       }
    });
 });
@@ -89,6 +92,18 @@ gulp.task('assets', function() {
    return gulp.src(paths.assets)
       .pipe(gulp.dest(paths.dest + '/assets/'));
 });
+
+// Copy and gzip all psp logos
+gulp.task('svgz', function() {
+   return gulp.src(paths.svgs)
+      .pipe(gzip({
+         gzipOptions: { level: 9 },
+         append: false
+      }))
+      .on('error', errorHandler)
+      .pipe(gulp.dest(paths.dest + '/assets/img/psp/'));
+});
+
 
 // Minify JavaScript and move to _site/
 gulp.task('scripts', function() {
@@ -113,7 +128,8 @@ gulp.task('html', function() {
       .pipe(nunjucks({searchPaths: ['_site/'], locals: { lastUpdate: lastUpdate }}))
       .pipe(htmlmin(htmlminOpts))
       .on('error', errorHandler)
-      .pipe(gulp.dest(paths.dest));
+      .pipe(gulp.dest(paths.dest))
+      .pipe(connect.reload());
 });
 
 // Watch for changes.
@@ -126,7 +142,7 @@ gulp.task('watch', ['build'], function() {
 });
 
 gulp.task('build', function(callback) {
-   runSequence('clean', ['assets', 'scripts', 'less'], 'html', callback);
+   runSequence('clean', ['assets', 'scripts', 'less'], 'svgz', 'html', callback);
 });
 
 gulp.task('default', ['build', 'serve', 'watch']);

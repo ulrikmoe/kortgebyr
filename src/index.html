@@ -70,7 +70,7 @@
             </div>
             <div class="acquirer_description">Priser tager udgangspunkt i listepriser eller <a href="#">stikprøver</a>. Vi anbefaler at du starter med at læse vores <a href="#">forklaring her</a>.</div>
          </section>
-         <section style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
+         <section class="menulist" style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
             <p>
                <label>
                   <input autocomplete="off" type="text" class="field" id="transactions" value="500" onkeyup="build('keyup');" onblur="save_url();">Transaktioner pr. måned</label>
@@ -96,7 +96,7 @@
                   <input type="checkbox" id="multiacquirer" onchange="build();" /> Multi-indløser</label>
             </p>
          </section>
-         <section style="width:19%">
+         <section class="menulist" style="width:19%">
             <p>
                <label>
                   <input checked="" type="checkbox" class="ocards" id="dankort" onchange="build();" /> Dankort
@@ -125,7 +125,8 @@
 
          </section>
 
-         <section style="width: 17%; border-left:0; padding-left:0; padding-right:0">
+
+         <section class="menulist" style="width: 17%; border-left:0; padding-left:0; padding-right:0">
 
             <p>
                <label>
@@ -142,6 +143,16 @@
                   <input type="checkbox" class="ocards" id="mobilepay" onchange="build();" /> MobilePay
                </label>
             </p>
+            <p>
+               <label>
+                  <input type="checkbox" class="ocards" id="applepay" onchange="build();" /> Apple Pay
+               </label>
+            </p>
+            <p>
+               <label>
+                  <input type="checkbox" class="ocards" id="swipp" onchange="build();" /> Swipp
+               </label>
+            </p>
          </section>
       </div>
    </header>
@@ -153,8 +164,8 @@
                <th>Indløsere</th>
                <th>Betalingsmuligheder</th>
                <th>Oprettelse</th>
-               <th>Samlet <br />pr. måned</th>
-               <th>Samlet pr. <br />transaktion</th>
+               <th>Samlet <br>pr. måned</th>
+               <th>Samlet pr. <br>transaktion</th>
             </tr>
          </thead>
          <tbody id="tbody"></tbody>
@@ -162,9 +173,52 @@
    </main>
    <footer>
       Kortgebyr er udviklet af <a href="https://twitter.com/ulrikmoe">Ulrik Moe</a>, <a href="https://github.com/cblach">Christian Blach</a> og <a href="https://github.com/zhasha">Joakim Sindholt</a> som et værktøj
-      <br />til at sammenligne betalingsløsninger. Kortgebyr er uafhængig, non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (
-      <small><a href="https://github.com/ulrikmoe/kortgebyr/blob/master/GPLv3.md">GPLv3</a></small>).
+      <br />til at sammenligne betalingsløsninger. Kortgebyr er uafhængig, non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small><a href="https://github.com/ulrikmoe/kortgebyr/blob/master/GPLv3.md">GPLv3</a></small>).
    </footer>
+
+   <svg style="display:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+      <symbol id="dankortlogo" width="22" viewBox="0 0 70 48">
+         <path d="M59 22l11 15V10M24 8c8.3 0 14.4 2.9 15 11l9-11h22V6c0-3.3-2.7-6-6-6H6C2.7 0 0 2.7 0 6v2h24zM10.2 18.7l-3 9.5h11.9c3.5 0 4.6-1.7 5.4-5 .8-3.2-1.2-4.5-3.6-4.5H10.2zm37.4 20.1L39 26.1c-.2-.3-.6-.2-.7.1C36.4 34.9 31.1 39 21 39H0v3c0 3.3 2.7 6 6 6h58c3.3 0 6-2.7 6-6v-3H48c-.1 0-.3-.1-.4-.2z" fill="#EA292B"/>
+      </symbol>
+
+      <symbol id="visalogo" width="22" viewBox="0 0 70 48">
+         <path fill="#FDFEFF" d="M66 48H4c-2.21 0-4-1.79-4-4V4c0-2.21 1.79-4 4-4h62c2.21 0 4 1.79 4 4v40c0 2.21-1.79 4-4 4z"/><path fill="#005197" d="M25.73 32.34l2.83-16.64h4.54l-2.84 16.64M46.7 16.11c-.9-.34-2.31-.7-4.06-.7-4.48 0-7.64 2.26-7.66 5.49-.03 2.39 2.25 3.72 3.97 4.52 1.76.82 2.36 1.34 2.35 2.06-.01 1.11-1.41 1.62-2.71 1.62-1.81 0-2.78-.25-4.27-.87l-.58-.26-.64 3.73c1.06.46 3.02.87 5.05.89 4.77 0 7.86-2.23 7.9-5.68.02-1.89-1.19-3.33-3.81-4.52-1.58-.77-2.56-1.28-2.55-2.06 0-.69.82-1.43 2.6-1.43 1.48-.02 2.56.3 3.39.64l.41.19.61-3.62M58.33 15.72h-3.5c-1.09 0-1.9.3-2.37 1.38l-6.73 15.24h4.76l.95-2.5c.52 0 5.15.01 5.81.01.14.58.55 2.49.55 2.49H62l-3.67-16.62m-5.59 10.72c.37-.96 1.81-4.65 1.81-4.65-.03.04.37-.96.6-1.59l.31 1.43s.87 3.97 1.05 4.8h-3.77zM21.93 15.72l-4.44 11.34-.47-2.31c-.83-2.66-3.4-5.54-6.28-6.98l4.06 14.55 4.8-.01 7.14-16.6h-4.81"/><path fill="#F4A51D" d="M13.37 15.71H6.06l-.06.34c5.69 1.38 9.45 4.7 11.01 8.7l-1.59-7.64c-.27-1.05-1.07-1.37-2.05-1.4"/><path fill="#0A5395" d="M70 10H0V4c0-2.21 1.79-4 4-4h62c2.21 0 4 1.79 4 4v6z"/><path fill="#F3A527" d="M0 38h70v6c0 2.21-1.79 4-4 4H4c-2.21 0-4-1.79-4-4v-6z"/>
+      </symbol>
+
+      <symbol id="mastercardlogo" width="22" viewBox="0 0 70 48">
+         <path d="M66 48H4c-2.2 0-4-1.8-4-4V4c0-2.2 1.8-4 4-4h62c2.2 0 4 1.8 4 4v40c0 2.2-1.8 4-4 4z" fill="#272D67"/><circle cx="24" cy="24" r="15" fill="#EA2B2C"/><path d="M38.3 25.5H31c.1 1 .3 2 .6 3h6c-.3 1.1-.8 2.1-1.3 3h-3.4c.5.8 1.1 1.7 1.7 2.4C37.3 37 41.5 39 45.9 39 54.3 39 61 32.3 61 24S54.3 9 45.9 9c-4.5 0-8.6 2-11.3 5.1-.7.7-1.2 1.5-1.7 2.4h3.4c.5.9 1 2 1.3 3h-6c-.3 1-.5 2-.6 3h7.3" fill="#FBA81F"/>
+      </symbol>
+
+      <symbol id="maestrologo" width="22" viewBox="0 0 70 48">
+         <path d="M66 48H4c-2.2 0-4-1.8-4-4V4c0-2.2 1.8-4 4-4h62c2.2 0 4 1.8 4 4v40c0 2.2-1.8 4-4 4z" fill="#183059"/><circle cx="24" cy="24" r="15" fill="#0595C3"/><path d="M38.3 25.5H31c.1 1 .3 2 .6 3h6c-.3 1.1-.8 2.1-1.3 3h-3.4c.5.8 1.1 1.7 1.7 2.4C37.3 37 41.5 39 45.9 39 54.3 39 61 32.3 61 24S54.3 9 45.9 9c-4.5 0-8.6 2-11.3 5.1-.7.7-1.2 1.5-1.7 2.4h3.4c.5.9 1 2 1.3 3h-6c-.3 1-.5 2-.6 3h7.3" fill="#D22538"/>
+      </symbol>
+
+      <symbol id="dinerslogo" width="22" viewBox="0 0 70 48">
+         <path d="M66 48H4c-2.2 0-4-1.8-4-4V4c0-2.2 1.8-4 4-4h62c2.2 0 4 1.8 4 4v40c0 2.2-1.8 4-4 4z" fill="#DEE0E1"/><path d="M39.7 43.5h-9.4C19.6 43.5 11 34.9 11 24.2v-.4c0-10.7 8.6-19.3 19.3-19.3h9.4C50.4 4.5 59 13.1 59 23.8v.4c0 10.7-8.6 19.3-19.3 19.3z" fill="#0A5495"/><path d="M31.6 8.2c-8.7 0-15.8 7.1-15.8 15.8s7.1 15.8 15.8 15.8 15.8-7 15.8-15.8c0-8.7-7.1-15.8-15.8-15.8zM20.3 24.1c0-5.1 3.2-9.4 8.2-10.6v21.3c-4.9-1.3-8.2-5.6-8.2-10.7zm13.3 10.6V13.4c5 1.2 8.2 5.5 8.2 10.6s-3.2 9.5-8.2 10.7z" fill="#FFF"/>
+      </symbol>
+
+      <symbol id="amexlogo" width="22" viewBox="0 0 70 48">
+         <path d="M66 48H4c-2.2 0-4-1.8-4-4V4c0-2.2 1.8-4 4-4h62c2.2 0 4 1.8 4 4v40c0 2.2-1.8 4-4 4z" fill="#30ABE2"/><path d="M29.8 26.2l-4-10.7h-5.1v15.4L15 15.5h-4.3L5 31.5h3.4l1.2-3.6h6.5l1.2 3.6h6.6V19.6l4.3 11.9h3l4.4-11.7v11.7h3.2v-16h-5.2c.1 0-3.8 10.7-3.8 10.7zm-16.9-1.8h-2l2-5.6v.2l2 5.4h-2zm46.4-1.2l2.4-3 3.4-4.7H61l-3.7 4.9-3.7-4.9H40.7v15.8h12.5l3.9-5.2 3.8 5.3H65l-3.4-4.9c.1.1-2.3-3.3-2.3-3.3zm-7.8 4.9h-7.4v-3.2h7.2v-3h-7.2V19h7.4l3.7 4.2-3.7 4.9z" fill="#FFF"/>
+      </symbol>
+
+      <symbol id="jcblogo" width="22" viewBox="0 0 70 48">
+         <path d="M66 48H4c-2.2 0-4-1.8-4-4V4c0-2.2 1.8-4 4-4h62c2.2 0 4 1.8 4 4v40c0 2.2-1.8 4-4 4z" fill="#E5E5E5"/><path d="M55.2 44.5H5.9v-29c0-6.7 4.8-12.1 10.6-12.1h47.1v31.4c.1 5.4-3.7 9.7-8.4 9.7z" fill="#FFF"/><path d="M19.7 40.9H9.6V14.3c0-4 4.1-7.2 7.6-7.2h7.6v26.6c0 4-1.6 7.2-5.1 7.2z" fill="#136EB1"/><path d="M37.6 40.9H27.4V14.3c0-4 4.1-7.2 7.6-7.2h7.6v26.6c0 4-1.5 7.2-5 7.2z" fill="#DD2229"/><path d="M55.4 40.9H45.2V14.3c0-4 4.1-7.2 7.6-7.2h7.6v26.6c.1 4-1.5 7.2-5 7.2z" fill="#1B9045"/>
+      </symbol>
+
+      <symbol id="unionpaylogo" width="22" viewBox="0 0 70 48">
+         <path d="M2.8 0C1.3 0 0 1.8 0 4v40c0 2.2 1.3 4 2.8 4H24V0H2.8z" fill="#E9272B"/><path d="M66.5 0H46v48h20.9c1.7 0 3.1-1.8 3.1-4V4c0-2.2-1.8-4-3.5-4z" fill="#0E8A8F"/><path fill="#00589F" d="M23.5 0h23v48h-23z"/><path d="M38.6 31.2H42l1-3.5h-3.4l-1 3.5zm2.7-9.6l-1.2 4.1 3.8-1.2.8-2.9h-3.4m1.7-5.9l-1.1 3.9 3.7-1.1.8-2.9H43m7.6.1l-4.4 15.4h1.2l-.9 3.2h-1.2l-.3 1h-4.2l.3-1h-8.5l.8-2.9h.9l5.3-18.8h4.3l-.4 1.6 2.2-1.2 7.3-.4-1 3.1h-1.4" fill="#FFF"/><path fill="#FFF" d="M52.4 12.6H57v1.8l.8.4h.9l-.8 3h-2.5l-2.9-1.9-.1-3.3M53 26.7h-4.3l.7-2.7h5l.7-2.4h-4.9l.8-3h13.7l-.9 3h-4.5l-.8 2.4h4.6l-.7 2.7h-5l-.9 1.1h2l.7 4 1.7.2-1 3.2h-2.6l-1.1-.5-.8-1.1-.5-3.3-2.3 3.2-3.3 1.9h-3.1l.8-2.9 2.1-.3 3.9-5.5M5.5 19.4H17l-.9 3h-4.6l-.7 2.4h4.7l-.8 3H10l-1.2 4.1 1.6.5 2.3-.4-.9 3.4-6.5-.2-.8-.7-.3-1.3 1.5-5.3H3.1l.8-3.1h2.7l.7-2.4H4.6l.9-3M13.2 14.2h4.7l-.8 3.1h-6.5l-1.5 1-4.1.6.8-2.9 1.7-.2 1.9-3.2H14l-.8 1.6"/><path d="M22.3 19.2l3.5-1.7 3.6-.1.5-1.7h-6.6l-1 3.5zm6.2 1.3h-6.6l-.4 1.4h6.6l.4-1.4M20 12.6h4l-.6 2.1 2.2-1.5 9.4-.7L31.6 23l-1.1 1.1-1.5.5-8.3.1-1.9 7.3.6.3 2.8-.3-.9 3.4-6.6-.4-.7-1 6-21.4" fill="#FFF"/><path fill="#FFF" d="M31.7 25.2l-1.1 3.3-2.2.8-2.2.1v2.1l.2.7.3.2 2.8-.2-.9 3.1-5.8-.4-.5-1.2.2-8.3h3.9v1.7L28 27l.6-1.8h3.1M66.6 12.7l-1.8 3.2-3.2 1.9-2.8-.1.8-2.8 1.2-.1 1.4-2.1h4.4"/>
+      </symbol>
+
+      <symbol id="forbrugsforeningenlogo" width="22" viewBox="0 0 70 48">
+         <path d="M26.7 48h.2-.2z" fill="#6E9ED4"/><path d="M35.6 47.5c14.6-.2 20.2-4.4 21.3-18.4.2-3.2.2-5.3.2-5.3s0-2.1-.2-5.3C55.8 4.5 50.2.2 35.6 0h-1.7C19.2.2 13.6 4.5 12.5 18.5c-.2 3.2-.2 5.3-.2 5.3s0 2.1.2 5.3c1.1 14 6.7 18.2 21.3 18.4h1.8" fill="#FFF"/><path d="M21.7 37.2s2.4.2 4.1-1.9c1.3-1.6 1.4-3.1 1.4-3.5 0-.1 0-5.3.1-5.5H12.4c0 .8.1 1.8.2 2.9.7 9.2 3.3 14.2 9.2 16.5-.1-.1-.1-8.5-.1-8.5zm-8.9-18.9h14.4s.2-9.9 2.6-12.7C34.2.2 39 .5 40.3.3h.4C39.1.1 37.4 0 35.5 0h-1.7C19.2.2 13.6 4.4 12.5 18.3h.3zM26.7 47h.2-.2zm30.1-28.5C56 8.2 52.8 3.1 45.4 1.2v10.4h-.2c-.9 0-5.6-.2-7.2 2.4-.6 1-.9 1.8-1.1 2.5v1.8h8.4v7.9H37v8s-.3 3.7-1.2 5.8c-2.2 4.8-5.9 6.8-8.5 7H27c2 .3 4.3.5 6.8.5h1.7c14.6-.2 20.2-4.4 21.3-18.4.2-3.2.2-5.3.2-5.3s.1-2.2-.2-5.3z" fill="#6E9ED4"/>
+      </symbol>
+
+      <symbol id="mobilepaylogo" width="22" viewBox="0 0 70 48">
+         <path d="M66 48H4c-2.2 0-4-1.8-4-4V4c0-2.2 1.8-4 4-4h62c2.2 0 4 1.8 4 4v40c0 2.2-1.8 4-4 4z" fill="#D6E2E8"/><path fill="none" d="M20.3 12.2l5.6 14.6-5.6-14.6M43.7 39.7l-5.9 2.2c-.3.1-.5.5-.3.8.1.3.5.5.8.4l5.9-2.2c.3-.1.5-.5.3-.8-.1-.4-.5-.6-.8-.4zM31.6 41.5l8.3-3.1-8.3 3.1M45.8 20.2c-1.7 0-3.2 1-3.9 2.4l.7 1.9c0-1.7 1.4-3.1 3.2-3.1 1.8 0 3.2 1.4 3.2 3.1 0 1.7-1.4 3.1-3.2 3.1-1 0-1.8-.4-2.4-1.1l.7 1.9c.5.2 1.1.3 1.6.3 2.4 0 4.4-1.9 4.4-4.3 0-2.2-1.9-4.2-4.3-4.2z"/><path d="M37.6 17.7c.7-.1 1.4-.3 2.2-.4 1.1-.2 2.4-.3 3.8-.4v-.1c-.6-1.1-1.7-1.7-2.8-1.7-.5 0-1 .1-1.4.3-.1 0-.1.1-.2.1-.9.5-1.4 1.3-1.6 2.2z" fill="#003F62"/><path d="M57.3 19.4c0-.3-.3-.7-.6-.8h-.1-.1-.1-.1-.1-.1-.1-.1-.1H54.9h-.5H53.5h-.7-.4-.9-.5-.9-.9-.9-.9-1.1-.6c-1.8.1-3.5.3-5 .5-3.7.5-6.2 1.3-6.2 1.3-.3.1-.6.5-.6.8l.6 11.7v.4h.6S39 32 45.3 31.5l1.8 4.7-7 2.7-8.3 3.1-5.7-14.8-5.6-14.5 15.3-5.8 2.3 6c-.2.1-.4.2-.5.3-5.5 3.1-9.1 6.5-9.1 6.5-.2.2-.3.7-.1 1l4.5 7.8-.4-7.3c-.1-1 .6-1.9 1.5-2.2.1 0 1.1-.3 2.6-.7 0-.3.1-.7.2-1 .4-1.1 1.1-1.9 2.1-2.5h.1c.6-.3 1.3-.5 2-.5 1.7 0 3.1.9 3.9 2.4.1.2.2.3.2.5h.4c1.5-.1 2.9-.1 4.2-.1 1.7 0 3.1.1 4.2.1L49 8.9c-.2-.3-.6-.5-.9-.4 0 0-2.2.4-7.1 2.9l-3.3-8.5c-.6-1.5-2.4-2.3-3.9-1.7L18 6.5c-1.6.6-2.4 2.3-1.8 3.9l13.6 35.1c.6 1.5 2.4 2.3 3.9 1.7l15.5-5.8c1.6-.6 2.4-2.3 1.8-3.9l-2.6-6.7H54.3c.2 0 .4 0 .6.1h.3c.2 0 .3 0 .5.1.1 0 .3 0 .4.1h.2c.1 0 .2 0 .3.1.1 0 .3.1.4.1H57.9v-.1-.1-.1-.1l-.6-11.5zM44.2 40.8L38.3 43c-.3.1-.7 0-.8-.4-.1-.3 0-.7.3-.8l5.9-2.2c.3-.1.7 0 .8.4.1.4 0 .7-.3.8zm1.6-12c-.6 0-1.1-.1-1.6-.3-1.6-.6-2.7-2.2-2.7-4 0-.7.2-1.3.4-1.9.7-1.4 2.2-2.4 3.9-2.4 2.4 0 4.4 1.9 4.4 4.3-.1 2.4-2 4.3-4.4 4.3z" fill="#003F62"/><path d="M45.8 27.7c1.8 0 3.2-1.4 3.2-3.1 0-1.7-1.4-3.1-3.2-3.1-1.8 0-3.2 1.4-3.2 3.1 0 .8.3 1.5.8 2 .6.7 1.4 1.1 2.4 1.1z" fill="#003F62"/>
+      </symbol>
+
+   </svg>
 
    <script>
       {% include "data.js" %}

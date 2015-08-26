@@ -140,14 +140,64 @@ Currency.prototype.scale = function(rhs) {
    return n;
 };
 
+
+
+function cardsCovered(acqs, settings) {
+   // Check if all cards in settings.cards are covered
+   // with the selected acquirers (acqs).
+
+   for (var _card in settings.cards) {
+
+      var cardfound = false;
+      for (var _acq in acqs) {
+
+         if( settings.acquirers[_acq].cards[_card] ){
+            cardfound = true;
+            break;
+         }
+      }
+      if (!cardfound) { return false; }
+   }
+   return true;
+}
+
+function cover(a, b) {
+
+   // Loop through object b and check if all its
+   // properties are present in object a.
+
+   for (var _b in b) {
+      var found = false;
+      for (var _a in a) {
+
+         if( _a[_b] ){
+            found = true;
+            break;
+         }
+      }
+      if (!found) { return false; }
+   }
+   return true;
+}
+
+
 function clone(obj) {
-    if (obj === null || "object" != typeof obj) { console.log("clone error"); return obj; }
     var copy = obj.constructor();
     for (var attr in obj) {
         if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
     }
     return copy;
 }
+
+function merge(o1, o2){
+    var o3 = {};
+    for (var property in o1) { o3[property] = o1[property]; }
+    for (property in o2) { o3[property] = o1[property]; }
+    return o3;
+}
+
+
+
 
 
 function acq_cost_default(o) {
@@ -472,8 +522,6 @@ var opts = {
    }
 };
 
-
-
 /*
 Acquirer options panel.
 */
@@ -505,18 +553,12 @@ function rnf(n) {
    return (typeof n == 'function') ? n() : n;
 }
 
-
-
 function init_defaults() {
    for (var k in opts) {
       if (opts[k].def) {
          opts[k].set(rnf(opts[k].def));
       }
    }
-}
-
-function price_total(v, s) {
-   return v.trans.scale(s).add(v.monthly);
 }
 
 function intersect(a, b) {
@@ -531,6 +573,8 @@ function intersect(a, b) {
    return r;
 }
 
+
+
 function cardlist(list) {
    var objekt = {};
    for (i = 0; i < list.length; i++)
@@ -538,17 +582,6 @@ function cardlist(list) {
       objekt[list[i]] = 1;
    }
    return objekt;
-}
-
-function cardSupported(pcards, scards) {
-
-   // Iterate through scards and see if they are present in pcards.
-
-   for (var key in scards) {
-
-   }
-
-   return true;
 }
 
 function build(action) {
@@ -564,63 +597,42 @@ function build(action) {
    // Get settings
    var settings = {};
    for (var key in opts) { settings[key] = opts[key].get(); }
+   var acquirers = clone(settings.acquirers);
 
+   settings.dankort_scale = (!settings.cards.dankort) ? 0 : (!settings.cards.visa) ? 1 : 0.8;
    settings.acquirersort = [];
-   settings.require = {};
-   if (settings.cards.dankort || settings.cards.forbrugsforeningen){
-      settings.require.nets = true;
+
+   if ( !settings.cards.dankort ) {
+
+      delete acquirers.nets;
+
+      if ( !settings.cards.visa ) {
+         alert("Venligst vælg betalingskort");
+         return;
+      }
+      if ( settings.forbrugsforeningen ) {
+         alert("Forbrugsforeningen kræver en Dankort aftale.");
+         return;
+      }
    }
 
-   var dankort_scale = (!settings.cards.dankort) ? 0 : (!settings.cards.visa) ? 1 : 0.8;
-
-   if ( !settings.cards.dankort && !settings.cards.visa ) {
-      alert("Venligst vælg betalingskort");
-      return;
-   }
-   if (settings.forbrugsforeningen && !settings.dankort) {
-      console.log("Forbrugsforeningen kræver en Dankort aftale.");
-      opts.dankort.set(1);
-   }
-
+   var costs = {};
    var data = [];
    var tbody = document.createElement("tbody");
    tbody.id = "tbody";
 
-   console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: removing some acquirers");
+   for (var a in acquirers) {
 
-   var tmpobj = {};
-   var tmparr = [];
-   settings.acquirersort = [];
-   // Time to remove some acquirers before we loop.
+      // Calculate individual acquirer costs
+      acquirers[a].fee = acquirers[a].costfn(settings);
 
-   acqloop:
-   for (var a in settings.acquirers) {
-      if (a == "nets") { tmpobj[a] = settings.acquirers[a]; continue; }
-
-      // Ugly fix: We can't use the Delete operator due to pointers (settings->ACQ)
-      for (var x in settings.cards) {
-         if( settings.cards.hasOwnProperty(x) ) {
-            if (x == "dankort" || x == 'forbrugsforeningen') { continue; }
-
-            if (!settings.acquirers[a].cards[x]) {
-               continue acqloop;
-            }
-         }
-      }
-      // Add acquirer and calculate individual acquirer costs
-      tmpobj[a] = settings.acquirers[a];
-      tmpobj[a].fee = settings.acquirers[a].costfn(settings);
-
-      // Check if tmpobj[a].fee.total.dkk() > settings.acquirersort[index]
       for (sort = 0; sort < settings.acquirersort.length; sort++){
-
-         if ( tmpobj[a].fee.total.dkk() < tmpobj[settings.acquirersort[sort]].fee.total.dkk() ) {
+         if ( acquirers[a].fee.total.dkk() < acquirers[settings.acquirersort[sort]].fee.total.dkk() ) {
             break;
          }
       }
       settings.acquirersort.splice(sort, 0, a);
    }
-   settings.acquirers = tmpobj;
 
    console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: time to build...");
 
@@ -629,121 +641,150 @@ function build(action) {
 
       var psp = PSPs[k];
       var acq = clone(psp.acquirers || {});
-      var setup = {}, subscription = {}, transfee = {}, kortgebyr = {};
+      var setup = new Currency(0, 'DKK'), total = new Currency(0, 'DKK');
+      var cardobj = {};
 
-      // Check if psp support any required acq (-> loop)
-      // this is used for dankort, forbrugsforeningen, mobilepay
-      if(settings.require.nets && !acq.nets){
-         console.log("Nets is required so we have to skip: " + psp.id);
-         continue;
-      }
-
-      // Skip psp if doesn't support settings.cards
+      // Check if psp support all cards
       for (i in settings.cards) {
-         if(!psp.cards[i]){
-            console.log(psp.id + " does not support " + i);
-            continue psploop;
-         }
+         if( !psp.cards[i] ){ continue psploop; }
+      }
+      // Check if psp support all features
+      for (i in settings.features) {
+         if( !psp.features[i] ){ continue psploop; }
       }
 
-      // Skip psp if its acquirers were deleted from settings.acquirers
-      if( Object.getOwnPropertyNames(acq).length > 0 ) {
+      if( Object.getOwnPropertyNames(acq).length === 0 ) {
+         // All-in-one solutions, e.g. Stripe.
+         cardobj = psp.cards;
+      }
+      else {
+         // Payment Gateways, e.g. DIBS.
 
-         for (i in acq) {
-            if ( !settings.acquirers[i] ) {
-               delete acq[i];
-            }
-         }
-         if( Object.getOwnPropertyNames(acq).length === 0 ) {
-            console.log(psp.id + " has run out of acquirers! Delete!");
-            continue;
-         }
+         var newacq = {};
+         var _carlist = {};
 
-         // Find cheapest (available) acquirer
+         // Find cheapest acquirer that support all cards
          for (i = 0; i < settings.acquirersort.length; i++) {
 
-            if (acq[settings.acquirersort[i]]){
-               console.log(settings.acquirersort[i] + " is cheapest for " + psp.id);
-               acq = {};
-               acq[settings.acquirersort[i]] = 1;
-               if( settings.require.nets ){ acq.nets = 1; } // ugly
-               break;
+            var _acq = settings.acquirersort[i];
+
+            // check if psp support this acquirer.
+            if( acq[_acq] ){
+
+               newacq[_acq] = 1;
+               var objlength = Object.getOwnPropertyNames(newacq).length;
+
+               // cardCovered newacq +
+               if( cardsCovered(newacq, settings) ) { break; }
+               else if ((newacq.nets && objlength < 2) || (objlength === 0))
+               {
+                  continue;
+               }
+               else if ( i+1 == settings.acquirersort.length )
+               {
+                  continue psploop;
+               }
+               else {
+                  // Delete and try with next acquirer.
+                  console.log("Didn't work, try with next acquirer.");
+                  delete newacq[_acq];
+               }
             }
          }
+         acq = newacq;
+
+         // Challenge this calc if psp support multiacquirer
+         /*
+
+            Coming soon.
+
+
+         */
+
+         for (var ac in acq) {
+            // Merge acquirer card lists
+            for (var card in acquirers[ac].cards ) {
+
+               // Some cards/methods (mobilepay, applepay, swipp) add extra costs.
+               // They will only be included if enabled in settings.cards.
+               console.log(settings.cards[card]);
+               if (card == "forbrugsforeningen" && !settings.cards.forbrugsforeningen){
+                  continue;
+               }
+               cardobj[card] = 1;
+            }
+
+            var scale = (ac == "nets") ? settings.dankort_scale :  1-settings.dankort_scale;
+
+            setup = setup.add(acquirers[ac].fee_setup);
+            total = total
+               .add( acquirers[ac].fee.trans.scale(scale))
+               .add( acquirers[ac].fee_monthly);
+         }
       }
+
+      // Don't show cards / payment methods with costs unless enabled in settings.
+      if (cardobj.mobilepay && !settings.cards.mobilepay) { delete cardobj.mobilepay; }
+      if (cardobj.applepay && !settings.cards.applepay) { delete cardobj.applepay; }
+      if (cardobj.swipp && !settings.cards.swipp) { delete cardobj.swipp; }
 
       psp.costs = psp.costfn(settings);
       if (psp.costs === null) { continue; } // legacy, see PSPs.scannet
 
-      // features skal flyttes til recurring
-      if (settings.mobilepay) { subscription.mobilepay = new Currency(49, 'DKK'); }
+      setup = setup.add(psp.costs.setup);
+      total = total
+         .add(psp.costs.monthly)
+         .add(psp.costs.trans);
 
-
-      var total = new Currency(49, 'DKK');
-      /*
-
-      for (l in i_totalmonth) {
-         i_trans[l] = i_totalmonth[l].scale(1 / settings.transactions);
+      // Payment methods w/ costs (should be improved)
+      if (settings.cards.mobilepay) {
+         setup = setup.add(new Currency(49, 'DKK'));
+         total = total.add(new Currency(49, 'DKK'));
       }
 
-      var s_setup = [];
-      var t_setup = new Currency(0, 'DKK');
-      var s_fixedmonth = [];
-      var s_totalmonth = [];
-      var t_totalmonth = new Currency(0, 'DKK');
-      var s_trans = [];
-      var t_trans = new Currency(0, 'DKK');
+      var frag1 = document.createDocumentFragment();
+      var wrapper, svg, use;
 
-      for (l in i_setup) {
-         s_setup.push(l + ': ' + i_setup[l].print());
-         t_setup = t_setup.add(i_setup[l]);
-      }
-      for (l in i_fixedmonth) {
-         s_fixedmonth.push(l + ': ' + i_fixedmonth[l].print());
-      }
-      for (l in i_totalmonth) {
-         s_totalmonth.push(l + ': ' + i_totalmonth[l].print());
-         t_totalmonth = t_totalmonth.add(i_totalmonth[l]);
-      }
-      for (l in i_trans) {
-         s_trans.push(l + ': ' + i_trans[l].print());
-         t_trans = t_trans.add(i_trans[l]);
-      }
-      */
-
-      var h_cards = "";
-      for (l in psp.cards) {
-         h_cards += '<img class="card '+ l +'" src="/assets/img/cards/' + company[l].logo + '" alt="' + company[l].name + '" title="' + company[l].name + '" />';
+      for (l in cardobj) {
+         wrapper = document.createElement("p");
+         wrapper.classList.add("card");
+         svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+         use = document.createElementNS("http://www.w3.org/2000/svg",'use');
+         use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", company[l].logo);
+         use.setAttribute('x','0');
+         use.setAttribute('y','0');
+         use.setAttribute('height','15');
+         svg.appendChild(use);
+         wrapper.appendChild(svg);
+         frag1.appendChild(wrapper);
       }
 
-      var h_acqs = [];
+      var frag2 = document.createDocumentFragment();
       for (l in acq) {
-         h_acqs.push('<a target="_blank" href="' + company[l].link + '"><img class="acquirer '+l+'" src="/assets/img/psp/' + company[l].logo + '" alt="' + company[l].name +
-            '" title="' + company[l].name + '" /></a>');
+         wrapper = document.createElement("p");
+         wrapper.innerHTML = '<a target="_blank" href="' + company[l].link + '"><img class="acquirer '+l+'" src="/assets/img/psp/' + company[l].logo + '" alt="' + company[l].name +
+         '" title="' + company[l].name + '" /></a>';
+         frag2.appendChild(wrapper);
       }
-      h_acqs = h_acqs.join("") || "&nbsp;"; // safari empty cell fix
 
-
-      // Sort psp after t_totalmonth.dkk()
+      // Sort psp after total.dkk()
       for (sort = 0; sort < data.length; ++sort) {
-         if (t_totalmonth.dkk() < data[sort]) { break; }
+         if (total.dkk() < data[sort]) { break; }
       }
-      data.splice(sort, 0, t_totalmonth.dkk());
+      data.splice(sort, 0, total.dkk());
 
-      // Format product name (e.g. Light, Pro, Business ...)
-      psp.product = (psp.product) ? " " + psp.product : "";
+      psp.product = (psp.product) ? " " + psp.product : ""; // add product name (Business, premium...)
 
       var row = tbody.insertRow(sort);
       row.insertCell(-1).innerHTML = '<a target="_blank" class="psp + '+psp.id+'" href=' + company[psp.id].link + '><img src="/assets/img/psp/' + company[psp.id].logo + '" alt="' + company[psp.id].name +
          '" title="' + company[psp.id].name + psp.product +'" /><p>' + company[psp.id].name + psp.product + '</p></a>';
-      row.insertCell(-1).innerHTML = h_acqs;
-      row.insertCell(-1).innerHTML = h_cards;
+      row.insertCell(-1).appendChild(frag2);
+      row.insertCell(-1).appendChild(frag1);
+      row.insertCell(-1).textContent = setup.print();
       row.insertCell(-1).textContent = total.print();
-      row.insertCell(-1).textContent = total.print();
-      row.insertCell(-1).textContent = total.print();
+      row.insertCell(-1).textContent = total.scale(1 / settings.transactions).print();
 
    }
-
    table.replaceChild(tbody, $('tbody'));
 
    if (action !== "init") { save_url(); }
@@ -978,15 +1019,15 @@ function setAcquirerPanel() {
    }
 
    /*
-   if (settings.acquirers != prevstate.acquirer) {
+   if (acquirers != prevstate.acquirer) {
       setAcquirerPanel();
-   } else if (settings.acquirers != "auto")
+   } else if (acquirers != "auto")
    {
       // Denne skal gerne slås sammen med setAcquirerPanel();
-      // ACQs[settings.acquirers].fee_fixed = settings.acquirers_fixed;
-      // ACQs[settings.acquirers].fee_variable = settings.acquirers_variable;
-      // ACQs[settings.acquirers].fee_monthly = settings.acquirers_monthly;
-      // ACQs[settings.acquirers].fee_setup = settings.acquirers_setup;
+      // ACQs[acquirers].fee_fixed = settings.acquirers_fixed;
+      // ACQs[acquirers].fee_variable = settings.acquirers_variable;
+      // ACQs[acquirers].fee_monthly = settings.acquirers_monthly;
+      // ACQs[acquirers].fee_setup = settings.acquirers_setup;
    }
    */
 
