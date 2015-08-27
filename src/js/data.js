@@ -66,6 +66,14 @@ var company = {
       name: "MobilePay",
       logo: "#mobilepaylogo"
    },
+   "applepay": {
+      name: "ApplePay",
+      logo: "#applepaylogo"
+   },
+   "swipp": {
+      name: "Swipp",
+      logo: "#swipplogo"
+   },
    // Acquirers
    "teller": {
       name: "Teller",
@@ -215,6 +223,33 @@ var company = {
    }
 };
 
+var CARDs = {
+   "forbrugsforeningen": {
+      fee_setup: new Currency(0, 'DKK'),
+      fee_monthly: new Currency(0, 'DKK'),
+      fee_fixed: new Currency(1, 'DKK'),
+      fee_variable: 11 // yes, 11%!!!
+   },
+   "mobilepay": {
+      fee_setup: new Currency(49, 'DKK'),
+      fee_monthly: new Currency(49, 'DKK'),
+      fee_fixed: new Currency(1, 'DKK'),
+      fee_variable: 0
+   },
+   "applepay": {
+      fee_setup: new Currency(0, 'DKK'),
+      fee_monthly: new Currency(0, 'DKK'),
+      fee_fixed: new Currency(0, 'DKK'),
+      fee_variable: 0
+   },
+   "swipp": {
+      fee_setup: new Currency(0, 'DKK'),
+      fee_monthly: new Currency(0, 'DKK'),
+      fee_fixed: new Currency(0, 'DKK'),
+      fee_variable: 0
+   }
+}
+
 var ACQs = {
    "teller": {
       cards: cardlist(["visa", "mastercard", "maestro", "amex", "jcb", "unionpay", "diners", "mobilepay"]),
@@ -299,7 +334,7 @@ var ACQs = {
 var PSPs = [
 {
    id: "braintree",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    cards: cardlist(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
       return {
@@ -310,7 +345,7 @@ var PSPs = [
    }
 }, {
    id: "certitrade",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    acquirers: cardlist(["handelsbanken", "nordea", "swedbank"]),
    cards: cardlist(["visa", "mastercard", "maestro", "diners", "amex"]),
    costfn: function(o) {
@@ -322,7 +357,7 @@ var PSPs = [
    }
 }, {
    id: "checkout",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    cards: cardlist(["visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
       return {
@@ -333,7 +368,7 @@ var PSPs = [
    }
 }, {
    id: "dandomain",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: {},
    acquirers: cardlist(["nets", "teller"]),
    cards: cardlist(["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
@@ -361,7 +396,7 @@ var PSPs = [
 }, {
    id: "dibs",
    product: "Start",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: {},
    acquirers: cardlist(["nets"]),
    cards: cardlist(["dankort", "mobilepay"]),
    costfn: function(o) {
@@ -374,7 +409,7 @@ var PSPs = [
 }, {
    id: "dibs",
    product: "Medium",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    acquirers: cardlist(["nets", "teller", "swedbank", "valitor", "handelsbanken", "elavon"]),
    cards: cardlist(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "diners", "mobilepay"]),
    costfn: function(o) {
@@ -400,7 +435,7 @@ var PSPs = [
 }, {
    id: "epay",
    product: "Light",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    acquirers: cardlist(["nets"]),
    cards: cardlist(["dankort", "forbrugsforeningen", "mobilepay"]),
    costfn: function(o) {
@@ -418,7 +453,7 @@ var PSPs = [
 }, {
    id: "epay",
    product: "Pro",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    acquirers: cardlist(["nets", "teller"]),
    cards: cardlist(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "mobilepay"]),
    costfn: function(o) {
@@ -461,7 +496,7 @@ var PSPs = [
 }, {
    id: "netaxept",
    product: "Start",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: {},
    acquirers: cardlist(["nets", "teller"]),
    cards: cardlist(["dankort", "visa", "mastercard"]),
    costfn: function(o) {
@@ -474,13 +509,10 @@ var PSPs = [
 }, {
    id: "netaxept",
    product: "Plus",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    acquirers: cardlist(["nets", "teller", "elavon", "swedbank", "nordea"]),
    cards: cardlist(["dankort", "visa", "mastercard", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
-      if (o.recurring || o.multiacquirer || o.mobilepay) {
-         return null;
-      }
       return {
          setup: new Currency(3016, 'DKK'),
          monthly: new Currency(502, 'DKK'),
@@ -490,7 +522,7 @@ var PSPs = [
 }, {
    id: "netaxept",
    product: "Advanced",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    acquirers: cardlist(["nets", "teller", "elavon", "swedbank", "nordea"]),
    cards: cardlist(["dankort", "visa", "mastercard", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
@@ -507,7 +539,7 @@ var PSPs = [
    }
 }, {
    id: "payer",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["recurring"]),
    acquirers: cardlist(["handelsbanken", "swedbank", "nordea"]),
    cards: cardlist(["visa", "mastercard", "maestro", "diners", "amex"]),
    costfn: function(o) {
@@ -519,7 +551,7 @@ var PSPs = [
    }
 }, {
    id: "paymill",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    cards: cardlist(["visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
       return {
@@ -530,7 +562,7 @@ var PSPs = [
    }
 }, {
    id: "paypal",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    cards: cardlist(["visa", "mastercard", "maestro", "diners", "jcb", "amex"]),
    costfn: function(o) {
       var oms = o.transactions * o.avgvalue.dkk();
@@ -556,7 +588,7 @@ var PSPs = [
    }
 }, {
    id: "payson",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    cards: cardlist(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
       return {
@@ -567,7 +599,7 @@ var PSPs = [
    }
 }, {
    id: "payza",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    cards: cardlist(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
       return {
@@ -579,7 +611,7 @@ var PSPs = [
 }, {
    id: "verifone",
    product: "Bas",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    acquirers: cardlist(["handelsbanken", "nordea", "swedbank"]),
    cards: cardlist(["visa", "mastercard", "diners", "jcb", "amex"]),
    costfn: function(o) {
@@ -592,7 +624,7 @@ var PSPs = [
 }, {
    id: "verifone",
    product: "Premium",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    acquirers: cardlist(["handelsbanken", "nordea", "swedbank"]),
    cards: cardlist(["visa", "mastercard", "diners", "jcb", "amex"]),
    costfn: function(o) {
@@ -617,7 +649,7 @@ var PSPs = [
    }
 }, {
    id: "stripe",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    cards: cardlist(["visa", "mastercard", "maestro", "amex", "applepay"]),
    costfn: function(o) {
       return {
@@ -656,7 +688,7 @@ var PSPs = [
    }
 }, {
    id: "scannet",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: {},
    acquirers: cardlist(["nets", "teller"]),
    cards: cardlist(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
@@ -668,7 +700,7 @@ var PSPs = [
    }
 }, {
    id: "skrill",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud", "recurring"]),
    cards: cardlist(["visa", "mastercard", "maestro", "diners", "jcb", "amex"]),
    costfn: function(o) {
       var oms = o.transactions * o.avgvalue.dkk();
@@ -682,7 +714,7 @@ var PSPs = [
    }
 }, {
    id: "wannafind",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["recurring"]),
    acquirers: cardlist(["nets", "teller"]),
    cards: cardlist(["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen", "diners", "jcb", "amex", "unionpay", "mobilepay"]),
    costfn: function(o) {
@@ -705,7 +737,7 @@ var PSPs = [
    }
 }, {
    id: "yourpay",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: {},
    cards: cardlist(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
 
@@ -720,7 +752,7 @@ var PSPs = [
 }, {
    id: "klarna",
    product: "checkout",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: {},
    cards: cardlist(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
 
@@ -734,7 +766,7 @@ var PSPs = [
    }
 }, {
    id: "2checkout",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["antifraud"]),
    cards: cardlist(["visa", "mastercard", "maestro", "amex", "jcb", "diners"]),
    costfn: function(o) {
       var fee = 2.4;
@@ -746,7 +778,7 @@ var PSPs = [
    }
 }, {
    id: "paylike",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
+   features: cardlist(["recurring"]),
    cards: cardlist(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
       return {

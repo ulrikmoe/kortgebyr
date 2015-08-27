@@ -141,7 +141,6 @@ Currency.prototype.scale = function(rhs) {
 };
 
 
-
 function cardsCovered(acqs, settings) {
    // Check if all cards in settings.cards are covered
    // with the selected acquirers (acqs).
@@ -195,9 +194,6 @@ function merge(o1, o2){
     for (property in o2) { o3[property] = o1[property]; }
     return o3;
 }
-
-
-
 
 
 function acq_cost_default(o) {
@@ -324,7 +320,7 @@ function setBool(k, v) {
 var opts = {
    'cards': {
       type: "bits",
-      bits: 8,
+      bits: 10,
       get: function() {
          // Get all selected payment methods from .ocards (0.2ms)
          var object = {};
@@ -341,6 +337,27 @@ var opts = {
          return object;
       },
       set: function(name, value) {}
+   },
+   'features': {
+      type: "bits",
+      bits: 4,
+      get: function() {
+         // Get all selected payment methods from .ocards (0.2ms)
+         var object = {};
+         var ofeatures = C("ofeatures");
+         for(i = 0; i < ofeatures.length; i++)
+         {
+            var ofeatures_name = ofeatures[i].id;
+
+            if ( ofeatures[i].checked ) {
+               object[ofeatures_name] = 1;
+            }
+         }
+         return object;
+      },
+      set: function(name, value) {
+         //setBool('multiacquirer', v); },
+      }
    },
    // Misc
    'acquirers': {
@@ -372,34 +389,6 @@ var opts = {
          */
       },
       def: 'auto'
-   },
-   'visasecure': {
-      type: "bits",
-      bits: 1,
-      get: function() { return +getBool('visasecure'); },
-      set: function(v) { setBool('visasecure', v); },
-      def: true
-   },
-   'antifraud': {
-      type: "bits",
-      bits: 1,
-      get: function() { return +getBool('antifraud'); },
-      set: function(v) { setBool('antifraud', v); },
-      def: false
-   },
-   'recurring': {
-      type: "bits",
-      bits: 1,
-      get: function() { return +getBool('recurring'); },
-      set: function(v) { setBool('recurring', v); },
-      def: false
-   },
-   'multiacquirer': {
-      type: "bits",
-      bits: 1,
-      get: function() { return +getBool('multiacquirer'); },
-      set: function(v) { setBool('multiacquirer', v); },
-      def: false
    },
    'transactions': {
       type: "string",
@@ -695,10 +684,7 @@ function build(action) {
 
          // Challenge this calc if psp support multiacquirer
          /*
-
             Coming soon.
-
-
          */
 
          for (var ac in acq) {
@@ -707,11 +693,14 @@ function build(action) {
 
                // Some cards/methods (mobilepay, applepay, swipp) add extra costs.
                // They will only be included if enabled in settings.cards.
-               console.log(settings.cards[card]);
-               if (card == "forbrugsforeningen" && !settings.cards.forbrugsforeningen){
-                  continue;
-               }
+               if ( !settings.cards[card] && CARDs[card] ){ continue; }
                cardobj[card] = 1;
+
+               // Add extra costs
+               if (CARDs[card]){
+                  setup = setup.add(CARDs[card].fee_setup);
+                  total = total.add(CARDs[card].fee_monthly);
+               }
             }
 
             var scale = (ac == "nets") ? settings.dankort_scale :  1-settings.dankort_scale;
@@ -723,29 +712,19 @@ function build(action) {
          }
       }
 
-      // Don't show cards / payment methods with costs unless enabled in settings.
-      if (cardobj.mobilepay && !settings.cards.mobilepay) { delete cardobj.mobilepay; }
-      if (cardobj.applepay && !settings.cards.applepay) { delete cardobj.applepay; }
-      if (cardobj.swipp && !settings.cards.swipp) { delete cardobj.swipp; }
-
       psp.costs = psp.costfn(settings);
-      if (psp.costs === null) { continue; } // legacy, see PSPs.scannet
 
       setup = setup.add(psp.costs.setup);
       total = total
          .add(psp.costs.monthly)
          .add(psp.costs.trans);
 
-      // Payment methods w/ costs (should be improved)
-      if (settings.cards.mobilepay) {
-         setup = setup.add(new Currency(49, 'DKK'));
-         total = total.add(new Currency(49, 'DKK'));
-      }
 
       var frag1 = document.createDocumentFragment();
       var wrapper, svg, use;
 
       for (l in cardobj) {
+         console.log(psp.id);
          wrapper = document.createElement("p");
          wrapper.classList.add("card");
          svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");

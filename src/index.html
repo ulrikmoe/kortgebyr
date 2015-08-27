@@ -37,10 +37,9 @@
             <h2>Indløsning</h2>
             <div class="acquirer_field">
                <select id="acquirer" onchange="build();">
-                  <option value="auto">Automatisk</option>
+                  <option value="auto">Billigst mulige</option>
                   <option value="teller">Teller</option>
                   <option value="handelsbanken">Handelsbanken</option>
-                  <option value="nordea">Nordea</option>
                   <option value="swedbank">Swedbank</option>
                   <option value="valitor">Valitor</option>
                   <option value="elavon">Elavon</option>
@@ -81,19 +80,15 @@
             </p>
             <p>
                <label>
-                  <input checked="" type="checkbox" id="visasecure" onchange="build();" /> 3D-Secure</label>
-            </p>
-            <p style="display:none">
-               <label>
-                  <input type="checkbox" id="antifraud" onchange="build();" /> Svindelkontrol</label>
+                  <input type="checkbox" class="ofeatures" id="antifraud" onchange="build();" /> Svindelkontrol</label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" id="recurring" onchange="build();" /> Abonnementsbetalinger</label>
+                  <input type="checkbox" class="ofeatures" id="recurring" onchange="build();" /> Abonnementsbetalinger</label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" id="multiacquirer" onchange="build();" /> Multi-indløser</label>
+                  <input type="checkbox" class="ofeatures" id="multiacquirer" onchange="build();" /> Multi-indløser</label>
             </p>
          </section>
          <section class="menulist" style="width:19%">
