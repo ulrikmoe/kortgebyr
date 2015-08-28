@@ -25,55 +25,6 @@ var currency_map = {
 var gccode = 'DKK';
 
 var company = {
-   // Cards
-   "dankort": {
-      name: "Dankort",
-      logo: '#dankortlogo'
-   },
-   "visa": {
-      name: "Visa",
-      logo: '#visalogo'
-   },
-   "mastercard": {
-      name: "MasterCard",
-      logo: '#mastercardlogo'
-   },
-   "maestro": {
-      name: "Maestro",
-      logo: '#maestrologo'
-   },
-   "diners": {
-      name: "Diners",
-      logo: '#dinerslogo'
-   },
-   "amex": {
-      name: "American Express",
-      logo: '#amexlogo'
-   },
-   "jcb": {
-      name: "JCB",
-      logo: '#jcblogo'
-   },
-   "unionpay": {
-      name: "UnionPay",
-      logo: '#unionpaylogo'
-   },
-   "forbrugsforeningen": {
-      name: "Forbrugsforeningen",
-      logo: '#forbrugsforeningenlogo'
-   },
-   "mobilepay": {
-      name: "MobilePay",
-      logo: "#mobilepaylogo"
-   },
-   "applepay": {
-      name: "ApplePay",
-      logo: "#applepaylogo"
-   },
-   "swipp": {
-      name: "Swipp",
-      logo: "#swipplogo"
-   },
    // Acquirers
    "teller": {
       name: "Teller",
@@ -223,32 +174,78 @@ var company = {
    }
 };
 
+// Payment Methods
 var CARDs = {
+   "dankort": {
+      name: "Dankort",
+      logo: '#dankortlogo'
+   },
+   "visa": {
+      name: "Visa",
+      logo: '#visalogo'
+   },
+   "mastercard": {
+      name: "MasterCard",
+      logo: '#mastercardlogo'
+   },
+   "maestro": {
+      name: "Maestro",
+      logo: '#maestrologo'
+   },
+   "diners": {
+      name: "Diners",
+      logo: '#dinerslogo'
+   },
+   "amex": {
+      name: "American Express",
+      logo: '#amexlogo'
+   },
+   "jcb": {
+      name: "JCB",
+      logo: '#jcblogo'
+   },
+   "unionpay": {
+      name: "UnionPay",
+      logo: '#unionpaylogo'
+   },
    "forbrugsforeningen": {
-      fee_setup: new Currency(0, 'DKK'),
-      fee_monthly: new Currency(0, 'DKK'),
-      fee_fixed: new Currency(1, 'DKK'),
-      fee_variable: 11 // yes, 11%!!!
+      name: "Forbrugsforeningen",
+      logo: '#forbrugsforeningenlogo',
+      costfn: function(o){
+         // We will calc the actual costs when we get some usage stats (ETA Q4 2015)
+         return {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(0, 'DKK'),
+            trans: new Currency(0, 'DKK')
+         };
+      },
    },
    "mobilepay": {
-      fee_setup: new Currency(49, 'DKK'),
-      fee_monthly: new Currency(49, 'DKK'),
-      fee_fixed: new Currency(1, 'DKK'),
-      fee_variable: 0
-   },
-   "applepay": {
-      fee_setup: new Currency(0, 'DKK'),
-      fee_monthly: new Currency(0, 'DKK'),
-      fee_fixed: new Currency(0, 'DKK'),
-      fee_variable: 0
+      name: "MobilePay",
+      logo: "#mobilepaylogo",
+      costfn: function(o){
+         // http://www.epay.dk/betalingsformer/mobilepay-online.asp
+         // We will calc the actual costs when we get some usage stats (ETA Q4 2015)
+         return {
+            setup: new Currency(49, 'DKK'),
+            monthly: new Currency(49, 'DKK'),
+            trans: new Currency(1, 'DKK')
+         };
+      }
    },
    "swipp": {
-      fee_setup: new Currency(0, 'DKK'),
-      fee_monthly: new Currency(0, 'DKK'),
-      fee_fixed: new Currency(0, 'DKK'),
-      fee_variable: 0
+      name: "Swipp",
+      logo: "#swipplogo",
+      costfn: function(o){
+         // We will calc the actual costs when we get some usage stats (ETA Q4 2015)
+         return {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(0, 'DKK'),
+            trans: new Currency(0, 'DKK')
+         };
+      },
    }
-}
+};
 
 var ACQs = {
    "teller": {
@@ -650,7 +647,7 @@ var PSPs = [
 }, {
    id: "stripe",
    features: cardlist(["antifraud", "recurring"]),
-   cards: cardlist(["visa", "mastercard", "maestro", "amex", "applepay"]),
+   cards: cardlist(["visa", "mastercard", "maestro", "amex"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'USD'),

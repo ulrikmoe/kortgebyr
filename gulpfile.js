@@ -8,32 +8,44 @@
  **/
 
 var gulp = require('gulp');
-var gls = require('gulp-live-server');
-var uglify = require('gulp-uglify'); // Javascript compressor
+var gutil = require('gulp-util');
+var connect = require('gulp-connect');
+var uglify = require('gulp-uglify');
 var nunjucks = require('gulp-nunjucks-html');
 var htmlmin = require('gulp-htmlmin');
 var del = require('del');
 var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css');
-var runSequence = require('run-sequence');
-var connect = require('gulp-connect');
 var gzip = require('gulp-gzip');
+var concat = require('gulp-concat');
 
+// Use 'gulp --prod' for production mode
+var config = {
+   production: !!gutil.env.prod,
+   htmlmin: {
+      removeComments: true,
+      collapseWhitespace: true,
+      minifyJS: true
+   },
+   uglify: {
+      mangle: {
+         sort: true,
+         toplevel: true // shorten function names etc.
+      }
+   }
+};
 
-// Constants
-var compress = false;
-var localize = false;
-var i18n = ['da', 'sv', 'no', 'fi', 'ee', 'lv', 'lt'];
 var paths = {
    dest: '_site',
    html: 'src/*.html',
    scripts: 'src/js/*.js',
-   less: 'src/less/global.less',
-   assets: ['src/assets/**', '!src/assets/img/{psp,psp/**.svg}'],
+   less: 'src/css/*.less',
+   assets: ['src/assets/**/*.{png,woff,woff2}'],
    svgs: 'src/assets/img/psp/**.svg',
-   rebuild: ['_site/kortgebyr.js', '_site/data.js', '_site/global.css']
+   rebuild: ['_site/all.js', '_site/global.css']
 };
 
+// Last changed
 var monthNames = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december"];
 var datetime = new Date();
 var day = datetime.getDate();
@@ -41,114 +53,80 @@ var month = datetime.getMonth();
 var year = datetime.getFullYear();
 var lastUpdate = day + ". " + monthNames[month] + " " + year;
 
-var uglifyOpts = {
-   mangle: {
-      sort: compress
-      //toplevel: compress // shorten function names etc.
-   },
-   output: {
-      beautify: !compress,
-      ascii_only: true
-   }
-};
-var htmlminOpts = {
-   removeComments: compress,
-   collapseWhitespace: compress,
-   conservativeCollapse: false,
-   preserveLineBreaks: false,
-   removeScriptTypeAttributes: compress,
-   removeEmptyAttributes: compress,
-   removeEmptyElements: false
-};
-
-var middleman = function (req, res, next) {
+var middleman = function(req, res, next) {
    var url = req.url;
-   var ext = url.substr(url.lastIndexOf('.')+1);
+   var ext = url.substr(url.lastIndexOf('.') + 1);
    if (ext == "svg" || ext == "gz" || ext == "svgz") {
       res.setHeader('Content-Encoding', 'gzip');
    }
    next();
 };
 
-// Delete
-gulp.task('clean', function(callback) {
-   del([paths.dest], callback);
-});
+// Gulp functions/tasks
+function clean(done) {
+   del([paths.dest], done);
+}
 
-// Webserver at port 9000
-gulp.task('serve', ['build'], function() {
+function webserver() {
    connect.server({
       root: paths.dest,
-      livereload: true,
+      livereload: !config.production,
       port: 9000,
-      middleware: function () {
+      middleware: function() {
          return [middleman];
       }
    });
-});
+}
 
-// Copy /assets/ folder to _site/
-gulp.task('assets', function() {
-   return gulp.src(paths.assets)
-      .pipe(gulp.dest(paths.dest + '/assets/'));
-});
+function assets() {
+   return gulp.src(paths.assets, { base: paths.src })
+      .pipe(gulp.dest(paths.dest + "/assets/"));
+}
 
-// Copy and gzip all psp logos
-gulp.task('svgz', function() {
-   return gulp.src(paths.svgs)
-      .pipe(gzip({
-         gzipOptions: { level: 9 },
-         append: false
-      }))
-      .on('error', errorHandler)
-      .pipe(gulp.dest(paths.dest + '/assets/img/psp/'));
-});
-
-
-// Minify JavaScript and move to _site/
-gulp.task('scripts', function() {
-   return gulp.src(paths.scripts)
-      //.pipe(uglify(uglifyOpts))
-      .on('error', errorHandler)
+function scripts() {
+   return gulp.src(paths.scripts, { base: paths.src })
+      .pipe(concat('all.js'))
+      .pipe(config.production ? uglify(config.uglify) : gutil.noop())
       .pipe(gulp.dest(paths.dest));
-});
+}
 
-// Less -> Minified CSS.
-gulp.task('less', function() {
-   return gulp.src(paths.less)
+function less2css() {
+   return gulp.src(paths.less, { base: paths.src })
       .pipe(less())
-      .pipe(minifyCSS())
-      .on('error', errorHandler)
+      .pipe(config.production ? minifyCSS() : gutil.noop())
       .pipe(gulp.dest(paths.dest));
-});
+}
 
-// Nunjucks -> HTML.
-gulp.task('html', function() {
-   return gulp.src(paths.html)
-      .pipe(nunjucks({searchPaths: ['_site/'], locals: { lastUpdate: lastUpdate }}))
-      .pipe(htmlmin(htmlminOpts))
-      .on('error', errorHandler)
+function html() {
+   return gulp.src(paths.html, { base: paths.src })
+      .pipe(nunjucks({
+         searchPaths: ['_site/'],
+         locals: {
+            lastUpdate: lastUpdate
+         }
+      }))
+      .pipe(config.production ? htmlmin(config.htmlmin) : gutil.noop())
       .pipe(gulp.dest(paths.dest))
       .pipe(connect.reload());
-});
-
-// Watch for changes.
-gulp.task('watch', ['build'], function() {
-   gulp.watch(paths.assets, ['assets']);
-   gulp.watch(paths.html, ['html']);
-   gulp.watch(paths.scripts, ['scripts']);
-   gulp.watch(paths.less, ['less']);
-   gulp.watch(paths.rebuild, ['html']);
-});
-
-gulp.task('build', function(callback) {
-   runSequence('clean', ['assets', 'scripts', 'less'], 'svgz', 'html', callback);
-});
-
-gulp.task('default', ['build', 'serve', 'watch']);
-
-// Handle the error
-function errorHandler (error) {
-   console.log(error.toString());
-   this.emit('end');
 }
+
+function svgz() {
+   return gulp.src(paths.svgs)
+      .pipe(gzip({
+         gzipOptions: {
+            level: 9
+         },
+         append: false
+      }))
+      .pipe(gulp.dest(paths.dest + '/assets/img/psp/'));
+}
+
+function stalker() {
+   gulp.watch(paths.less, less2css);
+   gulp.watch(paths.assets, assets);
+   gulp.watch(paths.html, html);
+   gulp.watch(paths.scripts, scripts);
+   gulp.watch(paths.rebuild, html);
+}
+
+gulp.task('default', gulp.series(clean, assets, scripts, less2css, svgz, html, gulp.parallel(stalker, webserver)));
