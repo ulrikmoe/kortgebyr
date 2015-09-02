@@ -36,7 +36,7 @@
          <section>
             <h2>Indløsning</h2>
             <div class="acquirer_field">
-               <select id="acquirer" onchange="build();">
+               <select id="acquirer">
                   <option value="auto">Billigst mulige</option>
                   <option value="teller">Teller</option>
                   <option value="handelsbanken">Handelsbanken</option>
@@ -46,75 +46,54 @@
                   <option value="clearhaus">Clearhaus</option>
                </select>
             </div>
-            <div class="acquirer_options">
-               <p>
-                  <label>
-                     <input type="text" class="field" value="0 kr" id="acquirer_setup" onkeyup="build('keyup');" onblur="save_url();">Oprettelsesgebyr
-                  </label>
-               </p>
-               <p>
-                  <label>
-                     <input type="text" class="field" value="0 kr" id="acquirer_monthly" onkeyup="build('keyup');" onblur="save_url();">Abonnement pr. måned
-                  </label>
-               </p>
-               <p>
-                  <label>
-                     <input type="text" class="field" value="0%" id="acquirer_variable" onkeyup="build('keyup');" onblur="save_url();">
-                  </label>+
-                  <label style="margin-left: 7px">
-                     <input type="text" class="field" value="0 kr" id="acquirer_fixed" onkeyup="build('keyup');" onblur="save_url();">
-                     pr. transaktion
-                  </label>
-               </p>
-            </div>
             <div class="acquirer_description">Priser tager udgangspunkt i listepriser eller <a href="#">stikprøver</a>. Vi anbefaler at du starter med at læse vores <a href="#">forklaring her</a>.</div>
          </section>
          <section class="menulist" style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
             <p>
                <label>
-                  <input autocomplete="off" type="text" class="field" id="transactions" value="500" onkeyup="build('keyup');" onblur="save_url();">Transaktioner pr. måned</label>
+                  <input autocomplete="off" type="text" class="field" id="transactions" value="500">Transaktioner pr. måned</label>
             </p>
             <p>
                <label>
-                  <input autocomplete="off" type="text" class="field" id="avgvalue" value="450 DKK" onkeyup="build('keyup');" onblur="save_url();">Gennemsnits ordreværdi:</label>
+                  <input autocomplete="off" type="text" class="field" id="avgvalue" value="450 DKK">Gennemsnits ordreværdi:</label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" class="ofeatures" id="antifraud" onchange="build();" /> Svindelkontrol</label>
+                  <input type="checkbox" class="ofeatures" id="antifraud"/> Svindelkontrol</label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" class="ofeatures" id="recurring" onchange="build();" /> Abonnementsbetalinger</label>
+                  <input type="checkbox" class="ofeatures" id="recurring"/> Abonnementsbetalinger</label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" class="ofeatures" id="multiacquirer" onchange="build();" /> Multi-indløser</label>
+                  <input type="checkbox" class="ofeatures" id="multiacquirer"/> Multi-indløser</label>
             </p>
          </section>
          <section class="menulist" style="width:19%">
             <p>
                <label>
-                  <input checked="" type="checkbox" class="ocards" id="dankort" onchange="build();" /> Dankort
+                  <input checked="" type="checkbox" class="ocards" id="dankort"/> Dankort
                </label>
             </p>
             <p>
                <label>
-                  <input checked="" type="checkbox" class="ocards" id="visa" onchange="build();" /> Visa / MasterCard
+                  <input checked="" type="checkbox" class="ocards" id="visa"/> Visa / MasterCard
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" class="ocards" id="forbrugsforeningen" onchange="build();" /> Forbrugsforening
+                  <input type="checkbox" class="ocards" id="forbrugsforeningen"/> Forbrugsforening
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" class="ocards" id="diners" onchange="build();" /> Diners
+                  <input type="checkbox" class="ocards" id="diners"/> Diners
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" class="ocards" id="amex" onchange="build();" /> American Express
+                  <input type="checkbox" class="ocards" id="amex"/> American Express
                </label>
             </p>
          </section>
@@ -123,22 +102,17 @@
          <section class="menulist" style="width: 17%; border-left:0; padding-left:0; padding-right:0">
             <p>
                <label>
-                  <input type="checkbox" class="ocards" id="jcb" onchange="build();" /> JCB
+                  <input type="checkbox" class="ocards" id="jcb"/> JCB
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" class="ocards" id="unionpay" onchange="build();" /> UnionPay
+                  <input type="checkbox" class="ocards" id="unionpay"/> UnionPay
                </label>
             </p>
             <p>
                <label>
-                  <input type="checkbox" class="ocards" id="mobilepay" onchange="build();" /> MobilePay
-               </label>
-            </p>
-            <p>
-               <label>
-                  <input type="checkbox" class="ocards" id="swipp" onchange="build();" /> Swipp
+                  <input type="checkbox" class="ocards" id="mobilepay"/> MobilePay
                </label>
             </p>
          </section>

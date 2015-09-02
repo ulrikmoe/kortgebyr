@@ -489,67 +489,6 @@ nav {
 }
 
 
-
-.tooltip {
-
-	outline:none;
-	cursor: help;
-	display: inline-block;
-	position: relative;
-
-	img {margin: -2px 0 0 6px; opacity: 0.7; }
-	strong {line-height:30px;}
-	span {
-		z-index:10;
-		display:none;
-		position:absolute;
-		padding:14px 20px;
-		top: -80px;
-		margin-left: -88px;
-		width:160px;
-		line-height:16px;
-		font-size: 12px;
-		background: #2C3843;
-		color:#f4f4f4;
-		border: 1px solid #000;
-		border-radius: 3px;
-	}
-
-	&:hover {
-		text-decoration:none;
-
-		span {
-			display:block;
-		}
-
-		span:after, span:before {
-			top: 100%;
-			border: solid transparent;
-			content: "";
-			height: 0;
-			width: 0;
-			position: absolute;
-		}
-
-		span:before {
-			border-color: rgba(136, 183, 213, 0);
-			border-top-color: #000;
-			border-width: 8px;
-			left: 50%;
-			margin-left: -8px;
-		}
-
-		span:after {
-			border-color: rgba(136, 183, 213, 0);
-			border-top-color: #2C3843;
-			border-width: 7px;
-			left: 50%;
-			margin-left: -7px;
-		}
-	}
-}
-
-
 footer {
 
   background: #fff;

@@ -5,176 +5,24 @@
  *
  *   Indentation: 3 spaces
  *   Conventions: https://github.com/airbnb/javascript
- *
  **/
 
-var currency_value = {
-   'DKK': 1,
-   'SEK': 0.779,
-   'NOK': 0.822,
-   'EUR': 7.462,
-   'USD': 6.750
-};
-var currency_map = {
-   'DKK': 'kr',
-   'SEK': 'kr',
-   'NOK': 'kr',
-   'EUR': '€',
-   'USD': '$'
-};
-var gccode = 'DKK';
+ var currency_value = {
+    'DKK': 1,
+    'SEK': 0.786,
+    'NOK': 0.798,
+    'EUR': 7.463,
+    'USD': 6.642
+ };
+ 
+ var currency_map = {
+    'DKK': 'kr',
+    'SEK': 'kr',
+    'NOK': 'kr',
+    'EUR': '€',
+    'USD': '$'
+ };
 
-var company = {
-   // Acquirers
-   "teller": {
-      name: "Teller",
-      logo: "teller.svg",
-      link: "http://www.teller.com"
-   },
-   "handelsbanken": {
-      name: "Handelsbanken",
-      logo: "handelsbanken.svg",
-      link: "http://www.handelsbanken.dk"
-   },
-   "nets": {
-      name: "Nets",
-      logo: "nets.svg",
-      link: "http://www.nets.eu"
-   },
-   "swedbank": {
-      name: "Swedbank",
-      logo: "swedbank.png",
-      link: "http://www.swedbank.dk"
-   },
-   "valitor": {
-      name: "Valitor",
-      logo: "valitor.png",
-      link: "http://www.valitor.com"
-   },
-   "elavon": {
-      name: "Elavon",
-      logo: "elavon.svg",
-      link: "http://www.elavon.com"
-   },
-   "clearhaus": {
-      name: "Clearhaus",
-      logo: "clearhaus.svg",
-      link: "https://www.clearhaus.com"
-   },
-   // Payment Service Providers
-   "braintree": {
-      name: "Braintree",
-      logo: "braintree.svg",
-      link: "https://www.braintreepayments.com"
-   },
-   "certitrade": {
-      name: "Certitrade",
-      logo: "certitrade.svg",
-      link: "http://www.certitrade.net/kortbetalning.php"
-   },
-   "checkout": {
-      name: "Checkout.com",
-      logo: "checkout.svg",
-      link: "https://www.checkout.com"
-   },
-   "dandomain": {
-      name: "DanDomain",
-      logo: "dandomain.svg",
-      link: "https://www.dandomain.dk/e-handel/betalingssystem"
-   },
-   "dibs": {
-      name: "DIBS",
-      logo: "dibs.svg",
-      link: "http://dibs.dk"
-   },
-   "epay": {
-      name: "ePay",
-      logo: "epay.svg",
-      link: "http://epay.dk"
-   },
-   "netaxept": {
-      name: "Netaxept",
-      logo: "netaxept.svg",
-      link: "https://www.terminalshop.dk/Netaxept/",
-   },
-   "payer": {
-      name: "Payer",
-      logo: "payer.svg",
-      link: "http://payer.se/betallosning/"
-   },
-   "paymill": {
-      name: "Paymill",
-      logo: "paymill.svg",
-      link: "https://paymill.com"
-   },
-   "paypal": {
-      name: "paypal",
-      logo: "paypal.svg",
-      link: "https://paypal.com"
-   },
-   "payson": {
-      name: "Payson",
-      logo: "payson.png",
-      link: "https://www.payson.se"
-   },
-   "payza": {
-      name: "Payza",
-      logo: "payza.svg",
-      link: "https://payza.com"
-   },
-   "verifone": {
-      name: "Verifone",
-      logo: "verifone.svg",
-      link: "http://www.verifone.se/sv/Sweden/Start/E-handel/"
-   },
-   "stripe": {
-      name: "Stripe",
-      logo: "stripe.svg",
-      link: "https://stripe.com"
-   },
-   "quickpay": {
-      name: "QuickPay",
-      logo: "quickpay.svg",
-      link: "https://quickpay.net"
-   },
-   "scannet": {
-      name: "Scannet",
-      logo: "scannet.png",
-      link: "http://www.scannet.dk/hosting/betalingsloesning/"
-   },
-   "skrill": {
-      name: "Skrill",
-      logo: "skrill.svg",
-      link: "https://skrill.com"
-   },
-   "wannafind": {
-      name: "Wannafind",
-      logo: "wannafind.svg",
-      link: "https://www.wannafind.dk/betalingsgateway/"
-   },
-   "yourpay": {
-      name: "yourpay",
-      logo: "yourpay.png",
-      link: "http://yourpay.dk"
-   },
-   "klarna": {
-      name: "Klarna",
-      logo: "klarna.svg",
-      link: "https://klarna.se"
-   },
-   "2checkout": {
-      name: "2checkout",
-      logo: "2checkout.svg",
-      link: "https://www.2checkout.com"
-   },
-   "paylike": {
-      name: "Paylike",
-      logo: "paylike.svg",
-      link: "https://paylike.io"
-   }
-};
-
-// Payment Methods
 var CARDs = {
    "dankort": {
       name: "Dankort",
@@ -224,7 +72,6 @@ var CARDs = {
       name: "MobilePay",
       logo: "#mobilepaylogo",
       costfn: function(o){
-         // http://www.epay.dk/betalingsformer/mobilepay-online.asp
          // We will calc the actual costs when we get some usage stats (ETA Q4 2015)
          return {
             setup: new Currency(49, 'DKK'),
@@ -232,24 +79,16 @@ var CARDs = {
             trans: new Currency(1, 'DKK')
          };
       }
-   },
-   "swipp": {
-      name: "Swipp",
-      logo: "#swipplogo",
-      costfn: function(o){
-         // We will calc the actual costs when we get some usage stats (ETA Q4 2015)
-         return {
-            setup: new Currency(0, 'DKK'),
-            monthly: new Currency(0, 'DKK'),
-            trans: new Currency(0, 'DKK')
-         };
-      },
    }
 };
 
+
 var ACQs = {
    "teller": {
-      cards: cardlist(["visa", "mastercard", "maestro", "amex", "jcb", "unionpay", "diners", "mobilepay"]),
+      name: "Teller",
+      logo: "teller.svg",
+      link: "http://www.teller.com",
+      cards: objectize(["visa", "mastercard", "maestro", "amex", "jcb", "unionpay", "diners", "mobilepay"]),
       fee_setup: new Currency(1000, 'DKK'),
       fee_monthly: new Currency(149, 'DKK'),
       fee_fixed: new Currency(0, 'DKK'),
@@ -267,7 +106,10 @@ var ACQs = {
       }
    },
    "handelsbanken": {
-      cards: cardlist(["visa", "mastercard", "maestro"]),
+      name: "Handelsbanken",
+      logo: "handelsbanken.svg",
+      link: "http://www.handelsbanken.dk",
+      cards: objectize(["visa", "mastercard", "maestro"]),
       fee_setup: new Currency(0, 'DKK'),
       fee_monthly: new Currency(0, 'DKK'),
       fee_fixed: new Currency(0, 'DKK'),
@@ -275,7 +117,10 @@ var ACQs = {
       costfn: acq_cost_default
    },
    "nets": {
-      cards: cardlist(["dankort", "forbrugsforeningen", "mobilepay"]),
+      name: "Nets",
+      logo: "nets.svg",
+      link: "http://www.nets.eu",
+      cards: objectize(["dankort", "forbrugsforeningen", "mobilepay"]),
       fee_setup: new Currency(250, 'DKK'),
       fee_monthly: new Currency(1000 / 12, 'DKK'),
       costfn: function(o) {
@@ -295,7 +140,10 @@ var ACQs = {
       }
    },
    "swedbank": {
-      cards: cardlist(["visa", "mastercard", "maestro"]),
+      name: "Swedbank",
+      logo: "swedbank.png",
+      link: "http://www.swedbank.dk",
+      cards: objectize(["visa", "mastercard", "maestro"]),
       fee_setup: new Currency(1900, 'DKK'),
       fee_monthly: new Currency(100, 'DKK'),
       fee_fixed: new Currency(0, 'DKK'),
@@ -303,7 +151,10 @@ var ACQs = {
       costfn: acq_cost_default
    },
    "valitor": {
-      cards: cardlist(["visa", "mastercard", "maestro"]),
+      name: "Valitor",
+      logo: "valitor.png",
+      link: "http://www.valitor.com",
+      cards: objectize(["visa", "mastercard", "maestro"]),
       fee_setup: new Currency(0, 'DKK'),
       fee_monthly: new Currency(0, 'DKK'),
       fee_fixed: new Currency(0, 'DKK'),
@@ -311,7 +162,10 @@ var ACQs = {
       costfn: acq_cost_default
    },
    "elavon": {
-      cards: cardlist(["visa", "mastercard", "maestro"]),
+      name: "Elavon",
+      logo: "elavon.svg",
+      link: "http://www.elavon.com",
+      cards: objectize(["visa", "mastercard", "maestro"]),
       fee_setup: new Currency(0, 'DKK'),
       fee_monthly: new Currency(0, 'DKK'),
       fee_fixed: new Currency(0, 'DKK'),
@@ -319,7 +173,10 @@ var ACQs = {
       costfn: acq_cost_default
    },
    "clearhaus": {
-      cards: cardlist(["visa", "mastercard", "maestro", "mobilepay"]),
+      name: "Clearhaus",
+      logo: "clearhaus.svg",
+      link: "https://www.clearhaus.com",
+      cards: objectize(["visa", "mastercard", "maestro", "mobilepay"]),
       fee_setup: new Currency(0, 'DKK'),
       fee_monthly: new Currency(0, 'DKK'),
       fee_fixed: new Currency(0, 'DKK'),
@@ -328,11 +185,15 @@ var ACQs = {
    }
 };
 
+
+
 var PSPs = [
 {
-   id: "braintree",
-   features: cardlist(["antifraud", "recurring"]),
-   cards: cardlist(["visa", "mastercard", "maestro"]),
+   name: "Braintree",
+   logo: "braintree.svg",
+   link: "https://www.braintreepayments.com",
+   features: objectize(["antifraud", "recurring"]),
+   cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'DKK'),
@@ -341,10 +202,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "certitrade",
-   features: cardlist(["antifraud", "recurring"]),
-   acquirers: cardlist(["handelsbanken", "nordea", "swedbank"]),
-   cards: cardlist(["visa", "mastercard", "maestro", "diners", "amex"]),
+   name: "Certitrade",
+   logo: "certitrade.svg",
+   link: "http://www.certitrade.net/kortbetalning.php",
+   features: objectize(["antifraud"]),
+   acquirers: objectize(["handelsbanken", "nordea", "swedbank", "clearhaus"]),
+   cards: objectize(["visa", "mastercard", "maestro", "diners", "amex"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'SEK'),
@@ -353,9 +216,11 @@ var PSPs = [
       };
    }
 }, {
-   id: "checkout",
-   features: cardlist(["antifraud", "recurring"]),
-   cards: cardlist(["visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
+   name: "Checkout.com",
+   logo: "checkout.svg",
+   link: "https://www.checkout.com",
+   features: objectize(["antifraud", "recurring"]),
+   cards: objectize(["visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'DKK'),
@@ -364,38 +229,40 @@ var PSPs = [
       };
    }
 }, {
-   id: "dandomain",
-   features: {},
-   acquirers: cardlist(["nets", "teller"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen", "diners", "jcb", "amex", "unionpay"]),
+   name: "DanDomain",
+   logo: "dandomain.svg",
+   link: "https://www.dandomain.dk/e-handel/betalingssystem",
+   features: objectize(["recurring"]),
+   acquirers: objectize(["nets", "teller"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
 
-      var s = 199;
-      var m = 149;
-      if (o.visasecure) {
-         s += 99;
-         m += 49;
-      }
+      var recurring = {};
+      recurring.setup = 0;
+      recurring.monthly = 0;
 
-      if (o.recurring) {
-         s += 299;
-         if (o.transactions < 100) m += 99;
-         else if (o.transactions < 1000) m += 149;
-         else m += 399;
-      }
+      if (o.features.recurring) {
+         recurring.setup = new Currency(299, 'DKK');
 
+         if (o.transactions < 100) { recurring.monthly = 99; }
+         else if (o.transactions < 1000) { recurring.monthly = 149; }
+         else { recurring.monthly = 399; }
+
+         recurring.monthly = new Currency(recurring.monthly, 'DKK');
+      }
       return {
-         setup: new Currency(s, 'DKK'),
-         monthly: new Currency(m, 'DKK'),
+         setup: new Currency(298, 'DKK').add(recurring.setup), // 199 + 99 (3D)
+         monthly: new Currency(198, 'DKK').add(recurring.monthly), // 149 + 49 (3D)
          trans: new Currency(0, 'DKK')
       };
    }
 }, {
-   id: "dibs",
-   product: "Start",
+   name: "DIBS Start",
+   logo: "dibs.svg",
+   link: "http://dibs.dk",
    features: {},
-   acquirers: cardlist(["nets"]),
-   cards: cardlist(["dankort", "mobilepay"]),
+   acquirers: objectize(["nets"]),
+   cards: objectize(["dankort", "mobilepay"]),
    costfn: function(o) {
       return {
          setup: new Currency(1495, 'DKK'),
@@ -404,11 +271,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "dibs",
-   product: "Medium",
-   features: cardlist(["antifraud", "recurring"]),
-   acquirers: cardlist(["nets", "teller", "swedbank", "valitor", "handelsbanken", "elavon"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "diners", "mobilepay"]),
+   name: "DIBS Medium",
+   logo: "dibs.svg",
+   link: "http://dibs.dk",
+   features: objectize(["antifraud"]),
+   acquirers: objectize(["nets", "teller", "swedbank", "valitor", "handelsbanken", "elavon"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "diners", "mobilepay"]),
    costfn: function(o) {
       return {
          setup: new Currency(4995, 'DKK'),
@@ -417,11 +285,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "dibs",
-   product: "Premium",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
-   acquirers: cardlist(["nets", "teller", "swedbank", "valitor", "handelsbanken", "elavon"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "diners", "mobilepay"]),
+   name: "DIBS Premium",
+   logo: "dibs.svg",
+   link: "http://dibs.dk",
+   features: objectize(["antifraud", "recurring", "multiacquirer"]),
+   acquirers: objectize(["nets", "teller", "swedbank", "valitor", "handelsbanken", "elavon"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "diners", "mobilepay"]),
    costfn: function(o) {
       return {
          setup: new Currency(10995, 'DKK'),
@@ -430,15 +299,16 @@ var PSPs = [
       };
    }
 }, {
-   id: "epay",
-   product: "Light",
-   features: cardlist(["antifraud", "recurring"]),
-   acquirers: cardlist(["nets"]),
-   cards: cardlist(["dankort", "forbrugsforeningen", "mobilepay"]),
+   name: "ePay Light",
+   logo: "epay.svg",
+   link: "http://epay.dk",
+   features: objectize(["antifraud"]),
+   acquirers: objectize(["nets"]),
+   cards: objectize(["dankort", "forbrugsforeningen", "mobilepay"]),
    costfn: function(o) {
       var fee = 0.25;
       var antifraud = 0;
-      if (o.antifraud) {
+      if (o.features.antifraud) {
          antifraud = (new Currency(0.3, 'DKK')).scale(o.transactions);
       }
       return {
@@ -448,18 +318,19 @@ var PSPs = [
       };
    }
 }, {
-   id: "epay",
-   product: "Pro",
-   features: cardlist(["antifraud", "recurring"]),
-   acquirers: cardlist(["nets", "teller"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "mobilepay"]),
+   name: "ePay Pro",
+   logo: "epay.svg",
+   link: "http://epay.dk",
+   features: objectize(["antifraud"]),
+   acquirers: objectize(["nets", "teller"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "mobilepay"]),
    costfn: function(o) {
       var fee = 0.25;
       var antifraud = 0;
-      if (o.antifraud) {
+
+      if (o.features.antifraud) {
          antifraud = (new Currency(0.3, 'DKK')).scale(o.transactions);
       }
-
       return {
          setup: new Currency(599, 'DKK'),
          monthly: new Currency(199, 'DKK'),
@@ -467,35 +338,37 @@ var PSPs = [
       };
    }
 }, {
-   id: "epay",
-   product: "Business",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
-   acquirers: cardlist(["nets", "teller", "swedbank", "handelsbanken", "valitor", "elavon", "clearhaus"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "mobilepay"]),
+   name: "ePay Business",
+   logo: "epay.svg",
+   link: "http://epay.dk",
+   features: objectize(["antifraud", "recurring", "multiacquirer"]),
+   acquirers: objectize(["nets", "teller", "swedbank", "handelsbanken", "valitor", "elavon", "clearhaus"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "mobilepay"]),
    costfn: function(o) {
       var fee = 0.25,
          antifraud = 0,
          recurring = 0;
 
-      if (o.antifraud) {
+      if (o.features.antifraud) {
          antifraud = (new Currency(0.3, 'DKK')).scale(o.transactions);
       }
-      if (o.recurring) {
-         recurring = (new Currency(1, 'DKK')).scale(o.transactions);
+      if (o.features.recurring) {
+         recurring = (new Currency(1/12, 'DKK')).scale(o.transactions);
       }
 
       return {
          setup: new Currency(999, 'DKK').add(recurring),
          monthly: new Currency(299, 'DKK'),
-         trans: (new Currency(fee, 'DKK')).scale(Math.max(o.transactions - 500, 0)).add(antifraud)
+         trans: (new Currency(fee, 'DKK')).scale(Math.max(o.transactions - 500, 0)).add(antifraud).add(recurring)
       };
    }
 }, {
-   id: "netaxept",
-   product: "Start",
-   features: {},
-   acquirers: cardlist(["nets", "teller"]),
-   cards: cardlist(["dankort", "visa", "mastercard"]),
+   name: "Netaxept Start",
+   logo: "netaxept.svg",
+   link: "https://www.terminalshop.dk/Netaxept/",
+   features: objectize(["antifraud"]),
+   acquirers: objectize(["nets", "teller"]),
+   cards: objectize(["dankort", "visa", "mastercard"]),
    costfn: function(o) {
       return {
          setup: new Currency(1005, 'DKK'),
@@ -504,11 +377,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "netaxept",
-   product: "Plus",
-   features: cardlist(["antifraud", "recurring"]),
-   acquirers: cardlist(["nets", "teller", "elavon", "swedbank", "nordea"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "diners", "jcb", "amex", "unionpay"]),
+   name: "Netaxept Plus",
+   logo: "netaxept.svg",
+   link: "https://www.terminalshop.dk/Netaxept/",
+   features: objectize(["antifraud"]),
+   acquirers: objectize(["nets", "teller", "elavon", "swedbank", "nordea"]),
+   cards: objectize(["dankort", "visa", "mastercard", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
       return {
          setup: new Currency(3016, 'DKK'),
@@ -517,17 +391,17 @@ var PSPs = [
       };
    }
 }, {
-   id: "netaxept",
-   product: "Advanced",
-   features: cardlist(["antifraud", "recurring"]),
-   acquirers: cardlist(["nets", "teller", "elavon", "swedbank", "nordea"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "diners", "jcb", "amex", "unionpay"]),
+   name: "Netaxept Advanced",
+   logo: "netaxept.svg",
+   link: "https://www.terminalshop.dk/Netaxept/",
+   features: objectize(["antifraud", "recurring"]),
+   acquirers: objectize(["nets", "teller", "elavon", "swedbank", "nordea"]),
+   cards: objectize(["dankort", "visa", "mastercard", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
       var recurring = 0;
-      if (o.recurring || o.multiacquirer) {
-         recurring = (new Currency(250, 'DKK'));
+      if (o.features.recurring) {
+         recurring = new Currency(250, 'DKK');
       }
-
       return {
          setup: new Currency(7540, 'DKK'),
          monthly: new Currency(703, 'DKK').add(recurring),
@@ -535,10 +409,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "payer",
-   features: cardlist(["recurring"]),
-   acquirers: cardlist(["handelsbanken", "swedbank", "nordea"]),
-   cards: cardlist(["visa", "mastercard", "maestro", "diners", "amex"]),
+   name: "Payer",
+   logo: "payer.svg",
+   link: "http://payer.se/betallosning/",
+   features: {},
+   acquirers: objectize(["handelsbanken", "swedbank", "nordea"]),
+   cards: objectize(["visa", "mastercard", "maestro", "diners", "amex"]),
    costfn: function(o) {
       return {
          setup: new Currency(1400, 'SEK'),
@@ -547,9 +423,11 @@ var PSPs = [
       };
    }
 }, {
-   id: "paymill",
-   features: cardlist(["antifraud", "recurring"]),
-   cards: cardlist(["visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
+   name: "Paymill",
+   logo: "paymill.svg",
+   link: "https://paymill.com",
+   features: objectize(["antifraud", "recurring"]),
+   cards: objectize(["visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'EUR'),
@@ -558,9 +436,11 @@ var PSPs = [
       };
    }
 }, {
-   id: "paypal",
-   features: cardlist(["antifraud", "recurring"]),
-   cards: cardlist(["visa", "mastercard", "maestro", "diners", "jcb", "amex"]),
+   name: "PayPal",
+   logo: "paypal.svg",
+   link: "https://paypal.com",
+   features: objectize(["antifraud", "recurring"]),
+   cards: objectize(["visa", "mastercard", "maestro", "diners", "jcb", "amex"]),
    costfn: function(o) {
       var oms = o.transactions * o.avgvalue.dkk();
       var fee = 1.9;
@@ -584,9 +464,11 @@ var PSPs = [
       };
    }
 }, {
-   id: "payson",
-   features: cardlist(["antifraud", "recurring"]),
-   cards: cardlist(["visa", "mastercard", "maestro"]),
+   name: "Payson",
+   logo: "payson.png",
+   link: "https://www.payson.se",
+   features: objectize(["antifraud"]),
+   cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'SEK'),
@@ -595,9 +477,11 @@ var PSPs = [
       };
    }
 }, {
-   id: "payza",
-   features: cardlist(["antifraud", "recurring"]),
-   cards: cardlist(["visa", "mastercard", "maestro"]),
+   name: "Payza",
+   logo: "payza.svg",
+   link: "https://payza.com",
+   features: objectize(["antifraud"]),
+   cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'EUR'),
@@ -606,11 +490,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "verifone",
-   product: "Bas",
-   features: cardlist(["antifraud", "recurring"]),
-   acquirers: cardlist(["handelsbanken", "nordea", "swedbank"]),
-   cards: cardlist(["visa", "mastercard", "diners", "jcb", "amex"]),
+   name: "Verifone Bas",
+   logo: "verifone.svg",
+   link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
+   features: {},
+   acquirers: objectize(["handelsbanken", "nordea", "swedbank"]),
+   cards: objectize(["visa", "mastercard", "diners", "jcb", "amex"]),
    costfn: function(o) {
       return {
          setup: new Currency(999, 'SEK'),
@@ -619,11 +504,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "verifone",
-   product: "Premium",
-   features: cardlist(["antifraud", "recurring"]),
-   acquirers: cardlist(["handelsbanken", "nordea", "swedbank"]),
-   cards: cardlist(["visa", "mastercard", "diners", "jcb", "amex"]),
+   name: "Verifone Premium",
+   logo: "verifone.svg",
+   link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
+   features: {},
+   acquirers: objectize(["handelsbanken", "nordea", "swedbank"]),
+   cards: objectize(["visa", "mastercard", "diners", "jcb", "amex"]),
    costfn: function(o) {
       return {
          setup: new Currency(2499, 'SEK'),
@@ -632,11 +518,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "verifone",
-   product: "PremiumPlus",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
-   acquirers: cardlist(["nets", "handelsbanken", "nordea", "swedbank"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "diners", "amex", "jcb"]),
+   name: "Verifone PremiumPlus",
+   logo: "verifone.svg",
+   link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
+   features: {},
+   acquirers: objectize(["nets", "handelsbanken", "nordea", "swedbank"]),
+   cards: objectize(["dankort", "visa", "mastercard", "diners", "amex", "jcb"]),
    costfn: function(o) {
       return {
          setup: new Currency(4999, 'SEK'),
@@ -645,9 +532,11 @@ var PSPs = [
       };
    }
 }, {
-   id: "stripe",
-   features: cardlist(["antifraud", "recurring"]),
-   cards: cardlist(["visa", "mastercard", "maestro", "amex"]),
+   name: "Stripe",
+   logo: "stripe.svg",
+   link: "https://stripe.com",
+   features: objectize(["antifraud", "recurring"]),
+   cards: objectize(["visa", "mastercard", "maestro", "amex"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'USD'),
@@ -656,11 +545,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "quickpay",
-   product: "Standard",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
-   acquirers: cardlist(["nets", "teller", "clearhaus"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "mobilepay"]),
+   name: "QuickPay Standard",
+   logo: "quickpay.svg",
+   link: "https://quickpay.net",
+   features: objectize(["antifraud", "recurring", "multiacquirer"]),
+   acquirers: objectize(["nets", "teller", "clearhaus"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "mobilepay"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'DKK'),
@@ -669,11 +559,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "quickpay",
-   product: "Professional",
-   features: cardlist(["antifraud", "recurring", "multiacquirer"]),
-   acquirers: cardlist(["nets", "teller", "clearhaus"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "mobilepay"]),
+   name: "QuickPay Professional",
+   logo: "quickpay.svg",
+   link: "https://quickpay.net",
+   features: objectize(["antifraud", "recurring", "multiacquirer"]),
+   acquirers: objectize(["nets", "teller", "clearhaus"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "mobilepay"]),
    costfn: function(o) {
 
       var fee = 0.25;
@@ -684,10 +575,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "scannet",
+   name: "Scannet",
+   logo: "scannet.png",
+   link: "http://www.scannet.dk/hosting/betalingsloesning/",
    features: {},
-   acquirers: cardlist(["nets", "teller"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
+   acquirers: objectize(["nets", "teller"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
       return {
          setup: new Currency(950, 'DKK'),
@@ -696,9 +589,11 @@ var PSPs = [
       };
    }
 }, {
-   id: "skrill",
-   features: cardlist(["antifraud", "recurring"]),
-   cards: cardlist(["visa", "mastercard", "maestro", "diners", "jcb", "amex"]),
+   name: "Skrill",
+   logo: "skrill.svg",
+   link: "https://skrill.com",
+   features: objectize(["antifraud", "recurring"]),
+   cards: objectize(["visa", "mastercard", "maestro", "diners", "jcb", "amex"]),
    costfn: function(o) {
       var oms = o.transactions * o.avgvalue.dkk();
       var fee = 2.9;
@@ -710,32 +605,30 @@ var PSPs = [
       };
    }
 }, {
-   id: "wannafind",
-   features: cardlist(["recurring"]),
-   acquirers: cardlist(["nets", "teller"]),
-   cards: cardlist(["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen", "diners", "jcb", "amex", "unionpay", "mobilepay"]),
+   name: "Wannafind",
+   logo: "wannafind.svg",
+   link: "https://www.wannafind.dk/betalingsgateway/",
+   features: objectize(["recurring"]),
+   acquirers: objectize(["nets", "teller"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
 
-      var recurring = 0,
-         visasecure = 0;
-
-      if (o.visasecure) {
-         visasecure = (new Currency(49, 'DKK'));
-      }
-      if (o.recurring) {
+      var recurring = 0;
+      if (o.features.recurring) {
          recurring = (new Currency(99, 'DKK'));
       }
-
       return {
          setup: new Currency(0, 'DKK'),
-         monthly: new Currency(149, 'DKK').add(recurring).add(visasecure),
+         monthly: new Currency(198, 'DKK').add(recurring), // 149 + 49 (3D secure)
          trans: new Currency(0, 'DKK')
       };
    }
 }, {
-   id: "yourpay",
+   name: "YourPay",
+   logo: "yourpay.png",
+   link: "http://yourpay.dk",
    features: {},
-   cards: cardlist(["visa", "mastercard", "maestro"]),
+   cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
 
       var fee = 2.25;
@@ -747,10 +640,12 @@ var PSPs = [
       };
    }
 }, {
-   id: "klarna",
+   name: "Klarna",
+   logo: "klarna.svg",
+   link: "https://klarna.se",
    product: "checkout",
    features: {},
-   cards: cardlist(["visa", "mastercard", "maestro"]),
+   cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
 
       var fee = 2.95;
@@ -762,9 +657,11 @@ var PSPs = [
       };
    }
 }, {
-   id: "2checkout",
-   features: cardlist(["antifraud"]),
-   cards: cardlist(["visa", "mastercard", "maestro", "amex", "jcb", "diners"]),
+   name: "2checkout",
+   logo: "2checkout.svg",
+   link: "https://www.2checkout.com",
+   features: objectize(["antifraud", "recurring"]),
+   cards: objectize(["visa", "mastercard", "maestro", "amex", "jcb", "diners"]),
    costfn: function(o) {
       var fee = 2.4;
       return {
@@ -774,14 +671,16 @@ var PSPs = [
       };
    }
 }, {
-   id: "paylike",
-   features: cardlist(["recurring"]),
-   cards: cardlist(["visa", "mastercard", "maestro"]),
+   name: "Paylike",
+   logo: "paylike.svg",
+   link: "https://paylike.io",
+   features: objectize(["antifraud"]),
+   cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'DKK'),
          monthly: new Currency(0, 'DKK'),
-         trans: o.avgvalue.scale(2.75 / 100).add(new Currency(0.25, 'EUR')).scale(o.transactions)
+         trans: o.avgvalue.scale(2.5 / 100).add(new Currency(0.25, 'EUR')).scale(o.transactions)
       };
    }
 }];
