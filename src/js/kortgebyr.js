@@ -401,11 +401,13 @@ function build(action) {
       settings.dankort_scale = 0;
 
       if ( !settings.cards.visa ) {
-         alert("Venligst vælg betalingskort");
+         $('tbody').innerHTML = "";
+         alert("Venligst vælg enten Dankort, Visa eller MasterCard.");
          return;
       }
-      if ( settings.forbrugsforeningen ) {
-         alert("Forbrugsforeningen kræver en Dankort aftale.");
+      if ( settings.cards.forbrugsforeningen ) {
+         $('tbody').innerHTML = "";
+         alert("Forbrugsforeningens kontokort kræver en Dankort aftale.");
          return;
       }
    }
