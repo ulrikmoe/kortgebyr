@@ -9,7 +9,7 @@
    <link rel="canonical" href="https://kortgebyr.dk">
 </head>
 <body>
-   <header class="container">
+   <header class="c">
       <nav role="navigation">
 
          <div class="logo"><a href="/">kortgebyr</a></div>
@@ -32,8 +32,9 @@
          </div>
          <div class="contact"> <a href="mailto:ulrik.moe@gmail.com?Subject=Kortgebyr.dk">Feedback</a></div>
       </nav>
+
       <div class="menu clearfix">
-         <section>
+         <section class="acquirer_menu">
             <h2>Indløsning</h2>
             <div class="acquirer_field">
                <select id="acquirer">
@@ -48,6 +49,7 @@
             </div>
             <div class="acquirer_description">Priser tager udgangspunkt i listepriser eller <a href="#">stikprøver</a>. Vi anbefaler at du starter med at læse vores <a href="#">forklaring her</a>.</div>
          </section>
+
          <section class="menulist" style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
             <p>
                <label>
@@ -119,7 +121,7 @@
       </div>
    </header>
    <main role="main">
-      <table id="table" class="table container">
+      <table id="table" class="table c">
          <thead>
             <tr>
                <th style="text-align:left; padding-left:12px">Betalingsløsning</th>
@@ -138,7 +140,7 @@
       <br />til at sammenligne betalingsløsninger. Kortgebyr er uafhængig, non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small><a href="https://github.com/ulrikmoe/kortgebyr/blob/master/GPLv3.md">GPLv3</a></small>).
    </footer>
 
-   <svg style="display:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <svg class="hidden" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
       <symbol id="dankortlogo" width="22" viewBox="0 0 70 48">
          <path d="M59 22l11 15V10M24 8c8.3 0 14.4 2.9 15 11l9-11h22V6c0-3.3-2.7-6-6-6H6C2.7 0 0 2.7 0 6v2h24zM10.2 18.7l-3 9.5h11.9c3.5 0 4.6-1.7 5.4-5 .8-3.2-1.2-4.5-3.6-4.5H10.2zm37.4 20.1L39 26.1c-.2-.3-.6-.2-.7.1C36.4 34.9 31.1 39 21 39H0v3c0 3.3 2.7 6 6 6h58c3.3 0 6-2.7 6-6v-3H48c-.1 0-.3-.1-.4-.2z" fill="#EA292B"/>

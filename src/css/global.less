@@ -57,54 +57,21 @@ body {
  * 5. Input fields should inherit font/color
  */
 
-a { background: transparent; } /* 1 */
-ul, ol { list-style: none; }
 img { box-sizing: content-box; border:0px; } /* 2 */
 a:active, a:hover { outline: 0; } /* 3 */
-input, button, select, textarea { font-family: inherit; color: inherit; } /* 5 */
-::-moz-selection { background: #b3d4fc; text-shadow: none; }
-::selection { background: #b3d4fc; text-shadow: none; }
+input, button, select { font-family: inherit; color: inherit; } /* 5 */
 :focus { outline-color: transparent; outline-style: none; }
 .hidden { display: none !important; visibility: hidden; }
 .clearfix:before, .clearfix:after { content: " "; display: table; }
 .clearfix:after { clear: both; }
 a { color: inherit; }
-textarea { overflow: auto; resize: vertical; }
-audio,canvas,img,svg,video { vertical-align: middle; }
+img,svg { vertical-align: middle; }
 :focus { outline:none; }
-
-
-/**
- * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
- *    and `video` controls.
- * 2. Correct inability to style clickable `input` types in iOS.
- * 3. Improve usability and consistency of cursor style between image-type
- *    `input` and others.
- */
-
-button,
-html input[type="button"], /* 1 */
-input[type="reset"],
-input[type="submit"] {
-  -webkit-appearance: button; /* 2 */
-  cursor: pointer; /* 3 */
-}
-
-
-/**
- * Re-set default cursor for disabled elements.
- */
-
-button[disabled],
-html input[disabled] {
-  cursor: default;
-}
 
 /**
  * Remove inner padding and border in Firefox 4+.
  */
 
-button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
   padding: 0;
@@ -149,7 +116,7 @@ a {
 	text-decoration: none
 }
 
-.container {
+.c {
 	width: 97%;
 	max-width: 1040px;
 	min-width: 860px;
@@ -262,16 +229,12 @@ nav {
 
 }
 
-.info { padding: 20px 0 0 0; }
-
-
 
 /*
 
 	O P T I O N S
 
 */
-
 
 .menu {
 	font-size: 14px;
@@ -289,12 +252,10 @@ nav {
 			background-color:#fafafa;
 		}
 
-		p {
-			margin: 5px 0;
-		}
+		p { margin: 5px 0; }
 	}
 
-	> :first-child {
+	.acquirer_menu {
 		padding-left: 22px;
 		padding-right: 25px
 	}
@@ -334,42 +295,20 @@ nav {
 		select {
 			display: block;
 			font-weight: 600;
-			-webkit-font-smoothing: antialiased;
-			font-smoothing: antialiased;
 			width: 100%;
 			height: 30px;
 			padding: 0 5px;
 			margin-bottom: 13px;
 			font-size: 14px;
-			line-height: 1.42857143;
-			color: #555;
-			background-color: #fff;
-			background-image: none;
+			color: #444;
 			border: 1px solid #ccc;
 			border-radius: 4px;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-			box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-			-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-			-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-			transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-		}
-
-		.field {
-			margin-left: 1px;
 		}
 	}
 
 	.acquirer_description {
 		font-size:14px;
 		margin-top: 16px
-	}
-
-	.acquirer_options {
-		display:none;
-
-		.field {
-			width: 77px
-		}
 	}
 
 	h2 {
@@ -379,14 +318,11 @@ nav {
 }
 
 
-
-
 /*
 
 	T A B L E
 
 */
-
 .table {
 	background: #fff;
 	border-collapse: separate;
@@ -404,7 +340,7 @@ nav {
 		position: relative;
 		border-left: 1px solid #dcdcdc;
 		border-top: 1px solid #dcdcdc;
-		padding: 11px 6px 8px;
+		padding: 9px 6px 8px;
 	}
 
 	th {
@@ -425,15 +361,15 @@ nav {
 	}
 
 	td:first-child {
-		width: 180px;
+		width: 190px;
 		text-align: left;
-		padding-left: 15px;
+		padding-left: 18px;
 		font-size: 12px;
 
 		img {
          display: inline;
          text-align: left;
-			margin: 6px 0 2px;
+			margin: 7px 0 2px;
          height: 31px;
          max-width: 135px;
 		}
@@ -441,7 +377,9 @@ nav {
 
 	td:nth-child(2) {
 
-      width: 128px;
+      width: 130px;
+      padding-right: 0;
+      padding-left: 0;
 
       img {
          max-height: 14px;
@@ -459,7 +397,7 @@ nav {
 	}
 
 	td:nth-child(3) {
-		width: 165px;
+		width: 175px;
 
       .card {
          display: inline-block;
