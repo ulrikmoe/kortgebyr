@@ -14,7 +14,7 @@
     'EUR': 7.463,
     'USD': 6.642
  };
- 
+
  var currency_map = {
     'DKK': 'kr',
     'SEK': 'kr',
@@ -278,9 +278,18 @@ var PSPs = [
    acquirers: objectize(["nets", "teller", "swedbank", "valitor", "handelsbanken", "elavon"]),
    cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "diners", "mobilepay"]),
    costfn: function(o) {
+
+      var antifraud = {};
+      antifraud.setup = 0;
+      antifraud.monthly = 0;
+      if (o.features.antifraud) {
+         antifraud.setup = new Currency(495, 'DKK');
+         antifraud.monthly = new Currency(49, 'DKK');
+      }
+
       return {
-         setup: new Currency(4995, 'DKK'),
-         monthly: new Currency(499, 'DKK'),
+         setup: new Currency(4995, 'DKK').add(antifraud.setup),
+         monthly: new Currency(499, 'DKK').add(antifraud.monthly),
          trans: (new Currency(0.55, 'DKK')).scale(o.transactions)
       };
    }
@@ -292,9 +301,18 @@ var PSPs = [
    acquirers: objectize(["nets", "teller", "swedbank", "valitor", "handelsbanken", "elavon"]),
    cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "diners", "mobilepay"]),
    costfn: function(o) {
+
+      var antifraud = {};
+      antifraud.setup = 0;
+      antifraud.monthly = 0;
+      if (o.features.antifraud) {
+         antifraud.setup = new Currency(495, 'DKK');
+         antifraud.monthly = new Currency(49, 'DKK');
+      }
+
       return {
-         setup: new Currency(10995, 'DKK'),
-         monthly: new Currency(899, 'DKK'),
+         setup: new Currency(10995, 'DKK').add(antifraud.setup),
+         monthly: new Currency(899, 'DKK').add(antifraud.monthly),
          trans: (new Currency(0.5, 'DKK')).scale(o.transactions)
       };
    }
