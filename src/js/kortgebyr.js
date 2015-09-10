@@ -458,9 +458,10 @@ function build(action) {
          if( !psp.features[i] ){ continue psploop; }
       }
 
-      // Check if a specific acquirer has been chosen
+      // If a specific acquirer has been chosen (select dropdown)
       if ( Object.keys(settings.acquirers).length === 1 ){
 
+         // Skip psp if it does not support selected acquirer
          if( !acq[Object.keys(settings.acquirers)[0]] ){
             continue psploop;
          }
@@ -495,9 +496,10 @@ function build(action) {
             Challenge newacq ( coming soon! )
          */
          }
-         if (!newacq) { continue psploop; }
-         acq = newacq;
 
+         // Skip PSP if acquirer does not support cards
+         if ( Object.getOwnPropertyNames(newacq).length === 0) { continue psploop; }
+         acq = newacq;
 
          for (var ac in acq) {
             // Merge acquirer card lists
