@@ -1,86 +1,53 @@
 <!DOCTYPE HTML><html>
 <head>
    <meta charset="utf-8">
-   <title>Kortgebyr - sammenlign betalingsløsninger</title>
-   <meta name="description" content="Kortgebyr er en prissammenligning af betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr.">
+   <title>Kortgebyr - foklaring</title>
+   <meta name="description" content="Forstå hvad en betalingsløsning er ... ">
    <style>
-		{% include "global.css" %}
+		{% include "forklaring.css" %}
 	</style>
    <link rel="canonical" href="https://kortgebyr.dk/foklaring.html">
 </head>
 <body>
-<script>
-function initialize() {
-	var element = document.createElement("script");
-	element.src = "defer.js";
-	document.body.appendChild(element);
-}
-window.onload = initialize;
-</script>
+<div class="c">
 
+   <div class="nav">
+      <h1>kortgebyr</h1>
+      <ul>
+         <li><a href="/">Udregner</a></li>
+         <li><a href="/forklaring.html">Forklaring</a></li>
+         <li><a href="">Blog</a></li>
+      </ul>
+   </div>
 
-<div class="container" style="margin-top:130px">
+	<section>
+		<h3>Introduktion til kortgebyr</h3>
+      <p>Kortgebyr er en prissammenligningside for betalingsløsninger og betalingsgateways. Siden er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede i 2012 og er fortsat under udvikling.</p>
+   </section>
 
+   <section>
+		<h3>Hvad er en betalingsgateway?</h3>
+		<p>En betalingsgateway, på engelsk <a href="http://en.wikipedia.org/wiki/Payment_gateway">payment gateway</a>, er en løsning der bedst kan beskrives som en online dankortterminal. En betalingsgateway tilkobler din virksomhed til et netværk af banker og betalingsløsninger og gør det nemt for dig at integrere dem i din e-business (typisk med shopmoduler ellet et simpelt API).</p>
+   </section>
 
-    <aside class="nav">
+   <section>
+		<h3>Hvad er en indløsningsaftale?</h3>
+		<p>En indløsningsaftale, på engelsk <a href="#">Merchant Account</a></p>
+   </section>
+   <section>
+		<h3>Hvad er en betalingsløsning?</h3>
+		<p>En betalingsløsning er sammensætningen af betalingsgateway og bank (f.eks. Quickpay + NETS + Teller). Nogle betalingsløsninger kræver ikke, at man laver en separat indløsningsaftale med en bank. Dette gælder for eksempel PayPal og Paymill. Til gengæld tager de en relativt høj procentsats for ulejligheden.
+      </p>
+   </section>
+   <section>
+      <h3>Beregningsmetoden</h3>
 
-        <h1>Forklaring</h1>
-        <ul>
-            <li><a href="#introduktion">Introduktion</a></li>
-            <li><a href="#om-os">Om os</a></li>
-            <li><a href="#betalingsgateway">Betalingsgateway</a></li>
-            <li><a href="#betalingslsning1">Betalingsløsning</a></li>
-        </ul>
-    </aside>
-
-
-
-
-	<div class="forklaring">
-		<h1 id="introduktion" style="margin-top:0">Introduktion til kortgebyr</h1>
-
-        <strong>Kortgebyr</strong> er en prissammenligningside for betalingsløsninger og betalingsgateways. Siden er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede i 2012 og er fortsat under udvikling.
-
-		<hr>
-
-		<h2>Indholdsfortegnelse:</h2>
-
-			<a href="#introduktion" class="list-group-item active">Introduktion</a>
-			<a href="#betalingsgateway" class="list-group-item">Betalingsgateway</a>
-			<a href="#betalingslsning" class="list-group-item">Betalingsløsning</a>
-			<a href="#beregningsmetoden" class="list-group-item">Beregningsmetoden</a>
-			<a href="#regneeksempel" class="list-group-item">Regneeksempel</a>
-			<a href="#regneeksempel" class="list-group-item">Changelog</a>
-			<a href="#regneeksempel" class="list-group-item">Hall of Fame</a>
-			<a href="#om" class="list-group-item">Om os</a>
-
-		<hr>
-		<h2 id="betalingsgateway">Hvad er en betalingsgateway?</h2>
-		<div class="">
-		En betalingsgateway, på engelsk <a href="http://en.wikipedia.org/wiki/Payment_gateway">payment gateway</a>, er en løsning der bedst kan beskrives som en online dankortterminal. En betalingsgateway tilkobler din virksomhed til et netværk af banker og betalingsløsninger og gør det nemt for dig at integrere dem i din e-business (typisk med shopmoduler ellet et simpelt API).
-			<br><br>
-
-
-
-		</div>
-
-		<hr>
-		<h2 id="indløsning">Hvad er en indløsningsaftale?</h2>
-		<div>
-
-		En indløsningsaftale, på engelsk <a href="#">Merchant Account</a>,
-
-
-		</div>
-		<hr>
-		<h2 id="betalingsløsning">Hvad er en betalingsløsning?</h2>
-			En betalingsløsning er sammensætningen af betalingsgateway og bank (f.eks. Quickpay + NETS + Teller). Nogle betalingsløsninger kræver ikke, at man laver en separat indløsningsaftale med en bank. Dette gælder for eksempel PayPal og Paymill. Til gengæld tager de en relativt høj procentsats for ulejligheden.
-		<div class="">
-		</div>
-		<hr>
-		<h2 id="beregningsmetoden">Beregningsmetoden</h2>
-		<h2 id="regneeksempel">Regneeksempel (epay)</h2>
-		Eksempel på udregning af kortgebyr for betalingsgatewayen Epay med et pro-abonnement (inklusiv fraudfighter)
+   </section>
+   <section>
+		<h3 id="regneeksempel">Regneeksempel (epay)</h3>
+      <p>
+         Eksempel på udregning af kortgebyr for betalingsgatewayen Epay med et pro-abonnement (inklusiv fraudfighter)
+      </p>
 		<ul>
 			<li>
 				<h3>Step 1: Udregn de månedlige omkostninger</h3>
@@ -145,24 +112,17 @@ window.onload = initialize;
 					<br>= 4796.69kr / 1500 = 3.20kr
 			</li>
 		</ul>
+   </section>
 
-		<h2 id="om">Om os</h2>
-
-			<div>
-
-			Kortgebyr.dk er udviklet af <a href="https://twitter.com/ulrikmoe">@ulrikmoe</a>, <a href="https://twitter.com/christianblach">@christianblach</a> og <a href="https://github.com/zhasha">@joakimsindholt</a>. Formålet med siden er at skabe klarhed på et yderst komplekst marked.
-
+   <section>
+		<h3>Om os</h3>
+			<p>Kortgebyr.dk er udviklet af <a href="https://twitter.com/ulrikmoe">@ulrikmoe</a>, <a href="https://twitter.com/christianblach">@christianblach</a> og <a href="https://github.com/zhasha">@joakimsindholt</a>. Formålet med siden er at skabe klarhed på et yderst komplekst marked.
 
 			Tak til alle som har bidraget eller delt projektet.
-
 			<br /><br />
-
 
 			Kontakt: <a href="mailto:ulrik.moe@gmail.com">ulrik.moe@gmail.com</a><br />
 			Kildekode: <a href="https://github.com/ulrikmoe/kortgebyr">https://github.com/ulrikmoe/kortgebyr</a> <br />
 			Amino tråd: <a href="http://www.amino.dk/forums/t/208824.aspx">http://www.amino.dk/forums/t/208824.aspx</a><br />
-		</div>
-
-		<hr>
-	</div>
-</div>
+		</p>
+	</section>

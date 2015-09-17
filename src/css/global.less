@@ -1,40 +1,35 @@
+// Browser fixes
+img { box-sizing: content-box; border:0px; }
+a:active, a:hover, :focus { outline: 0; outline-color: transparent; outline-style: none; }
+input, button, select { font-family: inherit; color: inherit; }
+.hidden { display: none !important; visibility: hidden; }
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+img,svg { vertical-align: middle; }
+.menulist { user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
 
 // Source Sans Pro [SSP]
 @font-face {
    font-family: 'SSP';
    font-weight: 400;
    font-style: normal;
-   src:
-      url("/assets/fonts/SSP/regular.woff2") format('woff2'),
-      url("/assets/fonts/SSP/regular.woff") format('woff');
+   src: url("/assets/fonts/SSP/regular.woff2") format('woff2'), url("/assets/fonts/SSP/regular.woff") format('woff');
 }
 
 @font-face {
    font-family: 'SSP';
    font-weight: 600;
    font-style: normal;
-   src:
-      url("/assets/fonts/SSP/semibold.woff2") format('woff2'),
-      url("/assets/fonts/SSP/semibold.woff") format('woff');
+   src: url("/assets/fonts/SSP/semibold.woff2") format('woff2'), url("/assets/fonts/SSP/semibold.woff") format('woff');
 }
 
-/**
- * 1. Default font
- * 2. Prevent iOS text size adjust after orientation change (normalize.css)
- * 3. Needed for footer.
- * 4. Border-box: width/height include padding/border.
- */
 html {
 	font-family: 'SSP', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 1 */
-	line-height: 23px;
-	font-size: 14px;
 	font-size: 15px;
 	line-height: 1.5;
 	color: #2c2c2c;
-  -ms-text-size-adjust: 100%; /* 3 */
-  -webkit-text-size-adjust: 100%; /* 3 */
-	position: relative; /* 4 */
-  box-sizing: border-box; /* 5 */
+	position: relative;
+   box-sizing: border-box;
 }
 
 body {
@@ -49,92 +44,24 @@ body {
    box-sizing: inherit;
 }
 
-/**
- * 1. Remove the grey background color from active links in IE 10
- * 2. Avoid image resizing when border is applied.
- * 3. Improve readability when focused and also mouse hovered in all browsers.
- * 4. Address style set to `bolder` in Firefox 4+, Safari, and Chrome
- * 5. Input fields should inherit font/color
- */
 
-img { box-sizing: content-box; border:0px; } /* 2 */
-a:active, a:hover { outline: 0; } /* 3 */
-input, button, select { font-family: inherit; color: inherit; } /* 5 */
-:focus { outline-color: transparent; outline-style: none; }
-.hidden { display: none !important; visibility: hidden; }
-.clearfix:before, .clearfix:after { content: " "; display: table; }
-.clearfix:after { clear: both; }
-a { color: inherit; }
-img,svg { vertical-align: middle; }
-:focus { outline:none; }
-
-/**
- * Remove inner padding and border in Firefox 4+.
- */
-
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
-/**
- * Address Firefox 4+ setting `line-height` on `input` using `!important` in
- * the UA stylesheet.
- */
-
-input {
-  line-height: normal;
-}
-
-/**
- * It's recommended that you don't attempt to style these elements.
- * Firefox's implementation doesn't respect box-sizing, padding, or width.
- *
- * 1. Address box sizing set to `content-box` in IE 8/9/10.
- * 2. Remove excess padding in IE 8/9/10.
- */
-
-input[type="checkbox"],
-input[type="radio"] {
-  box-sizing: border-box; /* 1 */
-  padding: 0; /* 2 */
-}
-
-.menulist {
-   -webkit-touch-callout: none;
-   -webkit-user-select: none;
-   -khtml-user-select: none;
-   -moz-user-select: none;
-   -ms-user-select: none;
-   user-select: none;
-}
-
-
-
-a {
-   color: #36b;
-	text-decoration: none
-}
+a { color: #36b; text-decoration: none; }
 
 .c {
 	width: 97%;
 	max-width: 1040px;
 	min-width: 860px;
-	padding: 0;
 	margin: auto;
 	position: relative;
 }
 
-
 header {
 	display:block;
-	margin-top: 17px !important;
+	margin-top: 15px !important;
 	border: 1px solid #dbdbdb;
 }
 
-
 nav {
-
 	font-size: 14px;
 	border-bottom: 1px solid #ddd;
 	height: 43px;
@@ -212,7 +139,7 @@ nav {
 			width: 100%;
 			height: 100%;
 			font-size: 13px;
-			cursor:pointer
+			cursor:pointer;
 		}
 
 	}
@@ -221,39 +148,30 @@ nav {
 		img { margin: 0px 0 0 11px; }
 	}
 
-
 	.lastUpdate {
 		float: left;
 		margin: 3px 0 0 7px;
 	}
-
 }
-
-
-/*
-
-	O P T I O N S
-
-*/
 
 .menu {
 	font-size: 14px;
 
-	section {
+   section {
       display: block;
    	width: 32%;
    	float:left;
 		padding: 6px 0 5px 3%;
 		margin: 11px 0;
-
-		input {
-			margin-right: 6px;
-			font-size: 15px;
-			background-color:#fafafa;
-		}
-
-		p { margin: 5px 0; }
 	}
+
+   label {
+      display: block;
+      margin: 5px 0;
+      line-height: 22px;
+   }
+
+   input { margin-right: 5px; }
 
 	.acquirer_menu {
 		padding-left: 22px;
@@ -271,7 +189,6 @@ nav {
 		text-rendering: optimizeLegibility;
 	}
 
-
 	.field {
 		width: 65px;
 		margin: 4px 7px 5px 0;
@@ -287,7 +204,6 @@ nav {
 		transition: border linear 0.2s, box-shadow linear 0.2s;
 	}
 
-
 	.acquirer_field
 	{
 		width: 100%;
@@ -300,9 +216,11 @@ nav {
 			padding: 0 5px;
 			margin-bottom: 13px;
 			font-size: 14px;
-			color: #444;
+			color: #666;
 			border: 1px solid #ccc;
 			border-radius: 4px;
+         font-weight: 400;
+         background: #FDFDFD;
 		}
 	}
 
@@ -317,12 +235,6 @@ nav {
 	}
 }
 
-
-/*
-
-	T A B L E
-
-*/
 .table {
 	background: #fff;
 	border-collapse: separate;
@@ -333,14 +245,14 @@ nav {
 	font-size: 14px;
 	color: #444;
 	empty-cells: show;
-	margin-top: 20px;
+	margin-top: 18px;
 
 	td, th {
 		text-align: center;
 		position: relative;
 		border-left: 1px solid #dcdcdc;
 		border-top: 1px solid #dcdcdc;
-		padding: 9px 6px 8px;
+		padding: 9px 0 8px;
 	}
 
 	th {
@@ -350,7 +262,6 @@ nav {
 		font-weight: 600;
 		background-color: #f5f5f5;
 		border-top:0;
-		text-shadow: 0 1px 0 rgba(255,255,255,.5);
 		color: #444;
 		-webkit-font-smoothing: antialiased;
 		-moz-font-smoothing: antialiased;
@@ -361,78 +272,99 @@ nav {
 	}
 
 	td:first-child {
-		width: 190px;
-		text-align: left;
-		padding-left: 18px;
-		font-size: 12px;
-
-		img {
-         display: inline;
-         text-align: left;
-			margin: 7px 0 2px;
-         height: 31px;
-         max-width: 135px;
-		}
-	}
-
-	td:nth-child(2) {
-
-      width: 130px;
-      padding-right: 0;
-      padding-left: 0;
-
-      img {
-         max-height: 14px;
-         max-width: 90px;
-      }
-      p {
-         height: 23px;
-         position: relative;
-         margin: 2px 0;
-      }
-
-      .teller {
-         height: 11px;
-      }
+		padding-left: 1.5%;
+      text-align: left;
 	}
 
 	td:nth-child(3) {
-		width: 175px;
-
-      .card {
-         display: inline-block;
-         width: 22px;
-         height: 15px;
-         position: relative;
-         margin: 5px 3px 4px;
-         vertical-align: middle;
-
-         svg {
-            display: block;
-            width: 100%;
-            height: 100%;
-         }
-      }
-
+      padding-right: 14px;
+      padding-left: 14px;
 	}
-
-	td:nth-child(6) {
-		width: 150px;
-	}
-
-	td:last-child {
-		width: 145px;
-	}
-
 }
+
+.psp {
+   font-size: 12px;
+   display: block;
+
+   img {
+      display: inline;
+      text-align: left;
+      margin: 7px 0 2px;
+      height: 31px;
+      max-width: 135px;
+   }
+}
+.acquirer {
+   height: 23px;
+   position: relative;
+   margin: 2px 0;
+
+   img {
+      max-height: 14px;
+      max-width: 90px;
+   }
+
+   &.teller { height: 11px; }
+}
+
+.card {
+   display: inline-block;
+   width: 22px;
+   height: 15px;
+   position: relative;
+   margin: 5px 3px 4px;
+   vertical-align: middle;
+
+   svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+   }
+}
+
+.equal {
+   font-size: 20px;
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   z-index: 99;
+
+   .icon {
+      position: relative;
+      margin-top: 18px;
+      height: 7px;
+      background: #F5F5F5;
+      width: 6px;
+
+      &:before, &:after {
+         display: block;
+         content: "";
+         width: 100%;
+         height: 2px;
+         background: #9f9f9f;
+      }
+      &:after { margin-top: 3px; }
+   }
+
+   &.right { right: 0; }
+   &.left {
+      left: 0;
+      border-left: 1px solid #dcdcdc;
+
+      .icon { margin-left: -1px; width: 7px; }
+   }
+}
+
+.kortgebyr, .procent { line-height: 19px; }
+.kortgebyr { margin-top: 4px; }
+.procent { word-spacing: -1px; color: #9f9f9f; font-size: 12px; }
 
 
 footer {
-
   background: #fff;
 	text-align: center;
-	padding: 30px 0 40px;
+	padding: 34px 0 44px;
 	color: #777;
-	line-height: 27px;
+	line-height: 24px;
 	font-size: 14px;
 }

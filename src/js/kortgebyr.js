@@ -1,15 +1,17 @@
 /**
- *   First shalt thou take out the Holy Pin. Then...
- *   @author Ulrik Moe, Christian Blach, Joakim Sindholt
- *   @license GPLv3
- *
- *   Indentation: 3 spaces
- *   Conventions: https://github.com/airbnb/javascript
- *
- *   1) Opdele i danske, svenske og norske priser.
- *   7) Forklaring
- *   8) Løsninger uden priser: Wirecard, Payex, Worldpay
- *   9) Authorize.net
+*  First shalt thou take out the Holy Pin. Then...
+*  @author Ulrik Moe, Christian Blach, Joakim Sindholt
+*  @license GPLv3
+*
+*  Indentation: 3 spaces
+*  Conventions: https://github.com/airbnb/javascript
+*
+*  Ugly fixes
+*  1: Nets needs to be the first acquirer in acquirersort. The problem is that
+*     we don't iterate through acquirers properly when we try to find the
+*     cheapest combination of acquirers.
+*
+*
  **/
 
 // Constants
@@ -413,7 +415,7 @@ function build(action) {
    }
    else {
       acquirers.nets = ACQs.nets;
-      settings.dankort_scale = (!settings.cards.visa) ? 1 : 0.8;
+      settings.dankort_scale = (!settings.cards.visa) ? 1 : 0.78;
    }
 
    var costs = {};
@@ -422,16 +424,21 @@ function build(action) {
    tbody.id = "tbody";
 
    for (i in acquirers) {
+
       // Calculate individual acquirer costs
       acquirers[i].fee = acquirers[i].costfn(settings);
+
+      if (i == "nets") { continue; } // uglyfix[1]
 
       for (sort = 0; sort < settings.acquirersort.length; sort++){
          if ( acquirers[i].fee.total.dkk() < acquirers[settings.acquirersort[sort]].fee.total.dkk() ) {
             break;
          }
       }
+
       settings.acquirersort.splice(sort, 0, i);
    }
+   if (acquirers.nets) { settings.acquirersort.splice(0, 0, "nets"); } // uglyfix[1]
 
    for (i in settings.cards) {
       // Some payment methods have extra costs. Lets calculate them.
@@ -446,7 +453,7 @@ function build(action) {
 
       var psp = PSPs[k];
       var acq = clone(psp.acquirers || {});
-      var setup = new Currency(0, 'DKK'), total = new Currency(0, 'DKK');
+      var setup = new Currency(0, 'DKK'), recurring = new Currency(0, 'DKK'), total = new Currency(0, 'DKK');
       var cardobj = {};
 
       // Check if psp support all cards
@@ -485,16 +492,15 @@ function build(action) {
                newacq[_acq] = 1; // replace '1' with the costs.
                var objlength = Object.getOwnPropertyNames(newacq).length;
 
-               if( cardsCovered(newacq, settings) ) { break; }
+               if ( cardsCovered(newacq, settings) ) { break; }
                else if ((newacq.nets && objlength < 2) || (objlength === 0)) { continue; }
                else if ( i+1 == settings.acquirersort.length ) { newacq = false; break; }
                else { delete newacq[_acq]; } // Delete and try with next acquirer
             }
          }
+
          if (psp.features.multiacquirer) {
-         /*
-            Challenge newacq ( coming soon! )
-         */
+         // Challenge newacq ( coming soon! )
          }
 
          // Skip PSP if acquirer does not support cards
@@ -507,32 +513,28 @@ function build(action) {
 
                // Some cards/methods (e.g. mobilepay) add extra costs.
                // They will only be included if enabled in settings.cards.
-               if ( !settings.cards[card] && CARDs[card].costfn ){ continue; }
-               cardobj[card] = 1;
+               if ( cardobj[card] || (!settings.cards[card] && CARDs[card].costfn) ){ continue; }
 
-               // Add extra costs
                if (CARDs[card].costfn){
                   setup = setup.add(CARDs[card].fee.setup);
-                  total = total.add(CARDs[card].fee.monthly);
+                  recurring = recurring.add(CARDs[card].fee.monthly);
                }
+               cardobj[card] = 1;
             }
 
             var scale = (ac == "nets") ? settings.dankort_scale :  1-settings.dankort_scale;
 
             setup = setup.add(acquirers[ac].fee_setup);
-            total = total
-               .add( acquirers[ac].fee.trans.scale(scale))
-               .add( acquirers[ac].fee_monthly);
+            recurring = recurring.add( acquirers[ac].fee_monthly);
+            total = total.add( acquirers[ac].fee.trans.scale(scale));
          }
       }
 
       psp.costs = psp.costfn(settings);
 
       setup = setup.add(psp.costs.setup);
-      total = total
-         .add(psp.costs.monthly)
-         .add(psp.costs.trans);
-
+      recurring = recurring.add(psp.costs.monthly);
+      total = total.add(psp.costs.trans).add(recurring);
 
       var frag1 = document.createDocumentFragment();
       var wrapper, svg, use;
@@ -554,6 +556,7 @@ function build(action) {
       var frag2 = document.createDocumentFragment();
       for (l in acq) {
          wrapper = document.createElement("p");
+         wrapper.className = "acquirer";
          wrapper.innerHTML = '<a target="_blank" href="' + ACQs[l].link + '"><img class="acquirer '+l+'" src="/assets/img/psp/' + ACQs[l].logo + '" alt="' + ACQs[l].name +
          '" title="' + ACQs[l].name + '" /></a>';
          frag2.appendChild(wrapper);
@@ -571,8 +574,13 @@ function build(action) {
       row.insertCell(-1).appendChild(frag2);
       row.insertCell(-1).appendChild(frag1);
       row.insertCell(-1).textContent = setup.print();
+      row.insertCell(-1).textContent = recurring.print();
       row.insertCell(-1).textContent = total.print();
-      row.insertCell(-1).textContent = total.scale(1 / settings.transactions).print();
+
+      var kortgebyr = total.scale(1 / settings.transactions);
+      var kortprocent = kortgebyr.scale( 1/settings.avgvalue.dkk()).dkk()*100;
+
+      row.insertCell(-1).innerHTML = "<p class='kortgebyr'>"+total.scale(1 / settings.transactions).print() + "</p><p class='procent'>≈ " + kortprocent.toFixed(3).replace('.', ',') + " %</p>";
 
    }
    table.replaceChild(tbody, $('tbody'));
