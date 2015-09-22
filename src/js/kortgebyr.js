@@ -256,6 +256,13 @@ function setPercent(k, v) {
    $(k).classList.remove('error');
 }
 
+function tooltip() {
+
+   console.log("hover");
+
+}
+
+
 var opts = {
    'cards': {
       type: "bits",
@@ -415,7 +422,7 @@ function build(action) {
    }
    else {
       acquirers.nets = ACQs.nets;
-      settings.dankort_scale = (!settings.cards.visa) ? 1 : 0.78;
+      settings.dankort_scale = (!settings.cards.visa) ? 1 : 0.77;
    }
 
    var costs = {};
@@ -542,6 +549,11 @@ function build(action) {
       for (l in cardobj) {
          wrapper = document.createElement("p");
          wrapper.classList.add("card");
+         wrapper.addEventListener("mouseover", tooltip);
+
+         // el.addEventListener("click", function(){modifyText("four")}, false);
+
+
          svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
          use = document.createElementNS("http://www.w3.org/2000/svg",'use');
          use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", CARDs[l].logo);
@@ -557,6 +569,8 @@ function build(action) {
       for (l in acq) {
          wrapper = document.createElement("p");
          wrapper.className = "acquirer";
+         wrapper.addEventListener("mouseover", tooltip);
+
          wrapper.innerHTML = '<a target="_blank" href="' + ACQs[l].link + '"><img class="acquirer '+l+'" src="/assets/img/psp/' + ACQs[l].logo + '" alt="' + ACQs[l].name +
          '" title="' + ACQs[l].name + '" /></a>';
          frag2.appendChild(wrapper);
@@ -588,6 +602,8 @@ function build(action) {
    // if (action !== "init") { save_url(); }
 
    console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: done building \n ");
+
+
 }
 
 //===========================

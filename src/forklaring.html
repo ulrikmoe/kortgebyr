@@ -21,33 +21,33 @@
    </div>
 
 	<section>
-		<h3>Introduktion til kortgebyr</h3>
-      <p>Kortgebyr er en prissammenligningside for betalingsløsninger og betalingsgateways. Siden er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede i 2012 og er fortsat under udvikling.</p>
+		<h3>Hvad er kortgebyr?</h3>
+      <div>Kortgebyr er en prissammenligningside for betalingsløsninger og betalingsgateways. Kortgebyr er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede som et excel-ark, der blev delt blandt iværksættere og e-købmænd, men i midten af 2012 valgte vi gøre projektet offentligt på <a href="https://kortgebyr.dk">kortgebyr.dk</a>. Projektet er under konstant udvikling og opdateres løbende.
+   </section>
+
+   <section>
+		<h3>Hvad er en indløser?</h3>
+		<div>
+         En indløser, på engelsk kaldet acquirer, er en finansiel virksomhed, der processeserer kortdata og i sidste ende flytter pengene fra kortholderens konto til butikkens bankkonto.
+      </div>
    </section>
 
    <section>
 		<h3>Hvad er en betalingsgateway?</h3>
-		<p>En betalingsgateway, på engelsk <a href="http://en.wikipedia.org/wiki/Payment_gateway">payment gateway</a>, er en løsning der bedst kan beskrives som en online dankortterminal. En betalingsgateway tilkobler din virksomhed til et netværk af banker og betalingsløsninger og gør det nemt for dig at integrere dem i din e-business (typisk med shopmoduler ellet et simpelt API).</p>
+		<div>En betalingsgateway er et tekniske bindeled mellem en netbutik og en eller flere indløsere. En betalingsgateway tilkobler din virksomhed til et netværk af banker og betalingsløsninger og gør det nemt for dig at integrere dem i din e-business (typisk med shopmoduler ellet et simpelt API).
+      </div>
    </section>
 
-   <section>
-		<h3>Hvad er en indløsningsaftale?</h3>
-		<p>En indløsningsaftale, på engelsk <a href="#">Merchant Account</a></p>
-   </section>
    <section>
 		<h3>Hvad er en betalingsløsning?</h3>
-		<p>En betalingsløsning er sammensætningen af betalingsgateway og bank (f.eks. Quickpay + NETS + Teller). Nogle betalingsløsninger kræver ikke, at man laver en separat indløsningsaftale med en bank. Dette gælder for eksempel PayPal og Paymill. Til gengæld tager de en relativt høj procentsats for ulejligheden.
-      </p>
+		<div>En betalingsløsning er sammensætningen af betalingsgateway og indløsning. Nogle betalingsløsninger kræver ikke, at man laver en separat indløsningsaftale med en bank. Dette gælder for eksempel PayPal og Paymill. Til gengæld tager de en relativt høj procentsats for ulejligheden.
+      </div>
    </section>
    <section>
-      <h3>Beregningsmetoden</h3>
-
-   </section>
-   <section>
-		<h3 id="regneeksempel">Regneeksempel (epay)</h3>
-      <p>
+      <h3>Hvordan udregner i kortgebyret?</h3>
+      <div>
          Eksempel på udregning af kortgebyr for betalingsgatewayen Epay med et pro-abonnement (inklusiv fraudfighter)
-      </p>
+      </div>
 		<ul>
 			<li>
 				<h3>Step 1: Udregn de månedlige omkostninger</h3>
@@ -82,32 +82,7 @@
 				</div>
 			</li>
 			<li>
-				<h3>Step 2: Korriger for mistet/forbigået forrentning pga. oprettelsesgebyret</h3>
-				Betaler du et oprettelsesgebyr, mister du penge du kunne have investeret i dit varelager. Vi regner med en intern rente på 16% p.a. og pålægger dette på kortgebyret for at opnå en retvisende prissammenligning.
-				<div>
-					<h4>Korrigering for Epays oprettelsesgebyr:</h4>
-					Epay Pro har et oprettelsesgebyr på 599kr
-					<br>Korrigerede Epay-omkostninger = Månedlige Epay-omkostninger + Oprettelsesgebyr * intern rente per år / 12 =
-					<br>= 449 kr + 599kr * 0.16 / 12 = 456.99 kr
-				</div>
-				<div>
-					<h4>Korrigering for NETS' oprettelsesgebyr:</h4>
-					NETS har et oprettelsesgebyr på 250kr
-					<br>Korrigerede NETS-omkostninger = Månedlige Epay-omkostninger + Oprettelsesgebyr * intern rente per år / 12 =
-					<br>= 1793.03 + 250kr * 0.16 / 12 = 1796.37kr
-				</div>
-				<div>
-					<h4>Korrigering for Tellers oprettelsesgebyr:</h4>
-					Teller har et oprettelsesgebyr på 1000kr
-					<br>Korrigerede Teller-omkostninger = Månedlige Teller-omkostninger + Oprettelsesgebyr * intern rente per år / 12 =
-					<br>= 2530 + 1000 * 0.16 / 12 = 2543.33kr
-				</div>
-				De totale månedlige omkostninger er da:
-				<br>Total-omkostninger = Korrigerede Epay-omkostninger + Korrigerede NETS-omkostninger + Korrigerede Teller-omkostninger
-				<br>= 456.99kr + 1796.37kr + 2543.33kr = 4796.69kr
-			</li>
-			<li>
-				<h3>Step 3: Del omkostningerne ud på hver transaktion</h3>
+				<h3>Step 2: Del omkostningerne ud på hver transaktion</h3>
 					Kortgebyr = Total-omkostninger / Transaktioner
 					<br>= 4796.69kr / 1500 = 3.20kr
 			</li>
@@ -115,14 +90,7 @@
    </section>
 
    <section>
-		<h3>Om os</h3>
+		<h3>Hvem står bag?</h3>
 			<p>Kortgebyr.dk er udviklet af <a href="https://twitter.com/ulrikmoe">@ulrikmoe</a>, <a href="https://twitter.com/christianblach">@christianblach</a> og <a href="https://github.com/zhasha">@joakimsindholt</a>. Formålet med siden er at skabe klarhed på et yderst komplekst marked.
 
-			Tak til alle som har bidraget eller delt projektet.
-			<br /><br />
-
-			Kontakt: <a href="mailto:ulrik.moe@gmail.com">ulrik.moe@gmail.com</a><br />
-			Kildekode: <a href="https://github.com/ulrikmoe/kortgebyr">https://github.com/ulrikmoe/kortgebyr</a> <br />
-			Amino tråd: <a href="http://www.amino.dk/forums/t/208824.aspx">http://www.amino.dk/forums/t/208824.aspx</a><br />
-		</p>
 	</section>

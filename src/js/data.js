@@ -9,10 +9,10 @@
 
 var currency_value = {
    'DKK': 1,
-   'SEK': 0.793,
-   'NOK': 0.811,
+   'SEK': 0.800,
+   'NOK': 0.810,
    'EUR': 7.461,
-   'USD': 6.698
+   'USD': 6.638
 };
 
 var currency_map = {

@@ -166,7 +166,7 @@ nav {
 	}
 
    label {
-      display: block;
+      display: table;
       margin: 5px 0;
       line-height: 22px;
    }
@@ -252,7 +252,7 @@ nav {
 		position: relative;
 		border-left: 1px solid #dcdcdc;
 		border-top: 1px solid #dcdcdc;
-		padding: 9px 0 8px;
+		padding: 10px 0 7px;
 	}
 
 	th {
@@ -289,22 +289,21 @@ nav {
    img {
       display: inline;
       text-align: left;
-      margin: 7px 0 2px;
+      margin: 6px 0 0;
       height: 31px;
       max-width: 135px;
    }
+   p {
+      padding: 2px 0 1px;
+   }
 }
 .acquirer {
-   height: 23px;
    position: relative;
-   margin: 2px 0;
+   margin: 1px 0 3px;
 
-   img {
-      max-height: 14px;
-      max-width: 90px;
-   }
-
-   &.teller { height: 11px; }
+   .clearhaus, .nets, .elavon { height: 13px; }
+   .teller { height: 10.4px; }
+   .handelsbanken { width: 90px; }
 }
 
 .card {
@@ -312,7 +311,7 @@ nav {
    width: 22px;
    height: 15px;
    position: relative;
-   margin: 5px 3px 4px;
+   margin: 4px 3px;
    vertical-align: middle;
 
    svg {
