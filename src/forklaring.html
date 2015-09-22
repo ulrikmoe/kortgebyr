@@ -22,27 +22,40 @@
 
 	<section>
 		<h3>Hvad er kortgebyr?</h3>
-      <div>Kortgebyr er en prissammenligningside for betalingsløsninger og betalingsgateways. Kortgebyr er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede som et excel-ark, der blev delt blandt iværksættere og e-købmænd, men i midten af 2012 valgte vi gøre projektet offentligt på <a href="https://kortgebyr.dk">kortgebyr.dk</a>. Projektet er under konstant udvikling og opdateres løbende.
+      <div>Kortgebyr er en prissammenligningside for betalingsløsninger og betalingsgateways. Kortgebyr er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede som et excel-ark, der blev delt blandt iværksættere og e-købmænd, men i midten af 2012 valgte vi gøre projektet offentligt på <a href="https://kortgebyr.dk">kortgebyr.dk</a>. Projektet er under løbende udvikling og priser holdes opdateret.
    </section>
 
    <section>
 		<h3>Hvad er en indløser?</h3>
 		<div>
-         En indløser, på engelsk kaldet acquirer, er en finansiel virksomhed, der processeserer kortdata og i sidste ende flytter pengene fra kortholderens konto til butikkens bankkonto.
+         En indløser, på engelsk kaldet acquirer, er en finansiel virksomhed, der processeserer kortdata og i sidste ende flytter pengene fra kortholderens bankkonto til butikkens bankkonto. På det danske marked er der p.t. 6 indløsere: Nets, Teller, Euroline (Bambora), Clearhaus, Swedbank, Handelsbanken, Elavon og Valitor.
       </div>
    </section>
 
    <section>
 		<h3>Hvad er en betalingsgateway?</h3>
-		<div>En betalingsgateway er et tekniske bindeled mellem en netbutik og en eller flere indløsere. En betalingsgateway tilkobler din virksomhed til et netværk af banker og betalingsløsninger og gør det nemt for dig at integrere dem i din e-business (typisk med shopmoduler ellet et simpelt API).
+		<div>
+         En betalingsgateway er det tekniske bindeled mellem en netbutik og indløseren. Kort sagt er det en løsning der modtager kortoplysningerne fra kortholder, f.eks. via et betalingsvindue, og sender det til indløseren.
       </div>
    </section>
 
    <section>
 		<h3>Hvad er en betalingsløsning?</h3>
-		<div>En betalingsløsning er sammensætningen af betalingsgateway og indløsning. Nogle betalingsløsninger kræver ikke, at man laver en separat indløsningsaftale med en bank. Dette gælder for eksempel PayPal og Paymill. Til gengæld tager de en relativt høj procentsats for ulejligheden.
+		<div>
+         På Kortgebyr har vi valgt at definere betalingsløsninger som løsninger der egenhændigt kan modtage, processesere og indløse betalinger. Dette er næsten altid en kombination af en betalingsgateway og en eller flere indløsere.
       </div>
    </section>
+
+   <section>
+		<h3>Hvad er PCI DSS?</h3>
+		<div>
+         PCI DSS står for Payment Card Industry Data Security Standard. PCI DSS er en sikkerhedsstandard for kreditkort-industrien. Standarden beskriver de krav som alle forretninger, der transmitterer, behandler eller opbevarer kortdata, skal opfylde. Standarden gælder for Dankort, Visa, MasterCard, JCB, UnionPay og American Express.
+
+          certificering som er nødvendig for at kunne modtage, gemme eller på anden måde håndtere kreditkort.
+      </div>
+   </section>
+
+
    <section>
       <h3>Hvordan udregner i kortgebyret?</h3>
       <div>

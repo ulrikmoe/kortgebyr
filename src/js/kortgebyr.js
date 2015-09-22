@@ -453,6 +453,7 @@ function build(action) {
          settings.cards[i].fee = settings.cards[i].costfn(settings);
       }
    }
+
    console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: time to build PSPs.");
 
    psploop:
@@ -514,6 +515,7 @@ function build(action) {
          if ( Object.getOwnPropertyNames(newacq).length === 0) { continue psploop; }
          acq = newacq;
 
+
          for (var ac in acq) {
             // Merge acquirer card lists
             for (var card in acquirers[ac].cards ) {
@@ -543,17 +545,14 @@ function build(action) {
       recurring = recurring.add(psp.costs.monthly);
       total = total.add(psp.costs.trans).add(recurring);
 
-      var frag1 = document.createDocumentFragment();
+      var cardfrag = document.createDocumentFragment();
       var wrapper, svg, use;
 
       for (l in cardobj) {
          wrapper = document.createElement("p");
          wrapper.classList.add("card");
-         wrapper.addEventListener("mouseover", tooltip);
-
+         // wrapper.addEventListener("mouseover", tooltip);
          // el.addEventListener("click", function(){modifyText("four")}, false);
-
-
          svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
          use = document.createElementNS("http://www.w3.org/2000/svg",'use');
          use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", CARDs[l].logo);
@@ -562,18 +561,23 @@ function build(action) {
          use.setAttribute('height','15');
          svg.appendChild(use);
          wrapper.appendChild(svg);
-         frag1.appendChild(wrapper);
+         cardfrag.appendChild(wrapper);
       }
 
-      var frag2 = document.createDocumentFragment();
+      var more = document.createElement("p");
+      var rand = Math.floor(Math.random() * 6) + 1;
+      more.innerHTML = "<a href='#'>"+ rand + "</a>";
+      // cardfrag.appendChild(more);
+
+      var acqfrag = document.createDocumentFragment();
       for (l in acq) {
          wrapper = document.createElement("p");
          wrapper.className = "acquirer";
-         wrapper.addEventListener("mouseover", tooltip);
+         //wrapper.addEventListener("mouseover", tooltip);
 
          wrapper.innerHTML = '<a target="_blank" href="' + ACQs[l].link + '"><img class="acquirer '+l+'" src="/assets/img/psp/' + ACQs[l].logo + '" alt="' + ACQs[l].name +
          '" title="' + ACQs[l].name + '" /></a>';
-         frag2.appendChild(wrapper);
+         acqfrag.appendChild(wrapper);
       }
 
       // Sort psp after total.dkk()
@@ -585,8 +589,8 @@ function build(action) {
       var row = tbody.insertRow(sort);
       row.insertCell(-1).innerHTML = '<a target="_blank" class="psp '+ psp.name.substring(0,4).toLowerCase() +'" href=' + psp.link + '><img src="/assets/img/psp/' + psp.logo + '" alt="' + psp.name +
          '" title="' + psp.name +'" /><p>' + psp.name +'</p></a>';
-      row.insertCell(-1).appendChild(frag2);
-      row.insertCell(-1).appendChild(frag1);
+      row.insertCell(-1).appendChild(acqfrag);
+      row.insertCell(-1).appendChild(cardfrag);
       row.insertCell(-1).textContent = setup.print();
       row.insertCell(-1).textContent = recurring.print();
       row.insertCell(-1).textContent = total.print();
