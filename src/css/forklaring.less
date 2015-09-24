@@ -13,6 +13,14 @@
    src: url("/assets/fonts/SSP/semibold.woff2") format('woff2'), url("/assets/fonts/SSP/semibold.woff") format('woff');
 }
 
+@font-face {
+   font-family: 'SSP';
+   font-weight: 700;
+   font-style: normal;
+   src: url("/assets/fonts/SSP/bold.woff2") format('woff2'), url("/assets/fonts/SSP/bold.woff") format('woff');
+}
+
+
 html {
 	font-family: 'SSP', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 1 */
 	font-size: 16px;
@@ -45,7 +53,7 @@ a { color: #36b; text-decoration: none; }
 
 .nav {
    border-bottom: 1px solid #d0d0d0;
-   padding: 60px 0 40px;
+   padding: 40px 0 40px;
    text-align: center;
 
 
@@ -62,9 +70,19 @@ a { color: #36b; text-decoration: none; }
 
 section {
    margin: 30px 0 0;
+   //-webkit-font-smoothing: antialiased;
+   //-moz-osx-font-smoothing: grayscale;
 
    h3 {
-      margin: 0 0 8px;
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 600;
+      color: #333;
+   }
+
+   .anchor {
+      color: #c0c0c0;
+      margin-left: 5px;
    }
 
    ul {

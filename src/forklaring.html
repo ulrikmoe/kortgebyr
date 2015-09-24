@@ -21,21 +21,22 @@
    </div>
 
 	<section>
-		<h3>Hvad er kortgebyr?</h3>
-      <div>Kortgebyr er en prissammenligningside for betalingsløsninger og betalingsgateways. Kortgebyr er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede som et excel-ark, der blev delt blandt iværksættere og e-købmænd, men i midten af 2012 valgte vi gøre projektet offentligt på <a href="https://kortgebyr.dk">kortgebyr.dk</a>. Projektet er under løbende udvikling og priser holdes opdateret.
+
+      <h3 id="kortgebyr">Hvad er kortgebyr?<a href="#kortgebyr" class="anchor">#</a></h3>
+      <div>Kortgebyr er en prissammenligningside for betalingsløsninger og betalingsgateways. Kortgebyr er uafhængig, non-profit og open source (<a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>). Projektet startede som et excel-ark, der blev delt blandt iværksættere og e-købmænd, men i midten af 2012 valgte vi gøre projektet offentligt tilgængeligt på <a href="https://kortgebyr.dk">kortgebyr.dk</a>. Projektet er under løbende udvikling og priser holdes opdateret.
    </section>
 
    <section>
 		<h3>Hvad er en indløser?</h3>
 		<div>
-         En indløser, på engelsk kaldet acquirer, er en finansiel virksomhed, der processeserer kortdata og i sidste ende flytter pengene fra kortholderens bankkonto til butikkens bankkonto. På det danske marked er der p.t. 6 indløsere: Nets, Teller, Euroline (Bambora), Clearhaus, Swedbank, Handelsbanken, Elavon og Valitor.
+         En indløser, på engelsk kaldet acquirer, er en finansiel virksomhed, der processeserer kortdata og i sidste ende flytter pengene fra kortholders bankkonto til butikkens bankkonto. På det danske marked er der p.t. 6 indløsere: Nets, Teller, Euroline (Bambora), Clearhaus, Swedbank, Handelsbanken, Elavon og Valitor.
       </div>
    </section>
 
    <section>
 		<h3>Hvad er en betalingsgateway?</h3>
 		<div>
-         En betalingsgateway er det tekniske bindeled mellem en netbutik og indløseren. Kort sagt er det en løsning der modtager kortoplysningerne fra kortholder, f.eks. via et betalingsvindue, og sender det til indløseren.
+         En betalingsgateway, ofte kaldet Payment Service Provider (PSP), er det tekniske og administrative bindeled mellem netbutik og indløser. Det er en PCI-certificeret løsning der er godkendt til at modtage kortoplysningerne, f.eks. via et betalingsvindue, samt til at behandle, lagre og transmittere dem til relevante indløsere. Betalingsgateways tilbyder typisk en lang række features, f.eks. svindelbekæmpelse.
       </div>
    </section>
 
@@ -50,10 +51,16 @@
 		<h3>Hvad er PCI DSS?</h3>
 		<div>
          PCI DSS står for Payment Card Industry Data Security Standard. PCI DSS er en sikkerhedsstandard for kreditkort-industrien. Standarden beskriver de krav som alle forretninger, der transmitterer, behandler eller opbevarer kortdata, skal opfylde. Standarden gælder for Dankort, Visa, MasterCard, JCB, UnionPay og American Express.
-
-          certificering som er nødvendig for at kunne modtage, gemme eller på anden måde håndtere kreditkort.
       </div>
    </section>
+
+   <section>
+      <h3>Skal jeg PCI certificeres?</h3>
+      <div>
+         Hvis du tilbyder kortbetaling skal du altid have en PCI certificering, men de fleste kan nøjes med en SAQ A eller SAQ A-EP. Det afgørende er om kunden indtaster sine kortoplysninger på din side eller om du videresender kunden til en hosted betalingsside. I Danmark har indløserne indtil videre set gennem fingre med kravet om at netbutikker skal PCI certificeres, men dette er ved at ændre sig.
+      </div>
+   </section>
+
 
 
    <section>
