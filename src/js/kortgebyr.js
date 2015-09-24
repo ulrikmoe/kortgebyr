@@ -849,13 +849,13 @@ function saveurl() {
     /* Loop through the options and construct the url */
     for (var key in opts) {
         o = opts[key];
-        
-        /* Create the bit part */
+
+        /* Depending on whether dirty bits are used or not, react accordingly */        
         if (o.dirty_bits) {
             nbits = o.dirty_bits;
             optbits = o.get_dirty_bits("url");
             var ret = o.get();
-            console.log(ret);
+            /* Create the argument string part if dirty bit is set */            
             if (optbits) {
                 if (ret instanceof Currency) {
                     argstr += ";" + ret.string();
@@ -864,13 +864,14 @@ function saveurl() {
                 }
             }
                 
-        } else {
+        } else if (o.bits) {
             nbits = typeof(o.bits) === "function" ? o.bits() : o.bits;
             optbits = o.get("url");
+        } else {
+            console.log("opt " + key + " neither has a bits field or a dirty_bits field");
+            return;
         }
-        console.log(key + ": " + optbits);
         bitbuf.pushbits(optbits, nbits);
-        /* Create the argument string part if dirty bit is set */
     }
     
     
