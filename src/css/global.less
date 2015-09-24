@@ -6,7 +6,10 @@ input, button, select { font-family: inherit; color: inherit; }
 .clearfix:before, .clearfix:after { content: " "; display: table; }
 .clearfix:after { clear: both; }
 img,svg { vertical-align: middle; }
-.menulist { user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
+.noselect, .menulist {
+   -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; 
+   -moz-user-select: none; -ms-user-select: none; user-select: none;
+}
 
 // Source Sans Pro [SSP]
 @font-face {
@@ -30,11 +33,15 @@ html {
 	color: #2c2c2c;
 	position: relative;
    box-sizing: border-box;
+   overflow: auto;
+   height: 100%;
 }
 
 body {
     background: #fff;
     overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
 }
 
 *, *:before, *:after {
@@ -354,10 +361,128 @@ nav {
    }
 }
 
+.infobutton {
+    display: inline-block;
+    background: -webkit-linear-gradient(top,#4387fd,#4683ea);
+    background: linear-gradient(top,#4387fd,#4683ea);
+    padding: 0px 4px;
+    border-radius: 2px;
+    color: white;
+    cursor: pointer;
+}
+
 .kortgebyr, .procent { line-height: 19px; }
 .kortgebyr { margin-top: 4px; }
 .procent { word-spacing: -1px; color: #9f9f9f; font-size: 12px; }
 
+.overlay{
+	  display:none;
+    position:fixed;
+  	left:0px;
+  	top:0px;
+  	z-index:1000;
+	  overflow-x: auto;
+	  overflow-y: scroll;
+	  width:100%;
+	  height:100%;
+    /* Fade modal background */
+  	&::before{
+  		position:fixed;
+  		width:100%;
+  		height:100%;
+  		background: gray;
+  		opacity: 0.7;
+  		overflow:visible;
+          top:0;
+          left:0;
+          content: "";
+  	}
+  	&.active{
+  		display:block;
+  	}
+  	.modal {
+  		display:block;
+  		position:relative;
+  		background: white;
+  		border-radius:5px;
+  		margin: 0 auto;
+          padding: 40px;
+      
+          & .part {
+              display:none;
+              &.active {
+                  display:block;
+              }
+          }
+          .cross{
+              font: normal normal normal 2em/normal Arial, Helvetica, sans-serif;
+              width: 0.75em;
+              height: 0.75em;
+              &:before {
+                  display: inline-block;
+                  width: 0.45em;
+                  height: 0.1em;
+                  position: absolute;
+                  content: "";
+                  top: 0.33em;
+                  left: 0.155em;
+                  font: normal normal normal 100%/normal Arial, Helvetica, sans-serif;
+                  background: #ffffff;
+                  -webkit-transform: rotateZ(45deg) scaleX(1) scaleY(1) scaleZ(1);
+                  transform: rotateZ(45deg) scaleX(1) scaleY(1) scaleZ(1);
+                  -webkit-transform-origin: 50% 50% 0;
+                  transform-origin: 50% 50% 0;
+              }
+              &:after {
+                  display: inline-block;
+                  width: 0.45em;
+                  height: 0.1em;
+                  position: absolute;
+                  content: "";
+                  top: 0.33em;
+                  left: 0.155em;
+                  font: normal normal normal 100%/normal Arial, Helvetica, sans-serif;
+                  background: #ffffff;
+                  -webkit-transform: rotateZ(-45deg) scaleX(1) scaleY(1) scaleZ(1);
+                  transform: rotateZ(-45deg) scaleX(1) scaleY(1) scaleZ(1);
+                  -webkit-transform-origin: 50% 50% 0;
+                  transform-origin: 50% 50% 0;
+              }
+          }
+          
+          .costblock {
+              margin-top: 10px;
+          }
+
+          .exit{
+              .cross;
+              .noselect;
+              z-index:1;
+              display: inline-block;
+              
+              position: absolute;
+              cursor: pointer;
+              top: 4px;
+              right: 4px;
+              -webkit-border-radius: 1em;
+              border-radius: 1em;
+              font: normal normal normal 2em/normal Arial, Helvetica, sans-serif;
+
+              background: #0092D2;
+          }
+          hr {
+              display: block;
+              margin-top: 0.5em;
+              margin-bottom: 0.5em;
+              margin-left: auto;
+              margin-right: auto;
+              border-style: inset;
+              border-top: 1px #E0E0E0 solid;
+        
+          }
+  	}
+      
+}
 
 footer {
   background: #fff;

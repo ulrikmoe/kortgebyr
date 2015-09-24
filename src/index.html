@@ -88,11 +88,21 @@
                   <div class="equal left"><p class="icon"></p></div>
                   Samlet pr. <br> transaktion
                </th>
+               <th></th>
             </tr>
          </thead>
          <tbody id="tbody"></tbody>
       </table>
    </main>
+   
+   <div class="overlay pspinfo">
+     <div class="modal" style="width:600px;">
+       <button class="exit" onclick="this.parentNode.parentNode.classList.remove('active')"></button>
+       <div class="content">
+       </div>
+     </div>
+   </div>
+   
    <footer>
       Kortgebyr er udviklet af <a href="https://twitter.com/ulrikmoe">Ulrik Moe</a>, <a href="https://github.com/cblach">Christian Blach</a> og <a href="https://github.com/zhasha">Joakim Sindholt</a> som et værktøj <br /> til at sammenligne betalingsløsninger. Kortgebyr er uafhængig, non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small><a href="https://github.com/ulrikmoe/kortgebyr/blob/master/GPLv3.md">GPLv3</a></small>).
    </footer>

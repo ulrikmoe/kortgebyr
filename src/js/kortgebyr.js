@@ -61,6 +61,15 @@ Currency.prototype.represent = function() {
    return this.dkk() / currency_value[gccode] + ' ' + gccode; //currency_map[gccode];
 };
 
+Currency.prototype.string = function() {
+   if (this.length() === 1) {
+      for (var code in this.amounts) {
+         return this.amounts[code] + code;
+      }
+   }
+   return this.dkk() / currency_value[gccode] + gccode; //currency_map[gccode];
+};
+
 Currency.prototype.length = function() {
    var k, n = 0;
    for (k in this.amounts) {
@@ -266,55 +275,85 @@ function tooltip() {
 var opts = {
    'cards': {
       type: "bits",
-      bits: 8,
+      bits: function() {
+          return C("ocards").length;
+      },
       get: function(action) {
          // Get all selected payment methods from .ocards
          var object = {};
          var ocards = C("ocards");
-         for(i = 0; i < ocards.length; i++)
-         {
+         var bitval = 0;
+         for(i = 0; i < ocards.length; i++) {
             var checkbox = ocards[i];
             if (action === 'init') { checkbox.addEventListener("click", build, false); }
 
-            if ( checkbox.checked ) {
+            if (checkbox.checked) {
                object[checkbox.id] = CARDs[checkbox.id];
-               if ( checkbox.id == "visa" ) { object.mastercard = CARDs.mastercard; }
+               if (checkbox.id == "visa") { object.mastercard = CARDs.mastercard; }
+               bitval += 1 << i;
             }
          }
+         if (action === "url") { return bitval; }
          return object;
       },
-      set: function(name, value) {
-         $(name).checked = value;
+      set: function(bitval) {
+         var ocards = C("ocards");
+         for(i = 0; i < ocards.length; i++) {
+            var checkbox = ocards[i];
+            checkbox.checked = (bitval & (1 << i)) !== 0;
+         }
       }
    },
    'features': {
       type: "bits",
-      bits: 3,
+      bits: function() {
+          return C("ofeatures").length;
+      },
       get: function(action) {
          // Get all selected features
          var object = {};
          var ofeatures = C("ofeatures");
-         for(i = 0; i < ofeatures.length; i++)
-         {
+         var bitval = 0;
+         for(i = 0; i < ofeatures.length; i++) {
             var checkbox = ofeatures[i];
             if (action === 'init') { checkbox.addEventListener("click", build, false); }
-            if ( checkbox.checked ) { object[checkbox.id] = 1; }
+            if ( checkbox.checked ) { 
+                object[checkbox.id] = 1; 
+                bitval += 1 << i;
+            }
+            //if (action === "url") console.log(ofeatures[i].id + ": " + checkbox.checked);
          }
+         if (action === "url") {return bitval;}
          return object;
       },
-      set: function(name, value) {
-         $(name).checked = value;
+      set: function(bitval) {
+         var ofeatures = C("ofeatures");
+         for(i = 0; i < ofeatures.length; i++) {
+             var checkbox = ofeatures[i];
+             checkbox.checked = (bitval & (1 << i)) !== 0;
+         }
       }
    },
    // Misc
    'acquirers': {
       type: "bits",
-      bits: 4,
+      bits: function() {
+          var len = $("acquirer").length;
+          var nbits = 0;
+          while (len > 0) {
+              len = len >>> 1;
+              nbits++;
+          }
+          return nbits;
+      },
       get: function(action) {
          if (action === 'init') { $('acquirer').addEventListener("change", build, false); }
 
          // Return the selected acquirers
          var name = $("acquirer").value;
+         if (action === "url" ){
+             return $("acquirer").selectedIndex;
+         }
          if ($("acquirer").value == 'auto') {
             return ACQs;
          }
@@ -324,26 +363,29 @@ var opts = {
             return objekt;
          }
       },
-      set: function(v) {}
+      set: function(bitval) {
+         if (bitval < $("acquirer").length) { $("acquirer").selectedIndex = bitval; }
+      },
    },
    'transactions': {
       type: "string",
       dirty_bits: 1,
-      // get_dirty_bits: function() { return +(this.get()); },
+      get_dirty_bits: function() { return +(this.get() !== parseInt($('transactions').defaultValue)); },
       get: function(action) { return getInt($('transactions'), action); },
       set: function(v) { setInt('transactions', v); }
    },
    'avgvalue': {
       type: "currency",
       dirty_bits: 1,
-      // get_dirty_bits: function() { return +!this.get(); },
+      get_dirty_bits: function() { console.log("?????");console.log(this.get());console.log(_getCurrency($('avgvalue').defaultValue));
+          return +(!this.get().is_equal_to(_getCurrency($('avgvalue').defaultValue))); },
       get: function(action) { return getCurrency('avgvalue', action); },
-      set: function(v) { setCurrency('avgvalue', v); }
+      set: function(v) { setCurrency('avgvalue', _getCurrency(v)); }
    },
    'currency': {
       type: "string",
       dirty_bits: 1,
-      // get_dirty_bits: function() { return +(this.get()); },
+       get_dirty_bits: function() { return +(this.get() !== $('currency_code_select').options[0].value); },
       get: function() { return gccode; },
       set: function(v) {
          var select = $("currency_code_select");
@@ -356,11 +398,9 @@ var opts = {
          }
          set_ccode(v);
       }
-   }
-   /*
-   ,
+   },
    // Dirty bits: bit0 = er der ændret i antal/gns, bit 1..N_acquirers+1 er der ændret i acquirer costs?  --- Objekter der bruger dirty-bits skal være EFTER
-   'dirty_bits': {
+   /*'dirty_bits': {
       type: "bits",
       bits: 0, //sættes on the fly
       get: function() {
@@ -374,8 +414,7 @@ var opts = {
          // 17 => nummber 1 og nummer 5
       },
       set: function(i) {}
-   }
-   */
+   }*/
 };
 
 function objectize(arr) {
@@ -394,12 +433,12 @@ function build(action) {
 
    if (action == 'init') {
       //init_dirty_bits(); // 0.3 ms
-      load_url(); // 0.4 ms
+      loadurl(); // 0.4 ms
    }
 
    // Get settings
    var settings = {};
-   for (var key in opts) { settings[key] = opts[key].get(action); }
+   for (var key in opts) { if (key !== "dirty_bits") { settings[key] = opts[key].get(action); }}
    var acquirers = clone(settings.acquirers);
 
    settings.acquirersort = [];
@@ -455,6 +494,12 @@ function build(action) {
    }
 
    console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: time to build PSPs.");
+
+   var klik = function(psp, acquirers, acqlabels, settings) {
+      return function() {
+         buildInfoModal(psp, acquirers, acqlabels, settings);
+      };
+   };
 
    psploop:
    for (k in PSPs) {
@@ -585,7 +630,7 @@ function build(action) {
          if (total.dkk() < data[sort]) { break; }
       }
       data.splice(sort, 0, total.dkk());
-
+      
       var row = tbody.insertRow(sort);
       row.insertCell(-1).innerHTML = '<a target="_blank" class="psp '+ psp.name.substring(0,4).toLowerCase() +'" href=' + psp.link + '><img src="/assets/img/psp/' + psp.logo + '" alt="' + psp.name +
          '" title="' + psp.name +'" /><p>' + psp.name +'</p></a>';
@@ -599,16 +644,133 @@ function build(action) {
       var kortprocent = kortgebyr.scale( 1/settings.avgvalue.dkk()).dkk()*100;
 
       row.insertCell(-1).innerHTML = "<p class='kortgebyr'>"+total.scale(1 / settings.transactions).print() + "</p><p class='procent'>≈ " + kortprocent.toFixed(3).replace('.', ',') + " %</p>";
+      
+      var infoButton = document.createElement("div");
+      infoButton.classList.add("infobutton");
+      /* construct acq list */
+      infoButton.addEventListener("click", klik(psp, acquirers, acq, settings));
 
+      infoButton.textContent = "Se mere";
+      row.insertCell(-1).appendChild(infoButton);
    }
    table.replaceChild(tbody, $('tbody'));
 
-   // if (action !== "init") { save_url(); }
+   if (action !== "init") { saveurl(); }
 
    console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: done building \n ");
 
+}
+
+//===========================
+//            Modal
+//===========================
+
+function buildInfoModal(psp, acquirers, acqlabels, settings) {
+    var overlay = document.querySelector(".overlay.pspinfo");
+    var content = overlay.getElementsByClassName("content")[0];
+    var frag = document.createDocumentFragment();
+    console.log(acqlabels);
+    content.innerHTML = "";
+    /*var h = document.createElement("h1");
+    frag.appendChild(h).textContent = "Oversigt over " + psp.name;*/
+
+    var psptitle = document.createElement("h3");
+    frag.appendChild(psptitle).textContent = "Omkostninger til payment gateway:";
+
+    var psph = document.createElement("h4");
+    var pspBlock = document.createElement("div");
+    var pspSetup = document.createElement("div");
+    var pspMonthly = document.createElement("div");
+    var pspTrans = document.createElement("div");
+
+    pspBlock.classList.add("costblock");
+
+    pspBlock.appendChild(psph).textContent =  psp.name + ":";
+    pspBlock.appendChild(pspSetup).textContent = "Oprettelse: " + psp.costs.setup.print();
+    pspBlock.appendChild(pspMonthly).textContent = "Abonnement per måned: " + psp.costs.monthly.print();
+    pspBlock.appendChild(pspTrans).textContent = "Transaktionsgebyrer: " + psp.costs.trans.print();
+    frag.appendChild(pspBlock);
+   
+    if (Object.keys(acqlabels).length > 0) {
+        frag.appendChild(document.createElement("hr"));
+        var acqtitle = document.createElement("h3");
+        frag.appendChild(acqtitle).textContent = "Indløseromkostninger:";
+        if (acqlabels.nets && Object.keys(acqlabels).length > 1) {
+            var acqdescription = document.createElement("div");
+            frag.appendChild(acqdescription).textContent = "Det antages jævnfør FDIH's statistikker at Nets modtager 77% af transaktionerne (fra visa/dankort samt rene dankort), mens den sekundære indløser modtager 33%.";
+        }
+    }
+    for (var label in acqlabels) {
+        var acq = acquirers[label];
+        var acqblock = document.createElement("div");
+        var acqh = document.createElement("h4");
+
+        var acqSetup = document.createElement("div");
+        var acqMonthly = document.createElement("div");
+        var acqTrans = document.createElement("div");
+        
+        acqblock.classList.add("costblock");
+        
+        acqblock.appendChild(acqh).textContent =  acq.name + ":";
+        acqblock.appendChild(acqSetup).textContent = "Oprettelse: " + acq.fee_setup.print();
+        acqblock.appendChild(acqMonthly).textContent = "Abonnement per måned: " + acq.fee_monthly.print();
+        var scale = (label === "nets") ? settings.dankort_scale :  1-settings.dankort_scale;
+        acqblock.appendChild(acqTrans).textContent = "Transaktionsgebyrer: " + acq.fee.trans.scale(scale).print();
+        frag.appendChild(acqblock);
+    }
+    console.log(settings.cards.mobilepay);
+    if (settings.cards.mobilepay) {
+        var mpayblock = document.createElement("div");
+        var mpayh = document.createElement("h4");
+        var mpaySetup = document.createElement("div");
+        var mpayMonthly = document.createElement("div");
+        var mpayTrans = document.createElement("div");
+        mpayblock.classList.add("costblock");
+        mpayblock.appendChild(mpayh).textContent =  "Extra til Mobilepay oven i indløseromkostninger:";
+        mpayblock.appendChild(mpaySetup).textContent = "Oprettelse: " + settings.cards.mobilepay.fee.setup.print();
+        mpayblock.appendChild(mpayMonthly).textContent = "Abonnement per måned: " + settings.cards.mobilepay.fee.monthly.print();
+        mpayblock.appendChild(mpayTrans).textContent = "Transaktionsgebyrer: 1kr ekstra pr. mobilepay transaktion";
+        frag.appendChild(mpayblock);
+    }
+        
+    content.appendChild(frag);
+    overlay.classList.add("active");
+    realignOverlay(overlay);
 
 }
+
+function realignOverlay(overlaycontainer) {
+    //Vertical centering of modals
+    var modal = overlaycontainer.getElementsByClassName("modal")[0];
+    var val = (document.documentElement.clientHeight-modal.clientHeight)/2;
+    if (val<0) {
+        val=0;
+    }
+    modal.style.top = val+"px";
+}
+
+window.onresize = function() {
+    var containers = document.querySelectorAll('.overlay.active');
+    for (var i in containers) {
+        if (!isNaN(i)) {
+            realignOverlay(containers[i]);
+        }
+    }
+};
+
+document.onkeydown = function (e) {
+    e = e || window.event;
+    if( (e.keyCode || e.which) === 27 ) {
+        var containers = document.querySelectorAll('.overlay.active');
+        for (var i in containers) {
+            if (!isNaN(i)) {
+                containers[i].classList.remove('active');
+            }
+        }
+    }
+};
+
+
 
 //===========================
 //            URL
@@ -616,184 +778,157 @@ function build(action) {
 
 var base64_chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/";
 
-function base64_encode(n) {
-   if (n < 0) {
-      return "";
-   }
-
-   var str = "",
-      curr_n = n;
-   do {
-      str = base64_chars[curr_n % 64] + str;
-      curr_n = Math.floor(curr_n / 64);
-   } while (curr_n !== 0);
-
-   return str;
+function Base64Array(initsize) {
+    this.bitpos = 0; // from 0 - 5
+    this.array = [];
+    this.pos = 0;
 }
 
-var MAX_INT32 = 0x7FFFFFFF;
+Base64Array.prototype.pushbit = function(bit) {
+    if (this.array.length === 0) {this.array.push(0);}
+    if (this.bitpos > 5) {
+        this.bitpos = 0;
+        this.array.push(0);
+    }
+    this.array[this.array.length - 1] += bit << this.bitpos;
+    this.bitpos++;
+};
+
+Base64Array.prototype.getbit = function() {
+    if (this.bitpos > 5) {
+        this.bitpos = 0;
+        this.pos++;
+    }
+    var bitval = (this.array[this.pos] & (1 << this.bitpos)) >>> this.bitpos;
+    this.bitpos++;
+    return bitval;
+};
+
+Base64Array.prototype.pushbits = function(bitval, nbits) {
+    for(var i = 0; i < nbits; i++) {
+        this.pushbit((bitval & (1 << i)) >>> i);
+    }
+};
+
+Base64Array.prototype.encode = function() {
+    var encstr = "";
+    for (var i = 0; i < this.array.length; i++) {
+        console.log("arr[" + i + "] = " + this.array[i]);
+        encstr += base64_chars[this.array[i]];
+    }
+    return encstr;
+};
+
+Base64Array.prototype.pushbase64char = function(b64char) {
+    var index = base64_chars.indexOf(b64char);
+    if (index < 0) {
+        console.log("Unexpected query character " + b64char);
+        return -1;
+    }
+    this.array.push(index);
+    return 0;
+};
+
+Base64Array.prototype.getbits = function(nbits) {
+    var val = 0;
+    for (var i = 0; i < nbits; i++) {
+        val += this.getbit() << i;
+    }
+    return val;
+};
 
 
-/*
-function init_dirty_bits() {
-   var dirty_bits_count = 0;
-   for (var i in opts) {
-      if (opts[i].dirty_bits && !opts[i].inactive) {
-         dirty_bits_count += opts[i].dirty_bits;
-      }
-   }
-   opts.dirty_bits.bits = dirty_bits_count;
+/* Save the url to the following structure URL = kortgebyr.dk?{BITS}{ARGUMENT STRING}*/
+function saveurl() {
+    var argstr = ""; // The optional arguments string which follows the base64 enc. bits
+    var nbits; // the number of bits for the current option
+    var optbits; // The bits for the current option
+    var bitbuf = new Base64Array(); // The buffer used for containing bits until they are flushed
+    var o;
+
+    /* Loop through the options and construct the url */
+    for (var key in opts) {
+        o = opts[key];
+        
+        /* Create the bit part */
+        if (o.dirty_bits) {
+            nbits = o.dirty_bits;
+            optbits = o.get_dirty_bits("url");
+            var ret = o.get();
+            console.log(ret);
+            if (optbits) {
+                if (ret instanceof Currency) {
+                    argstr += ";" + ret.string();
+                } else {
+                    argstr += ";" + ret;
+                }
+            }
+                
+        } else {
+            nbits = typeof(o.bits) === "function" ? o.bits() : o.bits;
+            optbits = o.get("url");
+        }
+        console.log(key + ": " + optbits);
+        bitbuf.pushbits(optbits, nbits);
+        /* Create the argument string part if dirty bit is set */
+    }
+    
+    
+    history.replaceState({
+       foo: "bar"
+    }, "", "?" + bitbuf.encode() + argstr);
 }
 
-function save_url() {
-   var url = "",
-      first_bit = 0, // from left
-      sum = 0,
-      last_index, dirty_bits_value = 0,
-      dirty_bits_position = 0;
-   for (var i in opts) {
-      if (!opts[i].inactive && !opts[i].dirty_bits) {
-         last_index = i;
-      }
-   }
-   dirty_bits_value = opts.dirty_bits.get("url");
+function loadurl() {
+    var querystring = location.search.replace("?", "");
+    if (!querystring) { return; }
 
-   for (i in opts) {
-      var obj = opts[i],
-         dirty_bits_current = 0;
-      if (obj.dirty_bits) {
-         dirty_bits_current = get_bit_range(dirty_bits_value, dirty_bits_position, dirty_bits_position + obj.dirty_bits - 1, opts.dirty_bits.bits);
-         dirty_bits_position += obj.dirty_bits;
-      }
-      if (obj.inactive === true || (obj.dirty_bits && dirty_bits_current === 0)) {
-         continue;
-      }
+    var encbits = ""; // The base64 encoded bits
+    var args; // The optional arguments string which follows the base64 enc. bits
+    var nbits; // the number of bits for the current option
+    var bitval;
+    var bitbuf = new Base64Array(); // The buffer used for containing bits until they are flushed
+    var o;
 
-      if (obj.type === "bits") {
-         var remainder = obj.get("url"),
-            remainder_bits = obj.bits;
-         //console.log(i + " : " + remainder);
-         do {
-            var last_bit = Math.min(first_bit + remainder_bits - 1, 5);
-            sum += remainder >>> Math.max(remainder_bits - (1 + last_bit - first_bit), 0) << (5 - last_bit);
-            remainder_bits -= 1 + last_bit - first_bit;
-            remainder = remainder & (MAX_INT32 >>> (31 - remainder_bits));
-            if (last_bit === 5 || i === last_index) {
-               url += base64_chars.charAt(sum);
-               first_bit = 0;
-               sum = 0;
-            } else {
-               first_bit += last_bit - first_bit + 1;
+    /* Check if any additional args after the bits and 
+       create the arg array if that is the case */
+    var nb64chars = querystring.indexOf(";");
+    if (nb64chars < 0) {
+        nb64chars = querystring.length;
+    } else {
+        args = querystring.slice(nb64chars + 1).split(";");
+    }
+
+    /* Load the base64 representation of the bits into a base64array type */
+    for (var i = 0; i < nb64chars; i++) {
+        if (bitbuf.pushbase64char(querystring[i]) !== 0) {
+            console.log("error parsing bits");
+            return -1;
+        }
+    }
+
+    /* Loop through the opts set the fields with values loaded from the url */
+    for (var key in opts) {
+        o = opts[key];
+        /* Check if opt has dirty bits, if so load arg */
+        if (o.dirty_bits) {
+            nbits = o.dirty_bits;
+            bitval = bitbuf.getbits(nbits);
+            if (bitval > 0) {
+                o.set(args[0]);
+                args.shift();
             }
-         } while (remainder_bits > 0);
-      } else {
-         if (sum > 0) {
-            url += base64_chars.charAt(sum);
-            first_bit = 0;
-            sum = 0;
-         }
-
-         if (obj.type === "string") {
-
-            url += ";" + obj.get("url");
-         } else if (obj.type === "currency") {
-
-            var amount = obj.get("url").amounts;
-            for (var cur in amount) {
-               url += ";" + amount[cur] + cur;
-            }
-         }
-      }
-
-      //console.log(i+" : "+sum);
-   }
-
-   history.replaceState({
-      foo: "bar"
-   }, "", "?" + url);
-}
-*/
-
-function get_bit_range(n, from, to, length) {
-   // from the left --- only up to 6 bits
-   return (n & (MAX_INT32 >>> (31 - length + from))) >>> length - 1 - to;
-}
-
-function load_url() {
-
-   var querystring = location.search.replace("?", "");
-   if (!querystring) { return; }
-
-   alert("Link-funktionaliteten er midlertidigt fjernet (02/09/2015).");
-
-/*
-   var current_char_num = 0;
-   var first_bit = 0;
-   var dirty_bits_value = 0;
-   var dirty_bits_position = 0;
-   var dirty_bits_current; // 0 char is ?
-
-   for (i in opts) {
-      var obj = opts[i], sum = 0;
-
-      if (obj.dirty_bits) {
-         // Wtf does this do...?
-         dirty_bits_current = get_bit_range(dirty_bits_value, dirty_bits_position, dirty_bits_position + obj.dirty_bits - 1, opts.dirty_bits.bits);
-         dirty_bits_position += obj.dirty_bits;
-
-         if (dirty_bits_current === 0) { continue; }
-      }
-      if (obj.type === "bits") {
-         var remaining_bits = obj.bits;
-
-         while (1) {
-            if (current_char_num > querystring.length - 1) { return; } // error querystring too short
-            var current_char = querystring.charAt(current_char_num);
-
-            if (current_char === ";") { break; }
-            var n = base64_chars.indexOf(current_char);
-
-            if (n === -1) { return; } // error invalid char
-            var last_bit = first_bit + remaining_bits - 1;
-
-            if (last_bit > 5) { last_bit = 5; }
-            remaining_bits -= 1 + last_bit - first_bit;
-            sum += get_bit_range(n, first_bit, last_bit, 6) << remaining_bits;
-
-            if (remaining_bits > 0) {
-               first_bit = 0;
-               current_char_num++;
-            }
-            else {
-               first_bit = last_bit + 1;
-
-               if (first_bit > 5) {
-                  first_bit = 0;
-                  current_char_num++;
-               }
-               break;
-            }
-         }
-         obj.set(sum);
-
-         if (i === "dirty_bits") { dirty_bits_value = sum; }
-
-         if (first_bit > 0) {
-            first_bit = 0;
-            current_char_num++;
-         }
-         if (querystring.charAt(current_char_num) === ";") { current_char_num++; }
-         var next_separator_index = querystring.indexOf(";", current_char_num);
-
-         if (next_separator_index === -1) { next_separator_index = querystring.length; }
-         var str = querystring.substring(current_char_num, next_separator_index);
-         current_char_num += str.length;
-
-         if (obj.type === "string") { opts[i].set(str); }
-         else if (obj.type === "currency") { opts[i].set(_getCurrency(str)); }
-      }
-   }
-   */
+        /* Otherwise just load the bits directly */
+        } else if (o.bits){
+            nbits = typeof(o.bits) === "function" ? o.bits() : o.bits;
+            bitval = bitbuf.getbits(nbits);
+            o.set(bitval);
+        } else {
+            console.log("opt " + key + " neither has a bits field or a dirty_bits field");
+            return;
+        }
+        /* Create the argument string part if dirty bit is set */
+    }
 }
 
 build('init');
