@@ -6,10 +6,13 @@
 *  Indentation: 3 spaces
 *  Conventions: https://github.com/airbnb/javascript
 *
-*  Ugly fixes
-*  1: Nets needs to be the first acquirer in acquirersort. The problem is that
+*  Ugly fixes:
+*  1) Nets needs to be the first acquirer in acquirersort. The problem is that
 *     we don't iterate through acquirers properly when we try to find the
 *     cheapest combination of acquirers.
+*
+*  To do:
+*  1) loadurl: add backward compatibility.
 *
 *
  **/
@@ -317,8 +320,8 @@ var opts = {
          for(i = 0; i < ofeatures.length; i++) {
             var checkbox = ofeatures[i];
             if (action === 'init') { checkbox.addEventListener("click", build, false); }
-            if ( checkbox.checked ) { 
-                object[checkbox.id] = 1; 
+            if ( checkbox.checked ) {
+                object[checkbox.id] = 1;
                 bitval += 1 << i;
             }
             //if (action === "url") console.log(ofeatures[i].id + ": " + checkbox.checked);
@@ -630,7 +633,7 @@ function build(action) {
          if (total.dkk() < data[sort]) { break; }
       }
       data.splice(sort, 0, total.dkk());
-      
+
       var row = tbody.insertRow(sort);
       row.insertCell(-1).innerHTML = '<a target="_blank" class="psp '+ psp.name.substring(0,4).toLowerCase() +'" href=' + psp.link + '><img src="/assets/img/psp/' + psp.logo + '" alt="' + psp.name +
          '" title="' + psp.name +'" /><p>' + psp.name +'</p></a>';
@@ -644,7 +647,7 @@ function build(action) {
       var kortprocent = kortgebyr.scale( 1/settings.avgvalue.dkk()).dkk()*100;
 
       row.insertCell(-1).innerHTML = "<p class='kortgebyr'>"+total.scale(1 / settings.transactions).print() + "</p><p class='procent'>≈ " + kortprocent.toFixed(3).replace('.', ',') + " %</p>";
-      
+
       var infoButton = document.createElement("div");
       infoButton.classList.add("infobutton");
       /* construct acq list */
@@ -666,108 +669,87 @@ function build(action) {
 //===========================
 
 function buildInfoModal(psp, acquirers, acqlabels, settings) {
-    var overlay = document.querySelector(".overlay.pspinfo");
-    var content = overlay.getElementsByClassName("content")[0];
-    var frag = document.createDocumentFragment();
-    console.log(acqlabels);
-    content.innerHTML = "";
-    /*var h = document.createElement("h1");
-    frag.appendChild(h).textContent = "Oversigt over " + psp.name;*/
+   var overlay = document.querySelector(".overlay.pspinfo");
+   var content = overlay.getElementsByClassName("content")[0];
+   var frag = document.createDocumentFragment();
+   console.log(acqlabels);
+   content.innerHTML = "";
+   /*var h = document.createElement("h1");
+   frag.appendChild(h).textContent = "Oversigt over " + psp.name;*/
 
-    var psptitle = document.createElement("h3");
-    frag.appendChild(psptitle).textContent = "Omkostninger til payment gateway:";
+   var psptitle = document.createElement("h3");
+   frag.appendChild(psptitle).textContent = "Omkostninger til payment gateway:";
 
-    var psph = document.createElement("h4");
-    var pspBlock = document.createElement("div");
-    var pspSetup = document.createElement("div");
-    var pspMonthly = document.createElement("div");
-    var pspTrans = document.createElement("div");
+   var psph = document.createElement("h4");
+   var pspBlock = document.createElement("div");
+   var pspSetup = document.createElement("div");
+   var pspMonthly = document.createElement("div");
+   var pspTrans = document.createElement("div");
 
-    pspBlock.classList.add("costblock");
+   pspBlock.classList.add("costblock");
 
-    pspBlock.appendChild(psph).textContent =  psp.name + ":";
-    pspBlock.appendChild(pspSetup).textContent = "Oprettelse: " + psp.costs.setup.print();
-    pspBlock.appendChild(pspMonthly).textContent = "Abonnement per måned: " + psp.costs.monthly.print();
-    pspBlock.appendChild(pspTrans).textContent = "Transaktionsgebyrer: " + psp.costs.trans.print();
-    frag.appendChild(pspBlock);
-   
-    if (Object.keys(acqlabels).length > 0) {
-        frag.appendChild(document.createElement("hr"));
-        var acqtitle = document.createElement("h3");
-        frag.appendChild(acqtitle).textContent = "Indløseromkostninger:";
-        if (acqlabels.nets && Object.keys(acqlabels).length > 1) {
-            var acqdescription = document.createElement("div");
-            frag.appendChild(acqdescription).textContent = "Det antages jævnfør FDIH's statistikker at Nets modtager 77% af transaktionerne (fra visa/dankort samt rene dankort), mens den sekundære indløser modtager 33%.";
-        }
-    }
-    for (var label in acqlabels) {
-        var acq = acquirers[label];
-        var acqblock = document.createElement("div");
-        var acqh = document.createElement("h4");
+   pspBlock.appendChild(psph).textContent = psp.name + ":";
+   pspBlock.appendChild(pspSetup).textContent = "Oprettelse: " + psp.costs.setup.print();
+   pspBlock.appendChild(pspMonthly).textContent = "Abonnement per måned: " + psp.costs.monthly.print();
+   pspBlock.appendChild(pspTrans).textContent = "Transaktionsgebyrer: " + psp.costs.trans.print();
+   frag.appendChild(pspBlock);
 
-        var acqSetup = document.createElement("div");
-        var acqMonthly = document.createElement("div");
-        var acqTrans = document.createElement("div");
-        
-        acqblock.classList.add("costblock");
-        
-        acqblock.appendChild(acqh).textContent =  acq.name + ":";
-        acqblock.appendChild(acqSetup).textContent = "Oprettelse: " + acq.fee_setup.print();
-        acqblock.appendChild(acqMonthly).textContent = "Abonnement per måned: " + acq.fee_monthly.print();
-        var scale = (label === "nets") ? settings.dankort_scale :  1-settings.dankort_scale;
-        acqblock.appendChild(acqTrans).textContent = "Transaktionsgebyrer: " + acq.fee.trans.scale(scale).print();
-        frag.appendChild(acqblock);
-    }
-    console.log(settings.cards.mobilepay);
-    if (settings.cards.mobilepay) {
-        var mpayblock = document.createElement("div");
-        var mpayh = document.createElement("h4");
-        var mpaySetup = document.createElement("div");
-        var mpayMonthly = document.createElement("div");
-        var mpayTrans = document.createElement("div");
-        mpayblock.classList.add("costblock");
-        mpayblock.appendChild(mpayh).textContent =  "Extra til Mobilepay oven i indløseromkostninger:";
-        mpayblock.appendChild(mpaySetup).textContent = "Oprettelse: " + settings.cards.mobilepay.fee.setup.print();
-        mpayblock.appendChild(mpayMonthly).textContent = "Abonnement per måned: " + settings.cards.mobilepay.fee.monthly.print();
-        mpayblock.appendChild(mpayTrans).textContent = "Transaktionsgebyrer: 1kr ekstra pr. mobilepay transaktion";
-        frag.appendChild(mpayblock);
-    }
-        
-    content.appendChild(frag);
-    overlay.classList.add("active");
-    realignOverlay(overlay);
+   if (Object.keys(acqlabels).length > 0) {
+      frag.appendChild(document.createElement("hr"));
+      var acqtitle = document.createElement("h3");
+      frag.appendChild(acqtitle).textContent = "Indløseromkostninger:";
+      if (acqlabels.nets && Object.keys(acqlabels).length > 1) {
+         var acqdescription = document.createElement("div");
+         frag.appendChild(acqdescription).textContent = "Det antages jævnfør FDIH's statistikker at Nets modtager 77% af transaktionerne (fra visa/dankort samt rene dankort), mens den sekundære indløser modtager 33%.";
+      }
+   }
+   for (var label in acqlabels) {
+      var acq = acquirers[label];
+      var acqblock = document.createElement("div");
+      var acqh = document.createElement("h4");
 
+      var acqSetup = document.createElement("div");
+      var acqMonthly = document.createElement("div");
+      var acqTrans = document.createElement("div");
+
+      acqblock.classList.add("costblock");
+
+      acqblock.appendChild(acqh).textContent = acq.name + ":";
+      acqblock.appendChild(acqSetup).textContent = "Oprettelse: " + acq.fee_setup.print();
+      acqblock.appendChild(acqMonthly).textContent = "Abonnement per måned: " + acq.fee_monthly.print();
+      var scale = (label === "nets") ? settings.dankort_scale : 1 - settings.dankort_scale;
+      acqblock.appendChild(acqTrans).textContent = "Transaktionsgebyrer: " + acq.fee.trans.scale(scale).print();
+      frag.appendChild(acqblock);
+   }
+
+   if (settings.cards.mobilepay) {
+      var mpayblock = document.createElement("div");
+      var mpayh = document.createElement("h4");
+      var mpaySetup = document.createElement("div");
+      var mpayMonthly = document.createElement("div");
+      var mpayTrans = document.createElement("div");
+      mpayblock.classList.add("costblock");
+      mpayblock.appendChild(mpayh).textContent = "Extra til Mobilepay oven i indløseromkostninger:";
+      mpayblock.appendChild(mpaySetup).textContent = "Oprettelse: " + settings.cards.mobilepay.fee.setup.print();
+      mpayblock.appendChild(mpayMonthly).textContent = "Abonnement per måned: " + settings.cards.mobilepay.fee.monthly.print();
+      mpayblock.appendChild(mpayTrans).textContent = "Transaktionsgebyrer: 1kr ekstra pr. mobilepay transaktion";
+      frag.appendChild(mpayblock);
+   }
+
+   content.appendChild(frag);
+   overlay.classList.add("active");
 }
 
-function realignOverlay(overlaycontainer) {
-    //Vertical centering of modals
-    var modal = overlaycontainer.getElementsByClassName("modal")[0];
-    var val = (document.documentElement.clientHeight-modal.clientHeight)/2;
-    if (val<0) {
-        val=0;
-    }
-    modal.style.top = val+"px";
-}
-
-window.onresize = function() {
-    var containers = document.querySelectorAll('.overlay.active');
-    for (var i in containers) {
-        if (!isNaN(i)) {
-            realignOverlay(containers[i]);
-        }
-    }
-};
-
-document.onkeydown = function (e) {
-    e = e || window.event;
-    if( (e.keyCode || e.which) === 27 ) {
-        var containers = document.querySelectorAll('.overlay.active');
-        for (var i in containers) {
-            if (!isNaN(i)) {
-                containers[i].classList.remove('active');
-            }
-        }
-    }
+document.onkeydown = function(e) {
+   e = e || window.event;
+   if ((e.keyCode || e.which) === 27) {
+      var containers = document.querySelectorAll('.overlay.active');
+      for (var i in containers) {
+         if (!isNaN(i)) {
+            containers[i].classList.remove('active');
+         }
+      }
+   }
 };
 
 
@@ -850,12 +832,12 @@ function saveurl() {
     for (var key in opts) {
         o = opts[key];
 
-        /* Depending on whether dirty bits are used or not, react accordingly */        
+        /* Depending on whether dirty bits are used or not, react accordingly */
         if (o.dirty_bits) {
             nbits = o.dirty_bits;
             optbits = o.get_dirty_bits("url");
             var ret = o.get();
-            /* Create the argument string part if dirty bit is set */            
+            /* Create the argument string part if dirty bit is set */
             if (optbits) {
                 if (ret instanceof Currency) {
                     argstr += ";" + ret.string();
@@ -863,7 +845,7 @@ function saveurl() {
                     argstr += ";" + ret;
                 }
             }
-                
+
         } else if (o.bits) {
             nbits = typeof(o.bits) === "function" ? o.bits() : o.bits;
             optbits = o.get("url");
@@ -873,8 +855,8 @@ function saveurl() {
         }
         bitbuf.pushbits(optbits, nbits);
     }
-    
-    
+
+
     history.replaceState({
        foo: "bar"
     }, "", "?" + bitbuf.encode() + argstr);
@@ -891,7 +873,7 @@ function loadurl() {
     var bitbuf = new Base64Array(); // The buffer used for containing bits until they are flushed
     var o;
 
-    /* Check if any additional args after the bits and 
+    /* Check if any additional args after the bits and
        create the arg array if that is the case */
     var nb64chars = querystring.indexOf(";");
     if (nb64chars < 0) {

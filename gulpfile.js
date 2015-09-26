@@ -41,7 +41,7 @@ var paths = {
    scripts: 'src/js/*.js',
    less: 'src/css/*.less',
    assets: ['src/assets/**/*.{png,woff,woff2}'],
-   svgs: 'src/assets/img/psp/**.svg',
+   svgs: 'src/assets/img/**/*.svg',
    rebuild: ['_site/all.js', '_site/global.css']
 };
 
@@ -118,7 +118,7 @@ function svgz() {
          },
          append: false
       }))
-      .pipe(gulp.dest(paths.dest + '/assets/img/psp/'));
+      .pipe(gulp.dest(paths.dest + '/assets/img/'));
 }
 
 function stalker() {
