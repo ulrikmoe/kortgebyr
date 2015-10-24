@@ -36,13 +36,13 @@ var config = {
 };
 
 var paths = {
-   dest: '_site',
+   dest: 'www',
    html: 'src/*.html',
    scripts: 'src/js/*.js',
    less: 'src/css/*.less',
    assets: ['src/assets/**/*.{png,woff,woff2}'],
    svgs: 'src/assets/img/**/*.svg',
-   rebuild: ['_site/all.js', '_site/global.css']
+   rebuild: ['www/all.js', 'www/global.css']
 };
 
 // Last changed
@@ -100,7 +100,7 @@ function less2css() {
 function html() {
    return gulp.src(paths.html, { base: paths.src })
       .pipe(nunjucks({
-         searchPaths: ['_site/'],
+         searchPaths: ['www/'],
          locals: {
             lastUpdate: lastUpdate
          }
