@@ -127,7 +127,7 @@ function svgz() {
 }
 
 function gz() {
-   return gulp.src('www/**/*.{html,css,js}')
+   return gulp.src('www/**/*.{html}')
       .pipe(gzip({
          gzipOptions: { level: 9 },
          append: true
