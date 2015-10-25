@@ -18,6 +18,7 @@ var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css');
 var gzip = require('gulp-gzip');
 var concat = require('gulp-concat');
+var rename = require("gulp-rename");
 
 // Use 'gulp --prod' for production mode
 var config = {
@@ -40,7 +41,7 @@ var paths = {
    html: 'src/*.html',
    scripts: 'src/js/*.js',
    less: 'src/css/*.less',
-   assets: ['src/assets/**/*.{png,woff,woff2}'],
+   assets: ['src/assets/**/*.{svg,png,woff,woff2}'],
    svgs: 'src/assets/img/**/*.svg',
    rebuild: ['www/all.js', 'www/global.css']
 };
@@ -56,7 +57,7 @@ var lastUpdate = day + ". " + monthNames[month] + " " + year;
 var middleman = function(req, res, next) {
    var url = req.url;
    var ext = url.substr(url.lastIndexOf('.') + 1);
-   if (ext == "svg" || ext == "gz" || ext == "svgz") {
+   if (ext == "gz" || ext == "svgz") {
       res.setHeader('Content-Encoding', 'gzip');
    }
    next();
@@ -118,7 +119,20 @@ function svgz() {
          },
          append: false
       }))
+      .pipe(rename(function (path) {
+         path.extname = ".svgz";
+         return path;
+      }))
       .pipe(gulp.dest(paths.dest + '/assets/img/'));
+}
+
+function gz() {
+   return gulp.src('www/**/*.{html,css,js}')
+      .pipe(gzip({
+         gzipOptions: { level: 9 },
+         append: true
+      }))
+      .pipe(gulp.dest(paths.dest));
 }
 
 function stalker() {
@@ -129,4 +143,4 @@ function stalker() {
    gulp.watch(paths.rebuild, html);
 }
 
-gulp.task('default', gulp.series(clean, assets, scripts, less2css, svgz, html, gulp.parallel(stalker, webserver)));
+gulp.task('default', gulp.series(clean, assets, scripts, less2css, svgz, html, gz, gulp.parallel(stalker, webserver)));
