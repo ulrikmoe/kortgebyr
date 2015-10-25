@@ -11,23 +11,15 @@ img,svg { vertical-align: middle; }
    -moz-user-select: none; -ms-user-select: none; user-select: none;
 }
 
-// Source Sans Pro [SSP]
-@font-face {
-   font-family: 'SSP';
-   font-weight: 400;
-   font-style: normal;
-   src: url("/assets/fonts/SSP/regular.woff2") format('woff2'), url("/assets/fonts/SSP/regular.woff") format('woff');
-}
-
-@font-face {
-   font-family: 'SSP';
-   font-weight: 600;
-   font-style: normal;
-   src: url("/assets/fonts/SSP/semibold.woff2") format('woff2'), url("/assets/fonts/SSP/semibold.woff") format('woff');
+*, *:before, *:after {
+   margin: 0;
+   padding: 0;
+   border: 0;
+   box-sizing: inherit;
 }
 
 html {
-   font-family: 'SSP', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 1 */
+   font-family: Arial, sans-serif;
    font-size: 15px;
    line-height: 1.5;
    color: #2c2c2c;
@@ -43,14 +35,10 @@ body {
    overflow: auto;
 }
 
-*, *:before, *:after {
-   margin: 0;
-   padding: 0;
-   border: 0;
-   box-sizing: inherit;
+a {
+   color: #36b;
+   text-decoration: none;
 }
-
-a { color: #36b; text-decoration: none; }
 
 .c {
    width: 97%;
@@ -116,9 +104,7 @@ nav {
          border-top: 4px solid #bbb;
       }
 
-      &:hover:after {
-         border-top-color: #999;
-      }
+      &:hover:after { border-top-color: #999; }
    }
 
    .language:hover, .currency:hover {
@@ -195,10 +181,10 @@ nav {
    }
 
    .field {
-      width: 65px;
+      width: 70px;
       margin: 4px 7px 5px 0;
       padding-left: 4px;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 24px;
       height: 26px;
       color: #555;
@@ -262,7 +248,7 @@ nav {
 
    th {
       padding: 5px 0 4px;
-      font-size: 13px;
+      font-size: 12px;
       line-height: 16px;
       font-weight: 600;
       background-color: #f5f5f5;
