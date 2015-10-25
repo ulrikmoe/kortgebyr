@@ -20,9 +20,9 @@ var gzip = require('gulp-gzip');
 var concat = require('gulp-concat');
 var rename = require("gulp-rename");
 
-// Use 'gulp --prod' for production mode
+// Use 'gulp --dev' for development mode (uncompressed code)
 var config = {
-   production: !!gutil.env.prod,
+   production: !gutil.env.dev,
    htmlmin: {
       removeComments: true,
       collapseWhitespace: true,
