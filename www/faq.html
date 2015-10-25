@@ -1,1 +1,257 @@
-<!DOCTYPE HTML><html><head><meta charset="utf-8"><title>Kortgebyr - foklaring</title><meta name="description" content="Forstå hvad en betalingsløsning er ... "><style>.c,.header,html{position:relative}.header h1,section h3{text-transform:uppercase}@font-face{font-family:SSP;font-weight:400;font-style:normal;src:url(/assets/fonts/SSP/regular.woff2) format('woff2'),url(/assets/fonts/SSP/regular.woff) format('woff')}@font-face{font-family:SSP;font-weight:600;font-style:normal;src:url(/assets/fonts/SSP/semibold.woff2) format('woff2'),url(/assets/fonts/SSP/semibold.woff) format('woff')}@font-face{font-family:SSP;font-weight:700;font-style:normal;src:url(/assets/fonts/SSP/bold.woff2) format('woff2'),url(/assets/fonts/SSP/bold.woff) format('woff')}html{font-family:SSP,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5;color:#2c2c2c;box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{background:#fff;overflow-x:hidden}*,:after,:before{margin:0;padding:0;border:0;box-sizing:inherit}a{color:#337ab7;text-decoration:none}.c{width:90%;max-width:690px;margin:auto}.header{padding:48px 0 33px;text-align:center;color:#fff;background:#007be4;overflow:hidden}.header .c{z-index:10}.header h1{text-align:center;font-size:72px;line-height:88px}.header h1 a{color:inherit}.header h2{font-weight:400;font-size:21px;color:#f9f9f9;padding:0 0 20px}.header::after{content:"";display:block;position:absolute;top:18px;left:0;right:0;height:100%;opacity:.1;z-index:0}nav{border-bottom:1px solid #d0d0d0;padding:22px 0}nav li{display:inline-block;font-size:18px;margin-right:15px}nav a{color:#337ab7}.notice{margin:33px 0 0;padding:12px 20px 15px;color:rgba(0,0,0,.7);background:#FCF8F2;border-left:3px solid #F1AE48}.notice h4{padding:2px 0 3px;color:#dc9e2d;font-weight:600;font-size:17px}section{margin:22px 0 0}section h3{margin:0 0 12px;padding:6px 0 10px;font-size:20px;font-weight:700;color:#333;border-bottom:1px solid #e0e0e0}section .anchor{color:silver;margin-left:5px}section ul{margin-left:50px}</style><link rel="canonical" href="https://kortgebyr.dk/foklaring.html"></head><body><div class="header"><div class="c"><h1><a href="/">kortgebyr</a></h1><h2>Kortgebyr er en prissammenligningside for betalingsløsninger og betalingsgateways. Kortgebyr er uafhængig, non-profit og open source.</h2><img src="/assets/img/github.png" alt=""></div></div><div class="c"><nav><ul><li><a href="#">Forklaring</a></li><li><a href="#">FAQ</a></li><li><a href="#">Kontakt</a></li></ul></nav><section><h3>Hvad er en indløser?</h3><div>En indløser, på engelsk kaldet acquirer, er en finansiel virksomhed, der processeserer kortdata og i sidste ende flytter pengene fra kortholders bankkonto til butikkens bankkonto. På det danske marked er der p.t. 6 indløsere: Nets, Teller, Euroline (Bambora), Clearhaus, Swedbank, Handelsbanken, Elavon og Valitor.</div></section><section><h3>Hvad er en betalingsgateway?</h3><div>En betalingsgateway, ofte kaldet Payment Service Provider (PSP), er det tekniske og administrative bindeled mellem netbutik og indløser. Det er en PCI-certificeret løsning der er godkendt til at modtage kortoplysningerne, f.eks. via et betalingsvindue, samt til at behandle, lagre og transmittere dem til relevante indløsere. Betalingsgateways tilbyder typisk en lang række features, f.eks. svindelbekæmpelse.</div></section><section><h3>Hvad er en betalingsløsning?</h3><div>På Kortgebyr har vi valgt at definere betalingsløsninger som løsninger der egenhændigt kan modtage, processesere og indløse betalinger. Dette er næsten altid en kombination af en betalingsgateway og en eller flere indløsere.</div></section><section><h3>Hvad er PCI DSS?</h3><div>PCI DSS står for Payment Card Industry Data Security Standard. PCI DSS er en sikkerhedsstandard for kreditkort-industrien. Standarden beskriver de krav som alle forretninger, der transmitterer, behandler eller opbevarer kortdata, skal opfylde. Standarden gælder for Dankort, Visa, MasterCard, JCB, UnionPay og American Express.</div></section><section><h3>Skal jeg PCI certificeres?</h3><div>Hvis du tilbyder kortbetaling skal du altid have en PCI certificering, men de fleste kan nøjes med en SAQ A eller SAQ A-EP. Det afgørende er om kunden indtaster sine kortoplysninger på din side eller om du videresender kunden til en hosted betalingsside. I Danmark har indløserne indtil videre set gennem fingre med kravet om at netbutikker skal PCI certificeres, men dette er ved at ændre sig.</div></section><section><h3>Hvordan udregner i kortgebyret?</h3><div>Eksempel på udregning af kortgebyr for betalingsgatewayen Epay med et pro-abonnement (inklusiv fraudfighter)</div><ul><li><h3>Step 1: Udregn de månedlige omkostninger</h3>De månedlige omkostniger til kortgebyr udgøres normalt af to ting:<br>Udgifter til en betalingsgateway og udgifter til indløserer.<br>De forskellige betalingsgateways bruger forskellige prisstrukturer, men de har typisk et et gebyr per transaktion samt et månedligt gebyr.<div><h4>Månedlige omkostninger til Epay:</h4>En webshop har 1500 transaktioner om måneden til en gennemsnitsværdi på 600kr. De månedlige omkostninger til Epay er da:<br>Månedlige Epay-omkostninger = (transaktioner - gratis transaktiner) * transaktionsfee + månedligt abonnement<br>= ( 1500 - 500 ) * 0.25kr + 199kr = 449 kr</div><br>Webshoppen har vil gerne tage mod dankort, Visa og Mastercard og har derfor indgået indløsningsaftaler hhv. med NETS og Teller. Jævnfør FDIH's statistikker antages det, at 18% af kunderne betaler med Dankort og 82% af kunderne betaler med Visa eller Mastercard.<div><h4>Månedlige omkostninger for dankort til NETS</h4>Nets tager 1.39kr per transaktion over 100kr. Hvis vi antager at samtlige af de 1500 transaktioner er over 100kr, vil det månedligt koste:<br>Månedlige NETS-omkostninger = ( transaktioner * procentdel dankorttransaktioner ) * transaktionsfee + månedligt abonnement<br>= (1500 * 0.82 ) * 1.39kr + 1000kr/år / ( 12måneder/år ) = 1793.03kr</div><div><h4>Månedlige omkostninger for Visa og Mastercard til Teller</h4>Teller tager 1.5% af beløbet, dog mindst 0.7kr per transaktion.<br>Det antages, at alle transaktioner er over 0.7kr / (0.0015) = 466.67kr, således at det er procentsatsen og ikke minimumssatsen, der gælder for alle transaktioner.<br>Månedlige Teller-omkostninger = ( transaktioner * procentdel visa/mastercard transaktioner ) * gennemsnitsværdi * procent transaktionsfee + månedligt abonnement<br>= (1500 * 0.18 ) * 600kr * 0.015 + 100kr = 2530kr</div></li><li><h3>Step 2: Del omkostningerne ud på hver transaktion</h3>Kortgebyr = Total-omkostninger / Transaktioner<br>= 4796.69kr / 1500 = 3.20kr</li></ul></section><section><h3>Hvem står bag?</h3><p>Kortgebyr.dk er udviklet af <a href="https://github.com/ulrikmoe">@ulrikmoe</a>, <a href="https://twitter.com/christianblach">@christianblach</a> og <a href="https://github.com/zhasha">@joakimsindholt</a>. Formålet med siden er at skabe klarhed på et yderst komplekst marked.</p></section></div><a href="https://github.com/ulrikmoe/kortgebyr"><img style="position: absolute; top: 0; right: 0; border: 0" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a></body></html>
+<!DOCTYPE HTML><html>
+<head>
+   <meta charset="utf-8">
+   <title>Kortgebyr - foklaring</title>
+   <meta name="description" content="Forstå hvad en betalingsløsning er ... ">
+   <style>
+		@font-face {
+  font-family: 'SSP';
+  font-weight: 400;
+  font-style: normal;
+  src: url("/assets/fonts/SSP/regular.woff2") format('woff2'), url("/assets/fonts/SSP/regular.woff") format('woff');
+}
+@font-face {
+  font-family: 'SSP';
+  font-weight: 600;
+  font-style: normal;
+  src: url("/assets/fonts/SSP/semibold.woff2") format('woff2'), url("/assets/fonts/SSP/semibold.woff") format('woff');
+}
+@font-face {
+  font-family: 'SSP';
+  font-weight: 700;
+  font-style: normal;
+  src: url("/assets/fonts/SSP/bold.woff2") format('woff2'), url("/assets/fonts/SSP/bold.woff") format('woff');
+}
+html {
+  font-family: 'SSP', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 1 */
+  font-size: 16px;
+  line-height: 1.5;
+  color: #2c2c2c;
+  position: relative;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  background: #fff;
+  overflow-x: hidden;
+}
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: inherit;
+}
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+.c {
+  width: 90%;
+  max-width: 690px;
+  margin: auto;
+  position: relative;
+}
+.header {
+  padding: 48px 0 33px;
+  text-align: center;
+  color: white;
+  background: #007be4;
+  position: relative;
+  overflow: hidden;
+}
+.header .c {
+  z-index: 10;
+}
+.header h1 {
+  text-align: center;
+  font-size: 72px;
+  line-height: 88px;
+  text-transform: uppercase;
+}
+.header h1 a {
+  color: inherit;
+}
+.header h2 {
+  font-weight: 400;
+  font-size: 21px;
+  color: #f9f9f9;
+  padding: 0 0 20px;
+}
+.header::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 18px;
+  left: 0;
+  right: 0;
+  height: 100%;
+  opacity: 0.1;
+  z-index: 0;
+}
+nav {
+  border-bottom: 1px solid #d0d0d0;
+  padding: 22px 0;
+}
+nav li {
+  display: inline-block;
+  font-size: 18px;
+  margin-right: 15px;
+}
+nav a {
+  color: #337ab7;
+}
+.notice {
+  margin: 33px 0 0;
+  padding: 12px 20px 15px;
+  color: rgba(0, 0, 0, 0.7);
+  background: #FCF8F2;
+  border-left: 3px solid #F1AE48;
+}
+.notice h4 {
+  padding: 2px 0 3px;
+  color: #dc9e2d;
+  font-weight: 600;
+  font-size: 17px;
+}
+section {
+  margin: 22px 0 0;
+}
+section h3 {
+  margin: 0 0 12px;
+  padding: 6px 0 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e0e0e0;
+}
+section .anchor {
+  color: #c0c0c0;
+  margin-left: 5px;
+}
+section ul {
+  margin-left: 50px;
+}
+
+	</style>
+   <link rel="canonical" href="https://kortgebyr.dk/foklaring.html">
+</head>
+<body>
+
+<div class="header">
+   <div class="c">
+      <h1><a href="/">kortgebyr</a></h1>
+      <h2>Kortgebyr er en prissammenligningside for betalingsløsninger og betalingsgateways. Kortgebyr er uafhængig, non-profit og open source.</h2>
+      <img src="/assets/img/github.png" alt="" />
+   </div>
+</div>
+
+<div class="c">
+
+   <nav>
+      <ul>
+         <li><a href="#">Forklaring</a></li>
+         <li><a href="#">FAQ</a></li>
+         <li><a href="#">Kontakt</a></li>
+      </ul>
+   </nav>
+
+   <section>
+		<h3>Hvad er en indløser?</h3>
+		<div>
+         En indløser, på engelsk kaldet acquirer, er en finansiel virksomhed, der processeserer kortdata og i sidste ende flytter pengene fra kortholders bankkonto til butikkens bankkonto. På det danske marked er der p.t. 6 indløsere: Nets, Teller, Euroline (Bambora), Clearhaus, Swedbank, Handelsbanken, Elavon og Valitor.
+      </div>
+   </section>
+
+   <section>
+		<h3>Hvad er en betalingsgateway?</h3>
+		<div>
+         En betalingsgateway, ofte kaldet Payment Service Provider (PSP), er det tekniske og administrative bindeled mellem netbutik og indløser. Det er en PCI-certificeret løsning der er godkendt til at modtage kortoplysningerne, f.eks. via et betalingsvindue, samt til at behandle, lagre og transmittere dem til relevante indløsere. Betalingsgateways tilbyder typisk en lang række features, f.eks. svindelbekæmpelse.
+      </div>
+   </section>
+
+   <section>
+		<h3>Hvad er en betalingsløsning?</h3>
+		<div>
+         På Kortgebyr har vi valgt at definere betalingsløsninger som løsninger der egenhændigt kan modtage, processesere og indløse betalinger. Dette er næsten altid en kombination af en betalingsgateway og en eller flere indløsere.
+      </div>
+   </section>
+
+   <section>
+		<h3>Hvad er PCI DSS?</h3>
+		<div>
+         PCI DSS står for Payment Card Industry Data Security Standard. PCI DSS er en sikkerhedsstandard for kreditkort-industrien. Standarden beskriver de krav som alle forretninger, der transmitterer, behandler eller opbevarer kortdata, skal opfylde. Standarden gælder for Dankort, Visa, MasterCard, JCB, UnionPay og American Express.
+      </div>
+   </section>
+
+   <section>
+      <h3>Skal jeg PCI certificeres?</h3>
+      <div>
+         Hvis du tilbyder kortbetaling skal du altid have en PCI certificering, men de fleste kan nøjes med en SAQ A eller SAQ A-EP. Det afgørende er om kunden indtaster sine kortoplysninger på din side eller om du videresender kunden til en hosted betalingsside. I Danmark har indløserne indtil videre set gennem fingre med kravet om at netbutikker skal PCI certificeres, men dette er ved at ændre sig.
+      </div>
+   </section>
+
+   <section>
+      <h3>Hvordan udregner i kortgebyret?</h3>
+      <div>
+         Eksempel på udregning af kortgebyr for betalingsgatewayen Epay med et pro-abonnement (inklusiv fraudfighter)
+      </div>
+		<ul>
+			<li>
+				<h3>Step 1: Udregn de månedlige omkostninger</h3>
+				De månedlige omkostniger til kortgebyr udgøres normalt af to ting:<br>
+				Udgifter til en betalingsgateway og udgifter til indløserer.
+				<br>
+				De forskellige betalingsgateways bruger forskellige prisstrukturer, men de har typisk et et gebyr per transaktion samt et månedligt gebyr.
+				<div>
+					<h4>Månedlige omkostninger til Epay:</h4>
+					En webshop har 1500 transaktioner om måneden til en gennemsnitsværdi på 600kr. De månedlige omkostninger til Epay er da: <br>
+					Månedlige Epay-omkostninger = (transaktioner - gratis transaktiner) * transaktionsfee + månedligt abonnement
+					<br> = ( 1500 - 500 ) * 0.25kr + 199kr = 449 kr
+				</div>
+				<br>
+				Webshoppen har vil gerne tage mod dankort, Visa og Mastercard og har derfor indgået indløsningsaftaler hhv. med NETS og Teller. Jævnfør FDIH's statistikker antages det, at 18% af kunderne betaler med Dankort og 82% af kunderne betaler med Visa eller Mastercard.
+				<div>
+					<h4>Månedlige omkostninger for dankort til NETS</h4>
+					Nets tager 1.39kr per transaktion over 100kr. Hvis vi antager at samtlige af de 1500 transaktioner er over 100kr, vil det månedligt koste:
+					<br>
+					Månedlige NETS-omkostninger = ( transaktioner * procentdel dankorttransaktioner ) * transaktionsfee + månedligt abonnement
+					<br>
+					= (1500 * 0.82 ) * 1.39kr + 1000kr/år / ( 12måneder/år ) = 1793.03kr
+				</div>
+				<div>
+					<h4>Månedlige omkostninger for Visa og Mastercard til Teller</h4>
+					Teller tager 1.5% af beløbet, dog mindst 0.7kr per transaktion.
+					<br>Det antages, at alle transaktioner er over 0.7kr / (0.0015) = 466.67kr, således at det er procentsatsen og ikke minimumssatsen, der gælder for alle transaktioner.
+					<br>
+					Månedlige Teller-omkostninger = ( transaktioner * procentdel visa/mastercard transaktioner ) * gennemsnitsværdi * procent transaktionsfee + månedligt abonnement
+					<br>
+					= (1500 * 0.18 ) * 600kr * 0.015 + 100kr = 2530kr
+				</div>
+			</li>
+			<li>
+				<h3>Step 2: Del omkostningerne ud på hver transaktion</h3>
+					Kortgebyr = Total-omkostninger / Transaktioner
+					<br>= 4796.69kr / 1500 = 3.20kr
+			</li>
+		</ul>
+   </section>
+
+   <section>
+		<h3>Hvem står bag?</h3>
+			<p>Kortgebyr.dk er udviklet af <a href="https://github.com/ulrikmoe">@ulrikmoe</a>, <a href="https://twitter.com/christianblach">@christianblach</a> og <a href="https://github.com/zhasha">@joakimsindholt</a>. Formålet med siden er at skabe klarhed på et yderst komplekst marked.
+
+	</section>
+
+</div>
+
+
+<a href="https://github.com/ulrikmoe/kortgebyr"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+
+</body>
+</html>

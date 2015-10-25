@@ -42,8 +42,8 @@ var paths = {
    scripts: 'src/js/*.js',
    less: 'src/css/*.less',
    assets: ['src/assets/**/*.{svg,png,woff,woff2}'],
-   svgs: 'src/assets/img/**/*.svg',
-   rebuild: ['www/all.js', 'www/global.css']
+   rebuild: ['www/all.js', 'www/global.css'],
+   gzip: ['www/**/*.{html,svg}']
 };
 
 // Last changed
@@ -54,15 +54,6 @@ var month = datetime.getMonth();
 var year = datetime.getFullYear();
 var lastUpdate = day + ". " + monthNames[month] + " " + year;
 
-var middleman = function(req, res, next) {
-   var url = req.url;
-   var ext = url.substr(url.lastIndexOf('.') + 1);
-   if (ext == "gz" || ext == "svgz") {
-      res.setHeader('Content-Encoding', 'gzip');
-   }
-   next();
-};
-
 // Gulp functions/tasks
 function clean(done) {
    del([paths.dest], done);
@@ -72,10 +63,7 @@ function webserver() {
    connect.server({
       root: paths.dest,
       livereload: !config.production,
-      port: 9000,
-      middleware: function() {
-         return [middleman];
-      }
+      port: 9000
    });
 }
 
@@ -111,23 +99,8 @@ function html() {
       .pipe(connect.reload());
 }
 
-function svgz() {
-   return gulp.src(paths.svgs)
-      .pipe(gzip({
-         gzipOptions: {
-            level: 9
-         },
-         append: false
-      }))
-      .pipe(rename(function (path) {
-         path.extname = ".svgz";
-         return path;
-      }))
-      .pipe(gulp.dest(paths.dest + '/assets/img/'));
-}
-
 function gz() {
-   return gulp.src('www/**/*.{html}')
+   return gulp.src(paths.gzip)
       .pipe(gzip({
          gzipOptions: { level: 9 },
          append: true
@@ -143,4 +116,4 @@ function stalker() {
    gulp.watch(paths.rebuild, html);
 }
 
-gulp.task('default', gulp.series(clean, assets, scripts, less2css, svgz, html, gz, gulp.parallel(stalker, webserver)));
+gulp.task('default', gulp.series(clean, assets, scripts, less2css, html, gz, gulp.parallel(stalker, webserver)));
