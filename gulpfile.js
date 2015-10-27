@@ -5,6 +5,7 @@
 *
 *   Indentation: 3 spaces
 *   Conventions: https://github.com/airbnb/javascript
+*
 *   Use 'gulp clean' to delete everything.
 *   Use 'gulp --dev' for development mode.
 *   Use 'gulp build --lang sv' if you wish to build in a different language than danish.
@@ -20,10 +21,11 @@ var del = require('del');
 var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
+var imagemin = require('gulp-imagemin');
 
 var config = {
    lang: (gutil.env.lang ? gutil.env.lang : 'da'),
-   production: !gutil.env.dev,
+   dev: !!gutil.env.dev,
    htmlmin: {
       removeComments: true,
       collapseWhitespace: true,
@@ -42,9 +44,8 @@ var paths = {
    html: 'src/*.html',
    scripts: 'src/js/*.js',
    less: 'src/css/*.less',
-   assets: ['src/**/*.{svg,png,woff,woff2}'],
    rebuild: ['www/all.js', 'www/global.css'],
-   gzip: ['www/**/*.{html,svg}']
+   assets: ['src/fonts/**','src/img/**']
 };
 
 // Last changed
@@ -55,35 +56,45 @@ var month = datetime.getMonth();
 var year = datetime.getFullYear();
 var lastUpdate = day + ". " + monthNames[month] + " " + year;
 
-// Gulp functions/tasks
+// Call with 'gulp clean'
 function clean(done) {
    del([paths.dest], done);
+}
+
+// Call with 'gulp minify'
+function minify() {
+   return gulp.src('src/img/**/*.{svg,png,jpg,jpeg,gif}')
+      .pipe(imagemin({
+         optimizationLevel: 5,
+         svgoPlugins: [{removeViewBox: false}]
+      }))
+      .pipe(gulp.dest('src/img/'));
 }
 
 function webserver() {
    connect.server({
       root: paths.dest,
-      livereload: true,
+      livereload: config.dev,
       port: 9000
    });
 }
 
 function assets() {
-   return gulp.src(paths.assets, { base: paths.src })
+   return gulp.src(paths.assets, { base: './src/' })
       .pipe(gulp.dest(paths.dest));
 }
 
 function scripts() {
    return gulp.src(paths.scripts, { base: paths.src })
       .pipe(concat('all.js'))
-      .pipe(config.production ? uglify(config.uglify) : gutil.noop())
+      .pipe(!config.dev ? uglify(config.uglify) : gutil.noop())
       .pipe(gulp.dest(paths.dest));
 }
 
 function less2css() {
    return gulp.src(paths.less, { base: paths.src })
       .pipe(less())
-      .pipe(config.production ? minifyCSS() : gutil.noop())
+      .pipe(!config.dev ? minifyCSS() : gutil.noop())
       .pipe(gulp.dest(paths.dest));
 }
 
@@ -95,7 +106,7 @@ function html() {
             lastUpdate: lastUpdate
          }
       }))
-      .pipe(config.production ? htmlmin(config.htmlmin) : gutil.noop())
+      .pipe(!config.dev ? htmlmin(config.htmlmin) : gutil.noop())
       .pipe(gulp.dest(paths.dest))
       .pipe(connect.reload());
 }
@@ -109,6 +120,7 @@ function stalker() {
 }
 
 gulp.task(clean);
+gulp.task(minify);
 gulp.task('build', gulp.series(
    gulp.parallel(assets, scripts, less2css),
    html
