@@ -21,7 +21,6 @@ var del = require('del');
 var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
-var imagemin = require('gulp-imagemin');
 
 var config = {
    lang: (gutil.env.lang ? gutil.env.lang : 'da'),
@@ -59,16 +58,6 @@ var lastUpdate = day + ". " + monthNames[month] + " " + year;
 // Call with 'gulp clean'
 function clean(done) {
    del([paths.dest], done);
-}
-
-// Call with 'gulp minify'
-function minify() {
-   return gulp.src('src/img/**/*.{svg,png,jpg,jpeg,gif}')
-      .pipe(imagemin({
-         optimizationLevel: 5,
-         svgoPlugins: [{removeViewBox: false}]
-      }))
-      .pipe(gulp.dest('src/img/'));
 }
 
 function webserver() {
@@ -120,7 +109,6 @@ function stalker() {
 }
 
 gulp.task(clean);
-gulp.task(minify);
 gulp.task('build', gulp.series(
    gulp.parallel(assets, scripts, less2css),
    html
