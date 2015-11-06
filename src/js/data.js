@@ -128,12 +128,8 @@ var ACQs = {
       costfn: function(o) {
          var gebyr = 1.39;
          var gnspris = o.avgvalue.dkk();
-         if (gnspris <= 100) {
-            gebyr = 1.1;
-         }
-         if (gnspris <= 50) {
-            gebyr = 0.7;
-         }
+         if (gnspris <= 100) { gebyr = 1.1; }
+         if (gnspris <= 50) { gebyr = 0.7; }
          gebyr = (new Currency(gebyr, 'DKK')).scale(o.transactions);
          return {
             trans: gebyr,
@@ -187,7 +183,6 @@ var ACQs = {
 };
 
 
-
 var PSPs = [{
    name: "Braintree",
    logo: "braintree.svg",
@@ -239,21 +234,16 @@ var PSPs = [{
    acquirers: objectize(["nets", "teller"]),
    cards: objectize(["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen", "diners", "jcb", "amex", "unionpay"]),
    costfn: function(o) {
-
-      var recurring = {};
-      recurring.setup = 0;
-      recurring.monthly = 0;
+      var recurring = {
+         setup: 0,
+         monthly: 0
+      };
 
       if (o.features.recurring) {
          recurring.setup = new Currency(299, 'DKK');
-
-         if (o.transactions < 100) {
-            recurring.monthly = 99;
-         } else if (o.transactions < 1000) {
-            recurring.monthly = 149;
-         } else {
-            recurring.monthly = 399;
-         }
+         if (o.transactions < 100) { recurring.monthly = 99; }
+         else if (o.transactions < 1000) { recurring.monthly = 149; }
+         else {recurring.monthly = 399; }
 
          recurring.monthly = new Currency(recurring.monthly, 'DKK');
       }
@@ -287,14 +277,14 @@ var PSPs = [{
    acquirers: objectize(["nets", "teller", "swedbank", "valitor", "handelsbanken", "elavon"]),
    cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "diners", "mobilepay"]),
    costfn: function(o) {
-      var antifraud = {};
-      antifraud.setup = 0;
-      antifraud.monthly = 0;
+      var antifraud = {
+         setup: 0,
+         monthly: 0
+      };
       if (o.features.antifraud) {
          antifraud.setup = new Currency(495, 'DKK');
          antifraud.monthly = new Currency(49, 'DKK');
       }
-
       return {
          setup: new Currency(4995, 'DKK').add(antifraud.setup),
          monthly: new Currency(499, 'DKK').add(antifraud.monthly),
@@ -310,15 +300,14 @@ var PSPs = [{
    acquirers: objectize(["nets", "teller", "swedbank", "valitor", "handelsbanken", "elavon"]),
    cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "diners", "mobilepay"]),
    costfn: function(o) {
-
-      var antifraud = {};
-      antifraud.setup = 0;
-      antifraud.monthly = 0;
+      var antifraud = {
+         setup: 0,
+         monthly: 0
+      };
       if (o.features.antifraud) {
          antifraud.setup = new Currency(495, 'DKK');
          antifraud.monthly = new Currency(49, 'DKK');
       }
-
       return {
          setup: new Currency(10995, 'DKK').add(antifraud.setup),
          monthly: new Currency(899, 'DKK').add(antifraud.monthly),
@@ -551,7 +540,7 @@ var PSPs = [{
    }
 },
 {
-   name: "PensoPay",
+   name: "PensoPay Iværksætter",
    logo: "pensopay.svg",
    link: "http://pensopay.dk",
    product: "Iværksætter",
@@ -566,32 +555,34 @@ var PSPs = [{
    }
 },
 {
-   name: "PensoPay",
+   name: "PensoPay Pro",
    logo: "pensopay.svg",
    link: "http://pensopay.dk",
    product: "Pro",
    features: objectize(["antifraud"]),
    cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
+      var crowns = (o.transactions>250) ? new Currency(0.25, 'DKK').scale(o.transactions-250) : 0;
       return {
          setup: new Currency(0, 'DKK'),
          monthly: new Currency(149, 'DKK'),
-         trans: o.avgvalue.scale(1.45 / 100).add(new Currency(0.25, 'DKK')).scale(o.transactions)
+         trans: o.avgvalue.scale(1.45 / 100).scale(o.transactions).add(crowns)
       };
    }
 },
 {
-   name: "PensoPay",
+   name: "PensoPay Enterprise",
    logo: "pensopay.svg",
    link: "http://pensopay.dk",
    product: "Enterprise",
    features: objectize(["antifraud"]),
    cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
+      var crowns = (o.transactions>500) ? new Currency(0.25, 'DKK').scale(o.transactions-500) : 0;
       return {
          setup: new Currency(0, 'DKK'),
          monthly: new Currency(249, 'DKK'),
-         trans: o.avgvalue.scale(1.45 / 100).add(new Currency(0.25, 'DKK')).scale(o.transactions)
+         trans: o.avgvalue.scale(1.45 / 100).scale(o.transactions).add(crowns)
       };
    }
 },
