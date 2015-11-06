@@ -541,7 +541,7 @@ var PSPs = [{
 },
 {
    name: "PensoPay Iværksætter",
-   logo: "pensopay.svg",
+   logo: "pensopay.png",
    link: "http://pensopay.dk",
    product: "Iværksætter",
    features: objectize(["antifraud"]),
@@ -556,7 +556,7 @@ var PSPs = [{
 },
 {
    name: "PensoPay Pro",
-   logo: "pensopay.svg",
+   logo: "pensopay.png",
    link: "http://pensopay.dk",
    product: "Pro",
    features: objectize(["antifraud"]),
@@ -572,7 +572,7 @@ var PSPs = [{
 },
 {
    name: "PensoPay Enterprise",
-   logo: "pensopay.svg",
+   logo: "pensopay.png",
    link: "http://pensopay.dk",
    product: "Enterprise",
    features: objectize(["antifraud"]),
