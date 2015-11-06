@@ -5,16 +5,16 @@ KORTGEBYR
 
 ![Alt text](/screenshot.png?raw=true "kortgebyr screenshot")
 
-Kortgebyr er en dansk prissammenligningsside for betalingsløsninger og betalingsgateways. Siden er skrevet i Javascript og hostet på Amazon S3. Formålet med siden er at gøre markedet for betalingsløsninger overskueligt og forståeligt for iværksættere.
+Kortgebyr er en dansk prissammenligningsside for betalingsløsninger og betalingsgateways. Siden er skrevet i JavaScript. Formålet med siden er at gøre markedet for betalingsløsninger overskueligt og forståeligt for iværksættere og e-købmænd.
 
 Bidrag til projektet
 =================
 
-Det er nemt at bidrage til projektet. For at gøre det endnu nemmere har vi valgt at bruge <a href="http://gulpjs.com">Gulp</a>. Du kan installere gulp via npm (<a href="http://nodejs.org/download/">Node</a> Package Manager).
+Det er nemt at bidrage til projektet. For at gøre det endnu nemmere har vi valgt at bruge <a href="http://gulpjs.com">Gulp</a>. Du kan installere gulp via npm (<a href="http://nodejs.org/download/">Node</a> Package Manager). **Bemærk** at det kræver gulp v.4.
 
-#### 1. Installer gulp:
+#### 1. Installer gulp v.4.x:
 <pre>
-npm install --global gulp
+npm install gulpjs/gulp-cli#4.0 -g
 </pre>
 
 #### 2. Installer dependencies:
