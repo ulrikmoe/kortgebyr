@@ -85,6 +85,17 @@ var CARDs = {
 
 
 var ACQs = {
+  "bambora": {
+     name: "Bambora",
+     logo: "bambora.svg",
+     link: "http://www.bambora.com/",
+     cards: objectize(["visa", "mastercard", "maestro"]),
+     fee_setup: new Currency(0, 'DKK'),
+     fee_monthly: new Currency(0, 'DKK'),
+     fee_fixed: new Currency(0, 'DKK'),
+     fee_variable: 1.45,
+     costfn: acq_cost_default
+  },
    "clearhaus": {
       name: "Clearhaus",
       logo: "clearhaus.svg",
@@ -94,7 +105,15 @@ var ACQs = {
       fee_monthly: new Currency(0, 'DKK'),
       fee_fixed: new Currency(0, 'DKK'),
       fee_variable: 1.45,
-      costfn: acq_cost_default
+      costfn: function(o) {
+         var trnfee = o.avgvalue.scale(this.fee_variable / 100);
+         trnfee = (trnfee.dkk() > 0.6) ? trnfee : (new Currency(0.6, 'DKK'));
+         trnfee = trnfee.scale(o.transactions);
+         return {
+            trans: trnfee,
+            total: trnfee.add(this.fee_monthly)
+         };
+      }
    },
    "elavon": {
       name: "Elavon",
@@ -158,14 +177,13 @@ var ACQs = {
       fee_fixed: new Currency(0, 'DKK'),
       fee_variable: 1.5,
       costfn: function(o) {
-         var gebyr = this.fee_fixed.add(o.avgvalue.scale(this.fee_variable / 100));
-         if (gebyr.dkk() < 0.7) {
-            gebyr = new Currency(0.7, 'DKK');
-         }
-         gebyr = gebyr.scale(o.transactions);
+         var trnfee = o.avgvalue.scale(this.fee_variable / 100);
+         trnfee = (trnfee.dkk() > 0.7) ? trnfee : (new Currency(0.7, 'DKK'));
+         trnfee = trnfee.scale(o.transactions);
+
          return {
-            trans: gebyr,
-            total: gebyr.add(this.fee_monthly)
+            trans: trnfee,
+            total: trnfee.add(this.fee_monthly)
          };
       }
    },
@@ -361,7 +379,7 @@ var PSPs = [{
    logo: "epay.svg",
    link: "http://epay.dk",
    features: objectize(["antifraud", "recurring", "multiacquirer"]),
-   acquirers: objectize(["nets", "teller", "swedbank", "handelsbanken", "valitor", "elavon", "clearhaus"]),
+   acquirers: objectize(["nets", "teller", "swedbank", "handelsbanken", "valitor", "elavon", "clearhaus", "bambora"]),
    cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "forbrugsforeningen", "mobilepay"]),
    costfn: function(o) {
       var fee = 0.25,
@@ -541,7 +559,7 @@ var PSPs = [{
 },
 {
    name: "PensoPay Iværksætter",
-   logo: "pensopay.png",
+   logo: "pensopay.svg",
    link: "http://pensopay.dk",
    product: "Iværksætter",
    features: objectize(["antifraud"]),
@@ -556,7 +574,7 @@ var PSPs = [{
 },
 {
    name: "PensoPay Pro",
-   logo: "pensopay.png",
+   logo: "pensopay.svg",
    link: "http://pensopay.dk",
    product: "Pro",
    features: objectize(["antifraud"]),
@@ -572,7 +590,7 @@ var PSPs = [{
 },
 {
    name: "PensoPay Enterprise",
-   logo: "pensopay.png",
+   logo: "pensopay.svg",
    link: "http://pensopay.dk",
    product: "Enterprise",
    features: objectize(["antifraud"]),
