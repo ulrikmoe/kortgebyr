@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ $UID = 0 ]]; then
+    echo "[Error] Please don't run this script as sudo."
+    exit 1
+fi
+
 hostname=scanpay.dk
 folder=kortgebyr.dk
 filename=$(date +"%Y%m%d%H%M")
