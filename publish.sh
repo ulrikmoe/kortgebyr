@@ -5,7 +5,7 @@ if [[ $UID = 0 ]]; then
     exit 1
 fi
 
-hostname=scanpay.dk
+hostname=kortgebyr.dk
 folder=kortgebyr.dk
 filename=$(date +"%Y%m%d%H%M")
 
