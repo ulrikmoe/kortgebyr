@@ -11,8 +11,9 @@
 *     we don't iterate through acquirers properly when we try to find the
 *     cheapest combination of acquirers.
 *
-*  To do:
-*  1) loadurl: add backward compatibility.
+*  @TODO:
+*  1) 'psp.features.multiacquirer'
+*
  **/
 
 // Constants
@@ -266,11 +267,8 @@ function setPercent(k, v) {
    $(k).classList.remove('error');
 }
 
-function tooltip() {
+function tooltip() {}
 
-   console.log("hover");
-
-}
 
 
 var opts = {
@@ -430,7 +428,7 @@ function objectize(arr) {
 
 function build(action) {
    stopwatch = performance.now();
-   console.log( (performance.now()-stopwatch).toFixed(4) +"ms ::: build() start");
+   //console.log( (performance.now()-stopwatch).toFixed(4) +"ms ::: build() start");
 
    if (action == 'init') {
       //init_dirty_bits(); // 0.3 ms
@@ -494,7 +492,7 @@ function build(action) {
       }
    }
 
-   console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: time to build PSPs.");
+   //console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: time to build PSPs.");
 
    var klik = function(psp, acquirers, acqlabels, settings) {
       return function() {
@@ -530,7 +528,18 @@ function build(action) {
 
       if( Object.getOwnPropertyNames(acq).length === 0) {
          // All-in-one solutions, e.g. Stripe.
-         cardobj = psp.cards;
+
+         for (var x in psp.cards ) {
+            //  Some cards/methods (e.g. mobilepay) add extra costs.
+            //  They will only be included if enabled in settings.cards.
+            if (CARDs[x].costfn){
+               if (!settings.cards[x]) { continue; }
+               setup = setup.add(CARDs[x].fee.setup);
+               recurring = recurring.add(CARDs[x].fee.monthly);
+            }
+            cardobj[x] = 1;
+         }
+
       }
       else {
          // Payment Gateways, e.g. DIBS.
@@ -553,14 +562,12 @@ function build(action) {
             }
          }
 
-         if (psp.features.multiacquirer) {
          // Challenge newacq ( coming soon! )
-         }
+         if (psp.features.multiacquirer) {}
 
          // Skip PSP if acquirer does not support cards
          if ( Object.getOwnPropertyNames(newacq).length === 0) { continue psploop; }
          acq = newacq;
-
 
          for (var ac in acq) {
             // Merge acquirer card lists
@@ -621,7 +628,7 @@ function build(action) {
          wrapper.className = "acquirer";
          //wrapper.addEventListener("mouseover", tooltip);
 
-         wrapper.innerHTML = '<a target="_blank" href="' + ACQs[l].link + '"><img class="acquirer '+l+'" src="/img/psp/' + ACQs[l].logo + '" alt="' + ACQs[l].name +
+         wrapper.innerHTML = '<a target="_blank" href="' + ACQs[l].link + '"><img class="'+l+'" src="/img/psp/' + ACQs[l].logo + '" alt="' + ACQs[l].name +
          '" title="' + ACQs[l].name + '" /></a>';
          acqfrag.appendChild(wrapper);
       }
@@ -633,7 +640,10 @@ function build(action) {
       data.splice(sort, 0, total.dkk());
 
       var row = tbody.insertRow(sort);
-      row.insertCell(-1).innerHTML = '<a target="_blank" class="psp '+ psp.name.substring(0,4).toLowerCase() +'" href=' + psp.link + '><img src="/img/psp/' + psp.logo + '" alt="' + psp.name +
+      //row.className = psp.name.toLowerCase().replace(/[0-9\s]/g, '');
+      row.className = psp.logo.split('.')[0].replace(/[^a-z]/g, '');
+
+      row.insertCell(-1).innerHTML = '<a target="_blank" class="psp" href=' + psp.link + '><img src="/img/psp/' + psp.logo + '" alt="' + psp.name +
          '" title="' + psp.name +'" /><p>' + psp.name +'</p></a>';
       row.insertCell(-1).appendChild(acqfrag);
       row.insertCell(-1).appendChild(cardfrag);
@@ -658,7 +668,7 @@ function build(action) {
 
    if (action !== "init") { saveurl(); }
 
-   console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: done building \n ");
+   //console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: done building \n ");
 
 }
 
@@ -670,7 +680,6 @@ function buildInfoModal(psp, acquirers, acqlabels, settings) {
    var overlay = document.querySelector(".overlay.pspinfo");
    var content = overlay.getElementsByClassName("content")[0];
    var frag = document.createDocumentFragment();
-   console.log(acqlabels);
    content.innerHTML = "";
    /*var h = document.createElement("h1");
    frag.appendChild(h).textContent = "Oversigt over " + psp.name;*/

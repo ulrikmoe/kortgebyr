@@ -243,9 +243,7 @@ nav {
       position: relative;
       border-left: 1px solid #dcdcdc;
       border-top: 1px solid #dcdcdc;
-      padding: 10px 0 7px;
    }
-
    th {
       padding: 5px 0 4px;
       font-size: 12px;
@@ -261,7 +259,10 @@ nav {
       text-rendering: optimizeLegibility;
       overflow: hidden;
    }
-
+   td {
+      padding: 4px 0 0;
+      height: 76px;
+   }
    td:first-child {
       padding-left: 1.5%;
       text-align: left;
@@ -287,21 +288,27 @@ nav {
       padding: 2px 0 1px;
    }
 }
-.quic img { height: 28px; }
-.dibs img { height: 29px; }
-.chec img { height: 16px; }
-.dand img { height: 25px;}
-.wann img { height: 19px;}
-.veri img { height: 24px;}
+.quickpay .psp img { height: 28px; }
+.epay .psp img { height: 30px; }
+.dibs .psp img { height: 29px; }
+.checkoutcom .psp img { height: 16px; }
+.checkout .psp img { height: 15px; }
+.dandomain .psp img { height: 25px;}
+.wannafind .psp img { height: 18px;}
+.verifone .psp img { height: 23px;}
 .paye img { height: 26px;}
-.cert img { height: 26px;}
-.2che img { height: 26px;}
-
+.certitrade img { height: 26px;}
+.braintree .psp img { height: 18px }
+.paymill .psp img { height: 24px }
+.netaxept .psp img { height: 28px }
+.payer .psp img { height: 24px }
+.klarna .psp img { height: 24px }
+.skrill .psp img { height: 26px }
 
 
 .acquirer {
    position: relative;
-   margin: 1px 0 3px;
+   margin: 0 0 2px 0;
 
    .clearhaus, .nets, .elavon  { height: 13px; }
    .bambora { width: 71px; }
@@ -360,6 +367,7 @@ nav {
 .infobutton {
    display: inline-block;
    background: #0097cf;
+   margin: 10px 0;
    padding: 0px 4px;
    border-radius: 2px;
    color: white;
@@ -482,7 +490,7 @@ nav {
 footer {
    background: #fff;
    text-align: center;
-   padding: 34px 0 44px;
+   padding: 30px 0 44px;
    color: #777;
    line-height: 24px;
    font-size: 14px;

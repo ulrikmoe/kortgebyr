@@ -9,10 +9,10 @@
 
 var currency_value = {
    'DKK': 1,
-   'SEK': 0.794,
-   'NOK': 0.802,
-   'EUR': 7.459,
-   'USD': 6.854
+   'SEK': 0.802,
+   'NOK': 0.800,
+   'EUR': 7.460,
+   'USD': 6.955
 };
 
 var currency_map = {
@@ -61,7 +61,7 @@ var CARDs = {
       name: "MobilePay",
       logo: "#mobilepaylogo",
       costfn: function(o) {
-         // We will calc the actual costs when we get some usage stats (ETA Q4 2015)
+         // We will calc the actual costs when we get some usage stats (ETA Q1 2016)
          return {
             setup: new Currency(49, 'DKK'),
             monthly: new Currency(49, 'DKK'),
@@ -73,7 +73,7 @@ var CARDs = {
       name: "Forbrugsforeningen",
       logo: '#forbrugsforeningenlogo',
       costfn: function(o) {
-         // We will calc the actual costs when we get some usage stats (ETA Q4 2015)
+         // We will calc the actual costs when we get some usage stats (ETA Q1 2016)
          return {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
@@ -232,7 +232,7 @@ var PSPs = [{
 },
 {
    name: "Checkout.com",
-   logo: "checkout.svg",
+   logo: "checkoutcom.svg",
    link: "https://www.checkout.com",
    features: objectize(["antifraud", "recurring"]),
    cards: objectize(["visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
@@ -250,7 +250,7 @@ var PSPs = [{
    link: "https://www.dandomain.dk/e-handel/betalingssystem",
    features: objectize(["recurring"]),
    acquirers: objectize(["nets", "teller"]),
-   cards: objectize(["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen", "diners", "jcb", "amex", "unionpay"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "forbrugsforeningen", "diners", "jcb", "amex", "unionpay", "mobilepay"]),
    costfn: function(o) {
       var recurring = {
          setup: 0,
@@ -563,7 +563,7 @@ var PSPs = [{
    link: "http://pensopay.dk",
    product: "Iværksætter",
    features: objectize(["antifraud"]),
-   cards: objectize(["visa", "mastercard", "maestro"]),
+   cards: objectize(["visa", "mastercard", "maestro", "mobilepay"]),
    costfn: function(o) {
       return {
          setup: new Currency(0, 'DKK'),
@@ -578,7 +578,7 @@ var PSPs = [{
    link: "http://pensopay.dk",
    product: "Pro",
    features: objectize(["antifraud"]),
-   cards: objectize(["visa", "mastercard", "maestro"]),
+   cards: objectize(["visa", "mastercard", "maestro", "mobilepay"]),
    costfn: function(o) {
       var crowns = (o.transactions>250) ? new Currency(0.25, 'DKK').scale(o.transactions-250) : 0;
       return {
@@ -594,7 +594,7 @@ var PSPs = [{
    link: "http://pensopay.dk",
    product: "Enterprise",
    features: objectize(["antifraud"]),
-   cards: objectize(["visa", "mastercard", "maestro"]),
+   cards: objectize(["visa", "mastercard", "maestro", "mobilepay"]),
    costfn: function(o) {
       var crowns = (o.transactions>500) ? new Currency(0.25, 'DKK').scale(o.transactions-500) : 0;
       return {
@@ -731,7 +731,7 @@ var PSPs = [{
    link: "https://www.wannafind.dk/betalingsgateway/",
    features: objectize(["recurring", "antifraud"]),
    acquirers: objectize(["nets", "teller"]),
-   cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay"]),
+   cards: objectize(["dankort", "visa", "mastercard", "maestro", "diners", "jcb", "amex", "unionpay", "mobilepay"]),
    costfn: function(o) {
       var recurring = 0;
       if (o.features.recurring) {
