@@ -23,8 +23,8 @@ So, you are interested in contributing? Welcome! Every single contribution is ve
 To build the website locally, you will need to install [Node.js](https://nodejs.org/en/) and [Gulp.js](http://gulpjs.com). We use Gulp.js to build the website and host it on `localhost:8000`. You can enable development mode with the `--dev` flag, which will enable live-reload and disable code minifiers.
 
 ```bash
-git clone git@github.com:ulrikmoe/scanpay.dk.git
-cd scanpay.dk
+git clone git@github.com:ulrikmoe/kortgebyr.git
+cd kortgebyr
 npm install
 gulp --dev
 ```
