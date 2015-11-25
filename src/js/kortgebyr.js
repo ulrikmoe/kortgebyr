@@ -11,10 +11,10 @@
 *     we don't iterate through acquirers properly when we try to find the
 *     cheapest combination of acquirers.
 *
-*  @TODO:
+*  To do:
 *  1) 'psp.features.multiacquirer'
 *
- **/
+**/
 
 // Constants
 var table = $('table');
@@ -45,7 +45,7 @@ Currency.prototype.print = function() {
    var number = Math.round((this.dkk() * 100) / currency_value[gccode]) / 100;
    var parts = number.toString().split(".");
    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-   if (parts.length == 2 && parts[1].length == 1) {
+   if (parts.length === 2 && parts[1].length === 1) {
       parts[1] += "0";
    }
    return parts.join(",") + " " + currency_map[gccode];
@@ -159,7 +159,7 @@ function cardsCovered(acqs, s) {
 function clone(obj) {
     var copy = obj.constructor();
     for (var attr in obj) {
-        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+        if (obj.hasOwnProperty(attr)) { copy[attr] = obj[attr]; }
     }
     return copy;
 }
@@ -178,7 +178,7 @@ function getInt(elem, action) {
 
    var str = elem.value.trim();
    if (!isNaN(parseFloat(str)) && isFinite(str) &&
-      parseFloat(str) == parseInt(str, 10)) {
+      parseFloat(str) === parseInt(str, 10)) {
       elem.classList.remove('error');
       return parseInt(str, 10);
    }
@@ -288,7 +288,7 @@ var opts = {
 
             if (checkbox.checked) {
                object[checkbox.id] = CARDs[checkbox.id];
-               if (checkbox.id == "visa") { object.mastercard = CARDs.mastercard; }
+               if (checkbox.id === "visa") { object.mastercard = CARDs.mastercard; }
                bitval += 1 << i;
             }
          }
@@ -353,7 +353,7 @@ var opts = {
          if (action === "url" ){
              return $("acquirer").selectedIndex;
          }
-         if ($("acquirer").value == 'auto') {
+         if ($("acquirer").value === 'auto') {
             return ACQs;
          }
          else {
@@ -430,7 +430,7 @@ function build(action) {
    stopwatch = performance.now();
    //console.log( (performance.now()-stopwatch).toFixed(4) +"ms ::: build() start");
 
-   if (action == 'init') {
+   if (action === 'init') {
       //init_dirty_bits(); // 0.3 ms
       loadurl(); // 0.4 ms
    }
@@ -473,7 +473,7 @@ function build(action) {
       // Calculate individual acquirer costs
       acquirers[i].fee = acquirers[i].costfn(settings);
 
-      if (i == "nets") { continue; } // uglyfix[1]
+      if (i === "nets") { continue; } // uglyfix[1]
 
       for (sort = 0; sort < settings.acquirersort.length; sort++){
          if ( acquirers[i].fee.total.dkk() < acquirers[settings.acquirersort[sort]].fee.total.dkk() ) {
@@ -557,7 +557,7 @@ function build(action) {
 
                if ( cardsCovered(newacq, settings) ) { break; }
                else if ((newacq.nets && objlength < 2) || (objlength === 0)) { continue; }
-               else if ( i+1 == settings.acquirersort.length ) { newacq = false; break; }
+               else if ( i+1 === settings.acquirersort.length ) { newacq = false; break; }
                else { delete newacq[_acq]; } // Delete and try with next acquirer
             }
          }
@@ -584,7 +584,7 @@ function build(action) {
                cardobj[card] = 1;
             }
 
-            var scale = (ac == "nets") ? settings.dankort_scale :  1-settings.dankort_scale;
+            var scale = (ac === "nets") ? settings.dankort_scale :  1-settings.dankort_scale;
 
             setup = setup.add(acquirers[ac].fee_setup);
             recurring = recurring.add( acquirers[ac].fee_monthly);
@@ -707,7 +707,7 @@ function buildInfoModal(psp, acquirers, acqlabels, settings) {
       frag.appendChild(acqtitle).textContent = "Indløseromkostninger:";
       if (acqlabels.nets && Object.keys(acqlabels).length > 1) {
          var acqdescription = document.createElement("div");
-         frag.appendChild(acqdescription).textContent = "Det antages jævnfør FDIH's statistikker at Nets modtager 77% af transaktionerne (fra visa/dankort samt rene dankort), mens den sekundære indløser modtager 33%.";
+         frag.appendChild(acqdescription).textContent = "Det antages jævnfør FDIH's statistikker at Nets modtager 77% af transaktionerne (fra visa/dankort samt rene dankort), mens den sekundære indløser modtager 23%.";
       }
    }
    for (var label in acqlabels) {
