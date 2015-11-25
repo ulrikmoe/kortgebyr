@@ -5,24 +5,19 @@
 *
 *   Indentation: 3 spaces
 *   Conventions: https://github.com/airbnb/javascript
-*
-*   Use 'gulp clean' to delete everything.
-*   Use 'gulp --dev' for development mode.
-*   Use 'gulp build --lang sv' if you wish to build in a different language than danish.
 **/
 
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var connect = require('gulp-connect');
-var uglify = require('gulp-uglify');
-var nunjucks = require('gulp-nunjucks-html');
-var htmlmin = require('gulp-htmlmin');
-var del = require('del');
-var less = require('gulp-less');
-var minifyCSS = require('gulp-minify-css');
-var concat = require('gulp-concat');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const connect = require('gulp-connect');
+const uglify = require('gulp-uglify');
+const nunjucks = require('gulp-nunjucks-html');
+const htmlmin = require('gulp-htmlmin');
+const less = require('gulp-less');
+const minifyCSS = require('gulp-minify-css');
+const concat = require('gulp-concat');
 
-var config = {
+const config = {
    lang: (gutil.env.lang ? gutil.env.lang : 'da'),
    dev: !!gutil.env.dev,
    htmlmin: {
@@ -38,57 +33,49 @@ var config = {
    }
 };
 
-var paths = {
-   dest: 'www',
-   html: 'src/*.html',
-   scripts: 'src/js/*.js',
-   less: 'src/css/*.less',
-   rebuild: ['www/all.js', 'www/global.css'],
-   assets: ['src/fonts/**','src/img/**']
-};
+//  Last changed
+const monthNames = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december"];
+const datetime = new Date();
+const day = datetime.getDate();
+const month = datetime.getMonth();
+const year = datetime.getFullYear();
+const lastUpdate = day + ". " + monthNames[month] + " " + year;
 
-// Last changed
-var monthNames = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december"];
-var datetime = new Date();
-var day = datetime.getDate();
-var month = datetime.getMonth();
-var year = datetime.getFullYear();
-var lastUpdate = day + ". " + monthNames[month] + " " + year;
-
-// Call with 'gulp clean'
-function clean(done) {
-   del([paths.dest], done);
-}
-
+//  Gulp tasks
 function webserver() {
    connect.server({
-      root: paths.dest,
+      root: 'www',
       livereload: config.dev,
       port: 9000
    });
 }
 
+function webserver() {
+   connect.server({ root: 'www', livereload:config.dev, port: 9000 });
+}
+
+
 function assets() {
-   return gulp.src(paths.assets, { base: './src/' })
-      .pipe(gulp.dest(paths.dest));
+   return gulp.src(['src/fonts/**','src/img/**'], { base: './src/' })
+      .pipe(gulp.dest('www'));
 }
 
 function scripts() {
-   return gulp.src(paths.scripts, { base: paths.src })
+   return gulp.src(['src/js/*.js'])
       .pipe(concat('all.js'))
       .pipe(!config.dev ? uglify(config.uglify) : gutil.noop())
-      .pipe(gulp.dest(paths.dest));
+      .pipe(gulp.dest('www'));
 }
 
 function less2css() {
-   return gulp.src(paths.less, { base: paths.src })
+   return gulp.src(['src/css/*.less'])
       .pipe(less())
       .pipe(!config.dev ? minifyCSS() : gutil.noop())
-      .pipe(gulp.dest(paths.dest));
+      .pipe(gulp.dest('www'));
 }
 
 function html() {
-   return gulp.src(paths.html, { base: paths.src })
+   return gulp.src(['src/*.html'])
       .pipe(nunjucks({
          searchPaths: ['www/'],
          locals: {
@@ -96,26 +83,19 @@ function html() {
          }
       }))
       .pipe(!config.dev ? htmlmin(config.htmlmin) : gutil.noop())
-      .pipe(gulp.dest(paths.dest))
+      .pipe(gulp.dest('www'))
       .pipe(connect.reload());
 }
 
 function stalker() {
-   gulp.watch(paths.less, less2css);
-   gulp.watch(paths.assets, assets);
-   gulp.watch(paths.html, html);
-   gulp.watch(paths.scripts, scripts);
-   gulp.watch(paths.rebuild, html);
+   gulp.watch(['src/css/*.less'], less2css);
+   gulp.watch(['src/fonts/**','src/img/**'], assets);
+   gulp.watch(['src/*.html'], html);
+   gulp.watch(['src/js/*.js'], scripts);
+   gulp.watch(['www/*.{js,css}'], html);
 }
 
-gulp.task(clean);
-gulp.task('build', gulp.series(
-   gulp.parallel(assets, scripts, less2css),
-   html
-));
-gulp.task('default', gulp.series(
-   clean,
-   gulp.parallel(assets, scripts, less2css),
-   html,
+gulp.task('build', gulp.series(assets, scripts, less2css, html));
+gulp.task('default', gulp.series(assets, scripts, less2css, html,
    gulp.parallel(stalker, webserver)
 ));
