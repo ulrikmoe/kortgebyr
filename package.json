@@ -18,7 +18,7 @@
   "homepage": "https://github.com/ulrikmoe/kortgebyr#readme",
   "devDependencies": {
     "gulp": "gulpjs/gulp#4.0",
-    "gulp-concat": "*",
+    "del": "*",
     "gulp-connect": "^2.2.0",
     "gulp-data": "*",
     "gulp-htmlmin": "^1.1.3",

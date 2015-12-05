@@ -151,10 +151,11 @@
          <rect fill="#D6E2E8" width="70" height="48" rx="5"/><path d="M37.6 17.7c.7-.1 1.4-.3 2.2-.4 1.1-.2 2.4-.3 3.8-.4v-.1c-.6-1.1-1.7-1.7-2.8-1.7-.5 0-1 .1-1.4.3-.1 0-.1.1-.2.1-.9.5-1.4 1.3-1.6 2.2z" fill="#003F62"/><path d="M57.3 19.4c0-.3-.3-.7-.6-.8h-11c-1.8.1-3.5.3-5 .5-3.7.5-6.2 1.3-6.2 1.3-.3.1-.6.5-.6.8l.6 11.7v.4h.6C.1 0 39 32 45.3 31.5l1.8 4.7-7 2.7-8.3 3.1-5.7-14.8-5.6-14.5 15.3-5.8 2.3 6c-.2.1-.4.2-.5.3-5.5 3.1-9.1 6.5-9.1 6.5-.2.2-.3.7-.1 1l4.5 7.8-.4-7.3c-.1-1 .6-1.9 1.5-2.2.1 0 1.1-.3 2.6-.7 0-.3.1-.7.2-1 .4-1.1 1.1-1.9 2.1-2.5h.1c.6-.3 1.3-.5 2-.5 1.7 0 3.1.9 3.9 2.4.1.2.2.3.2.5h.4c1.5-.1 2.9-.1 4.2-.1 1.7 0 3.1.1 4.2.1L49 8.9c-.2-.3-.6-.5-.9-.4 0 0-2.2.4-7.1 2.9l-3.3-8.5c-.6-1.5-2.4-2.3-3.9-1.7L18 6.5c-1.6.6-2.4 2.3-1.8 3.9l13.6 35.1c.6 1.5 2.4 2.3 3.9 1.7l15.5-5.8c1.6-.6 2.4-2.3 1.8-3.9l-2.6-6.7h5.9c.2 0 .4 0 .6.1h.3c.2 0 .3 0 .5.1.1 0 .3 0 .4.1h.2c.1 0 .2 0 .3.1.1 0 .3.1.4.1h.9v-.4l-.6-11.5zM44.2 40.8L38.3 43c-.3.1-.7 0-.8-.4-.1-.3 0-.7.3-.8l5.9-2.2c.3-.1.7 0 .8.4.1.4 0 .7-.3.8zm1.6-12c-.6 0-1.1-.1-1.6-.3-1.6-.6-2.7-2.2-2.7-4 0-.7.2-1.3.4-1.9.7-1.4 2.2-2.4 3.9-2.4 2.4 0 4.4 1.9 4.4 4.3-.1 2.4-2 4.3-4.4 4.3z" fill="#003F62"/><path d="M45.8 27.7c1.8 0 3.2-1.4 3.2-3.1 0-1.7-1.4-3.1-3.2-3.1-1.8 0-3.2 1.4-3.2 3.1 0 .8.3 1.5.8 2 .6.7 1.4 1.1 2.4 1.1z" fill="#003F62"/>
       </symbol>
    </svg>
-
    <footer>
       Kortgebyr er udviklet af <a rel=”nofollow” href="https://github.com/ulrikmoe">Ulrik Moe</a>, <a rel=”nofollow” href="https://github.com/cblach">Christian Blach</a> og <a rel=”nofollow” href="https://github.com/zhasha">Joakim Sindholt</a> som et værktøj til at sammenligne <br /> betalingsløsninger. Kortgebyr blev startet i 2012, projektet er non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small>GPLv3</small>).
    </footer>
-
-   <script>{% include "all.js" %}</script>
+   <script>
+      {% include "data.js" %}
+      {% include "kortgebyr.js" %}
+   </script>
 </body></html>

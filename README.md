@@ -20,7 +20,7 @@ So, you are interested in contributing? Welcome! Every single contribution is ve
 
 ## Build locally
 
-To build the website locally, you will need to install [Node.js](https://nodejs.org/en/) and [Gulp.js](http://gulpjs.com). We use Gulp.js to build the website and host it on `localhost:9000`. You can enable development mode with the `--dev` flag, which will enable live-reload and disable code minifiers.
+To build the website locally, you will need to install [Node.js](https://nodejs.org/en/) and [Gulp.js](http://gulpjs.com). We use Gulp.js to build the website and host it on `localhost:8080`. You can enable development mode with the `--dev` flag, which will enable live-reload and disable code minifiers.
 
 ```bash
 git clone git@github.com:ulrikmoe/kortgebyr.git
@@ -34,4 +34,4 @@ gulp --dev
 
 Everything in this repository is licensed under the GNU General Public License v3.0 (GPLv3). Feel free to use, study, share, copy, sell or modify it.
 
-[LICENSE](docs/LICENSE).
+[LICENSE](LICENSE).
