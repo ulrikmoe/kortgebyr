@@ -28,7 +28,7 @@ cd kortgebyr
 npm install
 gulp --dev
 ```
-**Note:** You need Gulp.js >= v.4.0 for this to work:
+**Note:** You need Gulp 4.x and del 2.x for this to work.
 
 ## License
 
