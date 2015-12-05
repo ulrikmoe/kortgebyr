@@ -765,10 +765,11 @@ var PSPs = [{
    features: objectize(["recurring", "antifraud"]),
    cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
+      var trnfee = new Currency(0.50, 'DKK').scale(Math.max(o.transactions - 50, 0));
       return {
          setup: new Currency(0, 'DKK'),
          monthly: new Currency(49, 'DKK'),
-         trans: o.avgvalue.scale(2.25 / 100).add(new Currency(0.50, 'DKK')).scale(o.transactions)
+         trans: o.avgvalue.scale(2.25 / 100).scale(o.transactions).add(trnfee)
       };
    }
 },
@@ -779,10 +780,11 @@ var PSPs = [{
    features: objectize(["recurring", "antifraud"]),
    cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
+      var trnfee = new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 75, 0));
       return {
          setup: new Currency(0, 'DKK'),
          monthly: new Currency(149, 'DKK'),
-         trans: o.avgvalue.scale(1.75 / 100).add(new Currency(0.25, 'DKK')).scale(o.transactions)
+         trans: o.avgvalue.scale(1.75 / 100).scale(o.transactions).add(trnfee)
       };
    }
 },
@@ -793,10 +795,11 @@ var PSPs = [{
    features: objectize(["recurring", "antifraud"]),
    cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
+      var trnfee = new Currency(0.15, 'DKK').scale(Math.max(o.transactions - 500, 0));
       return {
          setup: new Currency(0, 'DKK'),
          monthly: new Currency(299, 'DKK'),
-         trans: o.avgvalue.scale(1.35 / 100).add(new Currency(0.15, 'DKK')).scale(o.transactions)
+         trans: o.avgvalue.scale(1.35 / 100).scale(o.transactions).add(trnfee)
       };
    }
 },
