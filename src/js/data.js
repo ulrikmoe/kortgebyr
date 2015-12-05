@@ -745,17 +745,58 @@ var PSPs = [{
    }
 },
 {
-   name: "YourPay",
+   name: "YourPay Feemium",
    logo: "yourpay.png",
-   link: "http://yourpay.dk",
-   features: {},
+   link: "http://www.yourpay.io",
+   features: objectize(["recurring", "antifraud"]),
    cards: objectize(["visa", "mastercard", "maestro"]),
    costfn: function(o) {
-      var fee = 2.25;
       return {
          setup: new Currency(0, 'DKK'),
          monthly: new Currency(0, 'DKK'),
-         trans: o.avgvalue.scale(fee / 100).scale(Math.max(o.transactions, 0))
+         trans: o.avgvalue.scale(2.25 / 100).add(new Currency(0.75, 'DKK')).scale(o.transactions)
+      };
+   }
+},
+{
+   name: "YourPay Mini",
+   logo: "yourpay.png",
+   link: "http://www.yourpay.io",
+   features: objectize(["recurring", "antifraud"]),
+   cards: objectize(["visa", "mastercard", "maestro"]),
+   costfn: function(o) {
+      return {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(49, 'DKK'),
+         trans: o.avgvalue.scale(2.25 / 100).add(new Currency(0.50, 'DKK')).scale(o.transactions)
+      };
+   }
+},
+{
+   name: "YourPay Pro",
+   logo: "yourpay.png",
+   link: "http://www.yourpay.io",
+   features: objectize(["recurring", "antifraud"]),
+   cards: objectize(["visa", "mastercard", "maestro"]),
+   costfn: function(o) {
+      return {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(149, 'DKK'),
+         trans: o.avgvalue.scale(1.75 / 100).add(new Currency(0.25, 'DKK')).scale(o.transactions)
+      };
+   }
+},
+{
+   name: "YourPay Business",
+   logo: "yourpay.png",
+   link: "http://www.yourpay.io",
+   features: objectize(["recurring", "antifraud"]),
+   cards: objectize(["visa", "mastercard", "maestro"]),
+   costfn: function(o) {
+      return {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(299, 'DKK'),
+         trans: o.avgvalue.scale(1.35 / 100).add(new Currency(0.15, 'DKK')).scale(o.transactions)
       };
    }
 },
