@@ -27,12 +27,6 @@ var config = {
       removeComments: true,
       collapseWhitespace: true,
       minifyJS: true
-   },
-   uglify: {
-      mangle: {
-         sort: true,
-         toplevel: false // shorten function names etc.
-      }
    }
 };
 
@@ -60,7 +54,7 @@ function assets() {
 
 function scripts() {
    return gulp.src(paths.js, {since: gulp.lastRun(scripts)})
-      .pipe(!config.dev ? uglify(config.uglify) : gutil.noop())
+      .pipe(!config.dev ? uglify() : gutil.noop())
       .pipe(gulp.dest('www'));
 }
 
