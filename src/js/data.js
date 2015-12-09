@@ -9,10 +9,10 @@
 
 var currency_value = {
    'DKK': 1,
-   'SEK': 0.802,
-   'NOK': 0.800,
-   'EUR': 7.460,
-   'USD': 6.955
+   'SEK': 0.809,
+   'NOK': 0.780,
+   'EUR': 7.461,
+   'USD': 6.860
 };
 
 var currency_map = {
@@ -676,7 +676,7 @@ var PSPs = [{
       return {
          setup: new Currency(0, 'USD'),
          monthly: new Currency(0, 'USD'),
-         trans: o.avgvalue.scale(1.7 / 100).add(new Currency(1.8, 'DKK')).scale(o.transactions)
+         trans: o.avgvalue.scale(1.4 / 100).add(new Currency(1.8, 'DKK')).scale(o.transactions)
       };
    }
 },
