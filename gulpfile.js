@@ -18,7 +18,7 @@ var uglify = require('gulp-uglify');
 var nunjucks = require('gulp-nunjucks-html');
 var htmlmin = require('gulp-htmlmin');
 var less = require('gulp-less');
-var minifyCSS = require('gulp-minify-css');
+var nano = require('gulp-cssnano');
 
 //  Last changed
 var monthNames = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december"];
@@ -63,7 +63,7 @@ function scripts() {
 function less2css() {
    return gulp.src(paths.less, {since: gulp.lastRun(less2css)})
       .pipe(less())
-      .pipe(!config.dev ? minifyCSS() : gutil.noop())
+      .pipe(!config.dev ? nano() : gutil.noop())
       .pipe(gulp.dest('www'));
 }
 
