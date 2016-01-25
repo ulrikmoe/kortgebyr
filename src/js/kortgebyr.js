@@ -487,7 +487,7 @@ function build(action) {
 
    for (i in settings.cards) {
       // Some payment methods have extra costs. Lets calculate them.
-      if (settings.cards[i].costfn){
+      if ( settings.cards[i].costfn){
          settings.cards[i].fee = settings.cards[i].costfn(settings);
       }
    }
@@ -602,19 +602,12 @@ function build(action) {
       var wrapper, svg, use;
 
       for (l in cardobj) {
-         wrapper = document.createElement("p");
-         wrapper.classList.add("card");
-         // wrapper.addEventListener("mouseover", tooltip);
-         // el.addEventListener("click", function(){modifyText("four")}, false);
-         svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-         use = document.createElementNS("http://www.w3.org/2000/svg",'use');
-         use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", CARDs[l].logo);
-         use.setAttribute('x','0');
-         use.setAttribute('y','0');
-         use.setAttribute('height','15');
-         svg.appendChild(use);
-         wrapper.appendChild(svg);
-         cardfrag.appendChild(wrapper);
+         var cardicon = new Image(22, 15);
+         var name = (CARDs[l].name || l);
+         cardicon.src = "/img/cards/" + l + ".svg";
+         cardicon.alt = name;
+         cardicon.className = "card";
+         cardfrag.appendChild(cardicon);
       }
 
       var more = document.createElement("p");

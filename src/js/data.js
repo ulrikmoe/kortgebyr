@@ -24,42 +24,15 @@ var currency_map = {
 };
 
 var CARDs = {
-   // "Betalingsmidler" is listed in this order:
-   "dankort": {
-      name: "Dankort",
-      logo: '#dankortlogo'
-   },
-   "visa": {
-      name: "Visa",
-      logo: '#visalogo'
-   },
-   "mastercard": {
-      name: "MasterCard",
-      logo: '#mastercardlogo'
-   },
-   "maestro": {
-      name: "Maestro",
-      logo: '#maestrologo'
-   },
-   "diners": {
-      name: "Diners",
-      logo: '#dinerslogo'
-   },
-   "amex": {
-      name: "American Express",
-      logo: '#amexlogo'
-   },
-   "jcb": {
-      name: "JCB",
-      logo: '#jcblogo'
-   },
-   "unionpay": {
-      name: "UnionPay",
-      logo: '#unionpaylogo'
-   },
+   "dankort": {},
+   "visa": {},
+   "mastercard": {},
+   "maestro": {},
+   "diners": {},
+   "amex": { name: "American Express" },
+   "jcb": {},
+   "unionpay": {},
    "mobilepay": {
-      name: "MobilePay",
-      logo: "#mobilepaylogo",
       costfn: function(o) {
          // We will calc the actual costs when we get some usage stats (ETA Q1 2016)
          return {
@@ -70,8 +43,6 @@ var CARDs = {
       }
    },
    "forbrugsforeningen": {
-      name: "Forbrugsforeningen",
-      logo: '#forbrugsforeningenlogo',
       costfn: function(o) {
          // We will calc the actual costs when we get some usage stats (ETA Q1 2016)
          return {
@@ -554,53 +525,6 @@ var PSPs = [{
          setup: new Currency(0, 'EUR'),
          monthly: new Currency(20, 'EUR'),
          trans: o.avgvalue.scale(2.5 / 100).add(new Currency(0.25, 'EUR')).scale(o.transactions)
-      };
-   }
-},
-{
-   name: "PensoPay Iværksætter",
-   logo: "pensopay.svg",
-   link: "http://pensopay.dk",
-   product: "Iværksætter",
-   features: objectize(["antifraud"]),
-   cards: objectize(["visa", "mastercard", "maestro", "mobilepay"]),
-   costfn: function(o) {
-      return {
-         setup: new Currency(0, 'DKK'),
-         monthly: new Currency(59, 'DKK'),
-         trans: o.avgvalue.scale(1.45 / 100).add(new Currency(1.5, 'DKK')).scale(o.transactions)
-      };
-   }
-},
-{
-   name: "PensoPay Pro",
-   logo: "pensopay.svg",
-   link: "http://pensopay.dk",
-   product: "Pro",
-   features: objectize(["antifraud"]),
-   cards: objectize(["visa", "mastercard", "maestro", "mobilepay"]),
-   costfn: function(o) {
-      var crowns = (o.transactions>250) ? new Currency(0.25, 'DKK').scale(o.transactions-250) : 0;
-      return {
-         setup: new Currency(0, 'DKK'),
-         monthly: new Currency(149, 'DKK'),
-         trans: o.avgvalue.scale(1.45 / 100).scale(o.transactions).add(crowns)
-      };
-   }
-},
-{
-   name: "PensoPay Enterprise",
-   logo: "pensopay.svg",
-   link: "http://pensopay.dk",
-   product: "Enterprise",
-   features: objectize(["antifraud"]),
-   cards: objectize(["visa", "mastercard", "maestro", "mobilepay"]),
-   costfn: function(o) {
-      var crowns = (o.transactions>500) ? new Currency(0.25, 'DKK').scale(o.transactions-500) : 0;
-      return {
-         setup: new Currency(0, 'DKK'),
-         monthly: new Currency(249, 'DKK'),
-         trans: o.avgvalue.scale(1.45 / 100).scale(o.transactions).add(crowns)
       };
    }
 },
