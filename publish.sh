@@ -16,8 +16,10 @@ gulp clean
 gulp build --lang da
 
 #  Gzipping content
-echo -n "Gzipping"
+echo -n "Compress..."
 for fil in $(find www -name '*.css' -or -name '*.js' -or -name '*.svg' -or -name '*.html'); do
+
+   # Gzip
    if [ -z "$(which zopfli)" ]; then
       gzip -9 < $fil > $fil.gz
    else
@@ -25,10 +27,13 @@ for fil in $(find www -name '*.css' -or -name '*.js' -or -name '*.svg' -or -name
    fi
    touch -r $fil $fil.gz
 
+   # Brotli here.
+
    # Check if $fil.gz >= $fil.
-   if [[ $(stat -c%s $fil.gz) -ge $(stat -c%s $fil) ]]; then
+   if [[ $(wc -c <"$fil.gz") -ge $(wc -c <"$fil") ]]; then
       rm $fil.gz
    fi
+
    echo -n "."
 done; echo ""
 

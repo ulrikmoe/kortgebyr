@@ -54,36 +54,31 @@ var CARDs = {
    }
 };
 
-
 var ACQs = {
-  "bambora": {
-     name: "Bambora",
-     logo: "bambora.svg",
-     link: "http://www.bambora.com/",
-     cards: objectize(["visa", "mastercard", "maestro"]),
-     fee_setup: new Currency(0, 'DKK'),
-     fee_monthly: new Currency(0, 'DKK'),
-     fee_fixed: new Currency(0, 'DKK'),
-     fee_variable: 1.45,
-     costfn: acq_cost_default
-  },
+   "bambora": {
+      name: "Bambora",
+      logo: "bambora.svg",
+      link: "http://www.bambora.com/",
+      cards: objectize(["visa", "mastercard", "maestro"]),
+      fees: {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(0, 'DKK'),
+         trn: function(o) { return o.avgvalue.scale(1.45/100); }
+      }
+   },
    "clearhaus": {
       name: "Clearhaus",
       logo: "clearhaus.svg",
       link: "https://www.clearhaus.com",
       cards: objectize(["visa", "mastercard", "maestro", "mobilepay"]),
-      fee_setup: new Currency(0, 'DKK'),
-      fee_monthly: new Currency(0, 'DKK'),
-      fee_fixed: new Currency(0, 'DKK'),
-      fee_variable: 1.45,
-      costfn: function(o) {
-         var trnfee = o.avgvalue.scale(this.fee_variable / 100);
-         trnfee = (trnfee.dkk() > 0.6) ? trnfee : (new Currency(0.6, 'DKK'));
-         trnfee = trnfee.scale(o.transactions);
-         return {
-            trans: trnfee,
-            total: trnfee.add(this.fee_monthly)
-         };
+      fees: {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(0, 'DKK'),
+         trn: function(o) {
+            var trnfee = o.avgvalue.scale(1.45/100);
+            if (trnfee.dkk() < 0.6) trnfee = new Currency(0.6, 'DKK');
+            return trnfee;
+         }
       }
    },
    "elavon": {
@@ -91,40 +86,37 @@ var ACQs = {
       logo: "elavon.svg",
       link: "http://www.elavon.com",
       cards: objectize(["visa", "mastercard", "maestro"]),
-      fee_setup: new Currency(0, 'DKK'),
-      fee_monthly: new Currency(0, 'DKK'),
-      fee_fixed: new Currency(0, 'DKK'),
-      fee_variable: 1.6,
-      costfn: acq_cost_default
+      fees: {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(0, 'DKK'),
+         trn: function(o) { return o.avgvalue.scale(1.6/100); }
+      }
    },
    "handelsbanken": {
       name: "Handelsbanken",
       logo: "handelsbanken.svg",
       link: "http://www.handelsbanken.dk",
       cards: objectize(["visa", "mastercard", "maestro"]),
-      fee_setup: new Currency(0, 'DKK'),
-      fee_monthly: new Currency(0, 'DKK'),
-      fee_fixed: new Currency(0, 'DKK'),
-      fee_variable: 1.5,
-      costfn: acq_cost_default
+      fees: {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(0, 'DKK'),
+         trn: function(o) { return o.avgvalue.scale(1.5/100); }
+      }
    },
    "nets": {
       name: "Nets",
       logo: "nets.svg",
       link: "http://www.nets.eu",
       cards: objectize(["dankort", "forbrugsforeningen", "mobilepay"]),
-      fee_setup: new Currency(250, 'DKK'),
-      fee_monthly: new Currency(1000 / 12, 'DKK'),
-      costfn: function(o) {
-         var gebyr = 1.39;
-         var gnspris = o.avgvalue.dkk();
-         if (gnspris <= 100) { gebyr = 1.1; }
-         if (gnspris <= 50) { gebyr = 0.7; }
-         gebyr = (new Currency(gebyr, 'DKK')).scale(o.transactions);
-         return {
-            trans: gebyr,
-            total: gebyr.add(this.fee_monthly)
-         };
+      fees: {
+         setup: new Currency(250, 'DKK'),
+         monthly: new Currency(1000 / 12, 'DKK'),
+         trn: function(o) {
+            var avgvalue = o.avgvalue.dkk();
+            if (avgvalue <= 50) { return new Currency(0.7, 'DKK'); }
+            else if (avgvalue <= 100) { return new Currency(1.1, 'DKK'); }
+            else { return new Currency(1.39, 'DKK'); }
+         }
       }
    },
    "swedbank": {
@@ -132,30 +124,25 @@ var ACQs = {
       logo: "swedbank.png",
       link: "http://www.swedbank.dk",
       cards: objectize(["visa", "mastercard", "maestro"]),
-      fee_setup: new Currency(1900, 'DKK'),
-      fee_monthly: new Currency(100, 'DKK'),
-      fee_fixed: new Currency(0, 'DKK'),
-      fee_variable: 1.6,
-      costfn: acq_cost_default
+      fees: {
+         setup: new Currency(1900, 'DKK'),
+         monthly: new Currency(100, 'DKK'),
+         trn: function(o) { return o.avgvalue.scale(1.6/100); }
+      }
    },
    "teller": {
       name: "Teller",
       logo: "teller.svg",
       link: "http://www.teller.com",
       cards: objectize(["visa", "mastercard", "maestro", "amex", "jcb", "unionpay", "diners", "mobilepay"]),
-      fee_setup: new Currency(1000, 'DKK'),
-      fee_monthly: new Currency(149, 'DKK'),
-      fee_fixed: new Currency(0, 'DKK'),
-      fee_variable: 1.5,
-      costfn: function(o) {
-         var trnfee = o.avgvalue.scale(this.fee_variable / 100);
-         trnfee = (trnfee.dkk() > 0.7) ? trnfee : (new Currency(0.7, 'DKK'));
-         trnfee = trnfee.scale(o.transactions);
-
-         return {
-            trans: trnfee,
-            total: trnfee.add(this.fee_monthly)
-         };
+      fees: {
+         setup: new Currency(1000, 'DKK'),
+         monthly: new Currency(149, 'DKK'),
+         trn: function(o) {
+            var trnfee = o.avgvalue.scale(1.25/100).add(new Currency(0.19, 'DKK'));
+            if (trnfee.dkk() < 0.7) trnfee = new Currency(0.7, 'DKK');
+            return trnfee;
+         }
       }
    },
    "valitor": {
@@ -163,16 +150,17 @@ var ACQs = {
       logo: "valitor.png",
       link: "http://www.valitor.com",
       cards: objectize(["visa", "mastercard", "maestro"]),
-      fee_setup: new Currency(0, 'DKK'),
-      fee_monthly: new Currency(0, 'DKK'),
-      fee_fixed: new Currency(0, 'DKK'),
-      fee_variable: 1.5,
-      costfn: acq_cost_default
+      fees: {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(0, 'DKK'),
+         trn: function(o) { return o.avgvalue.scale(1.5/100); }
+      }
    }
 };
 
 
-var PSPs = [{
+var PSPs = [
+{
    name: "Braintree",
    logo: "braintree.svg",
    link: "https://www.braintreepayments.com",

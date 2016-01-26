@@ -21,7 +21,6 @@ var table = $('table');
 
 // Global variables
 var i, k, l, sort;
-var stopwatch;
 var gccode = 'DKK';
 
 // Functions
@@ -162,14 +161,6 @@ function clone(obj) {
         if (obj.hasOwnProperty(attr)) { copy[attr] = obj[attr]; }
     }
     return copy;
-}
-
-function acq_cost_default(o) {
-   var _t = o.avgvalue.scale(this.fee_variable / 100).add(this.fee_fixed).scale(o.transactions);
-   return {
-      trans: _t,
-      total: _t.add(this.fee_monthly)
-   };
 }
 
 function getInt(elem, action) {
@@ -397,43 +388,19 @@ var opts = {
          }
          set_ccode(v);
       }
-   },
-   // Dirty bits: bit0 = er der ændret i antal/gns, bit 1..N_acquirers+1 er der ændret i acquirer costs?  --- Objekter der bruger dirty-bits skal være EFTER
-   /*'dirty_bits': {
-      type: "bits",
-      bits: 0, //sættes on the fly
-      get: function() {
-         var sum = 0;
-         for (var k in opts) {
-            if (opts.hasOwnProperty(k) && opts[k].dirty_bits) {
-               sum = (sum << opts[k].dirty_bits) + opts[k].get_dirty_bits();
-            }
-         }
-         return sum; //17;// detect de acquirers der er ændret i og konverter til binary
-         // 17 => nummber 1 og nummer 5
-      },
-      set: function(i) {}
-   }*/
+   }
 };
 
 function objectize(arr) {
    // Array to object
    var objekt = {};
-   for (i = 0; i < arr.length; i++)
-   {
-      objekt[arr[i]] = 1;
-   }
+   for (i = 0; i < arr.length; i++) { objekt[arr[i]] = 1; }
    return objekt;
 }
 
 function build(action) {
-   stopwatch = performance.now();
-   //console.log( (performance.now()-stopwatch).toFixed(4) +"ms ::: build() start");
 
-   if (action === 'init') {
-      //init_dirty_bits(); // 0.3 ms
-      loadurl(); // 0.4 ms
-   }
+   if (action === 'init') { loadurl(); }
 
    // Get settings
    var settings = {};
@@ -443,7 +410,6 @@ function build(action) {
    settings.acquirersort = [];
 
    if ( !settings.cards.dankort ) {
-
       delete acquirers.nets;
       settings.dankort_scale = 0;
 
@@ -469,21 +435,17 @@ function build(action) {
    tbody.id = "tbody";
 
    for (i in acquirers) {
+      var cardscale = (i==="nets") ? settings.dankort_scale : 1-settings.dankort_scale;
 
       // Calculate individual acquirer costs
-      acquirers[i].fee = acquirers[i].costfn(settings);
-
-      if (i === "nets") { continue; } // uglyfix[1]
+      acquirers[i].trnfees = acquirers[i].fees.trn(settings).scale(settings.transactions).scale(cardscale);
+      acquirers[i].TC = acquirers[i].trnfees.add(acquirers[i].fees.monthly);
 
       for (sort = 0; sort < settings.acquirersort.length; sort++){
-         if ( acquirers[i].fee.total.dkk() < acquirers[settings.acquirersort[sort]].fee.total.dkk() ) {
-            break;
-         }
+         if ( acquirers[i].TC.dkk() < acquirers[settings.acquirersort[sort]].TC.dkk() ) { break; }
       }
-
       settings.acquirersort.splice(sort, 0, i);
    }
-   if (acquirers.nets) { settings.acquirersort.splice(0, 0, "nets"); } // uglyfix[1]
 
    for (i in settings.cards) {
       // Some payment methods have extra costs. Lets calculate them.
@@ -491,8 +453,6 @@ function build(action) {
          settings.cards[i].fee = settings.cards[i].costfn(settings);
       }
    }
-
-   //console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: time to build PSPs.");
 
    var klik = function(psp, acquirers, acqlabels, settings) {
       return function() {
@@ -505,8 +465,11 @@ function build(action) {
 
       var psp = PSPs[k];
       var acq = clone(psp.acquirers || {});
-      var setup = new Currency(0, 'DKK'), recurring = new Currency(0, 'DKK'), total = new Currency(0, 'DKK');
       var cardobj = {};
+      var setup = new Currency(0, 'DKK');
+      var monthly = new Currency(0, 'DKK');
+      var trnfee = new Currency(0, 'DKK');
+      var total = new Currency(0, 'DKK');
 
       // Check if psp support all cards
       for (i in settings.cards) {
@@ -527,7 +490,7 @@ function build(action) {
       }
 
       if( Object.getOwnPropertyNames(acq).length === 0) {
-         // All-in-one solutions, e.g. Stripe.
+      // All-in-one solutions, e.g. Stripe.
 
          for (var x in psp.cards ) {
             //  Some cards/methods (e.g. mobilepay) add extra costs.
@@ -535,7 +498,7 @@ function build(action) {
             if (CARDs[x].costfn){
                if (!settings.cards[x]) { continue; }
                setup = setup.add(CARDs[x].fee.setup);
-               recurring = recurring.add(CARDs[x].fee.monthly);
+               monthly = monthly.add(CARDs[x].fee.monthly);
             }
             cardobj[x] = 1;
          }
@@ -547,9 +510,7 @@ function build(action) {
 
          // Find cheapest acquirer that support all cards
          for (i = 0; i < settings.acquirersort.length; i++) {
-
             var _acq = settings.acquirersort[i];
-            var secondopinion = {};
 
             if( acq[_acq] ){
                newacq[_acq] = 1; // replace '1' with the costs.
@@ -563,9 +524,9 @@ function build(action) {
          }
 
          // Challenge newacq ( coming soon! )
-         if (psp.features.multiacquirer) {}
+         // if (psp.features.multiacquirer) {}
 
-         // Skip PSP if acquirer does not support cards
+         // Skip PSP if no acquirer support all cards
          if ( Object.getOwnPropertyNames(newacq).length === 0) { continue psploop; }
          acq = newacq;
 
@@ -579,24 +540,22 @@ function build(action) {
 
                if (CARDs[card].costfn){
                   setup = setup.add(CARDs[card].fee.setup);
-                  recurring = recurring.add(CARDs[card].fee.monthly);
+                  monthly = monthly.add(CARDs[card].fee.monthly);
                }
                cardobj[card] = 1;
             }
 
-            var scale = (ac === "nets") ? settings.dankort_scale :  1-settings.dankort_scale;
-
-            setup = setup.add(acquirers[ac].fee_setup);
-            recurring = recurring.add( acquirers[ac].fee_monthly);
-            total = total.add( acquirers[ac].fee.trans.scale(scale));
+            setup = setup.add(acquirers[ac].fees.setup);
+            monthly = monthly.add( acquirers[ac].fees.monthly);
+            total = total.add( acquirers[ac].trnfees );
          }
       }
 
       psp.costs = psp.costfn(settings);
 
       setup = setup.add(psp.costs.setup);
-      recurring = recurring.add(psp.costs.monthly);
-      total = total.add(psp.costs.trans).add(recurring);
+      monthly = monthly.add(psp.costs.monthly);
+      total = total.add(psp.costs.trans).add(monthly);
 
       var cardfrag = document.createDocumentFragment();
       var wrapper, svg, use;
@@ -641,7 +600,7 @@ function build(action) {
       row.insertCell(-1).appendChild(acqfrag);
       row.insertCell(-1).appendChild(cardfrag);
       row.insertCell(-1).textContent = setup.print();
-      row.insertCell(-1).textContent = recurring.print();
+      row.insertCell(-1).textContent = monthly.print();
       row.insertCell(-1).textContent = total.print();
 
       var kortgebyr = total.scale(1 / settings.transactions);
@@ -661,8 +620,6 @@ function build(action) {
 
    if (action !== "init") { saveurl(); }
 
-   //console.log( (performance.now()-stopwatch).toFixed(3) +"ms ::: done building \n ");
-
 }
 
 //===========================
@@ -677,32 +634,25 @@ function buildInfoModal(psp, acquirers, acqlabels, settings) {
    /*var h = document.createElement("h1");
    frag.appendChild(h).textContent = "Oversigt over " + psp.name;*/
 
-   var psptitle = document.createElement("h3");
-   frag.appendChild(psptitle).textContent = "Omkostninger til payment gateway:";
-
    var psph = document.createElement("h4");
    var pspBlock = document.createElement("div");
    var pspSetup = document.createElement("div");
    var pspMonthly = document.createElement("div");
    var pspTrans = document.createElement("div");
 
-   pspBlock.classList.add("costblock");
+   if (acqlabels.nets && Object.keys(acqlabels).length > 1) {
+      var acqdescription = document.createElement("div");
+      acqdescription.className = "acqdescription";
+      frag.appendChild(acqdescription).textContent = "Ved udregning af gebyrerne antages det, jf. statistik fra FDIH, at 77% af betalingerne sker med Visa/Dankort. Disse vil blive håndteret som Dankort transaktioner hos Nets, mens den sekundære indløser håndterer de resterende 23%.";
+   }
 
+   pspBlock.classList.add("costblock");
    pspBlock.appendChild(psph).textContent = psp.name + ":";
    pspBlock.appendChild(pspSetup).textContent = "Oprettelse: " + psp.costs.setup.print();
    pspBlock.appendChild(pspMonthly).textContent = "Abonnement per måned: " + psp.costs.monthly.print();
    pspBlock.appendChild(pspTrans).textContent = "Transaktionsgebyrer: " + psp.costs.trans.print();
    frag.appendChild(pspBlock);
 
-   if (Object.keys(acqlabels).length > 0) {
-      frag.appendChild(document.createElement("hr"));
-      var acqtitle = document.createElement("h3");
-      frag.appendChild(acqtitle).textContent = "Indløseromkostninger:";
-      if (acqlabels.nets && Object.keys(acqlabels).length > 1) {
-         var acqdescription = document.createElement("div");
-         frag.appendChild(acqdescription).textContent = "Det antages jævnfør FDIH's statistikker at Nets modtager 77% af transaktionerne (fra visa/dankort samt rene dankort), mens den sekundære indløser modtager 23%.";
-      }
-   }
    for (var label in acqlabels) {
       var acq = acquirers[label];
       var acqblock = document.createElement("div");
@@ -713,12 +663,11 @@ function buildInfoModal(psp, acquirers, acqlabels, settings) {
       var acqTrans = document.createElement("div");
 
       acqblock.classList.add("costblock");
-
       acqblock.appendChild(acqh).textContent = acq.name + ":";
-      acqblock.appendChild(acqSetup).textContent = "Oprettelse: " + acq.fee_setup.print();
-      acqblock.appendChild(acqMonthly).textContent = "Abonnement per måned: " + acq.fee_monthly.print();
+      acqblock.appendChild(acqSetup).textContent = "Oprettelse: " + acq.fees.setup.print();
+      acqblock.appendChild(acqMonthly).textContent = "Abonnement per måned: " + acq.fees.monthly.print();
       var scale = (label === "nets") ? settings.dankort_scale : 1 - settings.dankort_scale;
-      acqblock.appendChild(acqTrans).textContent = "Transaktionsgebyrer: " + acq.fee.trans.scale(scale).print();
+      acqblock.appendChild(acqTrans).textContent = "Transaktionsgebyrer: " + acq.trnfees.print() + "*";
       frag.appendChild(acqblock);
    }
 
@@ -793,12 +742,11 @@ Base64Array.prototype.pushbits = function(bitval, nbits) {
 };
 
 Base64Array.prototype.encode = function() {
-    var encstr = "";
-    for (var i = 0; i < this.array.length; i++) {
-        console.log("arr[" + i + "] = " + this.array[i]);
-        encstr += base64_chars[this.array[i]];
-    }
-    return encstr;
+   var encstr = "";
+   for (var i = 0; i < this.array.length; i++) {
+      encstr += base64_chars[this.array[i]];
+   }
+   return encstr;
 };
 
 Base64Array.prototype.pushbase64char = function(b64char) {
