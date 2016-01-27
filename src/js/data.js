@@ -33,24 +33,18 @@ var CARDs = {
    "jcb": {},
    "unionpay": {},
    "mobilepay": {
-      costfn: function(o) {
-         // We will calc the actual costs when we get some usage stats (ETA Q1 2016)
-         return {
-            setup: new Currency(49, 'DKK'),
-            monthly: new Currency(49, 'DKK'),
-            trans: new Currency(1, 'DKK')
-         };
+      fees: {
+         setup: new Currency(49, 'DKK'),
+         monthly: new Currency(49, 'DKK'),
+         trn: new Currency(1, 'DKK')
       }
    },
    "forbrugsforeningen": {
-      costfn: function(o) {
-         // We will calc the actual costs when we get some usage stats (ETA Q1 2016)
-         return {
-            setup: new Currency(0, 'DKK'),
-            monthly: new Currency(0, 'DKK'),
-            trans: new Currency(0, 'DKK')
-         };
-      },
+      fees: {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(0, 'DKK'),
+         trn: new Currency(0, 'DKK')
+      }
    }
 };
 

@@ -155,14 +155,6 @@ function cardsCovered(acqs, s) {
    return true;
 }
 
-function clone(obj) {
-    var copy = obj.constructor();
-    for (var attr in obj) {
-        if (obj.hasOwnProperty(attr)) { copy[attr] = obj[attr]; }
-    }
-    return copy;
-}
-
 function getInt(elem, action) {
 
    if (action === 'init') { elem.addEventListener("input", build, false); }
@@ -265,9 +257,7 @@ function tooltip() {}
 var opts = {
    'cards': {
       type: "bits",
-      bits: function() {
-          return C("ocards").length;
-      },
+      bits: function() { return C("ocards").length; },
       get: function(action) {
          // Get all selected payment methods from .ocards
          var object = {};
@@ -296,9 +286,7 @@ var opts = {
    },
    'features': {
       type: "bits",
-      bits: function() {
-          return C("ofeatures").length;
-      },
+      bits: function() { return C("ofeatures").length; },
       get: function(action) {
          // Get all selected features
          var object = {};
@@ -341,14 +329,11 @@ var opts = {
 
          // Return the selected acquirers
          var name = $("acquirer").value;
-         if (action === "url" ){
-             return $("acquirer").selectedIndex;
-         }
-         if ($("acquirer").value === 'auto') {
-            return ACQs;
-         }
+         if (action === "url" ){ return $("acquirer").selectedIndex; }
+         if (name === "auto") { return ACQs; }
          else {
             var objekt = {};
+            objekt.nets = ACQs.nets;
             objekt[name] = ACQs[name];
             return objekt;
          }
@@ -367,15 +352,15 @@ var opts = {
    'avgvalue': {
       type: "currency",
       dirty_bits: 1,
-      get_dirty_bits: function() { console.log("?????");console.log(this.get());console.log(_getCurrency($('avgvalue').defaultValue));
-          return +(!this.get().is_equal_to(_getCurrency($('avgvalue').defaultValue))); },
+      get_dirty_bits: function() {
+         return +(!this.get().is_equal_to(_getCurrency($('avgvalue').defaultValue))); },
       get: function(action) { return getCurrency('avgvalue', action); },
       set: function(v) { setCurrency('avgvalue', _getCurrency(v)); }
    },
    'currency': {
       type: "string",
       dirty_bits: 1,
-       get_dirty_bits: function() { return +(this.get() !== $('currency_code_select').options[0].value); },
+      get_dirty_bits: function() { return +(this.get() !== $('currency_code_select').options[0].value); },
       get: function() { return gccode; },
       set: function(v) {
          var select = $("currency_code_select");
@@ -403,15 +388,24 @@ function build(action) {
    if (action === 'init') { loadurl(); }
 
    // Get settings
+   var data = [];
+   var tbody = document.createElement("tbody");
+   tbody.id = "tbody";
    var settings = {};
    for (var key in opts) { if (key !== "dirty_bits") { settings[key] = opts[key].get(action); }}
-   var acquirers = clone(settings.acquirers);
-
+   var acqobj = Object.assign({}, settings.acquirers);
    settings.acquirersort = [];
+   var dankortscale = (!settings.cards.visa) ? 1 : 0.77;
+
+   // Modal window
+   var klik = function(psp, acqobj, acqlabels, settings) {
+      return function() { buildInfoModal(psp, acqobj, acqlabels, settings); };
+   };
 
    if ( !settings.cards.dankort ) {
-      delete acquirers.nets;
-      settings.dankort_scale = 0;
+      // Remove nets
+      delete acqobj.nets;
+      dankortscale = 0;
 
       if ( !settings.cards.visa ) {
          $('tbody').innerHTML = "";
@@ -424,130 +418,90 @@ function build(action) {
          return;
       }
    }
-   else {
-      acquirers.nets = ACQs.nets;
-      settings.dankort_scale = (!settings.cards.visa) ? 1 : 0.77;
-   }
 
-   var costs = {};
-   var data = [];
-   var tbody = document.createElement("tbody");
-   tbody.id = "tbody";
+   acqloop:
+   for (var acq in acqobj) {
 
-   for (i in acquirers) {
-      var cardscale = (i==="nets") ? settings.dankort_scale : 1-settings.dankort_scale;
+      // Remove acquirers that don't support all selected payment method.
+      for (var card in settings.cards) {
+         if (acq == "nets") { break; }
+         if (card == "dankort") { continue; }
+         if( !acqobj[acq].cards[card] ){
+            delete acqobj[acq];
+            continue acqloop;
+         }
+      }
 
-      // Calculate individual acquirer costs
-      acquirers[i].trnfees = acquirers[i].fees.trn(settings).scale(settings.transactions).scale(cardscale);
-      acquirers[i].TC = acquirers[i].trnfees.add(acquirers[i].fees.monthly);
+      // Calculate acquirer costs and sort them.
+      dankortscale = (i==="nets") ? dankortscale : 1-dankortscale;
+      acqobj[acq].trnfees = acqobj[acq].fees.trn(settings).scale(settings.transactions).scale(dankortscale);
+      acqobj[acq].TC = acqobj[acq].trnfees.add(acqobj[acq].fees.monthly);
 
       for (sort = 0; sort < settings.acquirersort.length; sort++){
-         if ( acquirers[i].TC.dkk() < acquirers[settings.acquirersort[sort]].TC.dkk() ) { break; }
+         if ( acqobj[acq].TC.dkk() < acqobj[settings.acquirersort[sort]].TC.dkk() ) { break; }
       }
-      settings.acquirersort.splice(sort, 0, i);
+      settings.acquirersort.splice(sort, 0, acq);
    }
 
-   for (i in settings.cards) {
-      // Some payment methods have extra costs. Lets calculate them.
-      if ( settings.cards[i].costfn){
-         settings.cards[i].fee = settings.cards[i].costfn(settings);
-      }
-   }
-
-   var klik = function(psp, acquirers, acqlabels, settings) {
-      return function() {
-         buildInfoModal(psp, acquirers, acqlabels, settings);
-      };
-   };
 
    psploop:
    for (k in PSPs) {
 
       var psp = PSPs[k];
-      var acq = clone(psp.acquirers || {});
       var cardobj = {};
+
       var setup = new Currency(0, 'DKK');
       var monthly = new Currency(0, 'DKK');
       var trnfee = new Currency(0, 'DKK');
       var total = new Currency(0, 'DKK');
 
-      // Check if psp support all cards
-      for (i in settings.cards) {
-         if( !psp.cards[i] ){ continue psploop; }
-      }
+      // Check if psp support all payment methods
+      for (var card in settings.cards) { if( !psp.cards[card] ){ continue psploop; } }
+
       // Check if psp support all features
-      for (i in settings.features) {
-         if( !psp.features[i] ){ continue psploop; }
-      }
+      for (i in settings.features) { if( !psp.features[i] ){ continue psploop; } }
 
-      // If a specific acquirer has been chosen (select dropdown)
-      if ( Object.keys(settings.acquirers).length === 1 ){
+      //  Some cards/methods (e.g. mobilepay) add extra costs.
+      //  They should only be included if enabled in settings.cards.
+      for (card in psp.cards) {
 
-         // Skip psp if it does not support selected acquirer
-         if( !acq[Object.keys(settings.acquirers)[0]] ){
-            continue psploop;
-         }
-      }
-
-      if( Object.getOwnPropertyNames(acq).length === 0) {
-      // All-in-one solutions, e.g. Stripe.
-
-         for (var x in psp.cards ) {
-            //  Some cards/methods (e.g. mobilepay) add extra costs.
-            //  They will only be included if enabled in settings.cards.
-            if (CARDs[x].costfn){
-               if (!settings.cards[x]) { continue; }
-               setup = setup.add(CARDs[x].fee.setup);
-               monthly = monthly.add(CARDs[x].fee.monthly);
+         if ( CARDs[card].fees ){
+            if ( settings.cards[card] ) {
+               setup = setup.add(CARDs[card].fees.setup);
+               monthly = monthly.add(CARDs[card].fees.monthly);
+               //trnfee = trnfee.add(CARDs[card].fees.trnfee);
             }
-            cardobj[x] = 1;
+            else { continue; }
          }
-
+         cardobj[card] = 2;
       }
-      else {
-         // Payment Gateways, e.g. DIBS.
-         var newacq = {};
 
+      // Payment Gateways, e.g. DIBS, ePay, Quickpay.
+      if( psp.acquirers ) {
+
+         var acq = {};
          // Find cheapest acquirer that support all cards
          for (i = 0; i < settings.acquirersort.length; i++) {
             var _acq = settings.acquirersort[i];
 
-            if( acq[_acq] ){
-               newacq[_acq] = 1; // replace '1' with the costs.
-               var objlength = Object.getOwnPropertyNames(newacq).length;
+            if( psp.acquirers[_acq] ){
+               acq[_acq] = 1; // replace '1' with the costs.
+               var objlength = Object.getOwnPropertyNames(acq).length;
 
-               if ( cardsCovered(newacq, settings) ) { break; }
-               else if ((newacq.nets && objlength < 2) || (objlength === 0)) { continue; }
-               else if ( i+1 === settings.acquirersort.length ) { newacq = false; break; }
-               else { delete newacq[_acq]; } // Delete and try with next acquirer
+               if ( cardsCovered(acq, settings) ) { break; }
+               else if ((acq.nets && objlength < 2) || (objlength === 0)) { continue; }
+               else if ( i+1 === settings.acquirersort.length ) { acq = false; break; }
+               else { delete acq[_acq]; } // Delete and try with next acquirer
             }
          }
 
-         // Challenge newacq ( coming soon! )
-         // if (psp.features.multiacquirer) {}
-
          // Skip PSP if no acquirer support all cards
-         if ( Object.getOwnPropertyNames(newacq).length === 0) { continue psploop; }
-         acq = newacq;
+         if ( Object.getOwnPropertyNames(acq).length === 0) { continue psploop; }
 
          for (var ac in acq) {
-            // Merge acquirer card lists
-            for (var card in acquirers[ac].cards ) {
-
-               // Some cards/methods (e.g. mobilepay) add extra costs.
-               // They will only be included if enabled in settings.cards.
-               if ( cardobj[card] || (!settings.cards[card] && CARDs[card].costfn) ){ continue; }
-
-               if (CARDs[card].costfn){
-                  setup = setup.add(CARDs[card].fee.setup);
-                  monthly = monthly.add(CARDs[card].fee.monthly);
-               }
-               cardobj[card] = 1;
-            }
-
-            setup = setup.add(acquirers[ac].fees.setup);
-            monthly = monthly.add( acquirers[ac].fees.monthly);
-            total = total.add( acquirers[ac].trnfees );
+            setup = setup.add( acqobj[ac].fees.setup );
+            monthly = monthly.add( acqobj[ac].fees.monthly );
+            total = total.add( acqobj[ac].trnfees );
          }
       }
 
@@ -611,7 +565,7 @@ function build(action) {
       var infoButton = document.createElement("div");
       infoButton.classList.add("infobutton");
       /* construct acq list */
-      infoButton.addEventListener("click", klik(psp, acquirers, acq, settings));
+      infoButton.addEventListener("click", klik(psp, acqobj, acq, settings));
 
       infoButton.textContent = "Se mere";
       row.insertCell(-1).appendChild(infoButton);
