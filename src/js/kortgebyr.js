@@ -250,9 +250,6 @@ function setPercent(k, v) {
    $(k).classList.remove('error');
 }
 
-function tooltip() {}
-
-
 
 var opts = {
    'cards': {
@@ -376,12 +373,6 @@ var opts = {
    }
 };
 
-function objectize(arr) {
-   // Array to object
-   var objekt = {};
-   for (i = 0; i < arr.length; i++) { objekt[arr[i]] = 1; }
-   return objekt;
-}
 
 function build(action) {
 
@@ -401,6 +392,11 @@ function build(action) {
    var klik = function(psp, acqobj, acqlabels, settings) {
       return function() { buildInfoModal(psp, acqobj, acqlabels, settings); };
    };
+
+
+   if (typeof PSPs[0].fees.trn === "function") {
+      //console.log("FUNCTION!");
+   }
 
    if ( !settings.cards.dankort ) {
       // Remove nets
@@ -445,9 +441,8 @@ function build(action) {
 
 
    psploop:
-   for (k in PSPs) {
-
-      var psp = PSPs[k];
+   for (var id in PSPs) {
+      var psp = PSPs[id];
       var cardobj = {};
 
       var setup = new Currency(0, 'DKK');
@@ -505,11 +500,9 @@ function build(action) {
          }
       }
 
-      psp.costs = psp.costfn(settings);
-
-      setup = setup.add(psp.costs.setup);
-      monthly = monthly.add(psp.costs.monthly);
-      total = total.add(psp.costs.trans).add(monthly);
+      setup = setup.add(psp.fees.setup);
+      monthly = monthly.add(psp.fees.monthly);
+      total = total.add(psp.fees.trn).add(monthly);
 
       var cardfrag = document.createDocumentFragment();
       var wrapper, svg, use;
@@ -574,6 +567,7 @@ function build(action) {
 
    if (action !== "init") { saveurl(); }
 
+
 }
 
 //===========================
@@ -602,9 +596,9 @@ function buildInfoModal(psp, acquirers, acqlabels, settings) {
 
    pspBlock.classList.add("costblock");
    pspBlock.appendChild(psph).textContent = psp.name + ":";
-   pspBlock.appendChild(pspSetup).textContent = "Oprettelse: " + psp.costs.setup.print();
-   pspBlock.appendChild(pspMonthly).textContent = "Abonnement per måned: " + psp.costs.monthly.print();
-   pspBlock.appendChild(pspTrans).textContent = "Transaktionsgebyrer: " + psp.costs.trans.print();
+   pspBlock.appendChild(pspSetup).textContent = "Oprettelse: " + psp.fees.setup.print();
+   pspBlock.appendChild(pspMonthly).textContent = "Abonnement per måned: " + psp.fees.monthly.print();
+   pspBlock.appendChild(pspTrans).textContent = "Transaktionsgebyrer: " + psp.fees.trn.print();
    frag.appendChild(pspBlock);
 
    for (var label in acqlabels) {
