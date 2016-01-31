@@ -56,6 +56,8 @@ var ACQs = {
    "bambora": {
       name: "Bambora",
       logo: "bambora.svg",
+      w: 72,
+      h: 13,
       link: "http://www.bambora.com/",
       cards: {
          visa: true,
@@ -71,6 +73,8 @@ var ACQs = {
    "clearhaus": {
       name: "Clearhaus",
       logo: "clearhaus.svg",
+      w: 67,
+      h: 13,
       link: "https://www.clearhaus.com",
       cards: {
          visa: true,
@@ -91,6 +95,8 @@ var ACQs = {
    "elavon": {
       name: "Elavon",
       logo: "elavon.svg",
+      w: 48,
+      h: 13,
       link: "http://www.elavon.com",
       cards: {
          visa: true,
@@ -106,6 +112,8 @@ var ACQs = {
    "handelsbanken": {
       name: "Handelsbanken",
       logo: "handelsbanken.svg",
+      w: 80,
+      h: 8,
       link: "http://www.handelsbanken.dk",
       cards: {
          visa: true,
@@ -121,6 +129,8 @@ var ACQs = {
    "nets": {
       name: "Nets",
       logo: "nets.svg",
+      w: 35,
+      h: 13,
       link: "http://www.nets.eu",
       cards: {
          dankort: true,
@@ -141,6 +151,8 @@ var ACQs = {
    "swedbank": {
       name: "Swedbank",
       logo: "swedbank.png",
+      w: 62,
+      h: 10,
       link: "http://www.swedbank.dk",
       cards: {
          visa: true,
@@ -156,6 +168,8 @@ var ACQs = {
    "teller": {
       name: "Teller",
       logo: "teller.svg",
+      w: 55,
+      h: 10,
       link: "http://www.teller.com",
       cards: {
          visa: true,
@@ -180,6 +194,8 @@ var ACQs = {
    "valitor": {
       name: "Valitor",
       logo: "valitor.png",
+      w: 61,
+      h: 9,
       link: "http://www.valitor.com",
       cards: {
          visa: true,
@@ -198,6 +214,8 @@ var PSPs = [
 {
    name: "Braintree",
    logo: "braintree.svg",
+   w: 116,
+   h: 16,
    link: "https://www.braintreepayments.com",
    features: {
       antifraud: true,
@@ -217,6 +235,8 @@ var PSPs = [
 {
    name: "Certitrade",
    logo: "certitrade.svg",
+   w: 125,
+   h: 25,
    link: "http://www.certitrade.net/kortbetalning.php",
    acquirers: {
       clearhaus: true,
@@ -241,6 +261,8 @@ var PSPs = [
 {
    name: "Checkout.com",
    logo: "checkoutcom.svg",
+   w: 145,
+   h: 15,
    link: "https://www.checkout.com",
    features: {
       antifraud: true,
@@ -264,6 +286,8 @@ var PSPs = [
 {
    name: "DanDomain",
    logo: "dandomain.svg",
+   w: 135,
+   h: 25,
    link: "https://www.dandomain.dk/webshop/betalingssystem",
    acquirers: {
       nets: true,
@@ -290,6 +314,8 @@ var PSPs = [
 {
    name: "DIBS Start",
    logo: "dibs.svg",
+   w: 115,
+   h: 28,
    link: "http://dibs.dk",
    acquirers: {
       nets: true
@@ -307,6 +333,8 @@ var PSPs = [
 {
    name: "DIBS Medium",
    logo: "dibs.svg",
+   w: 115,
+   h: 28,
    link: "http://dibs.dk",
    features: {
       antifraud: {
@@ -342,6 +370,8 @@ var PSPs = [
 {
    name: "DIBS Premium",
    logo: "dibs.svg",
+   w: 115,
+   h: 28,
    link: "http://dibs.dk",
    features: {
       antifraud: {
@@ -380,6 +410,8 @@ var PSPs = [
 {
    name: "ePay Light",
    logo: "epay.svg",
+   w: 134,
+   h: 30,
    link: "http://epay.dk",
    features: {
       antifraud: { trn: new Currency(0.3, 'DKK')}
@@ -402,6 +434,8 @@ var PSPs = [
 {
    name: "ePay Pro",
    logo: "epay.svg",
+   w: 134,
+   h: 30,
    link: "http://epay.dk",
    features: {
       antifraud: { trn: new Currency(0.3, 'DKK')}
@@ -432,6 +466,8 @@ var PSPs = [
 {
    name: "ePay Business",
    logo: "epay.svg",
+   w: 134,
+   h: 30,
    link: "http://epay.dk",
    features: {
       antifraud: { trn: new Currency(0.3, 'DKK')},
@@ -472,6 +508,8 @@ var PSPs = [
 {
    name: "Netaxept Start",
    logo: "netaxept.svg",
+   w: 99,
+   h: 27,
    link: "https://www.terminalshop.dk/Netaxept/",
    features: {
       antifraud: true
@@ -494,6 +532,8 @@ var PSPs = [
 {
    name: "Netaxept Plus",
    logo: "netaxept.svg",
+   w: 99,
+   h: 27,
    link: "https://www.terminalshop.dk/Netaxept/",
    features: {
       antifraud: true
@@ -522,6 +562,8 @@ var PSPs = [
 {
    name: "Netaxept Advanced",
    logo: "netaxept.svg",
+   w: 99,
+   h: 27,
    link: "https://www.terminalshop.dk/Netaxept/",
    features: {
       antifraud: true,
@@ -554,6 +596,8 @@ var PSPs = [
 {
    name: "Payer",
    logo: "payer.svg",
+   w: 117,
+   h: 24,
    link: "http://payer.se/betallosning/",
    acquirers: {
       swedbank: true,
@@ -576,6 +620,8 @@ var PSPs = [
 {
    name: "Paylike",
    logo: "paylike.svg",
+   w: 99,
+   h: 31,
    link: "https://paylike.io",
    features: {
       antifraud: true
@@ -594,6 +640,8 @@ var PSPs = [
 {
    name: "Paymill",
    logo: "paymill.svg",
+   w: 129,
+   h: 24,
    link: "https://paymill.com",
    features: {
       antifraud: true,
@@ -618,6 +666,8 @@ var PSPs = [
 {
    name: "PayPal",
    logo: "paypal.svg",
+   w: 127,
+   h: 31,
    link: "https://paypal.com",
    features: {
       antifraud: true
@@ -648,6 +698,8 @@ var PSPs = [
 {
    name: "Payson",
    logo: "payson.png",
+   w: 117,
+   h: 31,
    link: "https://www.payson.se",
    features: {
       antifraud: true
@@ -666,6 +718,8 @@ var PSPs = [
 {
    name: "Payza",
    logo: "payza.svg",
+   w: 107,
+   h: 31,
    link: "https://payza.com",
    features: {
       antifraud: true
@@ -684,6 +738,8 @@ var PSPs = [
 {
    name: "QuickPay Starter",
    logo: "quickpay.svg",
+   w: 138,
+   h: 27,
    link: "https://quickpay.net",
    features: {
       antifraud: true,
@@ -716,6 +772,8 @@ var PSPs = [
 {
    name: "QuickPay Professional",
    logo: "quickpay.svg",
+   w: 138,
+   h: 27,
    link: "https://quickpay.net",
    features: {
       antifraud: true,
@@ -749,6 +807,8 @@ var PSPs = [
 {
    name: "Stripe",
    logo: "stripe.svg",
+   w: 75,
+   h: 31,
    link: "https://stripe.com",
    features: {
       antifraud: true,
@@ -768,6 +828,8 @@ var PSPs = [
 {
    name: "Verifone Basis",
    logo: "verifone.svg",
+   w: 119,
+   h: 23,
    link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
    acquirers: {
       nets: true
@@ -785,6 +847,8 @@ var PSPs = [
 {
    name: "Verifone Premium",
    logo: "verifone.svg",
+   w: 119,
+   h: 23,
    link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
    acquirers: {
       nets: true,
@@ -811,6 +875,8 @@ var PSPs = [
 {
    name: "Verifone PremiumPlus",
    logo: "verifone.svg",
+   w: 119,
+   h: 23,
    link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
    acquirers: {
       nets: true,
@@ -837,6 +903,8 @@ var PSPs = [
 {
    name: "YourPay Feemium",
    logo: "yourpay.png",
+   w: 115,
+   h: 32,
    link: "http://www.yourpay.io",
    features: {
       antifraud: true
@@ -855,6 +923,8 @@ var PSPs = [
 {
    name: "YourPay Mini",
    logo: "yourpay.png",
+   w: 115,
+   h: 32,
    link: "http://www.yourpay.io",
    features: {
       antifraud: true
@@ -877,6 +947,8 @@ var PSPs = [
 {
    name: "YourPay Pro",
    logo: "yourpay.png",
+   w: 115,
+   h: 32,
    link: "http://www.yourpay.io",
    features: {
       antifraud: true
@@ -899,6 +971,8 @@ var PSPs = [
 {
    name: "YourPay Business",
    logo: "yourpay.png",
+   w: 115,
+   h: 32,
    link: "http://www.yourpay.io",
    features: {
       antifraud: true
@@ -921,6 +995,8 @@ var PSPs = [
 {
    name: "2checkout",
    logo: "2checkout.svg",
+   w: 127,
+   h: 15,
    link: "https://www.2checkout.com",
    features: {
       antifraud: true,
