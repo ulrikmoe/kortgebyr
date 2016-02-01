@@ -52,163 +52,163 @@ var CARDs = {
 };
 
 
-var ACQs = {
-   "bambora": {
-      name: "Bambora",
-      logo: "bambora.svg",
-      w: 72,
-      h: 13,
-      link: "http://www.bambora.com/",
-      cards: {
-         visa: true,
-         mastercard: true,
-         maestro: true
-      },
-      fees: {
-         setup: new Currency(0, 'DKK'),
-         monthly: new Currency(0, 'DKK'),
-         trn: function(o) { return o.avgvalue.scale(1.45/100); }
-      }
+var ACQs = [
+{
+   name: "Bambora",
+   logo: "bambora.svg",
+   w: 72,
+   h: 13,
+   link: "http://www.bambora.com/",
+   cards: {
+      visa: true,
+      mastercard: true,
+      maestro: true
    },
-   "clearhaus": {
-      name: "Clearhaus",
-      logo: "clearhaus.svg",
-      w: 67,
-      h: 13,
-      link: "https://www.clearhaus.com",
-      cards: {
-         visa: true,
-         mastercard: true,
-         maestro: true,
-         mobilepay: true
-      },
-      fees: {
-         setup: new Currency(0, 'DKK'),
-         monthly: new Currency(0, 'DKK'),
-         trn: function(o) {
-            var trnfee = o.avgvalue.scale(1.45/100);
-            if (trnfee.dkk() < 0.6) trnfee = new Currency(0.6, 'DKK');
-            return trnfee;
-         }
-      }
+   fees: {
+      setup: new Currency(0, 'DKK'),
+      monthly: new Currency(0, 'DKK'),
+      trn: function(o) { return o.avgvalue.scale(1.45/100); }
+   }
+},
+{
+   name: "Clearhaus",
+   logo: "clearhaus.svg",
+   w: 67,
+   h: 13,
+   link: "https://www.clearhaus.com",
+   cards: {
+      visa: true,
+      mastercard: true,
+      maestro: true,
+      mobilepay: true
    },
-   "elavon": {
-      name: "Elavon",
-      logo: "elavon.svg",
-      w: 48,
-      h: 13,
-      link: "http://www.elavon.com",
-      cards: {
-         visa: true,
-         mastercard: true,
-         maestro: true
-      },
-      fees: {
-         setup: new Currency(0, 'DKK'),
-         monthly: new Currency(0, 'DKK'),
-         trn: function(o) { return o.avgvalue.scale(1.6/100); }
-      }
-   },
-   "handelsbanken": {
-      name: "Handelsbanken",
-      logo: "handelsbanken.svg",
-      w: 80,
-      h: 8,
-      link: "http://www.handelsbanken.dk",
-      cards: {
-         visa: true,
-         mastercard: true,
-         maestro: true
-      },
-      fees: {
-         setup: new Currency(0, 'DKK'),
-         monthly: new Currency(0, 'DKK'),
-         trn: function(o) { return o.avgvalue.scale(1.5/100); }
-      }
-   },
-   "nets": {
-      name: "Nets",
-      logo: "nets.svg",
-      w: 35,
-      h: 13,
-      link: "http://www.nets.eu",
-      cards: {
-         dankort: true,
-         forbrugsforeningen: true,
-         mobilepay: true
-      },
-      fees: {
-         setup: new Currency(250, 'DKK'),
-         monthly: new Currency(1000 / 12, 'DKK'),
-         trn: function(o) {
-            var avgvalue = o.avgvalue.dkk();
-            if (avgvalue <= 50) { return new Currency(0.7, 'DKK'); }
-            else if (avgvalue <= 100) { return new Currency(1.1, 'DKK'); }
-            else { return new Currency(1.39, 'DKK'); }
-         }
-      }
-   },
-   "swedbank": {
-      name: "Swedbank",
-      logo: "swedbank.png",
-      w: 62,
-      h: 10,
-      link: "http://www.swedbank.dk",
-      cards: {
-         visa: true,
-         mastercard: true,
-         maestro: true
-      },
-      fees: {
-         setup: new Currency(1900, 'DKK'),
-         monthly: new Currency(100, 'DKK'),
-         trn: function(o) { return o.avgvalue.scale(1.6/100); }
-      }
-   },
-   "teller": {
-      name: "Teller",
-      logo: "teller.svg",
-      w: 55,
-      h: 10,
-      link: "http://www.teller.com",
-      cards: {
-         visa: true,
-         mastercard: true,
-         maestro: true,
-         amex: true,
-         jcb: true,
-         unionpay: true,
-         diners: true,
-         mobilepay: true
-      },
-      fees: {
-         setup: new Currency(1000, 'DKK'),
-         monthly: new Currency(149, 'DKK'),
-         trn: function(o) {
-            var trnfee = o.avgvalue.scale(1.25/100).add(new Currency(0.19, 'DKK'));
-            if (trnfee.dkk() < 0.7) trnfee = new Currency(0.7, 'DKK');
-            return trnfee;
-         }
-      }
-   },
-   "valitor": {
-      name: "Valitor",
-      logo: "valitor.png",
-      w: 61,
-      h: 9,
-      link: "http://www.valitor.com",
-      cards: {
-         visa: true,
-         mastercard: true,
-         maestro: true,
-      },
-      fees: {
-         setup: new Currency(0, 'DKK'),
-         monthly: new Currency(0, 'DKK'),
-         trn: function(o) { return o.avgvalue.scale(1.5/100); }
+   fees: {
+      setup: new Currency(0, 'DKK'),
+      monthly: new Currency(0, 'DKK'),
+      trn: function(o) {
+         var trnfee = o.avgvalue.scale(1.45/100);
+         if (trnfee.dkk() < 0.6) trnfee = new Currency(0.6, 'DKK');
+         return trnfee;
       }
    }
-};
+},
+{
+   name: "Elavon",
+   logo: "elavon.svg",
+   w: 48,
+   h: 13,
+   link: "http://www.elavon.com",
+   cards: {
+      visa: true,
+      mastercard: true,
+      maestro: true
+   },
+   fees: {
+      setup: new Currency(0, 'DKK'),
+      monthly: new Currency(0, 'DKK'),
+      trn: function(o) { return o.avgvalue.scale(1.6/100); }
+   }
+},
+{
+   name: "Handelsbanken",
+   logo: "handelsbanken.svg",
+   w: 80,
+   h: 8,
+   link: "http://www.handelsbanken.dk",
+   cards: {
+      visa: true,
+      mastercard: true,
+      maestro: true
+   },
+   fees: {
+      setup: new Currency(0, 'DKK'),
+      monthly: new Currency(0, 'DKK'),
+      trn: function(o) { return o.avgvalue.scale(1.5/100); }
+   }
+},
+{
+   name: "Nets",
+   logo: "nets.svg",
+   w: 35,
+   h: 13,
+   link: "http://www.nets.eu",
+   cards: {
+      dankort: true,
+      forbrugsforeningen: true,
+      mobilepay: true
+   },
+   fees: {
+      setup: new Currency(250, 'DKK'),
+      monthly: new Currency(1000 / 12, 'DKK'),
+      trn: function(o) {
+         var avgvalue = o.avgvalue.dkk();
+         if (avgvalue <= 50) { return new Currency(0.7, 'DKK'); }
+         else if (avgvalue <= 100) { return new Currency(1.1, 'DKK'); }
+         else { return new Currency(1.39, 'DKK'); }
+      }
+   }
+},
+{
+   name: "Swedbank",
+   logo: "swedbank.png",
+   w: 62,
+   h: 10,
+   link: "http://www.swedbank.dk",
+   cards: {
+      visa: true,
+      mastercard: true,
+      maestro: true
+   },
+   fees: {
+      setup: new Currency(1900, 'DKK'),
+      monthly: new Currency(100, 'DKK'),
+      trn: function(o) { return o.avgvalue.scale(1.6/100); }
+   }
+},
+{
+   name: "Teller",
+   logo: "teller.svg",
+   w: 55,
+   h: 10,
+   link: "http://www.teller.com",
+   cards: {
+      visa: true,
+      mastercard: true,
+      maestro: true,
+      amex: true,
+      jcb: true,
+      unionpay: true,
+      diners: true,
+      mobilepay: true
+   },
+   fees: {
+      setup: new Currency(1000, 'DKK'),
+      monthly: new Currency(149, 'DKK'),
+      trn: function(o) {
+         var trnfee = o.avgvalue.scale(1.25/100).add(new Currency(0.19, 'DKK'));
+         if (trnfee.dkk() < 0.7) trnfee = new Currency(0.7, 'DKK');
+         return trnfee;
+      }
+   }
+},
+{
+   name: "Valitor",
+   logo: "valitor.png",
+   w: 61,
+   h: 9,
+   link: "http://www.valitor.com",
+   cards: {
+      visa: true,
+      mastercard: true,
+      maestro: true,
+   },
+   fees: {
+      setup: new Currency(0, 'DKK'),
+      monthly: new Currency(0, 'DKK'),
+      trn: function(o) { return o.avgvalue.scale(1.5/100); }
+   }
+}
+];
 
 var PSPs = [
 {
@@ -239,10 +239,10 @@ var PSPs = [
    h: 25,
    link: "http://www.certitrade.net/kortbetalning.php",
    acquirers: {
-      clearhaus: true,
-      swedbank: true,
-      handelsbanken: true,
-      nordea: true
+      Clearhaus: true,
+      Swedbank: true,
+      Handelsbanken: true,
+      Nordea: true
    },
    cards: {
       visa: true,
@@ -290,8 +290,8 @@ var PSPs = [
    h: 25,
    link: "https://www.dandomain.dk/webshop/betalingssystem",
    acquirers: {
-      nets: true,
-      teller: true
+      Nets: true,
+      Teller: true
    },
    cards: {
       dankort: true,
@@ -318,7 +318,7 @@ var PSPs = [
    h: 28,
    link: "http://dibs.dk",
    acquirers: {
-      nets: true
+      Nets: true
    },
    cards: {
       dankort: true,
@@ -343,12 +343,12 @@ var PSPs = [
       }
    },
    acquirers: {
-      nets: true,
-      teller: true,
-      swedbank: true,
-      handelsbanken: true,
-      valitor: true,
-      elavon: true
+      Nets: true,
+      Teller: true,
+      Swedbank: true,
+      Handelsbanken: true,
+      Valitor: true,
+      Elavon: true
    },
    cards: {
       dankort: true,
@@ -382,12 +382,12 @@ var PSPs = [
       multiacquirer: true
    },
    acquirers: {
-      nets: true,
-      teller: true,
-      swedbank: true,
-      handelsbanken: true,
-      valitor: true,
-      elavon: true
+      Nets: true,
+      Teller: true,
+      Swedbank: true,
+      Handelsbanken: true,
+      Valitor: true,
+      Elavon: true
    },
    cards: {
       dankort: true,
@@ -417,7 +417,7 @@ var PSPs = [
       antifraud: { trn: new Currency(0.3, 'DKK')}
    },
    acquirers: {
-      nets: true
+      Nets: true
    },
    cards: {
       dankort: true,
@@ -441,8 +441,8 @@ var PSPs = [
       antifraud: { trn: new Currency(0.3, 'DKK')}
    },
    acquirers: {
-      nets: true,
-      teller: true
+      Nets: true,
+      Teller: true
    },
    cards: {
       dankort: true,
@@ -477,14 +477,14 @@ var PSPs = [
       multiacquirer: true
    },
    acquirers: {
-      nets: true,
-      teller: true,
-      clearhaus: true,
-      swedbank: true,
-      handelsbanken: true,
-      valitor: true,
-      elavon: true,
-      bambora: true,
+      Nets: true,
+      Teller: true,
+      Clearhaus: true,
+      Swedbank: true,
+      Handelsbanken: true,
+      Valitor: true,
+      Elavon: true,
+      Bambora: true,
    },
    cards: {
       dankort: true,
@@ -515,8 +515,8 @@ var PSPs = [
       antifraud: true
    },
    acquirers: {
-      nets: true,
-      teller: true
+      Nets: true,
+      Teller: true
    },
    cards: {
       dankort: true,
@@ -539,11 +539,11 @@ var PSPs = [
       antifraud: true
    },
    acquirers: {
-      nets: true,
-      teller: true,
-      swedbank: true,
-      nordea: true,
-      elavon: true
+      Nets: true,
+      Teller: true,
+      Swedbank: true,
+      Nordea: true,
+      Elavon: true
    },
    cards: {
       dankort: true,
@@ -572,11 +572,11 @@ var PSPs = [
       }
    },
    acquirers: {
-      nets: true,
-      teller: true,
-      swedbank: true,
-      nordea: true,
-      elavon: true
+      Nets: true,
+      Teller: true,
+      Swedbank: true,
+      Nordea: true,
+      Elavon: true
    },
    cards: {
       dankort: true,
@@ -600,9 +600,9 @@ var PSPs = [
    h: 24,
    link: "http://payer.se/betallosning/",
    acquirers: {
-      swedbank: true,
-      handelsbanken: true,
-      nordea: true
+      Swedbank: true,
+      Handelsbanken: true,
+      Nordea: true
    },
    cards: {
       visa: true,
@@ -747,9 +747,9 @@ var PSPs = [
       multiacquirer: true
    },
    acquirers: {
-      nets: true,
-      teller: true,
-      clearhaus: true
+      Nets: true,
+      Teller: true,
+      Clearhaus: true
    },
    cards: {
       dankort: true,
@@ -781,9 +781,9 @@ var PSPs = [
       multiacquirer: true
    },
    acquirers: {
-      nets: true,
-      teller: true,
-      clearhaus: true
+      Nets: true,
+      Teller: true,
+      Clearhaus: true
    },
    cards: {
       dankort: true,
@@ -832,7 +832,7 @@ var PSPs = [
    h: 23,
    link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
    acquirers: {
-      nets: true
+      Nets: true
    },
    cards: {
       dankort: true
@@ -851,10 +851,10 @@ var PSPs = [
    h: 23,
    link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
    acquirers: {
-      nets: true,
-      swedbank: true,
-      handelsbanken: true,
-      nordea: true
+      Nets: true,
+      Swedbank: true,
+      Handelsbanken: true,
+      Nordea: true
    },
    cards: {
       dankort: true,
@@ -879,10 +879,10 @@ var PSPs = [
    h: 23,
    link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
    acquirers: {
-      nets: true,
-      swedbank: true,
-      handelsbanken: true,
-      nordea: true
+      Nets: true,
+      Swedbank: true,
+      Handelsbanken: true,
+      Nordea: true
    },
    cards: {
       dankort: true,
