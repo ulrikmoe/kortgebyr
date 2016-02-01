@@ -133,24 +133,6 @@ Currency.prototype.scale = function(rhs) {
    return n;
 };
 
-function cardsCovered(acqs, s) {
-   // Check if all cards in settings.cards are covered
-   // with the selected acquirers (acqs).
-
-   for (var _card in s.cards) {
-
-      var cardfound = false;
-      for (var _acq in acqs) {
-
-         if( ACQs[_acq].cards[_card] ){
-            cardfound = true;
-            break;
-         }
-      }
-      if (!cardfound) { return false; }
-   }
-   return true;
-}
 
 function getInt(elem, action) {
 
@@ -317,7 +299,7 @@ var opts = {
          // Return the selected acquirers
          var name = $("acquirer").value;
          //if (action === "url" ){ return $("acquirer").selectedIndex; }
-         if (name === "auto") { return ACQs; }
+         if (name === "auto") { return null; }
          else {
             var obj = {};
             obj.nets = ACQs.nets;
@@ -379,54 +361,25 @@ function build(action) {
          settings[key] = opts[key].get(action);
       }
    }
-   var acqobj = Object.assign({}, settings.acquirers);
 
-   var acquirersort = [];
    var dankortscale = (!settings.cards.visa) ? 1 : 0.77;
 
-   // Modal window
-   var klik = function(psp, acqobj, acqlabels, settings) {
-      return function() { buildInfoModal(psp, acqobj, acqlabels, settings); };
-   };
-
-   if ( !settings.cards.dankort ) {
-      //delete acqobj.nets;
-      dankortscale = 0;
-
-      if ( !settings.cards.visa ) {
-         $('tbody').innerHTML = "";
-         alert("Venligst vælg enten Dankort, Visa eller MasterCard.");
-         return;
-      }
-      if ( settings.cards.forbrugsforeningen ) {
-         $('tbody').innerHTML = "";
-         alert("Forbrugsforeningens kontokort kræver en Dankort aftale.");
-         return;
-      }
+   // Calculate acquirer costs.
+   for (i in ACQs) {
+      var acq = ACQs[i];
+      dankortscale = (acq.name==="nets") ? dankortscale : 1-dankortscale;
+      acq.trnfees = acq.fees.trn(settings).scale(settings.transactions).scale(dankortscale);
+      acq.TC = acq.trnfees.add(acq.fees.monthly);
    }
 
-   acqloop:
-   for (acquirer in acqobj) {
-
-      // Calculate acquirer costs and sort them.
-      dankortscale = (acquirer==="nets") ? dankortscale : 1-dankortscale;
-      acqobj[acquirer].trnfees = acqobj[acquirer].fees.trn(settings).scale(settings.transactions).scale(dankortscale);
-      acqobj[acquirer].TC = acqobj[acquirer].trnfees.add(acqobj[acquirer].fees.monthly);
-
-      //acquirersort.push([vehicle, maxSpeed[vehicle]]);
-      //sortable.sort(function(a, b) { return a[1] - b[1]; });
-
-      for (sort = 0; sort < acquirersort.length; sort++){
-         if ( acqobj[acquirer].TC.dkk() < acqobj[acquirersort[sort]].TC.dkk() ) { break; }
-      }
-      acquirersort.splice(sort, 0, acquirer);
-   }
-
+   // Sort acquirers.
+   ACQs.sort(function(obj1, obj2) {
+   	return obj1.TC.dkk() - obj2.TC.dkk();
+   });
 
    psploop:
    for (i in PSPs) {
       var psp = PSPs[i];
-      var acq = {};
       var setup = new Currency(0, 'DKK');
       var monthly = new Currency(0, 'DKK');
       var trnfee = new Currency(0, 'DKK');
@@ -442,18 +395,37 @@ function build(action) {
       if( psp.acquirers ) {
 
          // Find first combination of acquirers that support all cards
-         for (i = 0; i < acquirersort.length; i++) {
-            acquirer = acquirersort[i];
+         for (i in ACQs) {
 
-            if( psp.acquirers[acquirer] ){
-               acq[acquirer] = 1; // replace '1' with the costs.
-               var objlength = Object.getOwnPropertyNames(acq).length;
+            var acq = ACQs[i];
 
-               if ( cardsCovered(acq, settings) ) { break; }
-               else if ((acq.nets && objlength < 2) || (objlength === 0)) { continue; }
-               else if ( i+1 === acquirersort.length ) { acq = false; break; }
-               else { delete acq[acquirer]; } // Delete and try with next acquirer
+            if ( psp.acquirers[acq.name] ){
+
+
             }
+
+            var objlength = Object.getOwnPropertyNames(acq).length;
+
+            // Check if all cards in settings.cards are covered
+            // with the selected acquirers (acqs).
+            for (var _card in s.cards) {
+
+               var cardfound = false;
+               for (var _acq in acqs) {
+
+                  if( ACQs[_acq].cards[_card] ){
+                     cardfound = true;
+                     break;
+                  }
+               }
+               if (!cardfound) { return false; }
+            }
+            return true;
+
+            if ((acq.nets && objlength < 2) || (objlength === 0)) { continue; }
+            else if ( i+1 === acqarr.length ) { acq = false; break; }
+            else { delete acq[acquirer]; } // Delete and try with next acquirer
+
          }
 
          // Skip PSP if no acquirer support all cards
@@ -533,6 +505,11 @@ function build(action) {
 
       var kortgebyr = total.scale(1 / settings.transactions);
       var kortprocent = kortgebyr.scale( 1/settings.avgvalue.dkk()).dkk()*100;
+
+      // Modal window
+      var klik = function(psp, acqobj, acqlabels, settings) {
+         return function() { buildInfoModal(psp, acqobj, acqlabels, settings); };
+      };
 
       var infoButton = document.createElement("div");
       infoButton.classList.add("infobutton");
