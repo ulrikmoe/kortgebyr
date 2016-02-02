@@ -30,6 +30,7 @@ function set_ccode(c) {
    }
 }
 
+
 function Currency(amt, code) {
    this.amounts = {};
    this.amounts[code] = amt;
@@ -345,23 +346,24 @@ var opts = {
    }
 };
 
-
-function build(action) {
-
+// To do: Settings skal forenes med opts()
+var Settings = function (action) {
    if (action === 'init') { loadurl(); }
 
-   // Get settings
+   for (var key in opts) {
+      if (key !== "dirty_bits") {
+         this[key] = opts[key].get(action);
+      }
+   }
+};
+
+function build(action) {
+   var t0 = performance.now();
+   console.log("Building:");
+   var settings = new Settings(action);
    var data = [];
    var tbody = document.createElement("tbody");
    tbody.id = "tbody";
-
-   var settings = {};
-   for (var key in opts) {
-      if (key !== "dirty_bits") {
-         settings[key] = opts[key].get(action);
-      }
-   }
-
    var dankortscale = (!settings.cards.visa) ? 1 : 0.77;
 
    // Calculate acquirer costs.
@@ -378,8 +380,9 @@ function build(action) {
    });
 
    psploop:
-   for (i in PSPs) {
-      var psp = PSPs[i];
+   for (var x = 0, xlen = PSPs.length; x < xlen; x++) {
+      var psp = PSPs[x];
+      var acqArr = [];
       var setup = new Currency(0, 'DKK');
       var monthly = new Currency(0, 'DKK');
       var trnfee = new Currency(0, 'DKK');
@@ -391,55 +394,73 @@ function build(action) {
       // Check if psp support all features
       for (card in settings.features) { if( !psp.features[card] ){ continue psploop; } }
 
-      // Payment Gateways, e.g. DIBS, ePay, Quickpay.
       if( psp.acquirers ) {
 
-         // Find first combination of acquirers that support all cards
-         for (i in ACQs) {
+         // Find combination of acquirers that support all cards
+         for (var i = 0, ilen = ACQs.length; i < ilen; i++) {
 
-            var acq = ACQs[i];
+            // Continue if PSP doesn't support acquirer
+            if ( !psp.acquirers[ACQs[i].name] ){ continue; }
 
-            if ( psp.acquirers[acq.name] ){
-
-
+            acqArr = [i];
+            var missingCards = [];
+            for ( card in settings.cards ) {
+               if( !ACQs[i].cards[card] ){ missingCards.push(card); }
             }
+            console.log(missingCards);
+            if( missingCards.length < 1 ) { break; }
 
-            var objlength = Object.getOwnPropertyNames(acq).length;
+            // Find secondary acquirer with the missing cards.
+            secondary:
+            for (var j = i+1; i < ilen; j++) {
+               if ( !psp.acquirers[ACQs[j].name] ){ continue; }
 
-            // Check if all cards in settings.cards are covered
-            // with the selected acquirers (acqs).
-            for (var _card in s.cards) {
-
-               var cardfound = false;
-               for (var _acq in acqs) {
-
-                  if( ACQs[_acq].cards[_card] ){
-                     cardfound = true;
-                     break;
+               for (k in missingCards) {
+                  if( !ACQs[j].cards[missingCards[k]] ){
+                     continue secondary;
                   }
                }
-               if (!cardfound) { return false; }
+               missingCards = [];
+               acqArr.push(j);
+               break;
             }
-            return true;
-
-            if ((acq.nets && objlength < 2) || (objlength === 0)) { continue; }
-            else if ( i+1 === acqarr.length ) { acq = false; break; }
-            else { delete acq[acquirer]; } // Delete and try with next acquirer
-
+            if( missingCards.length < 1 ) { break; }
+            acqArr = null;
          }
+         if ( !acqArr) { continue psploop; }
+      }
+      //console.log(acqArr);
 
-         // Skip PSP if no acquirer support all cards
-         if ( Object.keys(acq).length === 0 ) {
-            console.log("skip " + psp.name);
-            continue psploop;
-         }
+      var acqfrag = document.createDocumentFragment();
+      for (i in acqArr) {
+
+         var acq = ACQs[acqArr[i]];
+         setup = setup.add( acq.fees.setup );
+         monthly = monthly.add( acq.fees.monthly );
+         total = total.add( acq.trnfees );
+
+         var link = document.createElement('a');
+         link.href = acq.link;
+         link.className = "acq";
+         var img = new Image(acq.w, acq.h);
+         img.src = "/img/psp/" + acq.logo;
+         img.alt = acq.name;
+         link.appendChild(img);
+         acqfrag.appendChild(link);
       }
 
-      //  Some cards/methods (e.g. mobilepay) add extra costs.
-      //  They should only be included if enabled in settings.cards.
       var cardfrag = document.createDocumentFragment();
       for (card in psp.cards) {
 
+         if ( acqArr.length > 1 ) {
+            if( !(ACQs[acqArr[0]].cards[card] || ACQs[acqArr[1]].cards[card])) {
+               continue;
+            }
+         }
+         else if ( !ACQs[acqArr[0]].cards[card] ) { continue; }
+
+         //  Some cards/methods (e.g. mobilepay) add extra costs.
+         //  They should only be included if enabled in settings.cards.
          if ( CARDs[card].fees ){
             if ( settings.cards[card] ) {
                setup = setup.add(CARDs[card].fees.setup);
@@ -454,25 +475,6 @@ function build(action) {
          cardicon.alt = CARDs[card].name || card;
          cardicon.className = "card";
          cardfrag.appendChild(cardicon);
-      }
-
-      //
-      var link, img;
-      var acqfrag = document.createDocumentFragment();
-      for (acquirer in acq) {
-
-         setup = setup.add( acqobj[acquirer].fees.setup );
-         monthly = monthly.add( acqobj[acquirer].fees.monthly );
-         total = total.add( acqobj[acquirer].trnfees );
-
-         link = document.createElement('a');
-         link.href = ACQs[acquirer].link;
-         link.className = "acq";
-         img = new Image(ACQs[acquirer].w, ACQs[acquirer].h);
-         img.src = "/img/psp/" + ACQs[acquirer].logo;
-         img.alt = ACQs[acquirer].name;
-         link.appendChild(img);
-         acqfrag.appendChild(link);
       }
 
       setup = setup.add(psp.fees.setup);
@@ -490,11 +492,11 @@ function build(action) {
 
       // Create PSP logo.
       var pspfrag = document.createDocumentFragment();
-      link = document.createElement('a');
+      var link = document.createElement('a');
       link.target = "_blank";
       link.href = psp.link;
       link.className = "psp";
-      img = new Image(psp.w, psp.h);
+      var img = new Image(psp.w, psp.h);
       img.src = "/img/psp/" + psp.logo;
       img.alt = psp.name;
       var p = document.createElement("p");
@@ -507,14 +509,14 @@ function build(action) {
       var kortprocent = kortgebyr.scale( 1/settings.avgvalue.dkk()).dkk()*100;
 
       // Modal window
-      var klik = function(psp, acqobj, acqlabels, settings) {
-         return function() { buildInfoModal(psp, acqobj, acqlabels, settings); };
+      var klik = function(psp, ACQs, acqlabels, settings) {
+         return function() { buildInfoModal(psp, ACQs, acqlabels, settings); };
       };
 
       var infoButton = document.createElement("div");
       infoButton.classList.add("infobutton");
       /* construct acq list */
-      infoButton.addEventListener("click", klik(psp, acqobj, acq, settings));
+      infoButton.addEventListener("click", klik(psp, ACQs, acq, settings));
       infoButton.textContent = "Se mere";
 
       row.insertCell(-1).appendChild(pspfrag);
@@ -530,6 +532,8 @@ function build(action) {
 
    if (action !== "init") { saveurl(); }
 
+   var t1 = performance.now();
+   console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.");
 }
 
 //===========================
