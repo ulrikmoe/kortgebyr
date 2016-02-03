@@ -505,8 +505,20 @@ function build(action) {
       link.appendChild(p);
       pspfrag.appendChild(link);
 
-      var kortgebyr = total.scale(1 / settings.transactions);
-      var kortprocent = kortgebyr.scale( 1/settings.avgvalue.dkk()).dkk()*100;
+
+      // Create cardfee calc.
+      var cardfeefrag = document.createDocumentFragment();
+      var p1 = document.createElement('p');
+      var p2 = document.createElement('p');
+
+      var cardfee = total.scale(1 / settings.transactions);
+      var procent = cardfee.scale( 1/settings.avgvalue.dkk()).dkk()*100;
+
+      p1.textContent = cardfee;
+      p2.textContent = procent.toFixed(3).replace('.', ',') + " %";
+      p2.className = "procent";
+      cardfeefrag.appendChild(p1);
+      cardfeefrag.appendChild(p2);
 
       // Modal window
       var klik = function(psp, ACQs, acqlabels, settings) {
@@ -525,7 +537,7 @@ function build(action) {
       row.insertCell(-1).textContent = setup.print();
       row.insertCell(-1).textContent = monthly.print();
       row.insertCell(-1).textContent = total.print();
-      row.insertCell(-1).innerHTML = "<p class='kortgebyr'>"+total.scale(1 / settings.transactions).print() + "</p><p class='procent'>≈ " + kortprocent.toFixed(3).replace('.', ',') + " %</p>";
+      row.insertCell(-1).appendChild(cardfeefrag);
       row.insertCell(-1).appendChild(infoButton);
    }
    table.replaceChild(tbody, $('tbody'));
