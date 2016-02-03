@@ -740,7 +740,7 @@ var PSPs = [
    logo: "quickpay.svg",
    w: 138,
    h: 27,
-   link: "https://quickpay.net",
+   link: "https://quickpay.net/dk",
    features: {
       antifraud: true,
       recurring: true,
@@ -774,7 +774,7 @@ var PSPs = [
    logo: "quickpay.svg",
    w: 138,
    h: 27,
-   link: "https://quickpay.net",
+   link: "https://quickpay.net/dk",
    features: {
       antifraud: true,
       recurring: true,
