@@ -67,6 +67,7 @@ nav {
       margin-left: 20px;
       color: #204499;
       font-size:20px;
+      line-height: 43px;
       font-family: "Trebuchet MS", Helvetica, sans-serif;
       font-weight:bold;
       text-shadow: #fff 0px 1px 1px;
@@ -147,6 +148,7 @@ nav {
 
 .menu {
    font-size: 14px;
+   padding-bottom: 10px;
 
    section {
       display: block;
@@ -263,6 +265,9 @@ nav {
       padding: 4px 0 0;
       height: 76px;
    }
+   td:hover {
+      background: #fefefe;
+   }
    td:first-child {
       padding-left: 1.5%;
       text-align: left;
@@ -273,6 +278,14 @@ nav {
       padding-left: 13px;
    }
 }
+
+.info {
+   position: absolute;
+   top: 30px;
+   right: 20px;
+}
+
+
 .psp {
    font-size: 12px;
 
@@ -282,7 +295,7 @@ nav {
 
 .acq {
    display: block;
-   img { margin: 0 0 2px 0; }
+   img { margin: 2px 0 2px 0; }
 }
 
 .card { margin: 4px 3px; }
@@ -320,130 +333,7 @@ nav {
    }
 }
 
-.infobutton {
-   display: inline-block;
-   background: #0097cf;
-   margin: 10px 0;
-   padding: 0px 4px;
-   border-radius: 2px;
-   color: white;
-   cursor: pointer;
-}
-
-.kortgebyr, .procent { line-height: 19px; }
-.kortgebyr { margin-top: 4px; }
-.procent { word-spacing: -1px; color: #9f9f9f; font-size: 12px; }
-
-.overlay {
-   display: none;
-   position: absolute;
-   left: 0;
-   top: 0;
-   bottom: 0;
-   right: 0;
-   z-index: 1000;
-   overflow-x: auto;
-   //overflow-y: scroll;
-   width: 100%;
-   height: 100%;
-
-   /* Fade modal background */
-   &::before {
-      position: absolute;
-      content: "";
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: gray;
-      opacity: 0.7;
-      overflow: visible;
-   }
-   &.active { display: block; }
-}
-
-.modal {
-   display: block;
-   background: #fff;
-   border-radius: 5px;
-   margin: 0 auto;
-   padding: 35px 35px 25px 35px;
-   position: absolute;
-   left: 50%;
-   top: 45%;
-   transform: translate(-50%, -50%);
-
-   & .part {
-      display: none;
-      &.active { display: block; }
-   }
-   .cross {
-      font: normal normal normal 2em/normal Arial, Helvetica, sans-serif;
-      width: 0.75em;
-      height: 0.75em;
-
-      &:before {
-         display: inline-block;
-         width: 0.45em;
-         height: 0.1em;
-         position: absolute;
-         content: "";
-         top: 0.33em;
-         left: 0.155em;
-         font: normal normal normal 100%/normal Arial, Helvetica, sans-serif;
-         background: #fff;
-         -webkit-transform: rotateZ(45deg) scaleX(1) scaleY(1) scaleZ(1);
-         transform: rotateZ(45deg) scaleX(1) scaleY(1) scaleZ(1);
-         -webkit-transform-origin: 50% 50% 0;
-         transform-origin: 50% 50% 0;
-      }
-
-      &:after {
-         display: inline-block;
-         width: 0.45em;
-         height: 0.1em;
-         position: absolute;
-         content: "";
-         top: 0.33em;
-         left: 0.155em;
-         font: normal normal normal 100%/normal Arial, Helvetica, sans-serif;
-         background: #fff;
-         -webkit-transform: rotateZ(-45deg) scaleX(1) scaleY(1) scaleZ(1);
-         transform: rotateZ(-45deg) scaleX(1) scaleY(1) scaleZ(1);
-         -webkit-transform-origin: 50% 50% 0;
-         transform-origin: 50% 50% 0;
-      }
-   }
-   .exit {
-      .cross;
-      .noselect;
-      z-index: 1;
-      display: inline-block;
-      position: absolute;
-      cursor: pointer;
-      top: 4px;
-      right: 4px;
-      -webkit-border-radius: 1em;
-      border-radius: 1em;
-      font: normal normal normal 2em/normal Arial, Helvetica, sans-serif;
-      background: #0092d2;
-   }
-   .acqdescription {
-      float: right;
-      width: 42%;
-      margin-top: 6px;
-      padding: 1.5% 2%;
-      font-size: 85%;
-      line-height: 18px;
-      border: 1px solid #8B2323;
-   }
-   h4 {
-      text-decoration: underline;
-   }
-   .costblock {
-      margin-bottom: 15px;
-   }
-}
+.procent { color: #9f9f9f; font-size: 12px; }
 
 
 footer {
@@ -453,21 +343,4 @@ footer {
    color: #777;
    line-height: 24px;
    font-size: 14px;
-}
-
-
-@media screen and (max-width: 600px) {
-
-   .modal {
-      position: absolute;
-      width: 100% !important;
-      padding: 5%;
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      transform: none;
-      border-radius: 0;
-   }
-
 }

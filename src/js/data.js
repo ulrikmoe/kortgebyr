@@ -56,7 +56,7 @@ var ACQs = [
 {
    name: "Bambora",
    logo: "bambora.svg",
-   w: 72,
+   w: 71,
    h: 13,
    link: "http://www.bambora.com/",
    cards: {
@@ -73,8 +73,8 @@ var ACQs = [
 {
    name: "Clearhaus",
    logo: "clearhaus.svg",
-   w: 67,
-   h: 13,
+   w: 72,
+   h: 14,
    link: "https://www.clearhaus.com",
    cards: {
       visa: true,
@@ -95,8 +95,8 @@ var ACQs = [
 {
    name: "Elavon",
    logo: "elavon.svg",
-   w: 48,
-   h: 13,
+   w: 51,
+   h: 14,
    link: "http://www.elavon.com",
    cards: {
       visa: true,
@@ -112,8 +112,8 @@ var ACQs = [
 {
    name: "Handelsbanken",
    logo: "handelsbanken.svg",
-   w: 80,
-   h: 8,
+   w: 90,
+   h: 9,
    link: "http://www.handelsbanken.dk",
    cards: {
       visa: true,
@@ -129,8 +129,8 @@ var ACQs = [
 {
    name: "Nets",
    logo: "nets.svg",
-   w: 35,
-   h: 13,
+   w: 37,
+   h: 14,
    link: "http://www.nets.eu",
    cards: {
       dankort: true,
@@ -168,8 +168,8 @@ var ACQs = [
 {
    name: "Teller",
    logo: "teller.svg",
-   w: 55,
-   h: 10,
+   w: 59,
+   h: 11,
    link: "http://www.teller.com",
    cards: {
       visa: true,
@@ -219,12 +219,12 @@ var PSPs = [
    link: "https://www.braintreepayments.com",
    features: {
       antifraud: true,
-      recurring: true,
+      recurring: true
    },
    cards: {
       visa: true,
       mastercard: true,
-      maestro: true,
+      maestro: true
    },
    fees: {
       setup: new Currency(0, 'DKK'),
@@ -410,8 +410,8 @@ var PSPs = [
 {
    name: "ePay Light",
    logo: "epay.svg",
-   w: 134,
-   h: 30,
+   w: 130,
+   h: 29,
    link: "http://epay.dk",
    features: {
       antifraud: { trn: new Currency(0.3, 'DKK')}
@@ -434,15 +434,21 @@ var PSPs = [
 {
    name: "ePay Pro",
    logo: "epay.svg",
-   w: 134,
-   h: 30,
+   w: 130,
+   h: 29,
    link: "http://epay.dk",
    features: {
       antifraud: { trn: new Currency(0.3, 'DKK')}
    },
    acquirers: {
       Nets: true,
-      Teller: true
+      Teller: true,
+      Clearhaus: true,
+      Swedbank: true,
+      Handelsbanken: true,
+      Valitor: true,
+      Elavon: true,
+      Bambora: true
    },
    cards: {
       dankort: true,
@@ -466,8 +472,8 @@ var PSPs = [
 {
    name: "ePay Business",
    logo: "epay.svg",
-   w: 134,
-   h: 30,
+   w: 130,
+   h: 29,
    link: "http://epay.dk",
    features: {
       antifraud: { trn: new Currency(0.3, 'DKK')},
@@ -484,7 +490,7 @@ var PSPs = [
       Handelsbanken: true,
       Valitor: true,
       Elavon: true,
-      Bambora: true,
+      Bambora: true
    },
    cards: {
       dankort: true,

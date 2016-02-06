@@ -21,7 +21,7 @@ var table = $('table');
 function $(s) { return document.getElementById(s); }
 function C(s) { return document.getElementsByClassName(s); }
 
-var i, k, l, sort, card, acquirer;
+// var l, sort, card, acquirer;
 var gccode = 'DKK';
 
 function set_ccode(c) {
@@ -110,7 +110,6 @@ Currency.prototype.add = function(rhs) {
    }
    return n;
 };
-
 
 Currency.prototype.is_equal_to = function(other_currency_object) {
    for (var code in this.amounts) {
@@ -346,6 +345,14 @@ var opts = {
    }
 };
 
+// Check if object-x' properties is in object-y.
+function x_in_y(objx, objy){
+   for (var prop in objx){
+      if( !objy[prop] ){ return false; }
+   }
+   return true;
+}
+
 // To do: Settings skal forenes med opts()
 var Settings = function (action) {
    if (action === 'init') { loadurl(); }
@@ -357,20 +364,60 @@ var Settings = function (action) {
    }
 };
 
+
+// Find combination of acquirers that support all cards
+function acqbuild(psp, settings) {
+
+   var i, acqs = [];
+
+   for (i = 0; i < ACQs.length; i++) {
+
+      // Skip if PSP doesn't support acquirer
+      if ( !psp.acquirers[ACQs[i].name] ) continue;
+
+      // Return acq if it support all settings.cards.
+      if ( x_in_y(settings.cards, ACQs[i].cards) ) return [i];
+      acqs.push(i);
+   }
+
+   var len = acqs.length;
+   for (i = 0; i < len; i++) {
+
+      var missingCards = {};
+
+      for (var card in settings.cards ) {
+         if( !ACQs[i].cards[card] ){ missingCards[card] = true; }
+      }
+
+      // Find secondary acquirer with the missing cards.
+      for (var j = 0; j < len; j++) {
+         if (j == i) continue;
+
+         // Skip if it doesn't support missing cards.
+         if ( !x_in_y(missingCards, ACQs[j].cards) ) continue;
+         return [ acqs[i], acqs[j] ];
+      }
+      return null;
+   }
+}
+
+
 function build(action) {
+   var x,i,j,k,sort,acq,img,link,card;
    var t0 = performance.now();
-   console.log("Building:");
    var settings = new Settings(action);
    var data = [];
    var tbody = document.createElement("tbody");
    tbody.id = "tbody";
-   var dankortscale = (!settings.cards.visa) ? 1 : 0.77;
+
+   var dankortscale = (settings.cards.dankort) ? 0.77 : 0;
+   if (!settings.cards.visa) { dankortscale = 1; }
 
    // Calculate acquirer costs.
-   for (i in ACQs) {
-      var acq = ACQs[i];
-      dankortscale = (acq.name==="nets") ? dankortscale : 1-dankortscale;
-      acq.trnfees = acq.fees.trn(settings).scale(settings.transactions).scale(dankortscale);
+   for (x in ACQs) {
+      acq = ACQs[x];
+      var cardscale = (acq.name==="Nets") ? dankortscale : 1-dankortscale;
+      acq.trnfees = acq.fees.trn(settings).scale(settings.transactions).scale(cardscale);
       acq.TC = acq.trnfees.add(acq.fees.monthly);
    }
 
@@ -380,7 +427,7 @@ function build(action) {
    });
 
    psploop:
-   for (var x = 0, xlen = PSPs.length; x < xlen; x++) {
+   for (x = 0, xlen = PSPs.length; x < xlen; x++) {
       var psp = PSPs[x];
       var acqArr = [];
       var setup = new Currency(0, 'DKK');
@@ -389,60 +436,28 @@ function build(action) {
       var total = new Currency(0, 'DKK');
 
       // Check if psp support all payment methods
-      for (card in settings.cards) { if( !psp.cards[card] ){ continue psploop; } }
+      if( !x_in_y(settings.cards, psp.cards) ) continue;
 
       // Check if psp support all features
-      for (card in settings.features) { if( !psp.features[card] ){ continue psploop; } }
+      if( !x_in_y(settings.features, psp.features) ) continue;
 
-      if( psp.acquirers ) {
-
-         // Find combination of acquirers that support all cards
-         for (var i = 0, ilen = ACQs.length; i < ilen; i++) {
-
-            // Continue if PSP doesn't support acquirer
-            if ( !psp.acquirers[ACQs[i].name] ){ continue; }
-
-            acqArr = [i];
-            var missingCards = [];
-            for ( card in settings.cards ) {
-               if( !ACQs[i].cards[card] ){ missingCards.push(card); }
-            }
-            console.log(missingCards);
-            if( missingCards.length < 1 ) { break; }
-
-            // Find secondary acquirer with the missing cards.
-            secondary:
-            for (var j = i+1; i < ilen; j++) {
-               if ( !psp.acquirers[ACQs[j].name] ){ continue; }
-
-               for (k in missingCards) {
-                  if( !ACQs[j].cards[missingCards[k]] ){
-                     continue secondary;
-                  }
-               }
-               missingCards = [];
-               acqArr.push(j);
-               break;
-            }
-            if( missingCards.length < 1 ) { break; }
-            acqArr = null;
-         }
-         if ( !acqArr) { continue psploop; }
+      // ...
+      if(psp.acquirers) {
+         acqArr = acqbuild(psp, settings);
+         if (!acqArr) { continue; }
       }
-      //console.log(acqArr);
 
       var acqfrag = document.createDocumentFragment();
       for (i in acqArr) {
-
-         var acq = ACQs[acqArr[i]];
+         acq = ACQs[ acqArr[i] ];
          setup = setup.add( acq.fees.setup );
          monthly = monthly.add( acq.fees.monthly );
          total = total.add( acq.trnfees );
 
-         var link = document.createElement('a');
+         link = document.createElement('a');
          link.href = acq.link;
          link.className = "acq";
-         var img = new Image(acq.w, acq.h);
+         img = new Image(acq.w, acq.h);
          img.src = "/img/psp/" + acq.logo;
          img.alt = acq.name;
          link.appendChild(img);
@@ -450,14 +465,18 @@ function build(action) {
       }
 
       var cardfrag = document.createDocumentFragment();
+      cardloop:
       for (card in psp.cards) {
 
-         if ( acqArr.length > 1 ) {
+         for (i in acqArr) {
+            if(ACQs[i].cards[card]) continue cardloop;
+         }
+
+         if ( acqArr.length > 0 ) {
             if( !(ACQs[acqArr[0]].cards[card] || ACQs[acqArr[1]].cards[card])) {
                continue;
             }
          }
-         else if ( !ACQs[acqArr[0]].cards[card] ) { continue; }
 
          //  Some cards/methods (e.g. mobilepay) add extra costs.
          //  They should only be included if enabled in settings.cards.
@@ -479,7 +498,7 @@ function build(action) {
 
       setup = setup.add(psp.fees.setup);
       monthly = monthly.add(psp.fees.monthly);
-      total = total.add(psp.fees.trn).add(monthly);
+      total = total.add( psp.fees.trn.scale(settings.transactions) ).add(monthly);
 
       // Sort psp after total.dkk()
       for (sort = 0; sort < data.length; ++sort) {
@@ -492,11 +511,11 @@ function build(action) {
 
       // Create PSP logo.
       var pspfrag = document.createDocumentFragment();
-      var link = document.createElement('a');
+      link = document.createElement('a');
       link.target = "_blank";
       link.href = psp.link;
       link.className = "psp";
-      var img = new Image(psp.w, psp.h);
+      img = new Image(psp.w, psp.h);
       img.src = "/img/psp/" + psp.logo;
       img.alt = psp.name;
       var p = document.createElement("p");
@@ -505,31 +524,16 @@ function build(action) {
       link.appendChild(p);
       pspfrag.appendChild(link);
 
-
       // Create cardfee calc.
       var cardfeefrag = document.createDocumentFragment();
       var p1 = document.createElement('p');
       var p2 = document.createElement('p');
-
       var cardfee = total.scale(1 / settings.transactions);
-      var procent = cardfee.scale( 1/settings.avgvalue.dkk()).dkk()*100;
-
-      p1.textContent = cardfee;
-      p2.textContent = procent.toFixed(3).replace('.', ',') + " %";
+      p1.textContent = cardfee.print();
+      p2.textContent = "("+ (cardfee.scale( 1/settings.avgvalue.dkk()).dkk()*100).toFixed(3).replace('.', ',') + " %)";
       p2.className = "procent";
       cardfeefrag.appendChild(p1);
       cardfeefrag.appendChild(p2);
-
-      // Modal window
-      var klik = function(psp, ACQs, acqlabels, settings) {
-         return function() { buildInfoModal(psp, ACQs, acqlabels, settings); };
-      };
-
-      var infoButton = document.createElement("div");
-      infoButton.classList.add("infobutton");
-      /* construct acq list */
-      infoButton.addEventListener("click", klik(psp, ACQs, acq, settings));
-      infoButton.textContent = "Se mere";
 
       row.insertCell(-1).appendChild(pspfrag);
       row.insertCell(-1).appendChild(acqfrag);
@@ -538,7 +542,7 @@ function build(action) {
       row.insertCell(-1).textContent = monthly.print();
       row.insertCell(-1).textContent = total.print();
       row.insertCell(-1).appendChild(cardfeefrag);
-      row.insertCell(-1).appendChild(infoButton);
+
    }
    table.replaceChild(tbody, $('tbody'));
 
@@ -552,50 +556,32 @@ function build(action) {
 //            Modal
 //===========================
 
-function buildInfoModal(psp, acquirers, acqlabels, settings) {
+function buildInfo(psp, acqArr, settings) {
    var overlay = document.querySelector(".overlay.pspinfo");
    var content = overlay.getElementsByClassName("content")[0];
+
    var frag = document.createDocumentFragment();
    content.innerHTML = "";
-   /*var h = document.createElement("h1");
-   frag.appendChild(h).textContent = "Oversigt over " + psp.name;*/
-
    var psph = document.createElement("h4");
-   var pspBlock = document.createElement("div");
    var pspSetup = document.createElement("div");
    var pspMonthly = document.createElement("div");
    var pspTrans = document.createElement("div");
 
-   if (acqlabels.nets && Object.keys(acqlabels).length > 1) {
+   // Explain how transactions are allocated
+   if (acqArr.length > 1) {
       var acqdescription = document.createElement("div");
       acqdescription.className = "acqdescription";
       frag.appendChild(acqdescription).textContent = "Ved udregning af gebyrerne antages det, jf. statistik fra FDIH, at 77% af betalingerne sker med Visa/Dankort. Disse vil blive håndteret som Dankort transaktioner hos Nets, mens den sekundære indløser håndterer de resterende 23%.";
    }
 
+   // PSP costs
+   var pspBlock = document.createElement("div");
    pspBlock.classList.add("costblock");
    pspBlock.appendChild(psph).textContent = psp.name + ":";
    pspBlock.appendChild(pspSetup).textContent = "Oprettelse: " + psp.fees.setup.print();
    pspBlock.appendChild(pspMonthly).textContent = "Abonnement per måned: " + psp.fees.monthly.print();
    pspBlock.appendChild(pspTrans).textContent = "Transaktionsgebyrer: " + psp.fees.trn.print();
    frag.appendChild(pspBlock);
-
-   for (var label in acqlabels) {
-      var acq = acquirers[label];
-      var acqblock = document.createElement("div");
-      var acqh = document.createElement("h4");
-
-      var acqSetup = document.createElement("div");
-      var acqMonthly = document.createElement("div");
-      var acqTrans = document.createElement("div");
-
-      acqblock.classList.add("costblock");
-      acqblock.appendChild(acqh).textContent = acq.name + ":";
-      acqblock.appendChild(acqSetup).textContent = "Oprettelse: " + acq.fees.setup.print();
-      acqblock.appendChild(acqMonthly).textContent = "Abonnement per måned: " + acq.fees.monthly.print();
-      var scale = (label === "nets") ? settings.dankort_scale : 1 - settings.dankort_scale;
-      acqblock.appendChild(acqTrans).textContent = "Transaktionsgebyrer: " + acq.trnfees.print() + "*";
-      frag.appendChild(acqblock);
-   }
 
    if (settings.cards.mobilepay) {
       var mpayblock = document.createElement("div");
@@ -609,6 +595,32 @@ function buildInfoModal(psp, acquirers, acqlabels, settings) {
       mpayblock.appendChild(mpayMonthly).textContent = "Abonnement per måned: " + settings.cards.mobilepay.fee.monthly.print();
       mpayblock.appendChild(mpayTrans).textContent = "Transaktionsgebyrer: 1kr ekstra pr. mobilepay transaktion";
       frag.appendChild(mpayblock);
+   }
+
+   // Acquirer costs
+   for (var x in acqArr) {
+      var acq = ACQs[x];
+
+      var acqh4 = document.createElement("h4");
+      acqh4.textContent = acq.name + ":";
+
+      var acqSetup = document.createElement("div");
+      acqSetup.textContent = "Oprettelse: " + acq.fees.setup.print();
+
+      var acqMonthly = document.createElement("div");
+      acqMonthly.textContent = "Abonnement per måned: " + acq.fees.monthly.print();
+
+      var acqTrans = document.createElement("div");
+      acqTrans.textContent = "Transaktionsgebyrer: " + acq.trnfees.print() + "*";
+
+      var acqblock = document.createElement("div");
+      acqblock.classList.add("costblock");
+
+      acqblock.appendChild(acqh4);
+      acqblock.appendChild(acqSetup);
+      acqblock.appendChild(acqMonthly);
+      acqblock.appendChild(acqTrans);
+      frag.appendChild(acqblock);
    }
 
    content.appendChild(frag);
