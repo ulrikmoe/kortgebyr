@@ -26,31 +26,6 @@ var currency_map = {
    'USD': '$'
 };
 
-var CARDs = {
-   "dankort": {},
-   "visa": {},
-   "mastercard": {},
-   "maestro": {},
-   "diners": {},
-   "amex": { name: "American Express" },
-   "jcb": {},
-   "unionpay": {},
-   "mobilepay": {
-      fees: {
-         setup: new Currency(49, 'DKK'),
-         monthly: new Currency(49, 'DKK'),
-         trn: new Currency(1, 'DKK')
-      }
-   },
-   "forbrugsforeningen": {
-      fees: {
-         setup: new Currency(0, 'DKK'),
-         monthly: new Currency(0, 'DKK'),
-         trn: new Currency(0, 'DKK')
-      }
-   }
-};
-
 
 var ACQs = [
 {
@@ -80,7 +55,11 @@ var ACQs = [
       visa: true,
       mastercard: true,
       maestro: true,
-      mobilepay: true
+      mobilepay: {
+         setup: new Currency(49, 'DKK'),
+         monthly: new Currency(49, 'DKK'),
+         trn: new Currency(1, 'DKK')
+      }
    },
    fees: {
       setup: new Currency(0, 'DKK'),
@@ -134,8 +113,12 @@ var ACQs = [
    link: "http://www.nets.eu",
    cards: {
       dankort: true,
-      forbrugsforeningen: true,
-      mobilepay: true
+      forbrugsforeningen: { setup: new Currency(0, 'DKK') },
+      mobilepay: {
+         setup: new Currency(49, 'DKK'),
+         monthly: new Currency(49, 'DKK'),
+         trn: new Currency(1, 'DKK')
+      }
    },
    fees: {
       setup: new Currency(250, 'DKK'),
@@ -179,7 +162,11 @@ var ACQs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: true
+      mobilepay: {
+         setup: new Currency(49, 'DKK'),
+         monthly: new Currency(49, 'DKK'),
+         trn: new Currency(1, 'DKK')
+      }
    },
    fees: {
       setup: new Currency(1000, 'DKK'),
@@ -229,7 +216,7 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'DKK'),
       monthly: new Currency(0, 'DKK'),
-      trn: function(o) { return o.avgvalue.scale(2.9/100).add(new Currency(2.25, 'DKK')); }
+      trn: function(o) { return o.avgvalue.scale(2.9/100).add(new Currency(2.25, 'DKK')).scale(o.transactions); }
    }
 },
 {
@@ -255,7 +242,7 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'DKK'),
       monthly: new Currency(206, 'SEK'), // 48/7*30
-      trn: function(o) { return o.avgvalue.scale(0.9/100).add(new Currency(1.5, 'SEK')); }
+      trn: function(o) { return o.avgvalue.scale(0.9/100).add(new Currency(1.5, 'SEK')).scale(o.transactions); }
    }
 },
 {
@@ -280,7 +267,7 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'EUR'),
       monthly: new Currency(0, 'EUR'),
-      trn: function(o) { return o.avgvalue.scale(1.5/100).add(new Currency(0.15, 'EUR')); }
+      trn: function(o) { return o.avgvalue.scale(1.5/100).add(new Currency(0.15, 'EUR')).scale(o.transactions); }
    }
 },
 {
@@ -308,7 +295,7 @@ var PSPs = [
    fees: {
       setup: new Currency(199, 'DKK'),
       monthly: new Currency(248, 'DKK'), // 149 + 99 (3D-secure)
-      trn: new Currency(0, 'DKK')
+      trn: function(o) { return new Currency(0, 'DKK'); }
    }
 },
 {
@@ -327,7 +314,7 @@ var PSPs = [
    fees: {
       setup: new Currency(1495, 'DKK'),
       monthly: new Currency(149, 'DKK'),
-      trn: new Currency(0.6, 'DKK')
+      trn: function(o) { return new Currency(0.6, 'DKK').scale(o.transactions); }
    }
 },
 {
@@ -364,7 +351,7 @@ var PSPs = [
    fees: {
       setup: new Currency(4995, 'DKK'),
       monthly: new Currency(499, 'DKK'),
-      trn: new Currency(0.55, 'DKK')
+      trn: function(o) { return new Currency(0.55, 'DKK').scale(o.transactions); }
    }
 },
 {
@@ -404,7 +391,7 @@ var PSPs = [
    fees: {
       setup: new Currency(10995, 'DKK'),
       monthly: new Currency(899, 'DKK'),
-      trn: new Currency(0.5, 'DKK')
+      trn: function(o) { return new Currency(0.5, 'DKK').scale(o.transactions); }
    }
 },
 {
@@ -427,8 +414,7 @@ var PSPs = [
    fees: {
       setup: new Currency(399, 'DKK'),
       monthly: new Currency(99, 'DKK'),
-      trn: new Currency(0.25, 'DKK')
-      // 250 Free transactions pr month.
+      trn: function(o) { return new Currency(0.25, 'DKK').scale( Math.max(o.transactions - 250, 0) ); }
    }
 },
 {
@@ -465,8 +451,7 @@ var PSPs = [
    fees: {
       setup: new Currency(599, 'DKK'),
       monthly: new Currency(199, 'DKK'),
-      trn: new Currency(0.25, 'DKK')
-      // 250 Free transactions pr month.
+      trn: function(o) { return new Currency(0.25, 'DKK').scale( Math.max(o.transactions - 250, 0) ); }
    }
 },
 {
@@ -507,8 +492,7 @@ var PSPs = [
    fees: {
       setup: new Currency(999, 'DKK'),
       monthly: new Currency(299, 'DKK'),
-      trn: new Currency(0.25, 'DKK')
-      // 500 Free transactions pr month.
+      trn: function(o) { return new Currency(0.25, 'DKK').scale( Math.max(o.transactions - 500, 0) ); }
    }
 },
 {
@@ -532,7 +516,7 @@ var PSPs = [
    fees: {
       setup: new Currency(1005, 'DKK'),
       monthly: new Currency(180, 'DKK'),
-      trn: new Currency(1.5, 'DKK')
+      trn: function(o) { return new Currency(1.5, 'DKK').scale(o.transactions); }
    }
 },
 {
@@ -562,7 +546,7 @@ var PSPs = [
    fees: {
       setup: new Currency(3016, 'DKK'),
       monthly: new Currency(502, 'DKK'),
-      trn: new Currency(1, 'DKK')
+      trn: function(o) { return new Currency(1, 'DKK').scale(o.transactions); }
    }
 },
 {
@@ -596,7 +580,7 @@ var PSPs = [
    fees: {
       setup: new Currency(7540, 'DKK'),
       monthly: new Currency(703, 'DKK'),
-      trn: new Currency(0.7, 'DKK')
+      trn: function(o) { return new Currency(0.7, 'DKK').scale(o.transactions); }
    }
 },
 {
@@ -620,7 +604,7 @@ var PSPs = [
    fees: {
       setup: new Currency(1400, 'SEK'),
       monthly: new Currency(400, 'SEK'),
-      trn: new Currency(2, 'SEK')
+      trn: function(o) { return new Currency(2, 'SEK').scale(o.transactions); }
    }
 },
 {
@@ -640,7 +624,7 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'EUR'),
       monthly: new Currency(0, 'EUR'),
-      trn: function(o) { return o.avgvalue.scale(2.5/100).add(new Currency(0.25, 'EUR')); }
+      trn: function(o) { return o.avgvalue.scale(2.5/100).add(new Currency(0.25, 'EUR')).scale(o.transactions); }
    }
 },
 {
@@ -666,7 +650,7 @@ var PSPs = [
       // https://www.paymill.com/en/pricing
       setup: new Currency(0, 'EUR'),
       monthly: new Currency(0, 'EUR'),
-      trn: function(o) { return o.avgvalue.scale(2.95/100).add(new Currency(0.28, 'EUR')); }
+      trn: function(o) { return o.avgvalue.scale(2.95/100).add(new Currency(0.28, 'EUR')).scale(o.transactions); }
    }
 },
 {
@@ -697,7 +681,7 @@ var PSPs = [
          if (oms <= 400000) { fee = 2.7; }
          if (oms <= 80000) { fee = 2.9; }
          if (oms <= 20000) { fee = 3.4; }
-         return o.avgvalue.scale(fee/100).add(new Currency(2.6, 'DKK'));
+         return o.avgvalue.scale(fee/100).add(new Currency(2.6, 'DKK')).scale(o.transactions);
       }
    }
 },
@@ -718,7 +702,7 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'SEK'),
       monthly: new Currency(0, 'SEK'),
-      trn: function(o) { return o.avgvalue.scale(3/100).add(new Currency(3, 'SEK')); }
+      trn: function(o) { return o.avgvalue.scale(3/100).add(new Currency(3, 'SEK')).scale(o.transactions); }
    }
 },
 {
@@ -738,7 +722,9 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'EUR'),
       monthly: new Currency(0, 'EUR'),
-      trn: function(o) { return o.avgvalue.scale(2.5/100).add(new Currency(0.25, 'EUR')); }
+      trn: function(o) {
+         return o.avgvalue.scale(2.5/100).add(new Currency(0.25, 'EUR')).scale(o.transactions);
+      }
    }
 },
 {
@@ -772,7 +758,7 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'DKK'),
       monthly: new Currency(49, 'DKK'),
-      trn: new Currency(1, 'DKK')
+      trn: function(o) { return new Currency(1, 'DKK').scale(o.transactions); }
    }
 },
 {
@@ -806,8 +792,9 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'DKK'),
       monthly: new Currency(149, 'DKK'),
-      trn: new Currency(0.25, 'DKK')
-      // Discount: 250 gratis transaktioner
+      trn: function(o) {
+         return new Currency(0.25, 'DKK').scale( Math.max(o.transactions - 250, 0) );
+      }
    }
 },
 {
@@ -828,7 +815,7 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'DKK'),
       monthly: new Currency(0, 'DKK'),
-      trn: function(o) { return o.avgvalue.scale(1.4/100).add(new Currency(1.8, 'DKK')); }
+      trn: function(o) { return o.avgvalue.scale(1.4/100).add(new Currency(1.8, 'DKK')).scale(o.transactions); }
    }
 },
 {
@@ -836,7 +823,7 @@ var PSPs = [
    logo: "verifone.svg",
    w: 119,
    h: 23,
-   link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
+   link: "https://www.verifone.dk/da/Denmark/Start/E-handel/",
    acquirers: {
       Nets: true
    },
@@ -846,8 +833,7 @@ var PSPs = [
    fees: {
       setup: new Currency(395, 'DKK'),
       monthly: new Currency(99, 'DKK'),
-      trn: new Currency(0.5, 'DKK')
-      // Discount: 250 gratis transaktioner
+      trn: function(o) { return new Currency(0.5, 'DKK').scale( Math.max(o.transactions - 250, 0) ); }
    }
 },
 {
@@ -855,7 +841,7 @@ var PSPs = [
    logo: "verifone.svg",
    w: 119,
    h: 23,
-   link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
+   link: "https://www.verifone.dk/da/Denmark/Start/E-handel/",
    acquirers: {
       Nets: true,
       Swedbank: true,
@@ -874,8 +860,7 @@ var PSPs = [
    fees: {
       setup: new Currency(595, 'DKK'),
       monthly: new Currency(199, 'DKK'),
-      trn: new Currency(0.4, 'DKK')
-      // Discount: 250 gratis transaktioner
+      trn: function(o) { return new Currency(0.4, 'DKK').scale( Math.max(o.transactions - 250, 0) ); }
    }
 },
 {
@@ -883,7 +868,7 @@ var PSPs = [
    logo: "verifone.svg",
    w: 119,
    h: 23,
-   link: "http://www.verifone.se/sv/Sweden/Start/E-handel/",
+   link: "https://www.verifone.dk/da/Denmark/Start/E-handel/",
    acquirers: {
       Nets: true,
       Swedbank: true,
@@ -902,8 +887,7 @@ var PSPs = [
    fees: {
       setup: new Currency(1595, 'DKK'),
       monthly: new Currency(499, 'DKK'),
-      trn: new Currency(0.3, 'DKK')
-      // Discount: 250 gratis transaktioner
+      trn: function(o) { return new Currency(0.3, 'DKK').scale( Math.max(o.transactions - 250, 0) ); }
    }
 },
 {
@@ -923,7 +907,9 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'DKK'),
       monthly: new Currency(0, 'DKK'),
-      trn: function(o) { return o.avgvalue.scale(2.25/100).add(new Currency(0.75, 'DKK')); }
+      trn: function(o) {
+         return o.avgvalue.scale(2.25/100).add(new Currency(0.75, 'DKK')).scale(o.transactions);
+      }
    }
 },
 {
@@ -943,10 +929,9 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'DKK'),
       monthly: new Currency(49, 'DKK'),
-      trn: function(o) { return o.avgvalue.scale(2.25/100).add(new Currency(0.5, 'DKK')); },
-      discount: function(o) {
-         var count = (o.transactions < 50) ? o.transactions : 50;
-         return new Currency(0.5, 'DKK').scale(count);
+      trn: function(o) {
+         var fixed = (new Currency(0.5, 'DKK')).scale( Math.max(o.transactions - 50, 0) );
+         return o.avgvalue.scale(2.25/100).scale(o.transactions).add(fixed);
       }
    }
 },
@@ -967,10 +952,9 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'DKK'),
       monthly: new Currency(149, 'DKK'),
-      trn: function(o) { return o.avgvalue.scale(1.75/100).add(new Currency(0.25, 'DKK')); },
-      discount: function(o) {
-         var count = (o.transactions < 75) ? o.transactions : 75;
-         return new Currency(0.25, 'DKK').scale(count);
+      trn: function(o) {
+         var fixed = (new Currency(0.25, 'DKK')).scale( Math.max(o.transactions - 75, 0) );
+         return o.avgvalue.scale(1.75/100).scale(o.transactions).add(fixed);
       }
    }
 },
@@ -990,11 +974,10 @@ var PSPs = [
    },
    fees: {
       setup: new Currency(0, 'DKK'),
-      monthly: new Currency(299, 'DKK'),
-      trn: function(o) { return o.avgvalue.scale(1.35/100).add(new Currency(0.15, 'DKK')); },
-      discount: function(o) {
-         var count = (o.transactions < 500) ? o.transactions : 500;
-         return new Currency(0.15, 'DKK').scale(count);
+      monthly: new Currency(259, 'DKK'),
+      trn: function(o) {
+         var fixed = (new Currency(0.15, 'DKK')).scale( Math.max(o.transactions - 500, 0) );
+         return o.avgvalue.scale(1.35/100).scale(o.transactions).add(fixed);
       }
    }
 },
@@ -1020,6 +1003,8 @@ var PSPs = [
    fees: {
       setup: new Currency(0, 'USD'),
       monthly: new Currency(0, 'USD'),
-      trn: function(o) { return o.avgvalue.scale(2.4/100).add(new Currency(0.3, 'USD')); }
+      trn: function(o) {
+         return o.avgvalue.scale(2.4/100).add(new Currency(0.3, 'USD')).scale(o.transactions);
+      }
    }
 }];
