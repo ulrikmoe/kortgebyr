@@ -22,6 +22,7 @@ function C(s){ return document.getElementsByClassName(s); }
 
 // var l, sort, card, acquirer;
 var gccode = 'DKK';
+var settings;
 
 function set_ccode(c){
    if (currency_map.hasOwnProperty(c)){
@@ -366,6 +367,17 @@ var Settings = function (action){
 };
 
 
+function sum(){
+   var sumobj = new Currency(0, 'DKK');
+   for (var i = 0; i < arguments.length; i++) {
+      // Combine costs
+      for (var z in arguments[i]){
+         sumobj = sumobj.add(arguments[i][z]);
+      }
+   }
+   return sumobj;
+}
+
 // Find combination of acquirers that support all cards
 function acqcombo(psp, settings){
 
@@ -403,7 +415,7 @@ function acqcombo(psp, settings){
 function build(action){
    var x,i,j,k,sort,acq,img,link,card;
    var t0 = performance.now();
-   var settings = new Settings(action);
+   settings = new Settings(action);
    var data = [];
    var tbody = document.createElement("tbody");
    tbody.id = "tbody";
@@ -420,57 +432,65 @@ function build(action){
    }
    ACQs.sort(function(obj1, obj2){ return obj1.TC.dkk() - obj2.TC.dkk(); });
 
+   psploop:
    for (x = 0, xlen = PSPs.length; x < xlen; x++){
       var psp = PSPs[x];
-      var cardobj = psp.cards, acqArr = [];
+      var cardobj = psp.cards, acqArr = [], setup = {}, monthly = {}, trnfee = {};
 
-      var setup = psp.fees.setup;
-      var monthly = psp.fees.monthly;
-      var trnfee = psp.fees.trn(settings);
+      setup[psp.name] = psp.fees.setup;
+      monthly[psp.name] = psp.fees.monthly;
+      trnfee[psp.name] = psp.fees.trn(settings);
 
-      // Check if psp support all payment methods
-      if( !x_has_y(psp.cards, settings.cards) ){ continue; }
+      // Check if psp support all enabled payment methods
+      for (card in settings.cards) { if( !psp.cards[card] ){ continue psploop; } }
 
-      // Check if psp support all features
-      if( !x_has_y(psp.features, settings.features) ){ continue; }
+      // Check if psp support all enabled features
+      for (i in settings.features) {
+         if( !psp.features || !psp.features[i] ){ continue psploop; }
+         var feature = psp.features[i];
+         if (feature.setup){
+            setup[i] = feature.setup;
+            monthly[i] = feature.monthly;
+            trnfee[i] = feature.trn;
+         }
+      }
 
+      var acqfrag = document.createDocumentFragment();
       if( psp.acquirers ){
          acqArr = acqcombo(psp, settings); // Find acq with full card support
          if (!acqArr){ continue; } // If no acquirers support all cards
          cardobj = {};
-      }
 
-      var acqfrag = document.createDocumentFragment();
-      for (i in acqArr){
-         acq = ACQs[ acqArr[i] ];
-         setup = setup.add( acq.fees.setup );
-         monthly = monthly.add( acq.fees.monthly );
-         trnfee = trnfee.add( acq.trnfees );
+         for (i in acqArr){
+            acq = ACQs[ acqArr[i] ];
 
-         //console.log(acq.name + ": " + acq.trnfees.dkk());
+            setup[acq.name] = acq.fees.setup;
+            monthly[acq.name] = acq.fees.monthly;
+            trnfee[acq.name] = acq.trnfees;
 
-         link = document.createElement('a');
-         link.href = acq.link;
-         link.className = "acq";
-         img = new Image(acq.w, acq.h);
-         img.src = "/img/psp/" + acq.logo;
-         img.alt = acq.name;
-         link.appendChild(img);
-         acqfrag.appendChild(link);
+            link = document.createElement('a');
+            link.href = acq.link;
+            link.className = "acq";
+            img = new Image(acq.w, acq.h);
+            img.src = "/img/psp/" + acq.logo;
+            img.alt = acq.name;
+            link.appendChild(img);
+            acqfrag.appendChild(link);
 
-         // Construct cardobj
-         for (card in acq.cards){ cardobj[card] = acq.cards[card]; }
+            // Construct a new cardobj
+            for (card in acq.cards){ cardobj[card] = acq.cards[card]; }
+         }
       }
 
       var cardfrag = document.createDocumentFragment();
       for (card in cardobj){
-
          //  Some cards/methods (e.g. mobilepay) add extra costs.
          if ( cardobj[card].setup ){
             if ( !settings.cards[card] ){ continue; }  // Skip if not enabled.
-            setup = setup.add(cardobj[card].setup);
-            monthly = monthly.add(cardobj[card].monthly);
-            //trnfee = trnfee.add(cardobj[card].trnfee);
+
+            setup[card] = cardobj[card].setup;
+            monthly[card] = cardobj[card].monthly;
+            trnfee[card] = cardobj[card].trnfee;
          }
 
          var cardicon = new Image(22, 15);
@@ -480,7 +500,12 @@ function build(action){
          cardfrag.appendChild(cardicon);
       }
 
-      var total = monthly.add(trnfee);
+      var total = sum(monthly, trnfee);
+
+      // Save calc for tooltips
+      psp.setup = setup;
+      psp.monthly = monthly;
+      psp.trnfee = trnfee;
 
       // Sort psp after total.dkk()
       for (sort = 0; sort < data.length; ++sort){
@@ -518,11 +543,10 @@ function build(action){
       row.insertCell(-1).appendChild(pspfrag);
       row.insertCell(-1).appendChild(acqfrag);
       row.insertCell(-1).appendChild(cardfrag);
-      row.insertCell(-1).textContent = setup.print();
-      row.insertCell(-1).textContent = monthly.print();
+      row.insertCell(-1).textContent = sum(setup).print();
+      row.insertCell(-1).textContent = sum(monthly).print();
       row.insertCell(-1).textContent = total.print();
       row.insertCell(-1).appendChild(cardfeefrag);
-
    }
    table.replaceChild(tbody, $('tbody'));
 
@@ -530,81 +554,6 @@ function build(action){
 
    var t1 = performance.now();
    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.");
-}
-
-//===========================
-//            Modal
-//===========================
-
-function buildInfo(psp, acqArr, settings){
-   var overlay = document.querySelector(".overlay.pspinfo");
-   var content = overlay.getElementsByClassName("content")[0];
-
-   var frag = document.createDocumentFragment();
-   content.innerHTML = "";
-   var psph = document.createElement("h4");
-   var pspSetup = document.createElement("div");
-   var pspMonthly = document.createElement("div");
-   var pspTrans = document.createElement("div");
-
-   // Explain how transactions are allocated
-   if (acqArr.length > 1){
-      var acqdescription = document.createElement("div");
-      acqdescription.className = "acqdescription";
-      frag.appendChild(acqdescription).textContent = "Ved udregning af gebyrerne antages det, jf. statistik fra FDIH, at 77% af betalingerne sker med Visa/Dankort. Disse vil blive håndteret som Dankort transaktioner hos Nets, mens den sekundære indløser håndterer de resterende 23%.";
-   }
-
-   // PSP costs
-   var pspBlock = document.createElement("div");
-   pspBlock.classList.add("costblock");
-   pspBlock.appendChild(psph).textContent = psp.name + ":";
-   pspBlock.appendChild(pspSetup).textContent = "Oprettelse: " + psp.fees.setup.print();
-   pspBlock.appendChild(pspMonthly).textContent = "Abonnement per måned: " + psp.fees.monthly.print();
-   pspBlock.appendChild(pspTrans).textContent = "Transaktionsgebyrer: " + psp.fees.trn.print();
-   frag.appendChild(pspBlock);
-
-   if (settings.cards.mobilepay){
-      var mpayblock = document.createElement("div");
-      var mpayh = document.createElement("h4");
-      var mpaySetup = document.createElement("div");
-      var mpayMonthly = document.createElement("div");
-      var mpayTrans = document.createElement("div");
-      mpayblock.classList.add("costblock");
-      mpayblock.appendChild(mpayh).textContent = "Extra til Mobilepay oven i indløseromkostninger:";
-      mpayblock.appendChild(mpaySetup).textContent = "Oprettelse: " + settings.cards.mobilepay.fee.setup.print();
-      mpayblock.appendChild(mpayMonthly).textContent = "Abonnement per måned: " + settings.cards.mobilepay.fee.monthly.print();
-      mpayblock.appendChild(mpayTrans).textContent = "Transaktionsgebyrer: 1kr ekstra pr. mobilepay transaktion";
-      frag.appendChild(mpayblock);
-   }
-
-   // Acquirer costs
-   for (var x in acqArr){
-      var acq = ACQs[x];
-
-      var acqh4 = document.createElement("h4");
-      acqh4.textContent = acq.name + ":";
-
-      var acqSetup = document.createElement("div");
-      acqSetup.textContent = "Oprettelse: " + acq.fees.setup.print();
-
-      var acqMonthly = document.createElement("div");
-      acqMonthly.textContent = "Abonnement per måned: " + acq.fees.monthly.print();
-
-      var acqTrans = document.createElement("div");
-      acqTrans.textContent = "Transaktionsgebyrer: " + acq.trnfees.print() + "*";
-
-      var acqblock = document.createElement("div");
-      acqblock.classList.add("costblock");
-
-      acqblock.appendChild(acqh4);
-      acqblock.appendChild(acqSetup);
-      acqblock.appendChild(acqMonthly);
-      acqblock.appendChild(acqTrans);
-      frag.appendChild(acqblock);
-   }
-
-   content.appendChild(frag);
-   overlay.classList.add("active");
 }
 
 

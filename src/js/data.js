@@ -26,6 +26,14 @@ var currency_map = {
    'USD': '$'
 };
 
+var CARDs = {
+   mobilepay: {
+      setup: new Currency(49, 'DKK'),
+      monthly: new Currency(49, 'DKK'),
+      trn: new Currency(1, 'DKK')
+   }
+};
+
 
 var ACQs = [
 {
@@ -55,11 +63,7 @@ var ACQs = [
       visa: true,
       mastercard: true,
       maestro: true,
-      mobilepay: {
-         setup: new Currency(49, 'DKK'),
-         monthly: new Currency(49, 'DKK'),
-         trn: new Currency(1, 'DKK')
-      }
+      mobilepay: CARDs.mobilepay
    },
    fees: {
       setup: new Currency(0, 'DKK'),
@@ -114,11 +118,7 @@ var ACQs = [
    cards: {
       dankort: true,
       forbrugsforeningen: { setup: new Currency(0, 'DKK') },
-      mobilepay: {
-         setup: new Currency(49, 'DKK'),
-         monthly: new Currency(49, 'DKK'),
-         trn: new Currency(1, 'DKK')
-      }
+      mobilepay: CARDs.mobilepay
    },
    fees: {
       setup: new Currency(250, 'DKK'),
@@ -162,11 +162,7 @@ var ACQs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: {
-         setup: new Currency(49, 'DKK'),
-         monthly: new Currency(49, 'DKK'),
-         trn: new Currency(1, 'DKK')
-      }
+      mobilepay: CARDs.mobilepay
    },
    fees: {
       setup: new Currency(1000, 'DKK'),
@@ -326,7 +322,8 @@ var PSPs = [
    features: {
       antifraud: {
          setup: new Currency(495, 'DKK'),
-         monthly: new Currency(49, 'DKK')
+         monthly: new Currency(49, 'DKK'),
+         trn: new Currency(0, 'DKK')
       }
    },
    acquirers: {
@@ -363,7 +360,8 @@ var PSPs = [
    features: {
       antifraud: {
          setup: new Currency(495, 'DKK'),
-         monthly: new Currency(49, 'DKK')
+         monthly: new Currency(49, 'DKK'),
+         trn: new Currency(0, 'DKK')
       },
       recurring: true,
       multiacquirer: true
@@ -401,7 +399,11 @@ var PSPs = [
    h: 29,
    link: "http://epay.dk",
    features: {
-      antifraud: { trn: new Currency(0.3, 'DKK')}
+      antifraud: {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(0, 'DKK'),
+         trn: function(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
+      }
    },
    acquirers: {
       Nets: true
@@ -424,7 +426,11 @@ var PSPs = [
    h: 29,
    link: "http://epay.dk",
    features: {
-      antifraud: { trn: new Currency(0.3, 'DKK')}
+      antifraud: {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(0, 'DKK'),
+         trn: function(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
+      }
    },
    acquirers: {
       Nets: true,
@@ -461,9 +467,15 @@ var PSPs = [
    h: 29,
    link: "http://epay.dk",
    features: {
-      antifraud: { trn: new Currency(0.3, 'DKK')},
+      antifraud: {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(0, 'DKK'),
+         trn: function(o) { console.log(new Currency(0.3, 'DKK').scale(o.transactions)); }
+      },
       recurring: {
-         monthly: function(o) { return (new Currency(1 / 12, 'DKK')).scale(o.transactions); }
+         setup: new Currency(0, 'DKK'),
+         monthly: function(o) { return (new Currency(1 / 12, 'DKK')).scale(o.transactions); },
+         trn: new Currency(0, 'DKK')
       },
       multiacquirer: true
    },
@@ -558,7 +570,9 @@ var PSPs = [
    features: {
       antifraud: true,
       recurring: {
-         monthly: new Currency(250, 'DKK')
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(250, 'DKK'),
+         trn: new Currency(0, 'DKK')
       }
    },
    acquirers: {
