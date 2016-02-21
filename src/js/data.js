@@ -514,6 +514,33 @@ var PSPs = [
    }
 },
 {
+   name: "ePay Pro+",
+   logo: "epay.svg",
+   w: 130,
+   h: 29,
+   link: "http://epay.dk",
+   features: {
+      antifraud: {
+         setup: new Currency(0, 'DKK'),
+         monthly: new Currency(0, 'DKK'),
+         trn: function(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
+      }
+   },
+   cards: {
+      visa: true,
+      mastercard: true,
+      maestro: true,
+      mobilepay: true
+   },
+   fees: {
+      setup: new Currency(599, 'DKK'),
+      monthly: new Currency(199, 'DKK'),
+      trn: function(o) {
+         return o.avgvalue.scale(1.45/100).add(new Currency(0.25, 'DKK')).scale(o.transactions);
+      }
+   }
+},
+{
    name: "Netaxept Start",
    logo: "netaxept.svg",
    w: 99,
