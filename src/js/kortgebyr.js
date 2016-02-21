@@ -30,7 +30,6 @@ function set_ccode(c){
    }
 }
 
-
 function Currency(amt, code){
    this.amounts = {};
    this.amounts[code] = amt;
@@ -293,7 +292,7 @@ var opts = {
       bits: function(){
          var len = $("acquirer").length;
          var nbits = 0;
-         while (len > 0){
+         while (len){
             len = len >>> 1;
             nbits++;
          }
@@ -378,13 +377,15 @@ function sum(){
    return sumobj;
 }
 
+
 // Find combination of acquirers that support all cards
 function acqcombo(psp, settings){
-   console.log(settings);
    var i, acqs = [];
+
+   // First we need to check if a single acq support all cards.
+   // In the meantime we create a list of psp-supported acqs.
    for (i = 0; i < ACQs.length; i++){
 
-      // Skip if PSP doesn't support acquirer
       if ( !psp.acquirers[ACQs[i].name] ) continue;
 
       // Return acq if it support all settings.cards.
@@ -392,11 +393,16 @@ function acqcombo(psp, settings){
       acqs.push(i);
    }
 
+   // Ok. No single acq support all cards, so we will need to
+   // search for a combination of acquirers.
    var len = acqs.length;
    for (i = 0; i < len; i++){
 
       var missingCards = {};
-      for (var card in settings.cards ){ if(!ACQs[i].cards[card]) missingCards[card] = true; }
+
+      for (var card in settings.cards ){
+         if (!ACQs[i].cards[card]){ missingCards[card] = true; }
+      }
 
       // Find secondary acquirer with the missing cards.
       for (var j = 0; j < len; j++){
@@ -406,8 +412,9 @@ function acqcombo(psp, settings){
          if (!x_has_y(ACQs[j].cards, missingCards)){ continue; }
          return [ acqs[i], acqs[j] ];
       }
-      return null;
    }
+   console.log("here");
+   return null;
 }
 
 
@@ -463,10 +470,6 @@ function build(action){
 
       var acqfrag = document.createDocumentFragment();
       if( psp.acquirers ){
-
-
-
-
 
          acqArr = acqcombo(psp, settings); // Find acq with full card support
          if (!acqArr){ // no acquirers support all cards
@@ -708,7 +711,7 @@ function loadurl(){
         if (o.dirty_bits){
             nbits = o.dirty_bits;
             bitval = bitbuf.getbits(nbits);
-            if (bitval > 0){
+            if (bitval){
                 o.set(args[0]);
                 args.shift();
             }
@@ -726,8 +729,4 @@ function loadurl(){
 }
 build('init');
 
-var inputs = document.getElementsByTagName("input");
-for (i=0; i<inputs.length; i++){
-   inputs[i].addEventListener("input", build, false);
-}
-$('acquirer').addEventListener("change", build, false);
+$('form').addEventListener("change", build, false);
