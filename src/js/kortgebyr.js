@@ -359,7 +359,7 @@ function x_has_y(objx, objy){
 
 // To do: Settings skal forenes med opts()
 var Settings = function (action){
-   if (action === 'init'){ loadurl(); }
+   //if (action === 'init'){ loadurl(); }
 
    for (var key in opts){
       if (key !== "dirty_bits"){ this[key] = opts[key].get(action); }
@@ -380,7 +380,7 @@ function sum(){
 
 // Find combination of acquirers that support all cards
 function acqcombo(psp, settings){
-
+   console.log(settings);
    var i, acqs = [];
    for (i = 0; i < ACQs.length; i++){
 
@@ -442,11 +442,17 @@ function build(action){
       trnfee[psp.name] = psp.fees.trn(settings);
 
       // Check if psp support all enabled payment methods
-      for (card in settings.cards) { if( !psp.cards[card] ){ continue psploop; } }
+      for (card in settings.cards) { if( !psp.cards[card] ){
+         //console.log(psp.name + " doesn't support " + card);
+         continue psploop; }
+      }
 
       // Check if psp support all enabled features
       for (i in settings.features) {
-         if( !psp.features || !psp.features[i] ){ continue psploop; }
+         if( !psp.features || !psp.features[i] ){
+            console.log(psp.name + " doesn't support " + i);
+            continue psploop;
+         }
          var feature = psp.features[i];
          if (feature.setup){
             setup[i] = feature.setup;
@@ -457,8 +463,16 @@ function build(action){
 
       var acqfrag = document.createDocumentFragment();
       if( psp.acquirers ){
+
+
+
+
+
          acqArr = acqcombo(psp, settings); // Find acq with full card support
-         if (!acqArr){ continue; } // If no acquirers support all cards
+         if (!acqArr){ // no acquirers support all cards
+            console.log("Couldn't find acqcombo for " + psp.name);
+            continue;
+         }
          cardobj = {};
 
          for (i in acqArr){
@@ -490,7 +504,7 @@ function build(action){
 
             setup[card] = cardobj[card].setup;
             monthly[card] = cardobj[card].monthly;
-            trnfee[card] = cardobj[card].trnfee;
+            trnfee[card] = cardobj[card].trn;
          }
 
          var cardicon = new Image(22, 15);
@@ -501,11 +515,6 @@ function build(action){
       }
 
       var total = sum(monthly, trnfee);
-
-      // Save calc for tooltips
-      psp.setup = setup;
-      psp.monthly = monthly;
-      psp.trnfee = trnfee;
 
       // Sort psp after total.dkk()
       for (sort = 0; sort < data.length; ++sort){
@@ -550,7 +559,7 @@ function build(action){
    }
    table.replaceChild(tbody, $('tbody'));
 
-   if (action !== "init"){ saveurl(); }
+   //if (action !== "init"){ saveurl(); }
 
    var t1 = performance.now();
    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.");
@@ -719,6 +728,6 @@ build('init');
 
 var inputs = document.getElementsByTagName("input");
 for (i=0; i<inputs.length; i++){
-   inputs[i].addEventListener("change", build, false);
+   inputs[i].addEventListener("input", build, false);
 }
 $('acquirer').addEventListener("change", build, false);

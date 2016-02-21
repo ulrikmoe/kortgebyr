@@ -31,7 +31,13 @@ var CARDs = {
       setup: new Currency(49, 'DKK'),
       monthly: new Currency(49, 'DKK'),
       trn: new Currency(1, 'DKK')
+   },
+   forbrugsforeningen: {
+      setup: new Currency(0, 'DKK'),
+      monthly: new Currency(0, 'DKK'),
+      trn: new Currency(0, 'DKK')
    }
+
 };
 
 
@@ -117,7 +123,7 @@ var ACQs = [
    link: "http://www.nets.eu",
    cards: {
       dankort: true,
-      forbrugsforeningen: { setup: new Currency(0, 'DKK') },
+      forbrugsforeningen: CARDs.forbrugsforeningen,
       mobilepay: CARDs.mobilepay
    },
    fees: {
@@ -739,6 +745,40 @@ var PSPs = [
       trn: function(o) {
          return o.avgvalue.scale(2.5/100).add(new Currency(0.25, 'EUR')).scale(o.transactions);
       }
+   }
+},
+{
+   name: "QuickPay Basic",
+   logo: "quickpay.svg",
+   w: 138,
+   h: 27,
+   link: "https://quickpay.net/dk",
+   features: {
+      antifraud: true,
+      recurring: true,
+      multiacquirer: true
+   },
+   acquirers: {
+      Nets: true,
+      Teller: true,
+      Clearhaus: true
+   },
+   cards: {
+      dankort: true,
+      visa: true,
+      mastercard: true,
+      maestro: true,
+      amex: true,
+      jcb: true,
+      unionpay: true,
+      diners: true,
+      mobilepay: true,
+      forbrugsforeningen: true
+   },
+   fees: {
+      setup: new Currency(0, 'DKK'),
+      monthly: new Currency(0, 'DKK'),
+      trn: function(o) { return new Currency(5, 'DKK').scale(o.transactions); }
    }
 },
 {
