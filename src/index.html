@@ -6,31 +6,31 @@
    <style>{% include "global.css" %}</style>
 </head>
 <body>
-   <header class="c">
+   <header>
       <nav role="navigation">
-
-         <div class="logo"><a href="/">kortgebyr</a></div>
-         <div class=lastUpdate><a rel=”nofollow” href="https://github.com/ulrikmoe/kortgebyr/commits/master">Opdateret d. {{ lastUpdate }}</a></div>
+         <a class="logo" href="/">kortgebyr</a>
+         <a class="lastUpdate" rel=”nofollow” href="https://github.com/ulrikmoe/kortgebyr/commits/master">
+            Opdateret d. {{ lastUpdate }}
+         </a>
 
          <div class="language" onclick="alert('Denne funktion er midlertidigt disabled.')">
             <img width="19" src="/img/dk.png" alt="kortgebyr på dansk" />
          </div>
+
          <div id="currency" class="currency">
-            <label>
-               <span id="currency_code">DKK</span>
-               <select id="currency_code_select" onchange="changeCurrency(this)">
-                  <option value="DKK">DKK</option>
-                  <option value="SEK">SEK</option>
-                  <option value="NOK">NOK</option>
-                  <option value="USD">USD</option>
-                  <option value="EUR">EUR</option>
-               </select>
-            </label>
+            <span id="currency_code">DKK</span>
+            <select id="currency_code_select">
+               <option value="DKK">DKK</option>
+               <option value="SEK">SEK</option>
+               <option value="NOK">NOK</option>
+               <option value="USD">USD</option>
+               <option value="EUR">EUR</option>
+            </select>
          </div>
-         <div class="contact"> <a href="mailto:ulrik.moe@gmail.com?Subject=Kortgebyr.dk">Feedback</a></div>
+         <a href="mailto:ulrik.moe@gmail.com?Subject=Kortgebyr.dk" class="feedback">Feedback</a>
       </nav>
 
-      <form id="form" class="menu clearfix">
+      <form id="form" class="clearfix" autocomplete="off">
          <section class="acquirer_menu">
             <h2>Indløsning</h2>
             <div class="acquirer_field">
@@ -45,17 +45,20 @@
                   <option value="bambora">Bambora</option>
                </select>
             </div>
-            <div class="acquirer_description">Alle priser tager udgangspunkt i listepriser. Vi anbefaler at du starter med at læse vores <a href="/forklaring.html">forklaring</a>.</div>
+            <div class="acquirer_description">
+               Alle priser tager udgangspunkt i listepriser. Vi anbefaler at du starter med at læse vores <a href="/forklaring.html">forklaring</a>.
+            </div>
          </section>
 
-         <section class="menulist" style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
-            <label><input autocomplete="off" type="text" class="field" id="transactions" value="250"> Transaktioner pr. måned</label>
-            <label><input autocomplete="off" type="text" class="field" id="avgvalue" value="450 DKK"> Gennemsnits ordreværdi:</label>
+         <section style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
+            <label><input type="text" class="field" id="transactions" value="250"> Transaktioner pr. måned</label>
+            <label><input type="text" class="field" id="avgvalue" value="450 DKK"> Gennemsnits ordreværdi</label>
             <label><input type="checkbox" class="ofeatures" id="antifraud" /> Svindelkontrol</label>
             <label><input type="checkbox" class="ofeatures" id="recurring" /> Abonnementsbetalinger</label>
             <label><input type="checkbox" class="ofeatures" id="multiacquirer" /> Multi-indløser</label>
          </section>
-         <section class="menulist" style="width:19%">
+
+         <section style="width:19%; padding-right:0;">
             <label><input checked="" type="checkbox" class="ocards" id="dankort" /> Dankort</label>
             <label><input checked="" type="checkbox" class="ocards" id="visa" /> Visa / MasterCard</label>
             <label><input type="checkbox" class="ocards" id="forbrugsforeningen" /> Forbrugsforening</label>
@@ -63,36 +66,33 @@
             <label><input type="checkbox" class="ocards" id="amex" /> American Express</label>
          </section>
 
-
-         <section class="menulist" style="width: 17%; border-left:0; padding-left:0; padding-right:0">
+         <section style="width:17%; padding-right:0; padding-left: 0;">
             <label><input type="checkbox" class="ocards" id="jcb" /> JCB</label>
             <label><input type="checkbox" class="ocards" id="unionpay" /> UnionPay</label>
             <label><input type="checkbox" class="ocards" id="mobilepay" /> MobilePay</label>
          </section>
       </form>
    </header>
-   <main role="main">
-      <table id="table" class="table c">
-         <thead>
-            <tr>
-               <th width="172" style="text-align:left; padding-left: 1.5%;">Betalingsløsning</th>
-               <th width="130">Indløsere</th>
-               <th width="146">Betalingsmidler</th>
-               <th>Oprettelse</th>
-               <th>Abonnement</th>
-               <th>
-                  <div class="equal right"><p class="icon"></p></div>
-                  Samlet pr. <br> måned
-               </th>
-               <th style="border-left:0;">
-                  <div class="equal left"><p class="icon"></p></div>
-                  Samlet pr. <br> transaktion
-               </th>
-            </tr>
-         </thead>
-         <tbody id="tbody"></tbody>
-      </table>
-   </main>
+   <table id="table">
+      <thead>
+         <tr>
+            <th width="172" style="text-align:left; padding-left: 1.5%;">Betalingsløsning</th>
+            <th width="130">Indløsere</th>
+            <th width="146">Betalingsmidler</th>
+            <th>Oprettelse</th>
+            <th>Abonnement</th>
+            <th>
+               <div class="equal right"><p class="icon"></p></div>
+               Samlet pr. <br> måned
+            </th>
+            <th style="border-left:0;">
+               <div class="equal left"><p class="icon"></p></div>
+               Samlet pr. <br> transaktion
+            </th>
+         </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+   </table>
 
    <footer>
       Kortgebyr er udviklet af <a rel=”nofollow” href="https://github.com/ulrikmoe">Ulrik Moe</a>, <a rel=”nofollow” href="https://github.com/cblach">Christian Blach</a> og <a rel=”nofollow” href="https://github.com/zhasha">Joakim Sindholt</a> som et værktøj til at sammenligne <br /> betalingsløsninger. Kortgebyr blev startet i 2012, projektet er non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small>GPLv3</small>).

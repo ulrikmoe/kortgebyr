@@ -380,11 +380,13 @@ function sum(){
 
 // Find combination of acquirers that support all cards
 function acqcombo(psp, settings){
-   var i, acqs = [];
+   console.log(":::" + psp.name);
+   console.log(ACQs.length);
+   var acqs = [];
 
    // First we need to check if a single acq support all cards.
    // In the meantime we create a list of psp-supported acqs.
-   for (i = 0; i < ACQs.length; i++){
+   for (var i = 0; i < ACQs.length; i++){
 
       if ( !psp.acquirers[ACQs[i].name] ) continue;
 
@@ -396,21 +398,22 @@ function acqcombo(psp, settings){
    // Ok. No single acq support all cards, so we will need to
    // search for a combination of acquirers.
    var len = acqs.length;
-   for (i = 0; i < len; i++){
+   for (var primary = 0; primary < len; primary++){
 
       var missingCards = {};
 
       for (var card in settings.cards ){
-         if (!ACQs[i].cards[card]){ missingCards[card] = true; }
+         if ( !ACQs[primary].cards[card] ){ missingCards[card] = true; }
       }
 
       // Find secondary acquirer with the missing cards.
-      for (var j = 0; j < len; j++){
-         if (j == i) continue;
+      for (var secondary = 0; secondary < len; secondary++){
+         if (secondary == primary) { continue; }
+         console.log("primary: "+ primary + "; secondary: " + secondary);
 
          // Skip if it doesn't support missing cards.
-         if (!x_has_y(ACQs[j].cards, missingCards)){ continue; }
-         return [ acqs[i], acqs[j] ];
+         if (!x_has_y( ACQs[secondary].cards, missingCards) ){ continue; }
+         return [ acqs[primary], acqs[secondary] ];
       }
    }
    console.log("here");
@@ -473,7 +476,6 @@ function build(action){
 
          acqArr = acqcombo(psp, settings); // Find acq with full card support
          if (!acqArr){ // no acquirers support all cards
-            console.log("Couldn't find acqcombo for " + psp.name);
             continue;
          }
          cardobj = {};
@@ -493,6 +495,7 @@ function build(action){
             img.alt = acq.name;
             link.appendChild(img);
             acqfrag.appendChild(link);
+            acqfrag.appendChild( document.createElement('br') );
 
             // Construct a new cardobj
             for (card in acq.cards){ cardobj[card] = acq.cards[card]; }
@@ -543,13 +546,11 @@ function build(action){
       // Create cardfee calc.
       var cardfeefrag = document.createDocumentFragment();
       var p1 = document.createElement('p');
-      var p2 = document.createElement('p');
       var cardfee = total.scale(1 / settings.transactions);
-      p1.textContent = cardfee.print();
-      p2.textContent = "("+ (cardfee.scale( 1/settings.avgvalue.dkk()).dkk()*100).toFixed(3).replace('.', ',') + "%)";
-      p2.className = "procent";
+      cardfeefrag.textContent = cardfee.print();
+      p1.textContent = "("+ (cardfee.scale( 1/settings.avgvalue.dkk()).dkk()*100).toFixed(3).replace('.', ',') + "%)";
+      p1.className = "procent";
       cardfeefrag.appendChild(p1);
-      cardfeefrag.appendChild(p2);
 
       var row = tbody.insertRow(sort);
       row.insertCell(-1).appendChild(pspfrag);
@@ -730,3 +731,4 @@ function loadurl(){
 build('init');
 
 $('form').addEventListener("change", build, false);
+//onchange="changeCurrency(this)"
