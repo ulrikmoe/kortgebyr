@@ -69,7 +69,7 @@ var ACQs = [
       visa: true,
       mastercard: true,
       maestro: true,
-      mobilepay: CARDs.mobilepay
+      mobilepay: true
    },
    fees: {
       setup: new Currency(0, 'DKK'),
@@ -124,7 +124,7 @@ var ACQs = [
    cards: {
       dankort: true,
       forbrugsforeningen: CARDs.forbrugsforeningen,
-      mobilepay: CARDs.mobilepay
+      mobilepay: true
    },
    fees: {
       setup: new Currency(250, 'DKK'),
@@ -168,7 +168,7 @@ var ACQs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: CARDs.mobilepay
+      mobilepay: true
    },
    fees: {
       setup: new Currency(1000, 'DKK'),
@@ -291,8 +291,8 @@ var PSPs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: true,
-      forbrugsforeningen: true
+      mobilepay: CARDs.mobilepay,
+      forbrugsforeningen: CARDs.forbrugsforeningen
    },
    fees: {
       setup: new Currency(199, 'DKK'),
@@ -311,7 +311,7 @@ var PSPs = [
    },
    cards: {
       dankort: true,
-      mobilepay: true
+      mobilepay: CARDs.mobilepay
    },
    fees: {
       setup: new Currency(1495, 'DKK'),
@@ -349,7 +349,7 @@ var PSPs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: true
+      mobilepay: CARDs.mobilepay
    },
    fees: {
       setup: new Currency(4995, 'DKK'),
@@ -389,8 +389,8 @@ var PSPs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: true,
-      forbrugsforeningen: true
+      mobilepay: CARDs.mobilepay,
+      forbrugsforeningen: CARDs.forbrugsforeningen
    },
    fees: {
       setup: new Currency(10995, 'DKK'),
@@ -416,8 +416,8 @@ var PSPs = [
    },
    cards: {
       dankort: true,
-      mobilepay: true,
-      forbrugsforeningen: true
+      mobilepay: CARDs.mobilepay,
+      forbrugsforeningen: CARDs.forbrugsforeningen
    },
    fees: {
       setup: new Currency(399, 'DKK'),
@@ -436,7 +436,8 @@ var PSPs = [
          setup: new Currency(0, 'DKK'),
          monthly: new Currency(0, 'DKK'),
          trn: function(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
-      }
+      },
+      multiacquirer: true
    },
    acquirers: {
       Nets: true,
@@ -457,8 +458,8 @@ var PSPs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: true,
-      forbrugsforeningen: true
+      mobilepay: CARDs.mobilepay,
+      forbrugsforeningen: CARDs.forbrugsforeningen
    },
    fees: {
       setup: new Currency(599, 'DKK'),
@@ -504,8 +505,8 @@ var PSPs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: true,
-      forbrugsforeningen: true
+      mobilepay: CARDs.mobilepay,
+      forbrugsforeningen: CARDs.forbrugsforeningen
    },
    fees: {
       setup: new Currency(999, 'DKK'),
@@ -530,7 +531,7 @@ var PSPs = [
       visa: true,
       mastercard: true,
       maestro: true,
-      mobilepay: true
+      mobilepay: CARDs.mobilepay
    },
    fees: {
       setup: new Currency(599, 'DKK'),
@@ -799,8 +800,8 @@ var PSPs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: true,
-      forbrugsforeningen: true
+      mobilepay: CARDs.mobilepay,
+      forbrugsforeningen: CARDs.forbrugsforeningen
    },
    fees: {
       setup: new Currency(0, 'DKK'),
@@ -833,8 +834,8 @@ var PSPs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: true,
-      forbrugsforeningen: true
+      mobilepay: CARDs.mobilepay,
+      forbrugsforeningen: CARDs.forbrugsforeningen
    },
    fees: {
       setup: new Currency(0, 'DKK'),
@@ -867,8 +868,8 @@ var PSPs = [
       jcb: true,
       unionpay: true,
       diners: true,
-      mobilepay: true,
-      forbrugsforeningen: true
+      mobilepay: CARDs.mobilepay,
+      forbrugsforeningen: CARDs.forbrugsforeningen
    },
    fees: {
       setup: new Currency(0, 'DKK'),
