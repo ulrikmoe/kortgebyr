@@ -11,8 +11,6 @@
 *     we don't iterate through acquirers properly when we try to find the
 *     cheapest combination of acquirers.
 *
-*  To do:
-*  1) 'psp.features.multiacquirer'
 *
 **/
 
@@ -41,18 +39,17 @@ Currency.prototype.print = function(){
    var number = Math.round((this.dkk() * 100) / currency_value[gccode]) / 100;
    var parts = number.toString().split(".");
    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
    if (parts.length === 2 && parts[1].length === 1){
       parts[1] += "0";
    }
    return parts.join(",") + " " + currency_map[gccode];
 };
 
+
 Currency.prototype.represent = function(){
    if (this.length() === 1){
       for (var code in this.amounts){
-         //if (currency_map.hasOwnProperty(code)){
-         //    return this.amounts[code] + ' ' + currency_map[code];
-         //}
          return this.amounts[code] + ' ' + code;
       }
    }
@@ -91,8 +88,6 @@ Currency.prototype.dkk = function(){
 
 
 Currency.prototype.add = function(rhs){
-
-   // typeof(object) === 'function';
 
    var n = new Currency(0, 'DKK');
    var code;
@@ -380,26 +375,21 @@ function sum(){
 
 // Find combination of acquirers that support all cards
 function acqcombo(psp, settings){
-   console.log(":::" + psp.name);
-   console.log(ACQs.length);
-   var acqs = [];
+   var i, j, acqs = [];
 
-   // First we need to check if a single acq support all cards.
-   // In the meantime we create a list of psp-supported acqs.
-   for (var i = 0; i < ACQs.length; i++){
-
-      if ( !psp.acquirers[ACQs[i].name] ) continue;
-
-      // Return acq if it support all settings.cards.
-      if ( x_has_y(ACQs[i].cards, settings.cards) ) return [i];
-      acqs.push(i);
+   // Check if a single acq support all cards.
+   for (i = 0; i < ACQs.length; i++){
+      if ( psp.acquirers[ACQs[i].name] ) {
+         // Return acq if it support all settings.cards.
+         if ( x_has_y(ACQs[i].cards, settings.cards) ) return [i];
+         acqs.push(i);
+      }
    }
 
-   // Ok. No single acq support all cards, so we will need to
-   // search for a combination of acquirers.
+   // Nope. Then we'll need to search for a combination of acquirers.
    var len = acqs.length;
-   for (var primary = 0; primary < len; primary++){
-
+   for (i = 0; i < len; i++){
+      var primary = acqs[i];
       var missingCards = {};
 
       for (var card in settings.cards ){
@@ -407,16 +397,13 @@ function acqcombo(psp, settings){
       }
 
       // Find secondary acquirer with the missing cards.
-      for (var secondary = 0; secondary < len; secondary++){
-         if (secondary == primary) { continue; }
-         console.log("primary: "+ primary + "; secondary: " + secondary);
-
-         // Skip if it doesn't support missing cards.
-         if (!x_has_y( ACQs[secondary].cards, missingCards) ){ continue; }
-         return [ acqs[primary], acqs[secondary] ];
+      for (j = i+1; j < len; j++){
+         var secondary = acqs[j];
+         if ( x_has_y( ACQs[secondary].cards, missingCards) ){
+            return [ primary, secondary ];
+         }
       }
    }
-   console.log("here");
    return null;
 }
 
@@ -430,6 +417,10 @@ function build(action){
    var tbody = document.createElement("tbody");
    tbody.id = "tbody";
 
+   // Input validation
+   if (!Object.keys(settings.cards).length) return false;
+
+   // Cards
    var dankortscale = (settings.cards.dankort) ? 0.77 : 0;
    if (!settings.cards.visa){ dankortscale = 1; }
 
@@ -445,24 +436,18 @@ function build(action){
    psploop:
    for (x = 0, xlen = PSPs.length; x < xlen; x++){
       var psp = PSPs[x];
-      var cardobj = psp.cards, acqArr = [], setup = {}, monthly = {}, trnfee = {};
+      var acqcards = {}, acqArr = [], setup = {}, monthly = {}, trnfee = {};
 
       setup[psp.name] = psp.fees.setup;
       monthly[psp.name] = psp.fees.monthly;
       trnfee[psp.name] = psp.fees.trn(settings);
 
       // Check if psp support all enabled payment methods
-      for (card in settings.cards) { if( !psp.cards[card] ){
-         //console.log(psp.name + " doesn't support " + card);
-         continue psploop; }
-      }
+      for (card in settings.cards) { if( !psp.cards[card] ){ continue psploop; } }
 
       // Check if psp support all enabled features
       for (i in settings.features) {
-         if( !psp.features || !psp.features[i] ){
-            console.log(psp.name + " doesn't support " + i);
-            continue psploop;
-         }
+         if ( !psp.features || !psp.features[i] ){ continue psploop; }
          var feature = psp.features[i];
          if (feature.setup){
             setup[i] = feature.setup;
@@ -475,10 +460,7 @@ function build(action){
       if( psp.acquirers ){
 
          acqArr = acqcombo(psp, settings); // Find acq with full card support
-         if (!acqArr){ // no acquirers support all cards
-            continue;
-         }
-         cardobj = {};
+         if (!acqArr){ continue; }
 
          for (i in acqArr){
             acq = ACQs[ acqArr[i] ];
@@ -497,20 +479,22 @@ function build(action){
             acqfrag.appendChild(link);
             acqfrag.appendChild( document.createElement('br') );
 
-            // Construct a new cardobj
-            for (card in acq.cards){ cardobj[card] = acq.cards[card]; }
+            // Construct a new acqcards
+            for (card in acq.cards){ acqcards[card] = acq.cards[card]; }
          }
       }
 
       var cardfrag = document.createDocumentFragment();
-      for (card in cardobj){
-         //  Some cards/methods (e.g. mobilepay) add extra costs.
-         if ( cardobj[card].setup ){
-            if ( !settings.cards[card] ){ continue; }  // Skip if not enabled.
+      for (card in psp.cards){
 
-            setup[card] = cardobj[card].setup;
-            monthly[card] = cardobj[card].monthly;
-            trnfee[card] = cardobj[card].trn;
+         if (psp.acquirers && !acqcards[card]) { continue; }
+
+         //  Some cards/methods (e.g. mobilepay) add extra costs.
+         if ( psp.cards[card].setup ){
+            if (!settings.cards[card]) continue; // Disable if not enabled.
+            setup[card] = psp.cards[card].setup;
+            monthly[card] = psp.cards[card].monthly;
+            trnfee[card] = psp.cards[card].trn;
          }
 
          var cardicon = new Image(22, 15);
@@ -520,13 +504,12 @@ function build(action){
          cardfrag.appendChild(cardicon);
       }
 
-      var total = sum(monthly, trnfee);
-
-      // Sort psp after total.dkk()
+      // Calc TC and sort psps
+      var totalcost = sum(monthly, trnfee);
       for (sort = 0; sort < data.length; ++sort){
-         if (total.dkk() < data[sort]){ break; }
+         if (totalcost.dkk() < data[sort]){ break; }
       }
-      data.splice(sort, 0, total.dkk());
+      data.splice(sort, 0, totalcost.dkk());
 
       // Create PSP logo.
       var pspfrag = document.createDocumentFragment();
@@ -543,10 +526,24 @@ function build(action){
       link.appendChild(p);
       pspfrag.appendChild(link);
 
-      // Create cardfee calc.
+      // setup fee
+      var setupfrag = document.createDocumentFragment();
+      setupfrag.textContent = sum(setup).print();
+      //var tooltip = document.createElement('p');
+      //img = new Image(16, 16);
+      //img.src = "/img/info.svg";
+      //img.className = "tool";
+      //tooltip.className = "tip";
+      //setupfrag.appendChild(img);
+      //setupfrag.appendChild(tooltip);
+
+      // cardfee calc.
       var cardfeefrag = document.createDocumentFragment();
       var p1 = document.createElement('p');
-      var cardfee = total.scale(1 / settings.transactions);
+
+      if (!settings.transactions) settings.transactions = 1; // Avoid infinite ( 1 / 0 ).
+      var cardfee = totalcost.scale(1 / settings.transactions);
+
       cardfeefrag.textContent = cardfee.print();
       p1.textContent = "("+ (cardfee.scale( 1/settings.avgvalue.dkk()).dkk()*100).toFixed(3).replace('.', ',') + "%)";
       p1.className = "procent";
@@ -556,9 +553,9 @@ function build(action){
       row.insertCell(-1).appendChild(pspfrag);
       row.insertCell(-1).appendChild(acqfrag);
       row.insertCell(-1).appendChild(cardfrag);
-      row.insertCell(-1).textContent = sum(setup).print();
+      row.insertCell(-1).appendChild(setupfrag);
       row.insertCell(-1).textContent = sum(monthly).print();
-      row.insertCell(-1).textContent = total.print();
+      row.insertCell(-1).textContent = totalcost.print();
       row.insertCell(-1).appendChild(cardfeefrag);
    }
    table.replaceChild(tbody, $('tbody'));
@@ -571,7 +568,7 @@ function build(action){
 
 
 //===========================
-//            URL
+//    Blach's magic shit!
 //===========================
 
 var base64_chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/";
@@ -619,7 +616,6 @@ Base64Array.prototype.encode = function(){
 Base64Array.prototype.pushbase64char = function(b64char){
     var index = base64_chars.indexOf(b64char);
     if (index < 0){
-        //console.log("Unexpected query character " + b64char);
         return -1;
     }
     this.array.push(index);
@@ -665,7 +661,6 @@ function saveurl(){
             nbits = typeof(o.bits) === "function" ? o.bits() : o.bits;
             optbits = o.get("url");
         } else {
-            //console.log("opt " + key + " neither has a bits field or a dirty_bits field");
             return;
         }
         bitbuf.pushbits(optbits, nbits);
@@ -700,7 +695,6 @@ function loadurl(){
     /* Load the base64 representation of the bits into a base64array type */
     for (var i = 0; i < nb64chars; i++){
         if (bitbuf.pushbase64char(querystring[i]) !== 0){
-            //console.log("error parsing bits");
             return -1;
         }
     }
@@ -722,13 +716,16 @@ function loadurl(){
             bitval = bitbuf.getbits(nbits);
             o.set(bitval);
         } else {
-            //console.log("opt " + key + " neither has a bits field or a dirty_bits field");
             return;
         }
         /* Create the argument string part if dirty bit is set */
     }
 }
-build('init');
 
+//===========================
+//    Lets build
+//===========================
+
+build('init');
+$('currency_code_select').onchange=function(){ changeCurrency(this); };
 $('form').addEventListener("change", build, false);
-//onchange="changeCurrency(this)"
