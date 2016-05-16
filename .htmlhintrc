@@ -1,0 +1,10 @@
+{
+    "attr-lowercase": false,
+    "attr-no-duplication": true,
+    "attr-unsafe-chars": true,
+    "attr-value-double-quotes": true,
+    "head-script-disabled": false,
+    "id-unique": true,
+    "style-disabled": false,
+    "tagname-lowercase": true
+}
