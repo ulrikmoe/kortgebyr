@@ -1,0 +1,12 @@
+{
+   "strict": "implied",
+   "esversion": 6,
+   "browser": true,
+   "devel": true,
+   "bitwise": false,
+   "curly": true,
+   "-W117": true,
+   "-W034": true,
+   "-W097": true,
+   "-W040": true
+}
