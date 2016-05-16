@@ -18,14 +18,17 @@
   "homepage": "https://github.com/ulrikmoe/kortgebyr#readme",
   "devDependencies": {
     "gulp": "gulpjs/gulp#4.0",
-    "del": "^2.0",
-    "gulp-connect": "^2.2.0",
-    "gulp-data": "^1.2",
-    "gulp-htmlmin": "^1.1.3",
-    "gulp-less": "^3.0",
-    "gulp-cssnano": "^2.0.0",
-    "gulp-nunjucks-html": "^2.0",
-    "gulp-uglify": "^1.5",
-    "gulp-util": "^3.0.6"
+    "del": "*",
+    "gulp-connect": "*",
+    "gulp-data": "*",
+    "gulp-htmlmin": "*",
+    "gulp-less": "*",
+    "gulp-cssnano": "*",
+    "gulp-nunjucks-html": "*",
+    "gulp-uglify": "*",
+    "gulp-util": "*",
+    "gulp-babel": "*",
+    "babel-plugin-transform-es2015-block-scoping": "*",
+    "babel-plugin-transform-es2015-shorthand-properties": "*"
   }
 }
