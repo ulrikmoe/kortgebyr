@@ -973,7 +973,7 @@ var PSPs = [
         }
     },
     {
-        name: "YourPay Feemium",
+        name: "YourPay",
         logo: "yourpay.png",
         w: 115,
         h: 32,
@@ -990,76 +990,7 @@ var PSPs = [
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
             trn: function(o) {
-                return o.avgvalue.scale(2.25/100).add(new Currency(0.75, 'DKK')).scale(o.transactions);
-            }
-        }
-    },
-    {
-        name: "YourPay Mini",
-        logo: "yourpay.png",
-        w: 115,
-        h: 32,
-        link: "http://www.yourpay.io",
-        features: {
-            antifraud: true
-        },
-        cards: {
-            visa: true,
-            mastercard: true,
-            maestro: true
-        },
-        fees: {
-            setup: new Currency(0, 'DKK'),
-            monthly: new Currency(49, 'DKK'),
-            trn: function(o) {
-                var fixed = (new Currency(0.5, 'DKK')).scale( Math.max(o.transactions - 50, 0) );
-                return o.avgvalue.scale(2.25/100).scale(o.transactions).add(fixed);
-            }
-        }
-    },
-    {
-        name: "YourPay Pro",
-        logo: "yourpay.png",
-        w: 115,
-        h: 32,
-        link: "http://www.yourpay.io",
-        features: {
-            antifraud: true
-        },
-        cards: {
-            visa: true,
-            mastercard: true,
-            maestro: true
-        },
-        fees: {
-            setup: new Currency(0, 'DKK'),
-            monthly: new Currency(149, 'DKK'),
-            trn: function(o) {
-                var fixed = (new Currency(0.25, 'DKK')).scale( Math.max(o.transactions - 75, 0) );
-                return o.avgvalue.scale(1.75/100).scale(o.transactions).add(fixed);
-            }
-        }
-    },
-    {
-        name: "YourPay Business",
-        logo: "yourpay.png",
-        w: 115,
-        h: 32,
-        link: "http://www.yourpay.io",
-        features: {
-            antifraud: true
-        },
-        cards: {
-            visa: true,
-            mastercard: true,
-            maestro: true
-        },
-        fees: {
-            setup: new Currency(0, 'DKK'),
-            monthly: new Currency(259, 'DKK'),
-            trn: function(o) {
-                var fixed = (new Currency(0.15, 'DKK')).scale( Math.max(o.transactions - 500, 0) );
-                return o.avgvalue.scale(1.35/100).scale(o.transactions).add(fixed);
+                return o.avgvalue.scale(2.25/100).scale(o.transactions);
             }
         }
     },
@@ -1089,4 +1020,5 @@ var PSPs = [
                 return o.avgvalue.scale(2.4/100).add(new Currency(0.3, 'USD')).scale(o.transactions);
             }
         }
-    }];
+    }
+];

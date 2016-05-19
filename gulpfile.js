@@ -32,7 +32,7 @@ const updated = date.getDate() + '. ' + months[date.getMonth()] + ' ' + date.get
 const config = {
     htmlmin: { removeComments: true, collapseWhitespace: true },
     uglify: {
-        mangle: { sort: true, toplevel: false },
+        mangle: { sort: true, toplevel: true },
         compress: {
             drop_console: true,
             loops: false,
