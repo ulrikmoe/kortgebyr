@@ -15,11 +15,9 @@
 
 const table = $('table');
 function $(s) { return document.getElementById(s); }
-function C(s) { return document.getElementsByClassName(s); }
 
-// var l, sort, card, acquirer;
-var gccode = 'DKK';
-var settings;
+// let l, sort, card, acquirer;
+let gccode = 'DKK';
 
 function set_ccode(c) {
     if (currency_map.hasOwnProperty(c)) {
@@ -35,8 +33,8 @@ function Currency(amt, code) {
 Currency.prototype.type = 'currency';
 
 Currency.prototype.print = function () {
-    var number = Math.round((this.dkk() * 100) / currency_value[gccode]) / 100;
-    var parts = number.toString().split('.');
+    const number = Math.round((this.dkk() * 100) / currency_value[gccode]) / 100;
+    let parts = number.toString().split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
     if (parts.length === 2 && parts[1].length === 1) {
@@ -48,7 +46,7 @@ Currency.prototype.print = function () {
 
 Currency.prototype.represent = function () {
     if (this.length() === 1) {
-        for (var code in this.amounts) {
+        for (let code in this.amounts) {
             return this.amounts[code] + ' ' + code;
         }
     }
@@ -57,7 +55,7 @@ Currency.prototype.represent = function () {
 
 Currency.prototype.string = function () {
     if (this.length() === 1) {
-        for (var code in this.amounts) {
+        for (let code in this.amounts) {
             return this.amounts[code] + code;
         }
     }
@@ -65,9 +63,8 @@ Currency.prototype.string = function () {
 };
 
 Currency.prototype.length = function () {
-    var k;
-    var n = 0;
-    for (k in this.amounts) {
+    let n = 0;
+    for (let k in this.amounts) {
         if (this.amounts.hasOwnProperty(k)) {
             n++;
         }
@@ -75,9 +72,9 @@ Currency.prototype.length = function () {
     return n;
 };
 
-Currency.prototype.dkk = function() {
-    var sum = 0;
-    for (var code in this.amounts) {
+Currency.prototype.dkk = function () {
+    let sum = 0;
+    for (let code in this.amounts) {
         if (this.amounts.hasOwnProperty(code) &&
         currency_value.hasOwnProperty(code)) {
             sum += currency_value[code] * this.amounts[code];
@@ -87,18 +84,17 @@ Currency.prototype.dkk = function() {
 };
 
 
-Currency.prototype.add = function(rhs) {
+Currency.prototype.add = function (rhs) {
 
-    var n = new Currency(0, 'DKK');
-    var code;
+    let n = new Currency(0, 'DKK');
 
-    for (code in this.amounts) {
+    for (let code in this.amounts) {
         if (this.amounts.hasOwnProperty(code)) {
             n.amounts[code] = this.amounts[code];
         }
     }
 
-    for (code in rhs.amounts) {
+    for (let code in rhs.amounts) {
         if (rhs.amounts.hasOwnProperty(code)) {
             if (!n.amounts.hasOwnProperty(code)) {
                 n.amounts[code] = 0;
@@ -109,8 +105,8 @@ Currency.prototype.add = function(rhs) {
     return n;
 };
 
-Currency.prototype.is_equal_to = function(other_currency_object) {
-    for (var code in this.amounts) {
+Currency.prototype.is_equal_to = function (other_currency_object) {
+    for (let code in this.amounts) {
         if (this.amounts.hasOwnProperty(code)) {
             if (this.amounts[code] !== other_currency_object.amounts[code]) {
                 return false;
@@ -120,10 +116,10 @@ Currency.prototype.is_equal_to = function(other_currency_object) {
     return true;
 };
 
-Currency.prototype.scale = function(rhs) {
-    var n = new Currency(0, 'DKK');
+Currency.prototype.scale = function (rhs) {
+    let n = new Currency(0, 'DKK');
 
-    for (var code in this.amounts) {
+    for (let code in this.amounts) {
         if (this.amounts.hasOwnProperty(code)) {
             n.amounts[code] = this.amounts[code] * rhs;
         }
@@ -133,16 +129,15 @@ Currency.prototype.scale = function(rhs) {
 
 
 function getInt(elem, action) {
-
     if (action === 'init') { elem.addEventListener('input', build, false); }
 
-    var str = elem.value.trim();
+    const str = elem.value.trim();
     if (!isNaN(parseFloat(str)) && isFinite(str) &&
     parseFloat(str) === parseInt(str, 10)) {
         elem.classList.remove('error');
         return parseInt(str, 10);
     }
-    $(k).classList.add('error');
+    elem.classList.add('error');
     return null;
 }
 
@@ -152,30 +147,29 @@ function setInt(k, v) {
 }
 
 function mkcurregex() {
-    var k, a = [];
-    for (k in currency_map) {
-        a.push(currency_map[k]);
+    let arr = [];
+    for (let k in currency_map) {
+        arr.push(currency_map[k]);
     }
-    for (k in currency_value) {
-        a.push(k);
+    for (let k in currency_value) {
+        arr.push(k);
     }
-    return RegExp('^ *([0-9][0-9., ]*)(' + a.join('|') + ')? *$', 'i');
+    return RegExp('^ *([0-9][0-9., ]*)(' + arr.join('|') + ')? *$', 'i');
 }
-var curregex = mkcurregex();
+const curregex = mkcurregex();
 
 function _getCurrency(currency) {
-    var a = currency.match(curregex);
-    if (a === null) {
-        return null;
-    }
-    var c = a[2] ? a[2] : currency_map[gccode];
+    const a = currency.match(curregex);
+    if (a === null) { return null; }
+
+    let c = a[2] ? a[2] : currency_map[gccode];
     if (c.toLowerCase() === currency_map[gccode].toLowerCase()) {
         /* there are a lot of currencies named kr and we should prefer the kr
         * that has been selected */
         c = gccode;
     } else {
         /* if that's not what's selected, find the currency */
-        for (var k in currency_map) {
+        for (let k in currency_map) {
             if (currency_map[k].toLowerCase() === c.toLowerCase() ||
             k.toLowerCase() === c.toLowerCase()) {
                 c = k;
@@ -190,7 +184,7 @@ function getCurrency(currency, action) {
 
     if (action === 'init') { $(currency).addEventListener('input', build, false); }
 
-    var a = _getCurrency($(currency).value);
+    const a = _getCurrency($(currency).value);
     if (a === null) {
         $(currency).classList.add('error');
         return null;
@@ -212,8 +206,8 @@ function setCurrency(k, v) {
 }
 
 function getPercent(k) {
-    var elem = $(k);
-    var str = elem.value.replace('%', '').replace(',', '.').trim();
+    const elem = $(k);
+    const str = elem.value.replace('%', '').replace(',', '.').trim();
     if (!isNaN(parseFloat(str)) && isFinite(str)) {
         $(k).classList.remove('error');
         return parseFloat(str);
@@ -228,500 +222,519 @@ function setPercent(k, v) {
 }
 
 
-var opts = {
-    'cards': {
+let opts = {
+    cards: {
         type: 'bits',
-        bits: function() { return C('ocards').length; },
-        get: function(action) {
+        bits() { return document.getElementsByClassName('ocards').length; },
+        get(action) {
             // Get all selected payment methods from .ocards
-            var object = {};
-            var ocards = C('ocards');
-            var bitval = 0;
-            for(i = 0; i < ocards.length; i++) {
-                var checkbox = ocards[i];
+            let obj = {};
+            const ocards = document.getElementsByClassName('ocards');
+            let bitval = 0;
+            for (let i = 0; i < ocards.length; i++) {
+                const checkbox = ocards[i];
                 if (checkbox.checked) {
-                    object[checkbox.id] = 1;
-                    if (checkbox.id === 'visa') { object.mastercard = 1; }
+                    obj[checkbox.id] = 1;
+                    if (checkbox.id === 'visa') { obj.mastercard = 1; }
                     bitval += 1 << i;
                 }
             }
-            return object;
+            return obj;
         },
-        set: function(bitval) {
-            var ocards = C('ocards');
-            for(i = 0; i < ocards.length; i++) {
-                var checkbox = ocards[i];
+        set(bitval) {
+            const ocards = document.getElementsByClassName('ocards');
+            for (let i = 0; i < ocards.length; i++) {
+                const checkbox = ocards[i];
                 checkbox.checked = (bitval & (1 << i)) !== 0;
             }
         }
     },
-    'features': {
+    features: {
         type: 'bits',
-        bits: function() { return C('ofeatures').length; },
-        get: function(action) {
+        bits() { return document.getElementsByClassName('ofeatures').length; },
+        get(action) {
             // Get all selected features
-            var object = {};
-            var ofeatures = C('ofeatures');
-            var bitval = 0;
-            for(i = 0; i < ofeatures.length; i++) {
-                var checkbox = ofeatures[i];
-                if ( checkbox.checked ) {
-                    object[checkbox.id] = 1;
+            let obj = {};
+            const ofeatures = document.getElementsByClassName('ofeatures');
+            let bitval = 0;
+            for (let i = 0; i < ofeatures.length; i++) {
+                const checkbox = ofeatures[i];
+                if (checkbox.checked) {
+                    obj[checkbox.id] = 1;
                     bitval += 1 << i;
                 }
             }
             //if (action === 'url') { return bitval; }
-            return object;
+            return obj;
         },
-        set: function(bitval) {
-            var ofeatures = C('ofeatures');
-            for(i = 0; i < ofeatures.length; i++) {
-                var checkbox = ofeatures[i];
+        set(bitval) {
+            const ofeatures = document.getElementsByClassName('ofeatures');
+            for (let i = 0; i < ofeatures.length; i++) {
+                const checkbox = ofeatures[i];
                 checkbox.checked = (bitval & (1 << i)) !== 0;
             }
         }
     },
     // Misc
-    'acquirers': {
+    acquirers: {
         type: 'bits',
-        bits: function() {
-            var len = $('acquirer').length;
-            var nbits = 0;
+        bits() {
+            let len = $('acquirer').length;
+            let nbits = 0;
             while (len) {
                 len = len >>> 1;
                 nbits++;
             }
             return nbits;
         },
-        get: function(action) {
+        get(action) {
             // Return the selected acquirers
-            var name = $('acquirer').value;
-            //if (action === 'url' ) { return $('acquirer').selectedIndex; }
-            if (name === 'auto') { return null; }
-            else {
-                var obj = {};
-                obj.nets = ACQs.nets;
-                obj[name] = ACQs[name];
-                return obj;
+            const index = $('acquirer').selectedIndex;
+            if (index) {
+                return [ACQs[0], ACQs[index]];
             }
+            return ACQs.slice(0);
         },
-        set: function(bitval) {
+        set(bitval) {
             if (bitval < $('acquirer').length) { $('acquirer').selectedIndex = bitval; }
         },
     },
-    'transactions': {
+    transactions: {
         type: 'string',
         dirty_bits: 1,
-        get_dirty_bits: function() { return +(this.get() !== parseInt($('transactions').defaultValue)); },
-        get: function(action) { return getInt($('transactions'), action); },
-        set: function(v) { setInt('transactions', v); }
+        get_dirty_bits() { return +(this.get() !== parseInt($('transactions').defaultValue)); },
+        get(action) { return getInt($('transactions'), action); },
+        set(v) { setInt('transactions', v); }
     },
-    'avgvalue': {
+    avgvalue: {
         type: 'currency',
         dirty_bits: 1,
-        get_dirty_bits: function() {
-            return +(!this.get().is_equal_to(_getCurrency($('avgvalue').defaultValue))); },
-            get: function(action) { return getCurrency('avgvalue', action); },
-            set: function(v) { setCurrency('avgvalue', _getCurrency(v)); }
-        },
-        'currency': {
-            type: 'string',
-            dirty_bits: 1,
-            get_dirty_bits: function() { return +(this.get() !== $('currency_code_select').options[0].value); },
-            get: function() { return gccode; },
-            set: function(v) {
-                var select = $('currency_code_select');
-                for (var i = 0; i < select.length; i++) {
-                    if (select.options[i].value === v) {
-                        select.selectedIndex = i;
-                        $('currency_code').innerHTML = v;
-                        break;
-                    }
-                }
-                set_ccode(v);
-            }
-        }
-    };
-
-    // Check if object-x' properties is in object-y.
-    function x_has_y(objx, objy) {
-        for (var prop in objy) {
-            if( !objx[prop] ) { return false; }
-        }
-        return true;
-    }
-
-    // To do: Settings skal forenes med opts()
-    var Settings = function (action) {
-        //if (action === 'init') { loadurl(); }
-
-        for (var key in opts) {
-            if (key !== 'dirty_bits') { this[key] = opts[key].get(action); }
-        }
-    };
-
-
-    function sum() {
-        var sumobj = new Currency(0, 'DKK');
-        for (var i = 0; i < arguments.length; i++) {
-            // Combine costs
-            for (var z in arguments[i]) {
-                sumobj = sumobj.add(arguments[i][z]);
-            }
-        }
-        return sumobj;
-    }
-
-
-    // Find combination of acquirers that support all cards
-    function acqcombo(psp, settings) {
-        var i, j, acqs = [];
-
-        // Check if a single acq support all cards.
-        for (i = 0; i < ACQs.length; i++) {
-            if ( psp.acquirers[ACQs[i].name] ) {
-                // Return acq if it support all settings.cards.
-                if ( x_has_y(ACQs[i].cards, settings.cards) ) { return [i]; }
-                acqs.push(i);
-            }
-        }
-
-        // Nope. Then we'll need to search for a combination of acquirers.
-        var len = acqs.length;
-        for (i = 0; i < len; i++) {
-            var primary = acqs[i];
-            var missingCards = {};
-
-            for (var card in settings.cards ) {
-                if ( !ACQs[primary].cards[card] ) { missingCards[card] = true; }
-            }
-
-            // Find secondary acquirer with the missing cards.
-            for (j = i+1; j < len; j++) {
-                var secondary = acqs[j];
-                if ( x_has_y( ACQs[secondary].cards, missingCards) ) {
-                    return [ primary, secondary ];
+        get_dirty_bits() { return +(!this.get().is_equal_to(_getCurrency($('avgvalue').defaultValue))); },
+        get(action) { return getCurrency('avgvalue', action); },
+        set(v) { setCurrency('avgvalue', _getCurrency(v)); }
+    },
+    currency: {
+        type: 'string',
+        dirty_bits: 1,
+        get_dirty_bits() { return +(this.get() !== $('currency_code_select').options[0].value); },
+        get() { return gccode; },
+        set(v) {
+            const select = $('currency_code_select');
+            for (let i = 0; i < select.length; i++) {
+                if (select.options[i].value === v) {
+                    select.selectedIndex = i;
+                    $('currency_code').innerHTML = v;
+                    break;
                 }
             }
+            set_ccode(v);
         }
-        return null;
+    }
+};
+
+
+// Check if object-x' properties is in object-y.
+function x_has_y(objx, objy) {
+    for (let prop in objy) {
+        if (!objx[prop]) { return false; }
+    }
+    return true;
+}
+
+// To do: Settings skal forenes med opts()
+const Settings = function (action) {
+    //if (action === 'init') { loadurl(); }
+
+    for (let key in opts) {
+        if (key !== 'dirty_bits') { this[key] = opts[key].get(action); }
+    }
+};
+
+
+function sum() {
+    let sumobj = new Currency(0, 'DKK');
+    for (let i = 0; i < arguments.length; i++) {
+        // Combine costs
+        for (let z in arguments[i]) {
+            sumobj = sumobj.add(arguments[i][z]);
+        }
+    }
+    return sumobj;
+}
+
+// Find combination of acquirers that support all cards
+function acqcombo(psp, settings) {
+    const A = settings.acquirers;
+    let acqarr = [];
+
+    // Check if a single acq support all cards.
+    for (let acq of A) {
+        if (psp.acquirers[acq.name]) {
+            // Return acq if it support all settings.cards.
+            //if (x_has_y(acq.cards, settings.cards)) { return [i]; }
+            acqarr.push(acq);
+        }
     }
 
+    // Nope. Then we'll need to search for a combination of acquirers.
+    const len = acqarr.length;
+    for (let i = 0; i < len; i++) {
+        const primary = acqarr[i];
+        let missingCards = {};
 
-    // Build table
-    function build(action) {
-        var x,i,j,k,sort,acq,img,link,card;
-        settings = new Settings(action);
-        var data = [];
-        var tbody = document.createElement('tbody');
-        tbody.id = 'tbody';
-
-        // Input validation
-        if (!Object.keys(settings.cards).length) { return false; }
-
-        // Cards
-        var dankortscale = (settings.cards.dankort) ? 0.77 : 0;
-        if (!settings.cards.visa) { dankortscale = 1; }
-
-        // Calculate acquirer costs and sort by Total Costs.
-        for (x in ACQs) {
-            acq = ACQs[x];
-            var cardscale = (acq.name==='Nets') ? dankortscale : 1-dankortscale;
-            acq.trnfees = acq.fees.trn(settings).scale(settings.transactions).scale(cardscale);
-            acq.TC = acq.trnfees.add(acq.fees.monthly);
+        for (let card in settings.cards) {
+            if (!primary.cards[card]) { missingCards[card] = true; }
         }
-        ACQs.sort(function(obj1, obj2) { return obj1.TC.dkk() - obj2.TC.dkk(); });
 
-        psploop:
-        for (x = 0, xlen = PSPs.length; x < xlen; x++) {
-            var psp = PSPs[x];
-            var acqcards = {}, acqArr = [], setup = {}, monthly = {}, trnfee = {};
+        // Find secondary acquirer with the missing cards.
+        for (let j = i + 1; j < len; j++) {
+            let secondary = acqarr[j];
+            if (x_has_y(secondary.cards, missingCards)) {
+                return [primary, secondary];
+            }
+        }
+    }
+    return null;
+}
 
-            setup[psp.name] = psp.fees.setup;
-            monthly[psp.name] = psp.fees.monthly;
-            trnfee[psp.name] = psp.fees.trn(settings);
 
-            // Check if psp support all enabled payment methods
-            for (card in settings.cards) { if( !psp.cards[card] ) { continue psploop; } }
+function showTooltip(elem, setup) {
+    if (!elem.firstElementChild) {
+        const infobox = document.createElement('ul');
+        for (let prop in setup) {
+            if (setup.hasOwnProperty(prop)) {
+                const li = document.createElement('li');
+                li.textContent = prop + ': ' + setup[prop].print();
+                infobox.appendChild(li);
+            }
+        }
+        elem.appendChild(infobox);
+    }
+}
 
-            // Check if psp support all enabled features
-            for (i in settings.features) {
-                if ( !psp.features || !psp.features[i] ) { continue psploop; }
-                var feature = psp.features[i];
-                if (feature.setup) {
-                    setup[i] = feature.setup;
-                    monthly[i] = feature.monthly;
-                    trnfee[i] = feature.trn;
+// Build table
+function build(action) {
+    settings = new Settings(action);
+    let data = [];
+    const tbody = document.createElement('tbody');
+    tbody.id = 'tbody';
+
+    // Input validation
+    if (!Object.keys(settings.cards).length) { return false; }
+
+    // Cards
+    const dankortscale = (!settings.cards.visa) ? 1 : (settings.cards.dankort) ? 0.77 : 0;
+
+    // Calculate acquirer costs and sort by Total Costs.
+    for (let acq of settings.acquirers) {
+        const cardscale = (acq.name === 'Nets') ? dankortscale : 1 - dankortscale;
+        acq.trnfees = acq.fees.trn(settings).scale(settings.transactions).scale(cardscale);
+        acq.TC = acq.trnfees.add(acq.fees.monthly);
+    }
+    settings.acquirers.sort(function (obj1, obj2) { return obj1.TC.dkk() - obj2.TC.dkk(); });
+
+    psploop:
+    for (let psp of PSPs) {
+        let setup = {};
+        let monthly = {};
+        let trnfee = {};
+
+        setup[psp.name] = psp.fees.setup;
+        monthly[psp.name] = psp.fees.monthly;
+        trnfee[psp.name] = psp.fees.trn(settings);
+
+        // Check if psp support all enabled payment methods
+        for (let card in settings.cards) { if (!psp.cards[card]) { continue psploop; } }
+
+        // Check if psp support all enabled features
+        for (let i in settings.features) {
+            if (!psp.features || !psp.features[i]) { continue psploop; }
+            const feature = psp.features[i];
+            if (feature.setup) {
+                setup[i] = feature.setup;
+                monthly[i] = feature.monthly;
+                trnfee[i] = feature.trn;
+            }
+        }
+
+        const acqfrag = document.createDocumentFragment();
+        let acqcards = {};
+        let acqArr = [];
+        if (psp.acquirers) {
+
+            acqArr = acqcombo(psp, settings); // Find acq with full card support
+            if (!acqArr) { continue; }
+            for (let acq of acqArr) {
+
+                setup[acq.name] = acq.fees.setup;
+                monthly[acq.name] = acq.fees.monthly;
+                trnfee[acq.name] = acq.trnfees;
+
+                const acqlink = document.createElement('a');
+                acqlink.href = acq.link;
+                acqlink.className = 'acq';
+                const acqlogo = new Image(acq.w, acq.h);
+                acqlogo.src = '/img/psp/' + acq.logo;
+                acqlogo.alt = acq.name;
+                acqlink.appendChild(acqlogo);
+                acqfrag.appendChild(acqlink);
+                acqfrag.appendChild(document.createElement('br'));
+
+                // Construct a new acqcards
+                for (let card in acq.cards) { acqcards[card] = acq.cards[card]; }
+            }
+        }
+
+        const cardfrag = document.createDocumentFragment();
+        for (let card in psp.cards) {
+
+            if (psp.acquirers && !acqcards[card]) { continue; }
+
+            //  Some cards/methods (e.g. mobilepay) add extra costs.
+            if (psp.cards[card].setup) {
+                if (!settings.cards[card]) { continue; } // Disable if not enabled.
+                setup[card] = psp.cards[card].setup;
+                monthly[card] = psp.cards[card].monthly;
+                trnfee[card] = psp.cards[card].trn;
+            }
+
+            const cardicon = new Image(22, 15);
+            cardicon.src = '/img/cards/' + card + '.svg';
+            cardicon.alt = card;
+            cardicon.className = 'card';
+            cardfrag.appendChild(cardicon);
+        }
+
+        // Calculate TC and sort psps
+        let totalcost = sum(monthly, trnfee);
+        let sort;
+        for (sort = 0; sort < data.length; ++sort) {
+            if (totalcost.dkk() < data[sort]) { break; }
+        }
+        data.splice(sort, 0, totalcost.dkk());
+
+        // Create PSP logo.
+        const pspfrag = document.createDocumentFragment();
+        const psplink = document.createElement('a');
+        psplink.target = '_blank';
+        psplink.href = psp.link;
+        psplink.className = 'psp';
+        const psplogo = new Image(psp.w, psp.h);
+        psplogo.src = '/img/psp/' + psp.logo;
+        psplogo.alt = psp.name;
+        const pspname = document.createElement('p');
+        pspname.textContent = psp.name;
+        psplink.appendChild(psplogo);
+        psplink.appendChild(pspname);
+        pspfrag.appendChild(psplink);
+
+        // setup fees
+        const setupfrag = document.createDocumentFragment();
+        setupfrag.textContent = sum(setup).print();
+        const setup_info = document.createElement('div');
+        setup_info.textContent = '[?]';
+        setup_info.className = 'info';
+        setup_info.onmouseover = function () { showTooltip(this, setup); };
+        setupfrag.appendChild(setup_info);
+
+        // Recurring fees
+        const recurringfrag = document.createDocumentFragment();
+        recurringfrag.textContent = sum(monthly).print();
+        const recurring_info = document.createElement('div');
+        recurring_info.textContent = '[?]';
+        recurring_info.className = 'info';
+        recurring_info.onmouseover = function () { showTooltip(this, monthly); };
+        recurringfrag.appendChild(recurring_info);
+
+        // Trn fees
+        const trnfrag = document.createDocumentFragment();
+        trnfrag.textContent = sum(trnfee).print();
+        const trn_info = document.createElement('div');
+        trn_info.textContent = '[?]';
+        trn_info.className = 'info';
+        trn_info.onmouseover = function () { showTooltip(this, trnfee); };
+        trnfrag.appendChild(trn_info);
+
+        // cardfee calc.
+        const cardfeefrag = document.createDocumentFragment();
+        const p1 = document.createElement('p');
+        let cardfee = totalcost.scale(1 / (settings.transactions || 1));
+        cardfeefrag.textContent = cardfee.print();
+        p1.textContent = '(' + (cardfee.scale(1 / settings.avgvalue.dkk()).dkk() * 100).toFixed(3).replace('.', ',') + '%)';
+        p1.className = 'procent';
+        cardfeefrag.appendChild(p1);
+
+        const row = tbody.insertRow(sort);
+        row.insertCell(-1).appendChild(pspfrag);
+        row.insertCell(-1).appendChild(acqfrag);
+        row.insertCell(-1).appendChild(cardfrag);
+        row.insertCell(-1).appendChild(setupfrag);
+        row.insertCell(-1).appendChild(recurringfrag);
+        row.insertCell(-1).appendChild(trnfrag);
+        row.insertCell(-1).textContent = totalcost.print();
+        row.insertCell(-1).appendChild(cardfeefrag);
+    }
+    table.replaceChild(tbody, $('tbody'));
+
+    //if (action !== 'init') { saveurl(); }
+}
+
+
+//===========================
+//    Blach magic!
+//===========================
+
+const base64_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/';
+
+function Base64Array(initsize) {
+    this.bitpos = 0; // from 0 - 5
+    this.array = [];
+    this.pos = 0;
+}
+
+Base64Array.prototype.pushbit = function (bit) {
+    if (this.array.length === 0) {this.array.push(0);}
+    if (this.bitpos > 5) {
+        this.bitpos = 0;
+        this.array.push(0);
+    }
+    this.array[this.array.length - 1] += bit << this.bitpos;
+    this.bitpos++;
+};
+
+Base64Array.prototype.getbit = function () {
+    if (this.bitpos > 5) {
+        this.bitpos = 0;
+        this.pos++;
+    }
+    let bitval = (this.array[this.pos] & (1 << this.bitpos)) >>> this.bitpos;
+    this.bitpos++;
+    return bitval;
+};
+
+Base64Array.prototype.pushbits = function (bitval, nbits) {
+    for (let i = 0; i < nbits; i++) {
+        this.pushbit((bitval & (1 << i)) >>> i);
+    }
+};
+
+Base64Array.prototype.encode = function () {
+    let encstr = '';
+    for (let i = 0; i < this.array.length; i++) {
+        encstr += base64_chars[this.array[i]];
+    }
+    return encstr;
+};
+
+Base64Array.prototype.pushbase64char = function (b64char) {
+    let index = base64_chars.indexOf(b64char);
+    if (index < 0) {
+        return -1;
+    }
+    this.array.push(index);
+    return 0;
+};
+
+Base64Array.prototype.getbits = function (nbits) {
+    let val = 0;
+    for (let i = 0; i < nbits; i++) {
+        val += this.getbit() << i;
+    }
+    return val;
+};
+
+
+/* Save the url to the following structure URL = kortgebyr.dk?{BITS}{ARGUMENT STRING}*/
+function saveurl() {
+    let argstr = ''; // The optional arguments string which follows the base64 enc. bits
+    let nbits; // the number of bits for the current option
+    let optbits; // The bits for the current option
+    let bitbuf = new Base64Array(); // The buffer used for containing bits until they are flushed
+
+    /* Loop through the options and construct the url */
+    for (let key in opts) {
+        let o = opts[key];
+
+        /* Depending on whether dirty bits are used or not, react accordingly */
+        if (o.dirty_bits) {
+            nbits = o.dirty_bits;
+            optbits = o.get_dirty_bits('url');
+            let ret = o.get();
+            /* Create the argument string part if dirty bit is set */
+            if (optbits) {
+                if (ret instanceof Currency) {
+                    argstr += ';' + ret.string();
+                } else {
+                    argstr += ';' + ret;
                 }
             }
 
-            var acqfrag = document.createDocumentFragment();
-            if( psp.acquirers ) {
-
-                acqArr = acqcombo(psp, settings); // Find acq with full card support
-                if (!acqArr) { continue; }
-
-                for (i in acqArr) {
-                    acq = ACQs[ acqArr[i] ];
-
-                    setup[acq.name] = acq.fees.setup;
-                    monthly[acq.name] = acq.fees.monthly;
-                    trnfee[acq.name] = acq.trnfees;
-
-                    link = document.createElement('a');
-                    link.href = acq.link;
-                    link.className = 'acq';
-                    img = new Image(acq.w, acq.h);
-                    img.src = '/img/psp/' + acq.logo;
-                    img.alt = acq.name;
-                    link.appendChild(img);
-                    acqfrag.appendChild(link);
-                    acqfrag.appendChild( document.createElement('br') );
-
-                    // Construct a new acqcards
-                    for (card in acq.cards) { acqcards[card] = acq.cards[card]; }
-                }
-            }
-
-            var cardfrag = document.createDocumentFragment();
-            for (card in psp.cards) {
-
-                if (psp.acquirers && !acqcards[card]) { continue; }
-
-                //  Some cards/methods (e.g. mobilepay) add extra costs.
-                if ( psp.cards[card].setup ) {
-                    if (!settings.cards[card]) { continue; } // Disable if not enabled.
-                    setup[card] = psp.cards[card].setup;
-                    monthly[card] = psp.cards[card].monthly;
-                    trnfee[card] = psp.cards[card].trn;
-                }
-
-                var cardicon = new Image(22, 15);
-                cardicon.src = '/img/cards/' + card + '.svg';
-                cardicon.alt = card;
-                cardicon.className = 'card';
-                cardfrag.appendChild(cardicon);
-            }
-
-            // Calc TC and sort psps
-            var totalcost = sum(monthly, trnfee);
-            for (sort = 0; sort < data.length; ++sort) {
-                if (totalcost.dkk() < data[sort]) { break; }
-            }
-            data.splice(sort, 0, totalcost.dkk());
-
-            // Create PSP logo.
-            var pspfrag = document.createDocumentFragment();
-            link = document.createElement('a');
-            link.target = '_blank';
-            link.href = psp.link;
-            link.className = 'psp';
-            img = new Image(psp.w, psp.h);
-            img.src = '/img/psp/' + psp.logo;
-            img.alt = psp.name;
-            var p = document.createElement('p');
-            p.textContent = psp.name;
-            link.appendChild(img);
-            link.appendChild(p);
-            pspfrag.appendChild(link);
-
-            // setup fee
-            var setupfrag = document.createDocumentFragment();
-            setupfrag.textContent = sum(setup).print();
-            //var tooltip = document.createElement('p');
-            //img = new Image(16, 16);
-            //img.src = '/img/info.svg';
-            //img.className = 'tool';
-            //tooltip.className = 'tip';
-            //setupfrag.appendChild(img);
-            //setupfrag.appendChild(tooltip);
-
-            // cardfee calc.
-            var cardfeefrag = document.createDocumentFragment();
-            var p1 = document.createElement('p');
-
-            if (!settings.transactions) { settings.transactions = 1; } // Avoid infinite ( 1 / 0 ).
-            var cardfee = totalcost.scale(1 / settings.transactions);
-
-            cardfeefrag.textContent = cardfee.print();
-            p1.textContent = '('+ (cardfee.scale( 1/settings.avgvalue.dkk()).dkk()*100).toFixed(3).replace('.', ',') + '%)';
-            p1.className = 'procent';
-            cardfeefrag.appendChild(p1);
-
-            var row = tbody.insertRow(sort);
-            row.insertCell(-1).appendChild(pspfrag);
-            row.insertCell(-1).appendChild(acqfrag);
-            row.insertCell(-1).appendChild(cardfrag);
-            row.insertCell(-1).appendChild(setupfrag);
-            row.insertCell(-1).textContent = sum(monthly).print();
-            row.insertCell(-1).textContent = totalcost.print();
-            row.insertCell(-1).appendChild(cardfeefrag);
+        } else if (o.bits) {
+            nbits = typeof (o.bits) === 'function' ? o.bits() : o.bits;
+            optbits = o.get('url');
+        } else {
+            return;
         }
-        table.replaceChild(tbody, $('tbody'));
-
-        //if (action !== 'init') { saveurl(); }
+        bitbuf.pushbits(optbits, nbits);
     }
 
+    history.replaceState({ foo: 'bar' }, '', '?' + bitbuf.encode() + argstr);
+}
 
-    //===========================
-    //    Blach's magic shit!
-    //===========================
+function loadurl() {
+    let querystring = location.search.replace('?', '');
+    if (!querystring) { return; }
 
-    var base64_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/';
+    let encbits = ''; // The base64 encoded bits
+    let args; // The optional arguments string which follows the base64 enc. bits
+    let nbits; // the number of bits for the current option
+    let bitval;
+    let bitbuf = new Base64Array(); // The buffer used for containing bits until they are flushed
+    let o;
 
-    function Base64Array(initsize) {
-        this.bitpos = 0; // from 0 - 5
-        this.array = [];
-        this.pos = 0;
+    /* Check if any additional args after the bits and
+    create the arg array if that is the case */
+    let nb64chars = querystring.indexOf(';');
+    if (nb64chars < 0) {
+        nb64chars = querystring.length;
+    } else {
+        args = querystring.slice(nb64chars + 1).split(';');
     }
 
-    Base64Array.prototype.pushbit = function(bit) {
-        if (this.array.length === 0) {this.array.push(0);}
-        if (this.bitpos > 5) {
-            this.bitpos = 0;
-            this.array.push(0);
-        }
-        this.array[this.array.length - 1] += bit << this.bitpos;
-        this.bitpos++;
-    };
-
-    Base64Array.prototype.getbit = function() {
-        if (this.bitpos > 5) {
-            this.bitpos = 0;
-            this.pos++;
-        }
-        var bitval = (this.array[this.pos] & (1 << this.bitpos)) >>> this.bitpos;
-        this.bitpos++;
-        return bitval;
-    };
-
-    Base64Array.prototype.pushbits = function(bitval, nbits) {
-        for(var i = 0; i < nbits; i++) {
-            this.pushbit((bitval & (1 << i)) >>> i);
-        }
-    };
-
-    Base64Array.prototype.encode = function() {
-        var encstr = '';
-        for (var i = 0; i < this.array.length; i++) {
-            encstr += base64_chars[this.array[i]];
-        }
-        return encstr;
-    };
-
-    Base64Array.prototype.pushbase64char = function(b64char) {
-        var index = base64_chars.indexOf(b64char);
-        if (index < 0) {
+    /* Load the base64 representation of the bits into a base64array type */
+    for (let i = 0; i < nb64chars; i++) {
+        if (bitbuf.pushbase64char(querystring[i]) !== 0) {
             return -1;
         }
-        this.array.push(index);
-        return 0;
-    };
-
-    Base64Array.prototype.getbits = function(nbits) {
-        var val = 0;
-        for (var i = 0; i < nbits; i++) {
-            val += this.getbit() << i;
-        }
-        return val;
-    };
-
-
-    /* Save the url to the following structure URL = kortgebyr.dk?{BITS}{ARGUMENT STRING}*/
-    function saveurl() {
-        var argstr = ''; // The optional arguments string which follows the base64 enc. bits
-        var nbits; // the number of bits for the current option
-        var optbits; // The bits for the current option
-        var bitbuf = new Base64Array(); // The buffer used for containing bits until they are flushed
-        var o;
-
-        /* Loop through the options and construct the url */
-        for (var key in opts) {
-            o = opts[key];
-
-            /* Depending on whether dirty bits are used or not, react accordingly */
-            if (o.dirty_bits) {
-                nbits = o.dirty_bits;
-                optbits = o.get_dirty_bits('url');
-                var ret = o.get();
-                /* Create the argument string part if dirty bit is set */
-                if (optbits) {
-                    if (ret instanceof Currency) {
-                        argstr += ';' + ret.string();
-                    } else {
-                        argstr += ';' + ret;
-                    }
-                }
-
-            } else if (o.bits) {
-                nbits = typeof(o.bits) === 'function' ? o.bits() : o.bits;
-                optbits = o.get('url');
-            } else {
-                return;
-            }
-            bitbuf.pushbits(optbits, nbits);
-        }
-
-
-        history.replaceState({
-            foo: 'bar'
-        }, '', '?' + bitbuf.encode() + argstr);
     }
 
-    function loadurl() {
-        var querystring = location.search.replace('?', '');
-        if (!querystring) { return; }
-
-        var encbits = ''; // The base64 encoded bits
-        var args; // The optional arguments string which follows the base64 enc. bits
-        var nbits; // the number of bits for the current option
-        var bitval;
-        var bitbuf = new Base64Array(); // The buffer used for containing bits until they are flushed
-        var o;
-
-        /* Check if any additional args after the bits and
-        create the arg array if that is the case */
-        var nb64chars = querystring.indexOf(';');
-        if (nb64chars < 0) {
-            nb64chars = querystring.length;
+    /* Loop through the opts set the fields with values loaded from the url */
+    for (let key in opts) {
+        o = opts[key];
+        /* Check if opt has dirty bits, if so load arg */
+        if (o.dirty_bits) {
+            nbits = o.dirty_bits;
+            bitval = bitbuf.getbits(nbits);
+            if (bitval) {
+                o.set(args[0]);
+                args.shift();
+            }
+            /* Otherwise just load the bits directly */
+        } else if (o.bits) {
+            nbits = typeof (o.bits) === 'function' ? o.bits() : o.bits;
+            bitval = bitbuf.getbits(nbits);
+            o.set(bitval);
         } else {
-            args = querystring.slice(nb64chars + 1).split(';');
+            return;
         }
-
-        /* Load the base64 representation of the bits into a base64array type */
-        for (var i = 0; i < nb64chars; i++) {
-            if (bitbuf.pushbase64char(querystring[i]) !== 0) {
-                return -1;
-            }
-        }
-
-        /* Loop through the opts set the fields with values loaded from the url */
-        for (var key in opts) {
-            o = opts[key];
-            /* Check if opt has dirty bits, if so load arg */
-            if (o.dirty_bits) {
-                nbits = o.dirty_bits;
-                bitval = bitbuf.getbits(nbits);
-                if (bitval) {
-                    o.set(args[0]);
-                    args.shift();
-                }
-                /* Otherwise just load the bits directly */
-            } else if (o.bits) {
-                nbits = typeof(o.bits) === 'function' ? o.bits() : o.bits;
-                bitval = bitbuf.getbits(nbits);
-                o.set(bitval);
-            } else {
-                return;
-            }
-            /* Create the argument string part if dirty bit is set */
-        }
+        /* Create the argument string part if dirty bit is set */
     }
+}
 
-    //===========================
-    //    Lets build
-    //===========================
+//===========================
+//    Lets build
+//===========================
 
-    build('init');
-    $('currency_code_select').onchange=function() { changeCurrency(this); };
-    $('form').addEventListener('change', build, false);
+build('init');
+$('currency_code_select').onchange = function () { changeCurrency(this); };
+$('form').addEventListener('change', build, false);

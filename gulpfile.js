@@ -18,10 +18,8 @@ const nunjucks = require('gulp-nunjucks-html');
 const htmlmin = require('gulp-htmlmin');
 const less = require('gulp-less');
 const nano = require('gulp-cssnano');
-//const data = require('gulp-data');
-//const mergestream = require('merge-stream');
 const babel = require('gulp-babel');
-//const fs = require('fs');
+const concat = require('gulp-concat');
 
 //  Last changed
 const months = ['januar', 'februar', 'marts', 'april', 'maj', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'december'];
@@ -40,7 +38,7 @@ const config = {
         }
     },
     babel: {
-        plugins: ['transform-es2015-block-scoping', 'transform-es2015-shorthand-properties']
+        plugins: ['transform-es2015-block-scoping', 'transform-es2015-shorthand-properties', 'transform-es2015-for-of']
     },
     nunjucks: {
         searchPaths: ['www/'],
@@ -59,6 +57,7 @@ function assets() {
 function scripts() {
     return gulp.src(['src/js/**/*'], { since: gulp.lastRun(scripts) })
     .pipe(gutil.env.min ? babel(config.babel) : gutil.noop())
+    .pipe(concat('all.js'))
     .pipe(gutil.env.min ? uglify(config.uglify) : gutil.noop())
     .pipe(gulp.dest('www'));
 }

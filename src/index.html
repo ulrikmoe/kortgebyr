@@ -3,7 +3,7 @@
    <title>Kortgebyr - sammenlign betalingsløsninger</title>
    <meta name="description" content="Sammenlign priser på betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr.">
    <link rel="canonical" href="https://kortgebyr.dk">
-   <style>{% include "global.css" %}</style>
+   <style>{% include "kortgebyr.css" %}</style>
 </head>
 <body>
    <header>
@@ -32,19 +32,18 @@
 
       <form id="form" class="clearfix" autocomplete="off">
          <section class="acquirer_menu">
-            <h2>Indløsning</h2>
-            <div class="acquirer_field">
-               <select id="acquirer" disabled>
-                  <option value="auto">Billigst mulige</option>
-                  <option value="teller">Teller</option>
-                  <option value="handelsbanken">Handelsbanken</option>
-                  <option value="swedbank">Swedbank</option>
-                  <option value="valitor">Valitor</option>
-                  <option value="elavon">Elavon</option>
-                  <option value="clearhaus">Clearhaus</option>
-                  <option value="bambora">Bambora</option>
+            <label class="acqlabel"> Indløsning
+               <select id="acquirer">
+                  <option>Billigst mulige</option>
+                  <option>Teller</option>
+                  <option>Handelsbanken</option>
+                  <option>Swedbank</option>
+                  <option>Valitor</option>
+                  <option>Elavon</option>
+                  <option>Clearhaus</option>
+                  <option>Bambora</option>
                </select>
-            </div>
+            </label>
             <div class="acquirer_description">
                Alle priser tager udgangspunkt i listepriser. Vi anbefaler at du starter med at læse vores <a href="/forklaring.html">forklaring</a>.
             </div>
@@ -76,11 +75,12 @@
    <table id="table">
       <thead>
          <tr>
-            <th width="172" style="text-align:left; padding-left: 1.5%;">Betalingsløsning</th>
-            <th width="130">Indløsere</th>
+            <th width="160" style="text-align:left; padding-left: 1.5%;">Betalingsløsning</th>
+            <th width="130">Indløsning</th>
             <th width="146">Betalingsmidler</th>
             <th>Oprettelse</th>
             <th>Abonnement</th>
+            <th>Transaktions-<br> gebyrer</th>
             <th>
                <div class="equal right"><p class="icon"></p></div>
                Samlet pr. <br> måned
@@ -93,12 +93,10 @@
       </thead>
       <tbody id="tbody"></tbody>
    </table>
-
    <footer>
       Kortgebyr er udviklet af <a rel=”nofollow” href="https://github.com/ulrikmoe">Ulrik Moe</a>, <a rel=”nofollow” href="https://github.com/cblach">Christian Blach</a> og <a rel=”nofollow” href="https://github.com/zhasha">Joakim Sindholt</a> som et værktøj til at sammenligne <br /> betalingsløsninger. Kortgebyr blev startet i 2012, projektet er non-profit og <a href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small>GPLv3</small>).
    </footer>
    <script>
-      {% include "data.js" %}
-      {% include "kortgebyr.js" %}
+      {% include "all.js" %}
    </script>
 </body></html>
