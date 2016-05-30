@@ -992,7 +992,7 @@ let PSPs = [
         },
         fees: {
             setup: new Currency(0, 'DKK'),
-            monthly: new Currency(199, 'DKK'), // 3D-secure
+            monthly: new Currency(0, 'DKK'),
             trn(o) {
                 return o.avgvalue.scale(2.25 / 100).scale(o.transactions);
             }
