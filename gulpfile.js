@@ -55,7 +55,7 @@ function assets() {
 }
 
 function scripts() {
-    return gulp.src(['src/js/**/*'], { since: gulp.lastRun(scripts) })
+    return gulp.src(['src/js/data.js', 'src/js/kortgebyr.js'])
     .pipe(gutil.env.min ? babel(config.babel) : gutil.noop())
     .pipe(concat('all.js'))
     .pipe(gutil.env.min ? uglify(config.uglify) : gutil.noop())
@@ -82,7 +82,7 @@ function stalker() {
     gulp.watch(['src/assets/**/*'], assets);
     gulp.watch(['src/**/*.html'], html);
     gulp.watch(['src/css/*.less'], gulp.series(less2css, html));
-    gulp.watch(['src/js/*.js'], gulp.series(scripts, html));
+    gulp.watch(['src/js/data.js', 'src/js/kortgebyr.js'], gulp.series(scripts, html));
     gulp.watch(['i18n/*.json'], gulp.series('build'));
 }
 

@@ -15,7 +15,8 @@ const currency_value = {
     SEK: 0.801,
     NOK: 0.804,
     EUR: 7.437,
-    USD: 6.659
+    USD: 6.659,
+    GBP: 9.754
 };
 
 const currency_map = {
@@ -23,7 +24,8 @@ const currency_map = {
     SEK: 'kr',
     NOK: 'kr',
     EUR: '€',
-    USD: '$'
+    USD: '$',
+    GBP: '£'
 };
 
 const CARDs = {
@@ -84,7 +86,7 @@ const ACQs = [
             setup: new Currency(1000, 'DKK'),
             monthly: new Currency(149, 'DKK'),
             trn(o) {
-                let trnfee = o.avgvalue.scale(1.25 / 100).add(new Currency(0.19, 'DKK'));
+                let trnfee = o.avgvalue.scale(1.34 / 100).add(new Currency(0.19, 'DKK'));
                 if (trnfee.dkk() < 0.7) { trnfee = new Currency(0.7, 'DKK'); }
                 return trnfee;
             }
@@ -214,6 +216,7 @@ let PSPs = [
         link: 'https://www.braintreepayments.com',
         features: {
             antifraud: true,
+            '3-D secure': true,
             recurring: true
         },
         cards: {
@@ -224,7 +227,7 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return o.avgvalue.scale(2.9 / 100).add(new Currency(2.25, 'DKK')).scale(o.transactions); }
+            trn(o) { return o.avgvalue.scale(1.9 / 100).add(new Currency(2.25, 'DKK')).scale(o.transactions); }
         }
     },
     {
@@ -232,12 +235,19 @@ let PSPs = [
         logo: 'certitrade.svg',
         w: 125,
         h: 25,
-        link: 'http://www.certitrade.net/kortbetalning.php',
+        link: 'https://certitrade.se',
+        features: {
+            antifraud: true,
+            '3-D secure': true,
+            recurring: true
+        },
         acquirers: {
+            Bambora: true,
             Clearhaus: true,
             Swedbank: true,
             Handelsbanken: true,
-            Nordea: true
+            Nordea: true,
+            Elavon: true
         },
         cards: {
             visa: true,
@@ -261,7 +271,8 @@ let PSPs = [
         link: 'https://www.checkout.com',
         features: {
             antifraud: true,
-            recurring: true,
+            '3-D secure': true,
+            recurring: true
         },
         cards: {
             visa: true,
@@ -275,7 +286,7 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'EUR'),
             monthly: new Currency(0, 'EUR'),
-            trn(o) { return o.avgvalue.scale(1.5 / 100).add(new Currency(0.15, 'EUR')).scale(o.transactions); }
+            trn(o) { return o.avgvalue.scale(1.5 / 100).add(new Currency(0.15, 'GBP')).scale(o.transactions); }
         }
     },
     {
@@ -284,6 +295,13 @@ let PSPs = [
         w: 135,
         h: 25,
         link: 'https://www.dandomain.dk/webshop/betalingssystem',
+        features: {
+            '3-D secure': {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(99, 'DKK'),
+                trn: new Currency(0, 'DKK')
+            }
+        },
         acquirers: {
             Nets: true,
             Teller: true
@@ -302,7 +320,7 @@ let PSPs = [
         },
         fees: {
             setup: new Currency(199, 'DKK'),
-            monthly: new Currency(248, 'DKK'), // 149 + 99 (3D-secure)
+            monthly: new Currency(149, 'DKK'),
             trn(o) { return new Currency(0, 'DKK'); }
         }
     },
@@ -312,6 +330,28 @@ let PSPs = [
         w: 115,
         h: 28,
         link: 'http://dibs.dk',
+        features: {
+            '3-D secure': {
+                setup: new Currency(495, 'DKK'),
+                monthly: new Currency(49, 'DKK'), // Ring og spørg.
+                trn: new Currency(0, 'DKK')
+            },
+            antifraud: {
+                setup: new Currency(495, 'DKK'),
+                monthly: new Currency(49, 'DKK'),
+                trn: new Currency(0, 'DKK')
+            },
+            recurring: {
+                setup: new Currency(495, 'DKK'),
+                monthly: new Currency(49, 'DKK'),
+                trn: new Currency(0, 'DKK')
+            },
+            multiacquirer: {
+                setup: new Currency(495, 'DKK'),
+                monthly: new Currency(49, 'DKK'),
+                trn: new Currency(0, 'DKK')
+            }
+        },
         acquirers: {
             Nets: true
         },
@@ -332,7 +372,18 @@ let PSPs = [
         h: 28,
         link: 'http://dibs.dk',
         features: {
+            '3-D secure': true, // følger gratis med
             antifraud: {
+                setup: new Currency(495, 'DKK'),
+                monthly: new Currency(49, 'DKK'),
+                trn: new Currency(0, 'DKK')
+            },
+            recurring: {
+                setup: new Currency(495, 'DKK'),
+                monthly: new Currency(49, 'DKK'),
+                trn: new Currency(0, 'DKK')
+            },
+            multiacquirer: {
                 setup: new Currency(495, 'DKK'),
                 monthly: new Currency(49, 'DKK'),
                 trn: new Currency(0, 'DKK')
@@ -370,6 +421,7 @@ let PSPs = [
         h: 28,
         link: 'http://dibs.dk',
         features: {
+            '3-D secure': true, // følger gratis med
             antifraud: {
                 setup: new Currency(495, 'DKK'),
                 monthly: new Currency(49, 'DKK'),
@@ -438,6 +490,7 @@ let PSPs = [
         h: 29,
         link: 'http://epay.dk',
         features: {
+            '3-D secure': true,
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
@@ -480,10 +533,11 @@ let PSPs = [
         h: 29,
         link: 'http://epay.dk',
         features: {
+            '3-D secure': true,
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trn(o) { console.log(new Currency(0.3, 'DKK').scale(o.transactions)); }
+                trn(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
             },
             recurring: {
                 setup: new Currency(0, 'DKK'),
@@ -521,12 +575,13 @@ let PSPs = [
         }
     },
     {
-        name: 'ePay Pro+',
+        name: 'ePay Pro+', // Bambora
         logo: 'epay.svg',
         w: 130,
         h: 29,
-        link: 'http://epay.dk',
+        link: 'http://www.epay.dk/bambora/',
         features: {
+            '3-D secure': true,
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
@@ -536,12 +591,11 @@ let PSPs = [
         cards: {
             visa: true,
             mastercard: true,
-            maestro: true,
-            mobilepay: CARDs.mobilepay
+            maestro: true
         },
         fees: {
-            setup: new Currency(599, 'DKK'),
-            monthly: new Currency(199, 'DKK'),
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(149, 'DKK'),
             trn(o) {
                 return o.avgvalue.scale(1.45 / 100).add(new Currency(0.25, 'DKK')).scale(o.transactions);
             }
@@ -554,6 +608,7 @@ let PSPs = [
         h: 27,
         link: 'https://www.terminalshop.dk/Netaxept/',
         features: {
+            '3-D secure': true,
             antifraud: true
         },
         acquirers: {
@@ -578,6 +633,7 @@ let PSPs = [
         h: 27,
         link: 'https://www.terminalshop.dk/Netaxept/',
         features: {
+            '3-D secure': true,
             antifraud: true
         },
         acquirers: {
@@ -608,6 +664,7 @@ let PSPs = [
         h: 27,
         link: 'https://www.terminalshop.dk/Netaxept/',
         features: {
+            '3-D secure': true,
             antifraud: true,
             recurring: {
                 setup: new Currency(0, 'DKK'),
@@ -643,6 +700,10 @@ let PSPs = [
         w: 117,
         h: 24,
         link: 'http://payer.se/betallosning/',
+        features: {
+            '3-D secure': true,
+            antifraud: true
+        },
         acquirers: {
             Swedbank: true,
             Handelsbanken: true,
@@ -668,6 +729,7 @@ let PSPs = [
         h: 31,
         link: 'https://paylike.io',
         features: {
+            '3-D secure': true,
             antifraud: true
         },
         cards: {
@@ -688,6 +750,7 @@ let PSPs = [
         h: 24,
         link: 'https://paymill.com',
         features: {
+            '3-D secure': true,
             antifraud: true,
             recurring: true
         },
@@ -713,6 +776,7 @@ let PSPs = [
         h: 31,
         link: 'https://paypal.com',
         features: {
+            '3-D secure': true,
             antifraud: true
         },
         cards: {
@@ -744,6 +808,7 @@ let PSPs = [
         h: 31,
         link: 'https://www.payson.se',
         features: {
+            '3-D secure': true,
             antifraud: true
         },
         cards: {
@@ -764,6 +829,7 @@ let PSPs = [
         h: 31,
         link: 'https://payza.com',
         features: {
+            '3-D secure': true,
             antifraud: true
         },
         cards: {
@@ -775,7 +841,7 @@ let PSPs = [
             setup: new Currency(0, 'EUR'),
             monthly: new Currency(0, 'EUR'),
             trn(o) {
-                return o.avgvalue.scale(2.5 / 100).add(new Currency(0.25, 'EUR')).scale(o.transactions);
+                return o.avgvalue.scale(2.9 / 100).add(new Currency(0.3, 'EUR')).scale(o.transactions);
             }
         }
     },
@@ -786,6 +852,7 @@ let PSPs = [
         h: 27,
         link: 'https://quickpay.net/dk',
         features: {
+            '3-D secure': true,
             antifraud: true,
             recurring: true,
             multiacquirer: true
@@ -820,6 +887,7 @@ let PSPs = [
         h: 27,
         link: 'https://quickpay.net/dk',
         features: {
+            '3-D secure': true,
             antifraud: true,
             recurring: true,
             multiacquirer: true
@@ -854,6 +922,7 @@ let PSPs = [
         h: 27,
         link: 'https://quickpay.net/dk',
         features: {
+            '3-D secure': true,
             antifraud: true,
             recurring: true,
             multiacquirer: true
@@ -890,6 +959,7 @@ let PSPs = [
         h: 31,
         link: 'https://stripe.com',
         features: {
+            '3-D secure': true,
             antifraud: true,
             recurring: true
         },
@@ -910,6 +980,9 @@ let PSPs = [
         w: 119,
         h: 23,
         link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/',
+        features: {
+            '3-D secure': true
+        },
         acquirers: {
             Nets: true
         },
@@ -928,6 +1001,9 @@ let PSPs = [
         w: 119,
         h: 23,
         link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/',
+        features: {
+            '3-D secure': true
+        },
         acquirers: {
             Nets: true,
             Swedbank: true,
@@ -955,6 +1031,9 @@ let PSPs = [
         w: 119,
         h: 23,
         link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/',
+        features: {
+            '3-D secure': true
+        },
         acquirers: {
             Nets: true,
             Swedbank: true,
@@ -981,8 +1060,13 @@ let PSPs = [
         logo: 'yourpay.png',
         w: 115,
         h: 32,
-        link: 'http://www.yourpay.io',
+        link: 'https://www.yourpay.io',
         features: {
+            '3-D secure': {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(199, 'DKK'),
+                trn: new Currency(0, 'DKK')
+            },
             antifraud: true
         },
         cards: {
@@ -992,7 +1076,7 @@ let PSPs = [
         },
         fees: {
             setup: new Currency(0, 'DKK'),
-            monthly: new Currency(199, 'DKK'), // 3D-secure
+            monthly: new Currency(0, 'DKK'),
             trn(o) {
                 return o.avgvalue.scale(2.25 / 100).scale(o.transactions);
             }
@@ -1005,6 +1089,7 @@ let PSPs = [
         h: 15,
         link: 'https://www.2checkout.com',
         features: {
+            '3-D secure': true,
             antifraud: true,
             recurring: true
         },

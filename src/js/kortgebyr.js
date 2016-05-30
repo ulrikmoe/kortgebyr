@@ -62,6 +62,7 @@ Currency.prototype.string = function () {
     return this.dkk() / currency_value[gccode] + gccode; //currency_map[gccode];
 };
 
+/*
 Currency.prototype.length = function () {
     let n = 0;
     for (let k in this.amounts) {
@@ -71,6 +72,7 @@ Currency.prototype.length = function () {
     }
     return n;
 };
+*/
 
 Currency.prototype.dkk = function () {
     let sum = 0;
@@ -118,7 +120,6 @@ Currency.prototype.is_equal_to = function (other_currency_object) {
 
 Currency.prototype.scale = function (rhs) {
     let n = new Currency(0, 'DKK');
-
     for (let code in this.amounts) {
         if (this.amounts.hasOwnProperty(code)) {
             n.amounts[code] = this.amounts[code] * rhs;
@@ -348,6 +349,7 @@ const Settings = function (action) {
     for (let key in opts) {
         if (key !== 'dirty_bits') { this[key] = opts[key].get(action); }
     }
+    this.features['3-D secure'] = true;
 };
 
 
@@ -371,7 +373,7 @@ function acqcombo(psp, settings) {
     for (let acq of A) {
         if (psp.acquirers[acq.name]) {
             // Return acq if it support all settings.cards.
-            //if (x_has_y(acq.cards, settings.cards)) { return [i]; }
+            if (x_has_y(acq.cards, settings.cards)) { return [acq]; }
             acqarr.push(acq);
         }
     }
@@ -397,14 +399,19 @@ function acqcombo(psp, settings) {
     return null;
 }
 
-
-function showTooltip(elem, setup) {
+function showTooltip(elem, obj) {
     if (!elem.firstElementChild) {
         const infobox = document.createElement('ul');
-        for (let prop in setup) {
-            if (setup.hasOwnProperty(prop)) {
+
+        for (let prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
+                let costobj = obj[prop];
+                if (typeof costobj === 'function') {
+                    costobj = costobj(settings);
+                }
+
                 const li = document.createElement('li');
-                li.textContent = prop + ': ' + setup[prop].print();
+                li.textContent = prop + ': ' + costobj.print();
                 infobox.appendChild(li);
             }
         }
@@ -457,6 +464,9 @@ function build(action) {
             }
         }
 
+        // If an acquirer has been selected then hide the Stripes
+        if (settings.acquirers.length < 3 && !psp.acquirers) { continue; }
+
         const acqfrag = document.createDocumentFragment();
         let acqcards = {};
         let acqArr = [];
@@ -465,7 +475,6 @@ function build(action) {
             acqArr = acqcombo(psp, settings); // Find acq with full card support
             if (!acqArr) { continue; }
             for (let acq of acqArr) {
-
                 setup[acq.name] = acq.fees.setup;
                 monthly[acq.name] = acq.fees.monthly;
                 trnfee[acq.name] = acq.trnfees;
