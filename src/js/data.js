@@ -714,7 +714,8 @@ let PSPs = [
             mastercard: true,
             maestro: true,
             amex: true,
-            diners: true
+            diners: true,
+            swish: true
         },
         fees: {
             setup: new Currency(1400, 'SEK'),
@@ -979,7 +980,7 @@ let PSPs = [
         logo: 'verifone.svg',
         w: 119,
         h: 23,
-        link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/',
+        link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/E-handel-Basis/',
         features: {
             '3-D secure': true
         },
@@ -1000,9 +1001,10 @@ let PSPs = [
         logo: 'verifone.svg',
         w: 119,
         h: 23,
-        link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/',
+        link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/E-handel-Premium/',
         features: {
-            '3-D secure': true
+            '3-D secure': true,
+            recurring: true
         },
         acquirers: {
             Nets: true,
@@ -1026,13 +1028,15 @@ let PSPs = [
         }
     },
     {
-        name: 'Verifone PremiumPlus',
+        name: 'Verifone Premium+',
         logo: 'verifone.svg',
         w: 119,
         h: 23,
-        link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/',
+        link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/E-handel-Premium-Plus/',
         features: {
-            '3-D secure': true
+            '3-D secure': true,
+            recurring: true,
+            multiacquirer: true
         },
         acquirers: {
             Nets: true,
