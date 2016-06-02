@@ -6,15 +6,31 @@
 *   Indentation: 4 spaces
 *   Conventions: https://github.com/airbnb/javascript
 *
-*   Ugly fixes:
-*   1) Nets needs to be the first acquirer in acquirersort. The problem is that
-*      we don't iterate through acquirers properly when we try to find the
-*      cheapest combination of acquirers.
+*   Resellers: Scannet, PensoPay, Wannafind ...
 *
 **/
 
-const table = $('table');
 function $(s) { return document.getElementById(s); }
+
+const table = $('table');
+
+const currency_value = {
+    DKK: 1,
+    SEK: 0.801,
+    NOK: 0.804,
+    EUR: 7.437,
+    USD: 6.659,
+    GBP: 9.754
+};
+
+const currency_map = {
+    DKK: 'kr',
+    SEK: 'kr',
+    NOK: 'kr',
+    EUR: '€',
+    USD: '$',
+    GBP: '£'
+};
 
 // let l, sort, card, acquirer;
 let gccode = 'DKK';
