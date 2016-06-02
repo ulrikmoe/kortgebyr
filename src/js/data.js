@@ -7,6 +7,7 @@
 *   Conventions: https://github.com/airbnb/javascript
 *
 *   Resellers: Scannet, PensoPay, Wannafind ...
+*   To do: opdatere Payson
 *
 **/
 
@@ -1111,6 +1112,31 @@ let PSPs = [
             monthly: new Currency(0, 'USD'),
             trn(o) {
                 return o.avgvalue.scale(2.4 / 100).add(new Currency(0.3, 'USD')).scale(o.transactions);
+            }
+        }
+    },
+    {
+        name: 'PayEx One',
+        logo: 'payex.svg',
+        w: 100,
+        h: 32,
+        link: 'http://payex.dk/tjenester/e-handel/',
+        features: {
+            '3-D secure': true,
+            antifraud: true,
+            recurring: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true,
+            mobilepay: true
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(299, 'DKK'),
+            trn(o) {
+                return o.avgvalue.scale(1 / 100).add(new Currency(1.5, 'DKK')).scale(o.transactions);
             }
         }
     }
