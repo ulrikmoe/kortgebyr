@@ -1,33 +1,9 @@
 /**
-*   First shalt thou take out the Holy Pin. Then...
 *   @author Ulrik Moe, Christian Blach, Joakim Sindholt
 *   @license GPLv3
-*
 *   Indentation: 4 spaces
-*   Conventions: https://github.com/airbnb/javascript
-*
-*   Resellers: Scannet, PensoPay, Wannafind ...
-*   To do: opdatere Payson
-*
 **/
 
-const currency_value = {
-    DKK: 1,
-    SEK: 0.801,
-    NOK: 0.804,
-    EUR: 7.437,
-    USD: 6.659,
-    GBP: 9.754
-};
-
-const currency_map = {
-    DKK: 'kr',
-    SEK: 'kr',
-    NOK: 'kr',
-    EUR: '€',
-    USD: '$',
-    GBP: '£'
-};
 
 const CARDs = {
     mobilepay: {
@@ -821,7 +797,7 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'SEK'),
             monthly: new Currency(0, 'SEK'),
-            trn(o) { return o.avgvalue.scale(3 / 100).add(new Currency(3, 'SEK')).scale(o.transactions); }
+            trn(o) { return o.avgvalue.scale(2.85 / 100).scale(o.transactions); }
         }
     },
     {
@@ -1130,7 +1106,7 @@ let PSPs = [
             visa: true,
             mastercard: true,
             maestro: true,
-            mobilepay: true
+            mobilepay: CARDs.mobilepay
         },
         fees: {
             setup: new Currency(0, 'DKK'),
