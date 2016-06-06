@@ -9,7 +9,7 @@ const CARDs = {
     mobilepay: {
         setup: new Currency(49, 'DKK'),
         monthly: new Currency(49, 'DKK'),
-        trn: new Currency(1, 'DKK')
+        trn(o) { return (new Currency(1, 'DKK')).scale(o.transactions / 20); }
     },
     forbrugsforeningen: {
         setup: new Currency(0, 'DKK'),
@@ -440,6 +440,7 @@ let PSPs = [
         h: 29,
         link: 'http://epay.dk',
         features: {
+            '3-D secure': true,
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
@@ -752,7 +753,7 @@ let PSPs = [
         logo: 'paypal.svg',
         w: 127,
         h: 31,
-        link: 'https://paypal.com',
+        link: 'https://www.paypal.com/dk/webapps/mpp/merchant',
         features: {
             '3-D secure': true,
             antifraud: true
@@ -1113,6 +1114,132 @@ let PSPs = [
             monthly: new Currency(299, 'DKK'),
             trn(o) {
                 return o.avgvalue.scale(1 / 100).add(new Currency(1.5, 'DKK')).scale(o.transactions);
+            }
+        }
+    },
+    {
+        name: 'Wannafind',
+        logo: 'wannafind.svg',
+        w: 135,
+        h: 18,
+        link: 'https://www.wannafind.dk/betalingssystem/',
+        features: {
+            '3-D secure': {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(49, 'DKK'),
+                trn: new Currency(0, 'DKK')
+            },
+            recurring: {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(99, 'DKK'),
+                trn: new Currency(0, 'DKK')
+            },
+            antifraud: true
+        },
+        acquirers: {
+            Nets: true,
+            Teller: true
+        },
+        cards: {
+            dankort: true,
+            visa: true,
+            mastercard: true,
+            maestro: true,
+            amex: true,
+            jcb: true,
+            unionpay: true,
+            diners: true,
+            mobilepay: CARDs.mobilepay,
+            forbrugsforeningen: CARDs.forbrugsforeningen
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(149, 'DKK'),
+            trn(o) { return new Currency(0, 'DKK'); }
+        }
+    },
+    {
+        name: 'PensoPay Basis',
+        logo: 'pensopay.svg',
+        w: 134,
+        h: 35,
+        link: 'https://pensopay.com/',
+        features: {
+            '3-D secure': true,
+            recurring: {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(0, 'DKK'),
+                trn: new Currency(0.20, 'DKK')
+            },
+            antifraud: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true,
+            mobilepay: CARDs.mobilepay
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(0, 'DKK'),
+            trn(o) { return o.avgvalue.scale(1.45 / 100).add(new Currency(5, 'DKK')).scale(o.transactions); }
+        }
+    },
+    {
+        name: 'PensoPay Iværksætter',
+        logo: 'pensopay.svg',
+        w: 134,
+        h: 35,
+        link: 'https://pensopay.com/',
+        features: {
+            '3-D secure': true,
+            recurring: {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(0, 'DKK'),
+                trn: new Currency(0.20, 'DKK')
+            },
+            antifraud: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true,
+            mobilepay: CARDs.mobilepay
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(59, 'DKK'),
+            trn(o) { return o.avgvalue.scale(1.45 / 100).add(new Currency(1, 'DKK')).scale(o.transactions); }
+        }
+    },
+    {
+        name: 'PensoPay Pro',
+        logo: 'pensopay.svg',
+        w: 134,
+        h: 35,
+        link: 'https://pensopay.com/',
+        features: {
+            '3-D secure': true,
+            recurring: {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(0, 'DKK'),
+                trn: new Currency(0.20, 'DKK')
+            },
+            antifraud: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true,
+            mobilepay: CARDs.mobilepay
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(149, 'DKK'),
+            trn(o) {
+                let fee = o.avgvalue.scale(1.45 / 100).scale(o.transactions);
+                fee.add(new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0)));
+                return fee;
             }
         }
     }
