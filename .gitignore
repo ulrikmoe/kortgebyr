@@ -1,3 +1,4 @@
 www/
 /node_modules/
 publish.sh
+optimize.sh
