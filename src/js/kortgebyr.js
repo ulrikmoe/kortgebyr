@@ -6,8 +6,6 @@
 *   Indentation: 4 spaces
 *   Conventions: https://github.com/airbnb/javascript
 *
-*   Resellers: Scannet, PensoPay, Wannafind ...
-*
 **/
 
 function $(s) { return document.getElementById(s); }
@@ -16,11 +14,11 @@ const table = $('table');
 
 const currency_value = {
     DKK: 1,
-    SEK: 0.801,
-    NOK: 0.804,
-    EUR: 7.437,
-    USD: 6.659,
-    GBP: 9.754
+    SEK: 0.803,
+    NOK: 0.801,
+    EUR: 7.438,
+    USD: 6.669,
+    GBP: 9.624
 };
 
 const currency_map = {
