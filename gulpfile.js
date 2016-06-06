@@ -88,5 +88,5 @@ function stalker() {
 
 gulp.task('clean', function () { return del(['www/**', '!www']); });
 gulp.task('serve', gulp.parallel(stalker, server));
-gulp.task('build', gulp.series('clean', assets, scripts, less2css, html));
+gulp.task('build', gulp.series(assets, scripts, less2css, html));
 gulp.task('default', gulp.series('clean', assets, scripts, less2css, html, 'serve'));
