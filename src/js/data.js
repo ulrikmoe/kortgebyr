@@ -322,11 +322,6 @@ let PSPs = [
                 setup: new Currency(495, 'DKK'),
                 monthly: new Currency(49, 'DKK'),
                 trn: new Currency(0, 'DKK')
-            },
-            multiacquirer: {
-                setup: new Currency(495, 'DKK'),
-                monthly: new Currency(49, 'DKK'),
-                trn: new Currency(0, 'DKK')
             }
         },
         acquirers: {
@@ -356,11 +351,6 @@ let PSPs = [
                 trn: new Currency(0, 'DKK')
             },
             recurring: {
-                setup: new Currency(495, 'DKK'),
-                monthly: new Currency(49, 'DKK'),
-                trn: new Currency(0, 'DKK')
-            },
-            multiacquirer: {
                 setup: new Currency(495, 'DKK'),
                 monthly: new Currency(49, 'DKK'),
                 trn: new Currency(0, 'DKK')
@@ -404,8 +394,7 @@ let PSPs = [
                 monthly: new Currency(49, 'DKK'),
                 trn: new Currency(0, 'DKK')
             },
-            recurring: true,
-            multiacquirer: true
+            recurring: true
         },
         acquirers: {
             Nets: true,
@@ -473,8 +462,7 @@ let PSPs = [
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
                 trn(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
-            },
-            multiacquirer: true
+            }
         },
         acquirers: {
             Nets: true,
@@ -521,8 +509,7 @@ let PSPs = [
                 setup: new Currency(0, 'DKK'),
                 monthly(o) { return (new Currency(1 / 12, 'DKK')).scale(o.transactions); },
                 trn: new Currency(0, 'DKK')
-            },
-            multiacquirer: true
+            }
         },
         acquirers: {
             Nets: true,
@@ -833,8 +820,7 @@ let PSPs = [
         features: {
             '3-D secure': true,
             antifraud: true,
-            recurring: true,
-            multiacquirer: true
+            recurring: true
         },
         acquirers: {
             Nets: true,
@@ -868,8 +854,7 @@ let PSPs = [
         features: {
             '3-D secure': true,
             antifraud: true,
-            recurring: true,
-            multiacquirer: true
+            recurring: true
         },
         acquirers: {
             Nets: true,
@@ -903,8 +888,7 @@ let PSPs = [
         features: {
             '3-D secure': true,
             antifraud: true,
-            recurring: true,
-            multiacquirer: true
+            recurring: true
         },
         acquirers: {
             Nets: true,
@@ -1013,8 +997,7 @@ let PSPs = [
         link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/E-handel-Premium-Plus/',
         features: {
             '3-D secure': true,
-            recurring: true,
-            multiacquirer: true
+            recurring: true
         },
         acquirers: {
             Nets: true,
