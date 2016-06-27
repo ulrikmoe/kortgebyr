@@ -49,7 +49,7 @@ const config = {
 function server() { connect.server({ root: 'www', livereload: !gutil.env.min }); }
 
 function assets() {
-    return gulp.src(['src/assets/**/*'], { base: 'src/assets', since: gulp.lastRun(assets) })
+    return gulp.src(['src/assets/**/*', 'src/*.{ico,xml}'], { since: gulp.lastRun(assets) })
     .pipe(gulp.dest('www'))
     .pipe(connect.reload());
 }
