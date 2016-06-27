@@ -1027,11 +1027,7 @@ let PSPs = [
         h: 32,
         link: 'https://www.yourpay.io',
         features: {
-            '3-D secure': {
-                setup: new Currency(0, 'DKK'),
-                monthly: new Currency(199, 'DKK'),
-                trn: new Currency(0, 'DKK')
-            },
+            '3-D secure': true,
             antifraud: true
         },
         cards: {
