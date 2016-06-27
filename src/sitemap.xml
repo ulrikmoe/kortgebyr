@@ -7,7 +7,7 @@
   </url>
   <url>
     <loc>https://kortgebyr.dk/forklaring.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.2</priority>
   </url>
 </urlset>
