@@ -999,6 +999,28 @@ let PSPs = [
         }
     },
     {
+        name: 'YourPay',
+        logo: 'yourpay.png',
+        w: 115,
+        h: 32,
+        link: 'http://www.yourpay.io',
+        features: {
+            antifraud: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(0, 'DKK'),
+            trn(o) {
+                return o.avgvalue.scale(1.35 / 100).scale(o.transactions);
+            }
+        }
+    },
+    {
         name: '2checkout',
         logo: '2checkout.svg',
         w: 127,
