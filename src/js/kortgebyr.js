@@ -2,10 +2,8 @@
 *   First shalt thou take out the Holy Pin. Then...
 *   @author Ulrik Moe, Christian Blach, Joakim Sindholt
 *   @license GPLv3
-*
 *   Indentation: 4 spaces
 *   Conventions: https://github.com/airbnb/javascript
-*
 **/
 
 function $(s) { return document.getElementById(s); }
@@ -14,11 +12,11 @@ const table = $('table');
 
 const currency_value = {
     DKK: 1,
-    SEK: 0.803,
-    NOK: 0.801,
-    EUR: 7.438,
-    USD: 6.669,
-    GBP: 9.624
+    SEK: 0.786,
+    NOK: 0.792,
+    EUR: 7.441,
+    USD: 6.722,
+    GBP: 8.729
 };
 
 const currency_map = {
