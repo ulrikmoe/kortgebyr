@@ -16,21 +16,13 @@
     "url": "https://github.com/ulrikmoe/kortgebyr/issues"
   },
   "homepage": "https://github.com/ulrikmoe/kortgebyr#readme",
-  "devDependencies": {
+  "dependencies": {
     "gulp": "gulpjs/gulp#4.0",
     "del": "*",
     "gulp-connect": "*",
-    "gulp-data": "*",
-    "gulp-htmlmin": "*",
     "gulp-less": "*",
-    "gulp-cssnano": "*",
     "gulp-nunjucks-html": "*",
-    "gulp-uglify": "*",
     "gulp-util": "*",
-    "gulp-babel": "*",
-    "gulp-concat": "*",
-    "babel-plugin-transform-es2015-block-scoping": "*",
-    "babel-plugin-transform-es2015-shorthand-properties": "*",
-    "babel-plugin-transform-es2015-for-of": "*"
+    "gulp-concat": "*"
   }
 }
