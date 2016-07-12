@@ -1,17 +1,13 @@
 /**
 *   @author Ulrik Moe
 *   @license GPLv3
-*
 *   Indentation: 4 spaces
 *   Conventions: https://github.com/airbnb/javascript
-*
-*   Use 'gulp --min'
 **/
 'use strict';
 
 const gulp = require('gulp');
 const del = require('del');
-const gutil = require('gulp-util');
 const connect = require('gulp-connect');
 const nunjucks = require('gulp-nunjucks-html');
 const less = require('gulp-less');
@@ -21,7 +17,7 @@ const concat = require('gulp-concat');
 const months = ['januar', 'februar', 'marts', 'april', 'maj', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'december'];
 const date = new Date();
 
-let env = gutil.env;
+let env = require('minimist')(process.argv.slice(2));
 env.lastUpdate = date.getDate() + '. ' + months[date.getMonth()] + ' ' + date.getFullYear();
 
 function server() { connect.server({ root: 'www', livereload: true }); }
