@@ -1,28 +1,12 @@
 {
-  "name": "kortgebyr",
-  "version": "1.0.0",
-  "description": "Prissammenligning af betalingsløsninger",
-  "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ulrikmoe/kortgebyr.git"
-  },
-  "author": "Ulrik Moe",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/ulrikmoe/kortgebyr/issues"
-  },
-  "homepage": "https://github.com/ulrikmoe/kortgebyr#readme",
+  "private": true,
   "dependencies": {
     "gulp": "gulpjs/gulp#4.0",
     "del": "*",
     "gulp-connect": "*",
     "gulp-less": "*",
     "gulp-nunjucks-html": "*",
-    "gulp-util": "*",
-    "gulp-concat": "*"
+    "gulp-concat": "*",
+    "minimist": "*"
   }
 }
