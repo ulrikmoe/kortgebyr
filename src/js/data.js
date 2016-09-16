@@ -433,21 +433,35 @@ let PSPs = [
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trn(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
+                trn(o) { return new Currency(0.5, 'DKK').scale(o.transactions); }
             }
         },
         acquirers: {
-            Nets: true
+            Nets: true,
+            Teller: true,
+            Clearhaus: true,
+            Swedbank: true,
+            Handelsbanken: true,
+            Valitor: true,
+            Elavon: true,
+            Bambora: true
         },
         cards: {
             dankort: true,
+            visa: true,
+            mastercard: true,
+            maestro: true,
+            amex: true,
+            jcb: true,
+            unionpay: true,
+            diners: true,
             mobilepay: CARDs.mobilepay,
             forbrugsforeningen: CARDs.forbrugsforeningen
         },
         fees: {
-            setup: new Currency(399, 'DKK'),
-            monthly: new Currency(99, 'DKK'),
-            trn(o) { return new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0)); }
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(0, 'DKK'),
+            trn(o) { return new Currency(5, 'DKK').scale(o.transactions); }
         }
     },
     {
@@ -461,7 +475,7 @@ let PSPs = [
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trn(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
+                trn(o) { return new Currency(0.5, 'DKK').scale(o.transactions); }
             }
         },
         acquirers: {
@@ -489,7 +503,7 @@ let PSPs = [
         fees: {
             setup: new Currency(599, 'DKK'),
             monthly: new Currency(199, 'DKK'),
-            trn(o) { return new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0)); }
+            trn(o) { return new Currency(0.5, 'DKK').scale(o.transactions); }
         }
     },
     {
@@ -503,7 +517,7 @@ let PSPs = [
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trn(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
+                trn(o) { return new Currency(0.5, 'DKK').scale(o.transactions); }
             },
             recurring: {
                 setup: new Currency(0, 'DKK'),
@@ -536,7 +550,7 @@ let PSPs = [
         fees: {
             setup: new Currency(999, 'DKK'),
             monthly: new Currency(299, 'DKK'),
-            trn(o) { return new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 500, 0)); }
+            trn(o) { return new Currency(0.5, 'DKK').scale(o.transactions); }
         }
     },
     {
@@ -562,7 +576,7 @@ let PSPs = [
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(149, 'DKK'),
             trn(o) {
-                return o.avgvalue.scale(1.45 / 100).add(new Currency(0.25, 'DKK')).scale(o.transactions);
+                return o.avgvalue.scale(1.45 / 100).add(new Currency(0.5, 'DKK')).scale(o.transactions);
             }
         }
     },
@@ -571,7 +585,7 @@ let PSPs = [
         logo: 'netaxept.svg',
         w: 99,
         h: 27,
-        link: 'https://www.terminalshop.dk/Netaxept/',
+        link: 'https://shop.nets.eu/da/web/dk/e-commerce',
         features: {
             '3-D secure': true,
             antifraud: true
@@ -592,42 +606,11 @@ let PSPs = [
         }
     },
     {
-        name: 'Netaxept Plus',
-        logo: 'netaxept.svg',
-        w: 99,
-        h: 27,
-        link: 'https://www.terminalshop.dk/Netaxept/',
-        features: {
-            '3-D secure': true,
-            antifraud: true
-        },
-        acquirers: {
-            Nets: true,
-            Teller: true,
-            Swedbank: true,
-            Nordea: true,
-            Elavon: true
-        },
-        cards: {
-            dankort: true,
-            visa: true,
-            mastercard: true,
-            jcb: true,
-            unionpay: true,
-            diners: true
-        },
-        fees: {
-            setup: new Currency(3016, 'DKK'),
-            monthly: new Currency(502, 'DKK'),
-            trn(o) { return new Currency(1, 'DKK').scale(o.transactions); }
-        }
-    },
-    {
         name: 'Netaxept Advanced',
         logo: 'netaxept.svg',
         w: 99,
         h: 27,
-        link: 'https://www.terminalshop.dk/Netaxept/',
+        link: 'https://shop.nets.eu/da/web/dk/e-commerce',
         features: {
             '3-D secure': true,
             antifraud: true,
@@ -938,89 +921,6 @@ let PSPs = [
         }
     },
     {
-        name: 'Verifone Basis',
-        logo: 'verifone.svg',
-        w: 119,
-        h: 23,
-        link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/E-handel-Basis/',
-        features: {
-            '3-D secure': true
-        },
-        acquirers: {
-            Nets: true
-        },
-        cards: {
-            dankort: true
-        },
-        fees: {
-            setup: new Currency(395, 'DKK'),
-            monthly: new Currency(99, 'DKK'),
-            trn(o) { return new Currency(0.5, 'DKK').scale(Math.max(o.transactions - 250, 0)); }
-        }
-    },
-    {
-        name: 'Verifone Premium',
-        logo: 'verifone.svg',
-        w: 119,
-        h: 23,
-        link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/E-handel-Premium/',
-        features: {
-            '3-D secure': true,
-            recurring: true
-        },
-        acquirers: {
-            Nets: true,
-            Swedbank: true,
-            Handelsbanken: true,
-            Nordea: true
-        },
-        cards: {
-            dankort: true,
-            visa: true,
-            mastercard: true,
-            maestro: true,
-            amex: true,
-            jcb: true,
-            diners: true
-        },
-        fees: {
-            setup: new Currency(595, 'DKK'),
-            monthly: new Currency(199, 'DKK'),
-            trn(o) { return new Currency(0.4, 'DKK').scale(Math.max(o.transactions - 250, 0)); }
-        }
-    },
-    {
-        name: 'Verifone Premium+',
-        logo: 'verifone.svg',
-        w: 119,
-        h: 23,
-        link: 'https://www.verifone.dk/da/Denmark/Start/E-handel/E-handel-Premium-Plus/',
-        features: {
-            '3-D secure': true,
-            recurring: true
-        },
-        acquirers: {
-            Nets: true,
-            Swedbank: true,
-            Handelsbanken: true,
-            Nordea: true
-        },
-        cards: {
-            dankort: true,
-            visa: true,
-            mastercard: true,
-            maestro: true,
-            amex: true,
-            jcb: true,
-            diners: true
-        },
-        fees: {
-            setup: new Currency(1595, 'DKK'),
-            monthly: new Currency(499, 'DKK'),
-            trn(o) { return new Currency(0.3, 'DKK').scale(Math.max(o.transactions - 250, 0)); }
-        }
-    },
-    {
         name: 'YourPay',
         logo: 'yourpay.png',
         w: 115,
@@ -1192,6 +1092,35 @@ let PSPs = [
         }
     },
     {
+        name: 'PensoPay Business',
+        logo: 'pensopay.svg',
+        w: 134,
+        h: 35,
+        link: 'https://pensopay.com/vores-betalingsloesninger/',
+        features: {
+            '3-D secure': true,
+            recurring: {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(0, 'DKK'),
+                trn: new Currency(0.20, 'DKK')
+            },
+            antifraud: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true,
+            mobilepay: CARDs.mobilepay
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(99, 'DKK'),
+            trn(o) {
+                return o.avgvalue.scale(1.4 / 100).add(new Currency(0.35, 'DKK')).scale(Math.max(o.transactions - 100, 0));
+            }
+        }
+    },
+    {
         name: 'PensoPay Pro',
         logo: 'pensopay.svg',
         w: 134,
@@ -1216,9 +1145,7 @@ let PSPs = [
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(149, 'DKK'),
             trn(o) {
-                let fee = o.avgvalue.scale(1.45 / 100).scale(o.transactions);
-                fee.add(new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0)));
-                return fee;
+                return o.avgvalue.scale(1.35 / 100).add(new Currency(0.25, 'DKK')).scale(Math.max(o.transactions - 250, 0));
             }
         }
     }
