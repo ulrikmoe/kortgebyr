@@ -33,9 +33,6 @@ html {
     -ms-text-size-adjust: 100%; // Fix text size adjust after orientation change.
     -webkit-text-size-adjust: 100%; // Fix text size adjust after orientation change.
     box-sizing: border-box;
-    text-rendering: geometricPrecision;
-    font-feature-settings: 'kern' 1;
-    font-kerning: normal;
 }
 
 body { margin: 0; }
@@ -340,7 +337,11 @@ td {
 
 .acq { line-height: 23px}
 
-.card { margin: 4px 3px; vertical-align: middle; }
+.card {
+    width: 22px;
+    height: 15px;
+    margin: 4px 3px;
+}
 
 .equal {
     font-size: 20px;
