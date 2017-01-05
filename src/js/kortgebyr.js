@@ -1,22 +1,17 @@
 /**
-*   First shalt thou take out the Holy Pin. Then...
 *   @author Ulrik Moe, Christian Blach, Joakim Sindholt
 *   @license GPLv3
-*   Indentation: 4 spaces
-*   Conventions: https://github.com/airbnb/javascript
 **/
 
 function $(s) { return document.getElementById(s); }
 
-const table = $('table');
-
 const currency_value = {
     DKK: 1,
-    SEK: 0.786,
-    NOK: 0.792,
-    EUR: 7.441,
-    USD: 6.722,
-    GBP: 8.729
+    SEK: 0.781,
+    NOK: 0.827,
+    EUR: 7.434,
+    USD: 7.123,
+    GBP: 8.752
 };
 
 const currency_map = {
@@ -28,7 +23,6 @@ const currency_map = {
     GBP: '£'
 };
 
-// let l, sort, card, acquirer;
 let gccode = 'DKK';
 
 function set_ccode(c) {
@@ -46,7 +40,7 @@ Currency.prototype.type = 'currency';
 
 Currency.prototype.print = function () {
     const number = Math.round((this.dkk() * 100) / currency_value[gccode]) / 100;
-    let parts = number.toString().split('.');
+    const parts = number.toString().split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
     if (parts.length === 2 && parts[1].length === 1) {
@@ -74,18 +68,6 @@ Currency.prototype.string = function () {
     return this.dkk() / currency_value[gccode] + gccode; //currency_map[gccode];
 };
 
-/*
-Currency.prototype.length = function () {
-    let n = 0;
-    for (let k in this.amounts) {
-        if (this.amounts.hasOwnProperty(k)) {
-            n++;
-        }
-    }
-    return n;
-};
-*/
-
 Currency.prototype.dkk = function () {
     let sum = 0;
     for (let code in this.amounts) {
@@ -99,8 +81,7 @@ Currency.prototype.dkk = function () {
 
 
 Currency.prototype.add = function (rhs) {
-
-    let n = new Currency(0, 'DKK');
+    const n = new Currency(0, 'DKK');
 
     for (let code in this.amounts) {
         if (this.amounts.hasOwnProperty(code)) {
@@ -131,7 +112,7 @@ Currency.prototype.is_equal_to = function (other_currency_object) {
 };
 
 Currency.prototype.scale = function (rhs) {
-    let n = new Currency(0, 'DKK');
+    const n = new Currency(0, 'DKK');
     for (let code in this.amounts) {
         if (this.amounts.hasOwnProperty(code)) {
             n.amounts[code] = this.amounts[code] * rhs;
@@ -160,7 +141,7 @@ function setInt(k, v) {
 }
 
 function mkcurregex() {
-    let arr = [];
+    const arr = [];
     for (let k in currency_map) {
         arr.push(currency_map[k]);
     }
@@ -195,7 +176,7 @@ function _getCurrency(currency) {
 
 function getCurrency(currency, action) {
 
-    if (action === 'init') { $(currency).addEventListener('input', build, false); }
+    if (action === 'init') { $(currency).addEventListener('input', build); }
 
     const a = _getCurrency($(currency).value);
     if (a === null) {
@@ -206,9 +187,9 @@ function getCurrency(currency, action) {
     return a;
 }
 
-function changeCurrency(option) {
-    $('currency_code').innerHTML = option.value;
-    set_ccode(option.value);
+function changeCurrency() {
+    $('currency_code').innerHTML = this.value;
+    set_ccode(this.value);
     build();
     //save_url();
 }
@@ -235,13 +216,13 @@ function setPercent(k, v) {
 }
 
 
-let opts = {
+const opts = {
     cards: {
         type: 'bits',
         bits() { return document.getElementsByClassName('ocards').length; },
         get(action) {
             // Get all selected payment methods from .ocards
-            let obj = {};
+            const obj = {};
             const ocards = document.getElementsByClassName('ocards');
             let bitval = 0;
             for (let i = 0; i < ocards.length; i++) {
@@ -267,7 +248,7 @@ let opts = {
         bits() { return document.getElementsByClassName('ofeatures').length; },
         get(action) {
             // Get all selected features
-            let obj = {};
+            const obj = {};
             const ofeatures = document.getElementsByClassName('ofeatures');
             let bitval = 0;
             for (let i = 0; i < ofeatures.length; i++) {
@@ -379,7 +360,7 @@ function sum() {
 // Find combination of acquirers that support all cards
 function acqcombo(psp, settings) {
     const A = settings.acquirers;
-    let acqarr = [];
+    const acqarr = [];
 
     // Check if a single acq support all cards.
     for (let acq of A) {
@@ -434,7 +415,7 @@ function showTooltip(elem, obj) {
 // Build table
 function build(action) {
     settings = new Settings(action);
-    let data = [];
+    const data = [];
     const tbody = document.createElement('tbody');
     tbody.id = 'tbody';
 
@@ -454,9 +435,9 @@ function build(action) {
 
     psploop:
     for (let psp of PSPs) {
-        let setup = {};
-        let monthly = {};
-        let trnfee = {};
+        const setup = {};
+        const monthly = {};
+        const trnfee = {};
 
         setup[psp.name] = psp.fees.setup;
         monthly[psp.name] = psp.fees.monthly;
@@ -480,7 +461,7 @@ function build(action) {
         if (settings.acquirers.length < 3 && !psp.acquirers) { continue; }
 
         const acqfrag = document.createDocumentFragment();
-        let acqcards = {};
+        const acqcards = {};
         let acqArr = [];
         if (psp.acquirers) {
 
@@ -527,7 +508,7 @@ function build(action) {
         }
 
         // Calculate TC and sort psps
-        let totalcost = sum(monthly, trnfee);
+        const totalcost = sum(monthly, trnfee);
         let sort;
         for (sort = 0; sort < data.length; ++sort) {
             if (totalcost.dkk() < data[sort]) { break; }
@@ -579,7 +560,7 @@ function build(action) {
         // cardfee calc.
         const cardfeefrag = document.createDocumentFragment();
         const p1 = document.createElement('p');
-        let cardfee = totalcost.scale(1 / (settings.transactions || 1));
+        const cardfee = totalcost.scale(1 / (settings.transactions || 1));
         cardfeefrag.textContent = cardfee.print();
         p1.textContent = '(' + (cardfee.scale(1 / settings.avgvalue.dkk()).dkk() * 100).toFixed(3).replace('.', ',') + '%)';
         p1.className = 'procent';
@@ -595,9 +576,7 @@ function build(action) {
         row.insertCell(-1).textContent = totalcost.print();
         row.insertCell(-1).appendChild(cardfeefrag);
     }
-    table.replaceChild(tbody, $('tbody'));
-
-    //if (action !== 'init') { saveurl(); }
+    $('table').replaceChild(tbody, $('tbody'));
 }
 
 
@@ -674,7 +653,7 @@ function saveurl() {
 
     /* Loop through the options and construct the url */
     for (let key in opts) {
-        let o = opts[key];
+        const o = opts[key];
 
         /* Depending on whether dirty bits are used or not, react accordingly */
         if (o.dirty_bits) {
@@ -757,5 +736,5 @@ function loadurl() {
 //===========================
 
 build('init');
-$('currency_code_select').onchange = function () { changeCurrency(this); };
-$('form').addEventListener('change', build, false);
+$('currency_code_select').addEventListener('change', changeCurrency);
+$('form').addEventListener('change', build);
