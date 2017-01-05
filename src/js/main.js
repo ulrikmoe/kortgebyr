@@ -5,125 +5,11 @@
 
 function $(s) { return document.getElementById(s); }
 
-const currency_value = {
-    DKK: 1,
-    SEK: 0.781,
-    NOK: 0.827,
-    EUR: 7.434,
-    USD: 7.123,
-    GBP: 8.752
-};
-
-const currency_map = {
-    DKK: 'kr',
-    SEK: 'kr',
-    NOK: 'kr',
-    EUR: '€',
-    USD: '$',
-    GBP: '£'
-};
-
-let gccode = 'DKK';
-
-function set_ccode(c) {
-    if (currency_map.hasOwnProperty(c)) {
-        gccode = c;
-    }
-}
-
-function Currency(amt, code) {
-    this.amounts = {};
-    this.amounts[code] = amt;
-}
-
-Currency.prototype.type = 'currency';
-
-Currency.prototype.print = function () {
-    const number = Math.round((this.dkk() * 100) / currency_value[gccode]) / 100;
-    const parts = number.toString().split('.');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-    if (parts.length === 2 && parts[1].length === 1) {
-        parts[1] += '0';
-    }
-    return parts.join(',') + ' ' + currency_map[gccode];
-};
-
-
-Currency.prototype.represent = function () {
-    if (this.length() === 1) {
-        for (let code in this.amounts) {
-            return this.amounts[code] + ' ' + code;
-        }
-    }
-    return this.dkk() / currency_value[gccode] + ' ' + gccode; //currency_map[gccode];
-};
-
-Currency.prototype.string = function () {
-    if (this.length() === 1) {
-        for (let code in this.amounts) {
-            return this.amounts[code] + code;
-        }
-    }
-    return this.dkk() / currency_value[gccode] + gccode; //currency_map[gccode];
-};
-
-Currency.prototype.dkk = function () {
-    let sum = 0;
-    for (let code in this.amounts) {
-        if (this.amounts.hasOwnProperty(code) &&
-        currency_value.hasOwnProperty(code)) {
-            sum += currency_value[code] * this.amounts[code];
-        }
-    }
-    return sum;
-};
-
-
-Currency.prototype.add = function (rhs) {
-    const n = new Currency(0, 'DKK');
-
-    for (let code in this.amounts) {
-        if (this.amounts.hasOwnProperty(code)) {
-            n.amounts[code] = this.amounts[code];
-        }
-    }
-
-    for (let code in rhs.amounts) {
-        if (rhs.amounts.hasOwnProperty(code)) {
-            if (!n.amounts.hasOwnProperty(code)) {
-                n.amounts[code] = 0;
-            }
-            n.amounts[code] += rhs.amounts[code];
-        }
-    }
-    return n;
-};
-
-Currency.prototype.is_equal_to = function (other_currency_object) {
-    for (let code in this.amounts) {
-        if (this.amounts.hasOwnProperty(code)) {
-            if (this.amounts[code] !== other_currency_object.amounts[code]) {
-                return false;
-            }
-        }
-    }
-    return true;
-};
-
-Currency.prototype.scale = function (rhs) {
-    const n = new Currency(0, 'DKK');
-    for (let code in this.amounts) {
-        if (this.amounts.hasOwnProperty(code)) {
-            n.amounts[code] = this.amounts[code] * rhs;
-        }
-    }
-    return n;
-};
-
 
 function getInt(elem, action) {
-    if (action === 'init') { elem.addEventListener('input', build, false); }
+    if (action === 'init') {
+        elem.addEventListener('input', build, false);
+    }
 
     const str = elem.value.trim();
     if (!isNaN(parseFloat(str)) && isFinite(str) &&
@@ -137,65 +23,6 @@ function getInt(elem, action) {
 
 function setInt(k, v) {
     $(k).value = parseInt(v, 10);
-    $(k).classList.remove('error');
-}
-
-function mkcurregex() {
-    const arr = [];
-    for (let k in currency_map) {
-        arr.push(currency_map[k]);
-    }
-    for (let k in currency_value) {
-        arr.push(k);
-    }
-    return RegExp('^ *([0-9][0-9., ]*)(' + arr.join('|') + ')? *$', 'i');
-}
-const curregex = mkcurregex();
-
-function _getCurrency(currency) {
-    const a = currency.match(curregex);
-    if (a === null) { return null; }
-
-    let c = a[2] ? a[2] : currency_map[gccode];
-    if (c.toLowerCase() === currency_map[gccode].toLowerCase()) {
-        /* there are a lot of currencies named kr and we should prefer the kr
-        * that has been selected */
-        c = gccode;
-    } else {
-        /* if that's not what's selected, find the currency */
-        for (let k in currency_map) {
-            if (currency_map[k].toLowerCase() === c.toLowerCase() ||
-            k.toLowerCase() === c.toLowerCase()) {
-                c = k;
-                break;
-            }
-        }
-    }
-    return new Currency(parseFloat(a[1].replace('.', '').replace(',', '.')), c);
-}
-
-function getCurrency(currency, action) {
-
-    if (action === 'init') { $(currency).addEventListener('input', build); }
-
-    const a = _getCurrency($(currency).value);
-    if (a === null) {
-        $(currency).classList.add('error');
-        return null;
-    }
-    $(currency).classList.remove('error');
-    return a;
-}
-
-function changeCurrency() {
-    $('currency_code').innerHTML = this.value;
-    set_ccode(this.value);
-    build();
-    //save_url();
-}
-
-function setCurrency(k, v) {
-    $(k).value = v.represent();
     $(k).classList.remove('error');
 }
 
@@ -392,23 +219,21 @@ function acqcombo(psp, settings) {
     return null;
 }
 
-function showTooltip(elem, obj) {
-    if (!elem.firstElementChild) {
+function showTooltip() {
+    if (!this.firstElementChild) {
         const infobox = document.createElement('ul');
-
+        const obj = this.ttdata;
         for (let prop in obj) {
-            if (obj.hasOwnProperty(prop)) {
-                let costobj = obj[prop];
-                if (typeof costobj === 'function') {
-                    costobj = costobj(settings);
-                }
-
-                const li = document.createElement('li');
-                li.textContent = prop + ': ' + costobj.print();
-                infobox.appendChild(li);
+            let costobj = obj[prop];
+            if (typeof costobj === 'function') {
+                costobj = costobj(settings);
             }
+
+            const li = document.createElement('li');
+            li.textContent = prop + ': ' + costobj.print();
+            infobox.appendChild(li);
         }
-        elem.appendChild(infobox);
+        this.appendChild(infobox);
     }
 }
 
@@ -536,7 +361,8 @@ function build(action) {
         const setup_info = document.createElement('div');
         setup_info.textContent = '[?]';
         setup_info.className = 'info';
-        setup_info.onmouseover = function () { showTooltip(this, setup); };
+        setup_info.ttdata = setup;
+        setup_info.addEventListener('mouseover', showTooltip);
         setupfrag.appendChild(setup_info);
 
         // Recurring fees
@@ -545,7 +371,8 @@ function build(action) {
         const recurring_info = document.createElement('div');
         recurring_info.textContent = '[?]';
         recurring_info.className = 'info';
-        recurring_info.onmouseover = function () { showTooltip(this, monthly); };
+        recurring_info.ttdata = monthly;
+        recurring_info.addEventListener('mouseover', showTooltip);
         recurringfrag.appendChild(recurring_info);
 
         // Trn fees
@@ -554,7 +381,8 @@ function build(action) {
         const trn_info = document.createElement('div');
         trn_info.textContent = '[?]';
         trn_info.className = 'info';
-        trn_info.onmouseover = function () { showTooltip(this, trnfee); };
+        trn_info.ttdata = trnfee;
+        trn_info.addEventListener('mouseover', showTooltip);
         trnfrag.appendChild(trn_info);
 
         // cardfee calc.
@@ -577,158 +405,6 @@ function build(action) {
         row.insertCell(-1).appendChild(cardfeefrag);
     }
     $('table').replaceChild(tbody, $('tbody'));
-}
-
-
-//===========================
-//    Blach magic!
-//===========================
-
-const base64_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/';
-
-function Base64Array(initsize) {
-    this.bitpos = 0; // from 0 - 5
-    this.array = [];
-    this.pos = 0;
-}
-
-Base64Array.prototype.pushbit = function (bit) {
-    if (this.array.length === 0) {this.array.push(0);}
-    if (this.bitpos > 5) {
-        this.bitpos = 0;
-        this.array.push(0);
-    }
-    this.array[this.array.length - 1] += bit << this.bitpos;
-    this.bitpos++;
-};
-
-Base64Array.prototype.getbit = function () {
-    if (this.bitpos > 5) {
-        this.bitpos = 0;
-        this.pos++;
-    }
-    let bitval = (this.array[this.pos] & (1 << this.bitpos)) >>> this.bitpos;
-    this.bitpos++;
-    return bitval;
-};
-
-Base64Array.prototype.pushbits = function (bitval, nbits) {
-    for (let i = 0; i < nbits; i++) {
-        this.pushbit((bitval & (1 << i)) >>> i);
-    }
-};
-
-Base64Array.prototype.encode = function () {
-    let encstr = '';
-    for (let i = 0; i < this.array.length; i++) {
-        encstr += base64_chars[this.array[i]];
-    }
-    return encstr;
-};
-
-Base64Array.prototype.pushbase64char = function (b64char) {
-    let index = base64_chars.indexOf(b64char);
-    if (index < 0) {
-        return -1;
-    }
-    this.array.push(index);
-    return 0;
-};
-
-Base64Array.prototype.getbits = function (nbits) {
-    let val = 0;
-    for (let i = 0; i < nbits; i++) {
-        val += this.getbit() << i;
-    }
-    return val;
-};
-
-
-/* Save the url to the following structure URL = kortgebyr.dk?{BITS}{ARGUMENT STRING}*/
-function saveurl() {
-    let argstr = ''; // The optional arguments string which follows the base64 enc. bits
-    let nbits; // the number of bits for the current option
-    let optbits; // The bits for the current option
-    let bitbuf = new Base64Array(); // The buffer used for containing bits until they are flushed
-
-    /* Loop through the options and construct the url */
-    for (let key in opts) {
-        const o = opts[key];
-
-        /* Depending on whether dirty bits are used or not, react accordingly */
-        if (o.dirty_bits) {
-            nbits = o.dirty_bits;
-            optbits = o.get_dirty_bits('url');
-            let ret = o.get();
-            /* Create the argument string part if dirty bit is set */
-            if (optbits) {
-                if (ret instanceof Currency) {
-                    argstr += ';' + ret.string();
-                } else {
-                    argstr += ';' + ret;
-                }
-            }
-
-        } else if (o.bits) {
-            nbits = typeof (o.bits) === 'function' ? o.bits() : o.bits;
-            optbits = o.get('url');
-        } else {
-            return;
-        }
-        bitbuf.pushbits(optbits, nbits);
-    }
-
-    history.replaceState({ foo: 'bar' }, '', '?' + bitbuf.encode() + argstr);
-}
-
-function loadurl() {
-    let querystring = location.search.replace('?', '');
-    if (!querystring) { return; }
-
-    let encbits = ''; // The base64 encoded bits
-    let args; // The optional arguments string which follows the base64 enc. bits
-    let nbits; // the number of bits for the current option
-    let bitval;
-    let bitbuf = new Base64Array(); // The buffer used for containing bits until they are flushed
-    let o;
-
-    /* Check if any additional args after the bits and
-    create the arg array if that is the case */
-    let nb64chars = querystring.indexOf(';');
-    if (nb64chars < 0) {
-        nb64chars = querystring.length;
-    } else {
-        args = querystring.slice(nb64chars + 1).split(';');
-    }
-
-    /* Load the base64 representation of the bits into a base64array type */
-    for (let i = 0; i < nb64chars; i++) {
-        if (bitbuf.pushbase64char(querystring[i]) !== 0) {
-            return -1;
-        }
-    }
-
-    /* Loop through the opts set the fields with values loaded from the url */
-    for (let key in opts) {
-        o = opts[key];
-        /* Check if opt has dirty bits, if so load arg */
-        if (o.dirty_bits) {
-            nbits = o.dirty_bits;
-            bitval = bitbuf.getbits(nbits);
-            if (bitval) {
-                o.set(args[0]);
-                args.shift();
-            }
-            /* Otherwise just load the bits directly */
-        } else if (o.bits) {
-            nbits = typeof (o.bits) === 'function' ? o.bits() : o.bits;
-            bitval = bitbuf.getbits(nbits);
-            o.set(bitval);
-        } else {
-            return;
-        }
-        /* Create the argument string part if dirty bit is set */
-    }
 }
 
 //===========================

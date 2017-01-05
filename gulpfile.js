@@ -26,20 +26,20 @@ function assets() {
 }
 
 function scripts() {
-    return gulp.src(['src/js/data.js', 'src/js/kortgebyr.js'])
+    return gulp.src(['src/js/data.js', 'src/js/currency.js', 'src/js/url.js', 'src/js/main.js'])
     .pipe(concat('all.js'))
     .pipe(gulp.dest('www/js/'));
 }
 
 function less2css() {
-    return gulp.src(['src/css/**/*'], { since: gulp.lastRun(less2css) })
+    return gulp.src(['src/css/*.less'], { since: gulp.lastRun(less2css) })
     .pipe(less())
     .pipe(gulp.dest('www/css/'))
     .pipe(connect.reload());
 }
 
 function html() {
-    return gulp.src(['src/**/*.html'])
+    return gulp.src(['src/*.html'])
     .pipe(nunjucks({ searchPaths: ['src/'], locals: env }))
     .pipe(gulp.dest('www'))
     .pipe(connect.reload());
@@ -47,9 +47,9 @@ function html() {
 
 function stalker() {
     gulp.watch(['src/assets/**/*'], assets);
-    gulp.watch(['src/**/*.html'], html);
+    gulp.watch(['src/*.html'], html);
     gulp.watch(['src/css/*.less'], gulp.series(less2css, html));
-    gulp.watch(['src/js/data.js', 'src/js/kortgebyr.js'], gulp.series(scripts, html));
+    gulp.watch(['src/js/*.js'], gulp.series(scripts, html));
     gulp.watch(['i18n/*.json'], gulp.series('build'));
 }
 
