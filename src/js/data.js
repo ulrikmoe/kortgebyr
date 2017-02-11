@@ -302,7 +302,7 @@ let PSPs = [
         }
     },
     {
-        name: 'DIBS Start',
+        name: 'DIBS All-in-one',
         logo: 'dibs.svg',
         w: 115,
         h: 28,
@@ -313,41 +313,38 @@ let PSPs = [
                 monthly: new Currency(49, 'DKK'), // Ring og spørg.
                 trn: new Currency(0, 'DKK')
             },
-            antifraud: {
-                setup: new Currency(495, 'DKK'),
-                monthly: new Currency(49, 'DKK'),
-                trn: new Currency(0, 'DKK')
-            },
             recurring: {
                 setup: new Currency(495, 'DKK'),
                 monthly: new Currency(49, 'DKK'),
                 trn: new Currency(0, 'DKK')
             }
         },
-        acquirers: {
-            Nets: true
-        },
         cards: {
-            dankort: true,
+            visa: true,
+            mastercard: true,
+            maestro: true,
             mobilepay: CARDs.mobilepay
         },
         fees: {
-            setup: new Currency(1495, 'DKK'),
+            setup: new Currency(0, 'DKK'),
             monthly: new Currency(149, 'DKK'),
-            trn(o) { return new Currency(0.6, 'DKK').scale(o.transactions); }
+            trn(o) {
+                const acquiring = o.avgvalue.scale(1.45 / 100).add(new Currency(0.19, 'DKK')).scale(o.transactions);
+                const trnfee = new Currency(0.35, 'DKK').scale(Math.max(o.transactions - 250, 0));
+                return acquiring.add(trnfee);
+            }
         }
     },
     {
-        name: 'DIBS Medium',
+        name: 'DIBS Basic',
         logo: 'dibs.svg',
         w: 115,
         h: 28,
         link: 'http://dibs.dk',
         features: {
-            '3-D secure': true, // følger gratis med
-            antifraud: {
+            '3-D secure': {
                 setup: new Currency(495, 'DKK'),
-                monthly: new Currency(49, 'DKK'),
+                monthly: new Currency(49, 'DKK'), // Ring og spørg.
                 trn: new Currency(0, 'DKK')
             },
             recurring: {
@@ -376,50 +373,9 @@ let PSPs = [
             mobilepay: CARDs.mobilepay
         },
         fees: {
-            setup: new Currency(4995, 'DKK'),
-            monthly: new Currency(499, 'DKK'),
-            trn(o) { return new Currency(0.55, 'DKK').scale(o.transactions); }
-        }
-    },
-    {
-        name: 'DIBS Premium',
-        logo: 'dibs.svg',
-        w: 115,
-        h: 28,
-        link: 'http://dibs.dk',
-        features: {
-            '3-D secure': true, // følger gratis med
-            antifraud: {
-                setup: new Currency(495, 'DKK'),
-                monthly: new Currency(49, 'DKK'),
-                trn: new Currency(0, 'DKK')
-            },
-            recurring: true
-        },
-        acquirers: {
-            Nets: true,
-            Teller: true,
-            Swedbank: true,
-            Handelsbanken: true,
-            Valitor: true,
-            Elavon: true
-        },
-        cards: {
-            dankort: true,
-            visa: true,
-            mastercard: true,
-            maestro: true,
-            amex: true,
-            jcb: true,
-            unionpay: true,
-            diners: true,
-            mobilepay: CARDs.mobilepay,
-            forbrugsforeningen: CARDs.forbrugsforeningen
-        },
-        fees: {
-            setup: new Currency(10995, 'DKK'),
-            monthly: new Currency(899, 'DKK'),
-            trn(o) { return new Currency(0.5, 'DKK').scale(o.transactions); }
+            setup: new Currency(599, 'DKK'),
+            monthly: new Currency(199, 'DKK'),
+            trn(o) { return new Currency(0.35, 'DKK').scale(Math.max(o.transactions - 250, 0)); }
         }
     },
     {
@@ -569,7 +525,7 @@ let PSPs = [
             monthly: new Currency(149, 'DKK'),
             trn(o) {
                 let gatewayfee = new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0));
-                let acqfee = o.avgvalue.scale(1.45 / 100).add(new Currency(0.25, 'DKK')).scale(o.transactions);
+                let acqfee = o.avgvalue.scale(1.45 / 100).scale(o.transactions);
                 return acqfee.add(gatewayfee);
             }
         }
