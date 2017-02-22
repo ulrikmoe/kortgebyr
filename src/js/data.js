@@ -100,9 +100,9 @@ const ACQs = [
             maestro: true
         },
         fees: {
-            setup: new Currency(1900, 'DKK'),
-            monthly: new Currency(100, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.6 / 100); }
+            setup: new Currency(1500, 'DKK'),
+            monthly: new Currency(0, 'DKK'),
+            trn(o) { return o.avgvalue.scale(1.5 / 100); }
         }
     },
     {
