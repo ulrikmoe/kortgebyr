@@ -639,7 +639,7 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'EUR'),
             monthly: new Currency(0, 'EUR'),
-            trn(o) { return o.avgvalue.scale(2.5 / 100).add(new Currency(0.25, 'EUR')).scale(o.transactions); }
+            trn(o) { return o.avgvalue.scale(1.9 / 100).add(new Currency(0.25, 'EUR')).scale(o.transactions); }
         }
     },
     {
