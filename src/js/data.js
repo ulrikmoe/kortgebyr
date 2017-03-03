@@ -990,8 +990,8 @@ let PSPs = [
     {
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
-        w: 134,
-        h: 35,
+        w: 143,
+        h: 14,
         link: 'https://pensopay.com/',
         features: {
             '3-D secure': true,
@@ -1017,8 +1017,8 @@ let PSPs = [
     {
         name: 'PensoPay Iværksætter',
         logo: 'pensopay.svg',
-        w: 134,
-        h: 35,
+        w: 143,
+        h: 14,
         link: 'https://pensopay.com/',
         features: {
             '3-D secure': true,
@@ -1044,8 +1044,8 @@ let PSPs = [
     {
         name: 'PensoPay Business',
         logo: 'pensopay.svg',
-        w: 134,
-        h: 35,
+        w: 143,
+        h: 14,
         link: 'https://pensopay.com/vores-betalingsloesninger/',
         features: {
             '3-D secure': true,
@@ -1073,8 +1073,8 @@ let PSPs = [
     {
         name: 'PensoPay Pro',
         logo: 'pensopay.svg',
-        w: 134,
-        h: 35,
+        w: 143,
+        h: 14,
         link: 'https://pensopay.com/',
         features: {
             '3-D secure': true,
