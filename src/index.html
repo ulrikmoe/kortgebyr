@@ -1,100 +1,98 @@
-<!DOCTYPE HTML><html lang="da">
-<head>
-  <title>Sammenlign betalingsløsninger - kortgebyr.dk</title>
-  <meta name="description" content="Sammenlign priser på online betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr.">
-  <link rel="canonical" href="https://kortgebyr.dk">
-  <link rel="stylesheet" href="/css/kortgebyr.css?{{ csstoken }}">
-</head>
-<body>
-  <header>
-    <nav role="navigation">
-      <a class="logo" href="/">kortgebyr</a>
-      <a class="lastUpdate" rel=”nofollow” href="https://github.com/ulrikmoe/kortgebyr/commits/master">
-        Opdateret d. {{ lastUpdate }}
-      </a>
+<!DOCTYPE HTML>
+<title>Sammenlign betalingsløsninger</title>
+<meta name="description" content="Sammenlign priser på online betalingsløsninger. Find den billigste betalingsløsning og udregn det samlede kortgebyr.">
+<link rel="icon" type="image/png" href="/favicon.png?1">
+<link rel="canonical" href="https://kortgebyr.dk">
+<link rel="stylesheet" href="/css/kortgebyr.css?{{ csstoken }}">
+<script src="/js/all.js?{{ jstoken }}" async></script>
 
-      <div class="language" onclick="alert('Denne funktion er midlertidigt disabled.')">
-        <img width="19" src="/img/dk.png" alt="kortgebyr på dansk" />
-      </div>
+<header>
+  <nav role="navigation">
+    <a class="logo" href="/">kortgebyr</a>
+    <a class="lastUpdate" rel=”nofollow” href="https://github.com/ulrikmoe/kortgebyr/commits/master">
+      Opdateret d. {{ lastUpdate }}
+    </a>
 
-      <div id="currency" class="currency">
-        <span id="currency_code">DKK</span>
-        <select id="currency_code_select">
-          <option value="DKK">DKK</option>
-          <option value="SEK">SEK</option>
-          <option value="NOK">NOK</option>
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
+    <div class="language" onclick="alert('Denne funktion er midlertidigt disabled.')">
+      <img width="19" src="/img/dk.png" alt="kortgebyr på dansk" />
+    </div>
+
+    <div id="currency" class="currency">
+      <span id="currency_code">DKK</span>
+      <select id="currency_code_select">
+        <option value="DKK">DKK</option>
+        <option value="SEK">SEK</option>
+        <option value="NOK">NOK</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+      </select>
+    </div>
+    <a href="mailto:ulrik.moe@gmail.com?Subject=Kortgebyr.dk" class="feedback">Feedback</a>
+  </nav>
+
+  <form id="form" class="clearfix" autocomplete="off">
+    <section class="acquirer_menu">
+      <label class="acqlabel"> Indløsning
+        <select id="acquirer">
+          <option>Billigst mulige</option>
+          <option>Teller</option>
+          <option>Handelsbanken</option>
+          <option>Swedbank</option>
+          <option>Valitor</option>
+          <option>Elavon</option>
+          <option>Clearhaus</option>
+          <option>Bambora</option>
         </select>
+      </label>
+      <div class="about">
+        Udregningen tager udgangspunkt i listepriser for online betalingsløsninger. Vi anbefaler at du starter med at læse vores <a href="/forklaring.html">forklaring</a>.
       </div>
-      <a href="mailto:ulrik.moe@gmail.com?Subject=Kortgebyr.dk" class="feedback">Feedback</a>
-    </nav>
+    </section>
 
-    <form id="form" class="clearfix" autocomplete="off">
-      <section class="acquirer_menu">
-        <label class="acqlabel"> Indløsning
-          <select id="acquirer">
-            <option>Billigst mulige</option>
-            <option>Teller</option>
-            <option>Handelsbanken</option>
-            <option>Swedbank</option>
-            <option>Valitor</option>
-            <option>Elavon</option>
-            <option>Clearhaus</option>
-            <option>Bambora</option>
-          </select>
-        </label>
-        <div class="about">
-          Udregningen tager udgangspunkt i listepriser for online betalingsløsninger. Vi anbefaler at du starter med at læse vores <a href="/forklaring.html">forklaring</a>.
-        </div>
-      </section>
+    <section style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
+      <label><input type="text" class="field" id="transactions" value="250"> Transaktioner pr. måned</label>
+      <label><input type="text" class="field" id="avgvalue" value="450 DKK"> Gennemsnits ordreværdi</label>
+      <label><input type="checkbox" class="ofeatures" id="antifraud" /> Svindelkontrol</label>
+      <label><input type="checkbox" class="ofeatures" id="recurring" /> Abonnementsbetalinger</label>
+    </section>
 
-      <section style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
-        <label><input type="text" class="field" id="transactions" value="250"> Transaktioner pr. måned</label>
-        <label><input type="text" class="field" id="avgvalue" value="450 DKK"> Gennemsnits ordreværdi</label>
-        <label><input type="checkbox" class="ofeatures" id="antifraud" /> Svindelkontrol</label>
-        <label><input type="checkbox" class="ofeatures" id="recurring" /> Abonnementsbetalinger</label>
-      </section>
+    <section style="width:19%; padding-right:0;">
+      <label><input checked="" type="checkbox" class="ocards" id="dankort" /> Dankort</label>
+      <label><input checked="" type="checkbox" class="ocards" id="visa" /> Visa / MasterCard</label>
+      <label><input type="checkbox" class="ocards" id="forbrugsforeningen" /> Forbrugsforening</label>
+      <label><input type="checkbox" class="ocards" id="diners" /> Diners</label>
+      <label><input type="checkbox" class="ocards" id="amex" /> American Express</label>
+    </section>
 
-      <section style="width:19%; padding-right:0;">
-        <label><input checked="" type="checkbox" class="ocards" id="dankort" /> Dankort</label>
-        <label><input checked="" type="checkbox" class="ocards" id="visa" /> Visa / MasterCard</label>
-        <label><input type="checkbox" class="ocards" id="forbrugsforeningen" /> Forbrugsforening</label>
-        <label><input type="checkbox" class="ocards" id="diners" /> Diners</label>
-        <label><input type="checkbox" class="ocards" id="amex" /> American Express</label>
-      </section>
-
-      <section style="width:17%; padding-right:0; padding-left: 0;">
-        <label><input type="checkbox" class="ocards" id="jcb" /> JCB</label>
-        <label><input type="checkbox" class="ocards" id="unionpay" /> UnionPay</label>
-        <label><input type="checkbox" class="ocards" id="mobilepay" /> MobilePay</label>
-      </section>
-    </form>
-  </header>
-  <table id="table">
-    <thead>
-      <tr>
-        <th width="178"><span class="pspth">Betalingsløsning</span></th>
-        <th width="130">Indløsning</th>
-        <th width="146">Betalingsmidler</th>
-        <th>Oprettelse</th>
-        <th>Abonnement</th>
-        <th>Transaktions-<br> gebyrer</th>
-        <th>
-          <div class="equal right"><p class="icon"></p></div>
-          Samlet pr. <br> måned
-        </th>
-        <th style="border-left:0;">
-          <div class="equal left"><p class="icon"></p></div>
-          Samlet pr. <br> transaktion
-        </th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-  <footer>
-    Kortgebyr er udviklet af Ulrik Moe, Christian Blach og Joakim Sindholt, som et værktøj til at sammenligne <br /> online betalingsløsninger. Kortgebyr blev startet i slutningen af 2010, projektet er non-profit og <a rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small>GPLv3</small>).
-  </footer>
-  <script src="/js/all.js?{{ jstoken }}"></script>
-</body></html>
+    <section style="width:17%; padding-right:0; padding-left: 0;">
+      <label><input type="checkbox" class="ocards" id="jcb" /> JCB</label>
+      <label><input type="checkbox" class="ocards" id="unionpay" /> UnionPay</label>
+      <label><input type="checkbox" class="ocards" id="mobilepay" /> MobilePay</label>
+    </section>
+  </form>
+</header>
+<table id="table">
+  <thead>
+    <tr>
+      <th width="178"><span class="pspth">Betalingsløsning</span></th>
+      <th width="130">Indløsning</th>
+      <th width="146">Betalingsmidler</th>
+      <th>Oprettelse</th>
+      <th>Abonnement</th>
+      <th>Transaktions-<br> gebyrer</th>
+      <th>
+        <div class="equal right"><p class="icon"></p></div>
+        Samlet pr. <br> måned
+      </th>
+      <th style="border-left:0;">
+        <div class="equal left"><p class="icon"></p></div>
+        Samlet pr. <br> transaktion
+      </th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+<footer>
+  Kortgebyr er udviklet af Ulrik Moe, Christian Blach og Joakim Sindholt, som et værktøj til at sammenligne <br /> online betalingsløsninger. Kortgebyr blev startet i slutningen af 2010, projektet er non-profit og <a rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr">open source</a> (<small>GPLv3</small>).
+</footer>
