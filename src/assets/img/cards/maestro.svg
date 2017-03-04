@@ -1,1 +1,9 @@
-<svg viewBox="0 0 70 48" xmlns="http://www.w3.org/2000/svg"><rect fill="#183059" width="70" height="48" rx="5"/><circle fill="#0595C3" cx="24" cy="24" r="15"/><circle fill="#D22538" cx="46" cy="24" r="15"/><path d="M27 28.5h10v3H27v-3zm1-6h10v3H28v-3zm-1-6h10v3H27v-3z" fill="#0595C3"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="15" viewBox="0 0 70 48">
+  <rect width="70" height="48" fill="#183059" rx="5"/>
+  <clipPath id="a">
+    <circle cx="45" cy="24" r="16"/>
+  </clipPath>
+  <circle cx="25" cy="24" r="16" fill="#eb001b"/>
+  <circle cx="45" cy="24" r="16" fill="#00a1df"/>
+  <circle cx="25" cy="24" r="16" fill="#7673c0" clip-path="url(#a)"/>
+</svg>
