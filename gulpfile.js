@@ -5,7 +5,6 @@
 'use strict';
 
 const gulp = require('gulp');
-const del = require('del');
 const connect = require('gulp-connect');
 const nunjucks = require('gulp-nunjucks-html');
 const less = require('gulp-less');
@@ -21,7 +20,7 @@ env.lastUpdate = date.getDate() + '. ' + months[date.getMonth()] + ', ' + date.g
 function server() { connect.server({ root: 'www', livereload: true }); }
 
 function assets() {
-    return gulp.src(['src/assets/**/*', 'src/*.{ico,xml}'])
+    return gulp.src(['src/img/**', 'src/font/*.*'], { base: 'src' })
     .pipe(gulp.dest('www'))
     .pipe(connect.reload());
 }
@@ -52,14 +51,13 @@ function html() {
 }
 
 function stalker() {
-    gulp.watch(['src/assets/**/*'], assets);
+    gulp.watch(['src/img/**', 'src/font/*'], assets);
     gulp.watch(['src/*.html'], html);
     gulp.watch(['src/css/*.less'], gulp.series(less2css, html));
     gulp.watch(['src/js/*.js'], gulp.series(scripts, html));
     gulp.watch(['i18n/*.json'], gulp.series('build'));
 }
 
-gulp.task('clean', function () { return del(['www/**', '!www']); });
 gulp.task('serve', gulp.parallel(stalker, server));
 gulp.task('build', gulp.series(assets, scripts, less2css, html));
-gulp.task('default', gulp.series('clean', 'build', 'serve'));
+gulp.task('default', gulp.series('build', 'serve'));
