@@ -1,9 +1,7 @@
 /**
 *   @author Ulrik Moe, Christian Blach, Joakim Sindholt
 *   @license GPLv3
-*   Indentation: 4 spaces
 **/
-
 
 const CARDs = {
     mobilepay: {
@@ -24,7 +22,7 @@ const ACQs = [
         logo: 'nets.svg',
         w: 40,
         h: 15,
-        link: 'http://www.nets.eu',
+        link: 'https://dankort.dk/Pages/Forretninger.aspx',
         //cardss: ['dankort', CARDs.forbrugsforeningen, 'mobilepay'],
         cards: {
             dankort: true,
@@ -47,7 +45,7 @@ const ACQs = [
         logo: 'teller.svg',
         w: 59,
         h: 11,
-        link: 'http://www.teller.com',
+        link: 'https://www.nets.eu/dk/payments/online-betalinger/',
         //cardss: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'unionpay', 'diners', 'mobilepay'],
         cards: {
             visa: true,
@@ -74,7 +72,7 @@ const ACQs = [
         logo: 'handelsbanken.svg',
         w: 100,
         h: 10,
-        link: 'http://www.handelsbanken.dk',
+        link: 'https://handelsbanken.dk/shb/inet/icentda.nsf/Default/qC21926A235427DE6C12578810023DBB9?Opendocument',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
             visa: true,
@@ -92,7 +90,7 @@ const ACQs = [
         logo: 'swedbank.png',
         w: 75,
         h: 12,
-        link: 'http://www.swedbank.dk',
+        link: 'https://www.swedbank.dk/card-services/produkter-og-losninger/kortindlosning-via-internet/',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
             visa: true,
@@ -110,7 +108,7 @@ const ACQs = [
         logo: 'valitor.png',
         w: 61,
         h: 9,
-        link: 'http://www.valitor.com',
+        link: 'https://www.valitor.com/acquiring-services/online-payments/',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
             visa: true,
@@ -128,7 +126,7 @@ const ACQs = [
         logo: 'elavon.svg',
         w: 51,
         h: 14,
-        link: 'http://www.elavon.com',
+        link: 'https://www.elavon.dk/v%C3%A5re-tjenester/sm%C3%A5-bedrifter',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
             visa: true,
@@ -146,7 +144,7 @@ const ACQs = [
         logo: 'clearhaus.svg',
         w: 77,
         h: 13,
-        link: 'https://www.clearhaus.com',
+        link: 'https://www.clearhaus.com/dk/',
         //cardss: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         cards: {
             visa: true,
@@ -263,7 +261,7 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'EUR'),
             monthly: new Currency(0, 'EUR'),
-            trn(o) { return o.avgvalue.scale(1.5 / 100).add(new Currency(0.15, 'GBP')).scale(o.transactions); }
+            trn(o) { return o.avgvalue.scale(1.5 / 100).add(new Currency(0.15, 'EUR')).scale(o.transactions); }
         }
     },
     {
@@ -273,11 +271,7 @@ let PSPs = [
         h: 25,
         link: 'https://www.dandomain.dk/webshop/betalingssystem',
         features: {
-            '3-D secure': {
-                setup: new Currency(0, 'DKK'),
-                monthly: new Currency(99, 'DKK'),
-                trn: new Currency(0, 'DKK')
-            }
+            '3-D secure': true
         },
         acquirers: {
             Nets: true,
@@ -587,8 +581,8 @@ let PSPs = [
             diners: true
         },
         fees: {
-            setup: new Currency(7540, 'DKK'),
-            monthly: new Currency(703, 'DKK'),
+            setup: new Currency(6000, 'DKK'),
+            monthly: new Currency(500, 'DKK'),
             trn(o) { return new Currency(0.7, 'DKK').scale(o.transactions); }
         }
     },
