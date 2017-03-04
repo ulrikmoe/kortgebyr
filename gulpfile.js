@@ -10,6 +10,7 @@ const connect = require('gulp-connect');
 const nunjucks = require('gulp-nunjucks-html');
 const less = require('gulp-less');
 const concat = require('gulp-concat');
+const sourcemaps = require('gulp-sourcemaps');
 const env = require('minimist')(process.argv.slice(2));
 
 //  Last changed
@@ -20,19 +21,23 @@ env.lastUpdate = date.getDate() + '. ' + months[date.getMonth()] + ', ' + date.g
 function server() { connect.server({ root: 'www', livereload: true }); }
 
 function assets() {
-    return gulp.src(['src/assets/**/*', 'src/*.{ico,xml}'], { since: gulp.lastRun(assets) })
+    return gulp.src(['src/assets/**/*', 'src/*.{ico,xml}'])
     .pipe(gulp.dest('www'))
     .pipe(connect.reload());
 }
 
 function scripts() {
     return gulp.src(['src/js/data.js', 'src/js/currency.js', 'src/js/url.js', 'src/js/main.js'])
+    .pipe(sourcemaps.init())
     .pipe(concat('all.js'))
-    .pipe(gulp.dest('www/js/'));
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('www/js/'))
+    .pipe(connect.reload());
 }
 
 function less2css() {
     return gulp.src(['src/css/*.less'], { since: gulp.lastRun(less2css) })
+    .pipe(nunjucks({ locals: env }))
     .pipe(less())
     .pipe(gulp.dest('www/css/'))
     .pipe(connect.reload());

@@ -7,6 +7,7 @@
     "gulp-less": "*",
     "gulp-nunjucks-html": "*",
     "gulp-concat": "*",
+    "gulp-sourcemaps": "*",
     "minimist": "*"
   }
 }

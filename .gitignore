@@ -3,3 +3,4 @@ www/
 publish.sh
 optimize.sh
 .babelrc
+subsetting.sh
