@@ -22,8 +22,8 @@ const ACQs = [
     {
         name: 'Nets',
         logo: 'nets.svg',
-        w: 37,
-        h: 14,
+        w: 40,
+        h: 15,
         link: 'http://www.nets.eu',
         //cardss: ['dankort', CARDs.forbrugsforeningen, 'mobilepay'],
         cards: {
@@ -72,8 +72,8 @@ const ACQs = [
     {
         name: 'Handelsbanken',
         logo: 'handelsbanken.svg',
-        w: 90,
-        h: 9,
+        w: 100,
+        h: 10,
         link: 'http://www.handelsbanken.dk',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
@@ -90,8 +90,8 @@ const ACQs = [
     {
         name: 'Swedbank',
         logo: 'swedbank.png',
-        w: 62,
-        h: 10,
+        w: 75,
+        h: 12,
         link: 'http://www.swedbank.dk',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
@@ -144,8 +144,8 @@ const ACQs = [
     {
         name: 'Clearhaus',
         logo: 'clearhaus.svg',
-        w: 72,
-        h: 14,
+        w: 77,
+        h: 13,
         link: 'https://www.clearhaus.com',
         //cardss: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         cards: {
