@@ -697,8 +697,8 @@ let PSPs = [
     {
         name: 'Payson',
         logo: 'payson.png',
-        w: 117,
-        h: 31,
+        w: 121,
+        h: 32,
         link: 'https://www.payson.se',
         features: {
             '3-D secure': true,
