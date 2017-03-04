@@ -347,9 +347,9 @@ function build(action) {
         psplink.href = psp.link;
         psplink.className = 'psp';
         const psplogo = new Image(psp.w, psp.h);
-        psplogo.src = '/img/psp/' + psp.logo;
+        psplogo.src = '/img/psp/' + psp.logo + '?{{ imgtoken }}';
         psplogo.alt = psp.name;
-        const pspname = document.createElement('p');
+        const pspname = document.createElement('span');
         pspname.textContent = psp.name;
         psplink.appendChild(psplogo);
         psplink.appendChild(pspname);
