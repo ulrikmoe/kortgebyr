@@ -28,6 +28,7 @@ function assets() {
 
 function scripts() {
     return gulp.src(['src/js/data.js', 'src/js/currency.js', 'src/js/url.js', 'src/js/main.js'])
+    .pipe(nunjucks({ locals: env }))
     .pipe(sourcemaps.init())
     .pipe(concat('all.js'))
     .pipe(sourcemaps.write())
