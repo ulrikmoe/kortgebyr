@@ -326,7 +326,7 @@ function build(action) {
             }
 
             const cardicon = new Image(22, 15);
-            cardicon.src = '/img/cards/' + card + '.svg';
+            cardicon.src = '/img/cards/' + card + '.svg?1';
             cardicon.alt = card;
             cardicon.className = 'card';
             cardfrag.appendChild(cardicon);
