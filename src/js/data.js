@@ -943,8 +943,8 @@ let PSPs = [
     {
         name: 'Wannafind',
         logo: 'wannafind.svg',
-        w: 135,
-        h: 18,
+        w: 146,
+        h: 14,
         link: 'https://www.wannafind.dk/betalingssystem/',
         features: {
             '3-D secure': {
