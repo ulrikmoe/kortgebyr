@@ -86,6 +86,7 @@ const ACQs = [
         }
     },
     {
+        // http://www.swedbank.dk/card-services/priser-og-vilkar/#!/CID_2263482
         name: 'Swedbank',
         logo: 'swedbank.png',
         w: 75,
@@ -98,9 +99,9 @@ const ACQs = [
             maestro: true
         },
         fees: {
-            setup: new Currency(1500, 'DKK'),
+            setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.5 / 100); }
+            trn(o) { return o.avgvalue.scale(1.1 / 100); }
         }
     },
     {
@@ -752,7 +753,10 @@ let PSPs = [
         acquirers: {
             Nets: true,
             Teller: true,
-            Clearhaus: true
+            Clearhaus: true,
+            Swedbank: true,
+            Handelsbanken: true,
+            Elavon: true
         },
         cards: {
             dankort: true,
@@ -786,7 +790,10 @@ let PSPs = [
         acquirers: {
             Nets: true,
             Teller: true,
-            Clearhaus: true
+            Clearhaus: true,
+            Swedbank: true,
+            Handelsbanken: true,
+            Elavon: true
         },
         cards: {
             dankort: true,
@@ -820,7 +827,10 @@ let PSPs = [
         acquirers: {
             Nets: true,
             Teller: true,
-            Clearhaus: true
+            Clearhaus: true,
+            Swedbank: true,
+            Handelsbanken: true,
+            Elavon: true
         },
         cards: {
             dankort: true,
