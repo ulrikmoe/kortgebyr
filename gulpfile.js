@@ -6,18 +6,34 @@
 
 const gulp = require('gulp');
 const connect = require('gulp-connect');
-const nunjucks = require('gulp-nunjucks-html');
+const nunjucks = require('nunjucks');
+const through = require('through2');
 const less = require('gulp-less');
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const env = require('minimist')(process.argv.slice(2));
 
 //  Last changed
-const months = ['jan', 'feb', 'mar', 'apr', 'maj', 'juni', 'juli', 'aug', 'sept', 'okt', 'nov', 'dec'];
+const months = ['jan', 'feb', 'mar', 'apr', 'maj', 'juni',
+                'juli', 'aug', 'sept', 'okt', 'nov', 'dec'];
 const date = new Date();
 env.lastUpdate = date.getDate() + '. ' + months[date.getMonth()] + ', ' + date.getFullYear();
 
-function server() { connect.server({ root: 'www', livereload: true }); }
+function server() {
+    connect.server({ root: 'www', livereload: true });
+}
+
+function nunj(o={}) {
+    return through.obj(function (file, enc, cb) {
+        if (!o.hasOwnProperty('autoescape')) { o.autoescape = false; }
+        const nenv = new nunjucks.Environment(null, o);
+        nenv.renderString(file.contents.toString('utf8'), o.locals, (err, res) => {
+            if (err) { throw err; }
+            file.contents = new Buffer(res);
+            cb(null, file);
+        });
+    });
+}
 
 function assets() {
     return gulp.src(['src/img/**', 'src/font/*.*'], { base: 'src' })
@@ -27,7 +43,7 @@ function assets() {
 
 function scripts() {
     return gulp.src(['src/js/data.js', 'src/js/currency.js', 'src/js/main.js'])
-    .pipe(nunjucks({ locals: env }))
+    .pipe(nunj({ locals: env }))
     .pipe(sourcemaps.init())
     .pipe(concat('all.js'))
     .pipe(sourcemaps.write())
@@ -37,7 +53,7 @@ function scripts() {
 
 function less2css() {
     return gulp.src(['src/css/*.less'], { since: gulp.lastRun(less2css) })
-    .pipe(nunjucks({ locals: env }))
+    .pipe(nunj({ locals: env }))
     .pipe(less())
     .pipe(gulp.dest('www/css/'))
     .pipe(connect.reload());
@@ -45,7 +61,7 @@ function less2css() {
 
 function html() {
     return gulp.src(['src/*.html'])
-    .pipe(nunjucks({ searchPaths: ['src/'], locals: env }))
+    .pipe(nunj({ locals: env }))
     .pipe(gulp.dest('www'))
     .pipe(connect.reload());
 }
