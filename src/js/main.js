@@ -310,6 +310,11 @@ function build(action) {
                 // Construct a new acqcards
                 for (let card in acq.cards) { acqcards[card] = acq.cards[card]; }
             }
+        } else {
+            const acqtext = document.createElement('p');
+            acqtext.classList.add('acquirer-included');
+            acqtext.textContent = 'Inkluderet';
+            acqfrag.appendChild(acqtext);
         }
 
         const cardfrag = document.createDocumentFragment();
