@@ -621,7 +621,7 @@ let PSPs = [
         logo: 'paylike.svg',
         w: 99,
         h: 31,
-        link: 'https://paylike.io',
+        link: 'https://paylike.dk',
         features: {
             '3-D secure': true,
             antifraud: true
@@ -634,7 +634,7 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'EUR'),
             monthly: new Currency(0, 'EUR'),
-            trn(o) { return o.avgvalue.scale(1.9 / 100).add(new Currency(1, 'DKK')).scale(o.transactions); }
+            trn(o) { return o.avgvalue.scale(1.35 / 100).add(new Currency(0.50, 'DKK')).scale(o.transactions); }
         }
     },
     {
