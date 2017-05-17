@@ -53,7 +53,6 @@ function scripts() {
 
 function less2css() {
     return gulp.src(['src/css/*.less'], { since: gulp.lastRun(less2css) })
-    .pipe(nunj({ locals: env }))
     .pipe(less())
     .pipe(gulp.dest('www/css/'))
     .pipe(connect.reload());
