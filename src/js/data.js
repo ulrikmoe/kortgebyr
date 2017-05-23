@@ -96,7 +96,8 @@ const ACQs = [
         cards: {
             visa: true,
             mastercard: true,
-            maestro: true
+            maestro: true,
+            mobilepay: true
         },
         fees: {
             setup: new Currency(0, 'DKK'),
