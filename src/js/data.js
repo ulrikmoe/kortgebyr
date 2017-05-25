@@ -1103,5 +1103,34 @@ let PSPs = [
                 return o.avgvalue.scale(1.35 / 100).scale(o.transactions).add(new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0)));
             }
         }
+    },
+    {
+        name: 'PensoPay Premium',
+        logo: 'pensopay.svg',
+        w: 143,
+        h: 14,
+        link: 'https://pensopay.com/',
+        features: {
+            '3-D secure': true,
+            recurring: {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(0, 'DKK'),
+                trn: new Currency(0.20, 'DKK')
+            },
+            antifraud: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true,
+            mobilepay: true
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(129, 'DKK'),
+            trn(o) {
+                return o.avgvalue.scale(1.35 / 100).scale(o.transactions).add(new Currency(0.35, 'DKK').scale(Math.max(o.transactions - 100, 0)));
+            }
+        }
     }
 ];
