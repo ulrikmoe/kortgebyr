@@ -219,23 +219,6 @@ function acqcombo(psp, settings) {
     return null;
 }
 
-function showTooltip() {
-    if (!this.firstElementChild) {
-        const infobox = document.createElement('ul');
-        const obj = this.ttdata;
-        for (let prop in obj) {
-            let costobj = obj[prop];
-            if (typeof costobj === 'function') {
-                costobj = costobj(settings);
-            }
-
-            const li = document.createElement('li');
-            li.textContent = prop + ': ' + costobj.print();
-            infobox.appendChild(li);
-        }
-        this.appendChild(infobox);
-    }
-}
 
 // Build table
 function build(action) {
