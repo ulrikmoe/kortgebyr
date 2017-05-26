@@ -5,9 +5,9 @@
 
 const CARDs = {
     mobilepay: {
-        setup: new Currency(49, 'DKK'),
+        setup: new Currency(0, 'DKK'),
         monthly: new Currency(49, 'DKK'),
-        trn(o) { return (new Currency(1, 'DKK')).scale(o.transactions / 20); }
+        trn: new Currency(0, 'DKK') // Add fees later
     },
     forbrugsforeningen: {
         setup: new Currency(0, 'DKK'),
