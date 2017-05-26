@@ -80,10 +80,9 @@ const ACQs = [
         }
     },
     {
-        // http://www.swedbank.dk/card-services/priser-og-vilkar/#!/CID_2263482
         name: 'Swedbank',
         logo: 'swedbank.png',
-        link: 'https://www.swedbank.dk/card-services/produkter-og-losninger/kortindlosning-via-internet/',
+        link: 'https://www.swedbank.dk/card-services/priser-og-vilkar/#!/CID_2263482',
         cards: {
             visa: true,
             mastercard: true,
@@ -93,7 +92,8 @@ const ACQs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn() {
+            trn(o) {
+                // TODO: Add minimum fee of 50 DKK / month.
                 return $avgvalue.scale(1.1 / 100);
             }
         }
@@ -249,7 +249,7 @@ let PSPs = [
             setup: new Currency(0, 'EUR'),
             monthly: new Currency(0, 'EUR'),
             trn() {
-                return $revenue.scale(1.5 / 100).add(new Currency(0.15 * $qty, 'EUR'));
+                return $revenue.scale(0.95 / 100).add(new Currency(0.20 * $qty, 'GBP'));
             }
         }
     },
@@ -711,7 +711,10 @@ let PSPs = [
             setup: new Currency(0, 'SEK'),
             monthly: new Currency(0, 'SEK'),
             trn() {
-                return $revenue.scale(2.85 / 100);
+                const minimum = new Currency(4.5 * $qty, 'SEK');
+                const fees = $revenue.scale(2.85 / 100);
+                if (minimum.dkk() > fees.dkk()) { return minimum; }
+                return fees;
             }
         }
     },
