@@ -8,7 +8,7 @@ const gulp = require('gulp');
 const connect = require('gulp-connect');
 const nunjucks = require('nunjucks');
 const through = require('through2');
-const less = require('gulp-less');
+const lessjs = require('less');
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const env = require('minimist')(process.argv.slice(2));
@@ -30,6 +30,17 @@ function nunj(o={}) {
         nenv.renderString(file.contents.toString('utf8'), o.locals, (err, res) => {
             if (err) { throw err; }
             file.contents = new Buffer(res);
+            cb(null, file);
+        });
+    });
+}
+
+function less() {
+    return through.obj((file, enc, cb) => {
+        lessjs.render(file.contents.toString(), null, (err, res) => {
+            if (err) { throw err; }
+            file.contents = new Buffer(res.css);
+            file.path = file.path.substring(0, file.path.lastIndexOf('.')) + '.css';
             cb(null, file);
         });
     });
