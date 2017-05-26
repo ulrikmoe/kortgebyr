@@ -300,7 +300,7 @@ function build(action) {
                 const acqlink = document.createElement('a');
                 acqlink.href = acq.link;
                 acqlink.className = 'acq';
-                const acqlogo = new Image(acq.w, acq.h);
+                const acqlogo = new Image();
                 acqlogo.src = '/img/psp/' + acq.logo;
                 acqlogo.alt = acq.name;
                 acqlink.appendChild(acqlogo);

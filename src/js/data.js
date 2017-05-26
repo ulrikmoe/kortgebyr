@@ -20,8 +20,6 @@ const ACQs = [
     {
         name: 'Nets',
         logo: 'nets.svg',
-        w: 40,
-        h: 15,
         link: 'https://dankort.dk/Pages/Forretninger.aspx',
         //cardss: ['dankort', CARDs.forbrugsforeningen, 'mobilepay'],
         cards: {
@@ -43,8 +41,6 @@ const ACQs = [
     {
         name: 'Teller',
         logo: 'teller.svg',
-        w: 59,
-        h: 11,
         link: 'https://www.nets.eu/dk/payments/online-betalinger/',
         //cardss: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'unionpay', 'diners', 'mobilepay'],
         cards: {
@@ -70,8 +66,6 @@ const ACQs = [
     {
         name: 'Handelsbanken',
         logo: 'handelsbanken.svg',
-        w: 100,
-        h: 10,
         link: 'https://handelsbanken.dk/shb/inet/icentda.nsf/Default/qC21926A235427DE6C12578810023DBB9?Opendocument',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
@@ -89,8 +83,6 @@ const ACQs = [
         // http://www.swedbank.dk/card-services/priser-og-vilkar/#!/CID_2263482
         name: 'Swedbank',
         logo: 'swedbank.png',
-        w: 75,
-        h: 12,
         link: 'https://www.swedbank.dk/card-services/produkter-og-losninger/kortindlosning-via-internet/',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
@@ -108,8 +100,6 @@ const ACQs = [
     {
         name: 'Valitor',
         logo: 'valitor.png',
-        w: 61,
-        h: 9,
         link: 'https://www.valitor.com/acquiring-services/online-payments/',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
@@ -126,8 +116,6 @@ const ACQs = [
     {
         name: 'Elavon',
         logo: 'elavon.svg',
-        w: 51,
-        h: 14,
         link: 'https://www.elavon.dk/v%C3%A5re-tjenester/sm%C3%A5-bedrifter',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
@@ -144,8 +132,6 @@ const ACQs = [
     {
         name: 'Clearhaus',
         logo: 'clearhaus.svg',
-        w: 77,
-        h: 13,
         link: 'https://www.clearhaus.com/dk/',
         //cardss: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         cards: {
@@ -167,8 +153,6 @@ const ACQs = [
     {
         name: 'Bambora',
         logo: 'bambora.svg',
-        w: 71,
-        h: 13,
         link: 'http://www.bambora.com/',
         //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
@@ -188,8 +172,6 @@ let PSPs = [
     {
         name: 'Braintree',
         logo: 'braintree.svg',
-        w: 116,
-        h: 16,
         link: 'https://www.braintreepayments.com',
         features: {
             antifraud: true,
@@ -210,8 +192,6 @@ let PSPs = [
     {
         name: 'Certitrade',
         logo: 'certitrade.svg',
-        w: 125,
-        h: 25,
         link: 'https://certitrade.se',
         features: {
             antifraud: true,
@@ -243,8 +223,6 @@ let PSPs = [
     {
         name: 'Checkout.com',
         logo: 'checkoutcom.svg',
-        w: 145,
-        h: 15,
         link: 'https://www.checkout.com',
         features: {
             antifraud: true,
@@ -269,8 +247,6 @@ let PSPs = [
     {
         name: 'DanDomain',
         logo: 'dandomain.svg',
-        w: 135,
-        h: 25,
         link: 'https://www.dandomain.dk/webshop/betalingssystem',
         features: {
             '3-D secure': true
@@ -300,8 +276,6 @@ let PSPs = [
     {
         name: 'DIBS All-in-one',
         logo: 'dibs.svg',
-        w: 115,
-        h: 28,
         link: 'http://dibs.dk',
         features: {
             '3-D secure': {
@@ -334,8 +308,6 @@ let PSPs = [
     {
         name: 'DIBS Basic',
         logo: 'dibs.svg',
-        w: 115,
-        h: 28,
         link: 'http://dibs.dk',
         features: {
             '3-D secure': {
@@ -377,8 +349,6 @@ let PSPs = [
     {
         name: 'ePay Light',
         logo: 'epay.svg',
-        w: 130,
-        h: 29,
         link: 'http://epay.dk',
         features: {
             '3-D secure': true,
@@ -407,8 +377,6 @@ let PSPs = [
     {
         name: 'ePay Pro',
         logo: 'epay.svg',
-        w: 130,
-        h: 29,
         link: 'http://epay.dk',
         features: {
             '3-D secure': true,
@@ -451,8 +419,6 @@ let PSPs = [
     {
         name: 'ePay Business',
         logo: 'epay.svg',
-        w: 130,
-        h: 29,
         link: 'http://epay.dk',
         features: {
             '3-D secure': true,
@@ -500,8 +466,6 @@ let PSPs = [
     {
         name: 'ePay Pro+', // Bambora
         logo: 'epay.svg',
-        w: 130,
-        h: 29,
         link: 'http://www.epay.dk/bambora/',
         features: {
             '3-D secure': true,
@@ -529,8 +493,6 @@ let PSPs = [
     {
         name: 'Netaxept Start',
         logo: 'netaxept.svg',
-        w: 99,
-        h: 27,
         link: 'https://shop.nets.eu/da/web/dk/e-commerce',
         features: {
             '3-D secure': true,
@@ -554,8 +516,6 @@ let PSPs = [
     {
         name: 'Netaxept Advanced',
         logo: 'netaxept.svg',
-        w: 99,
-        h: 27,
         link: 'https://shop.nets.eu/da/web/dk/e-commerce',
         features: {
             '3-D secure': true,
@@ -591,8 +551,6 @@ let PSPs = [
     {
         name: 'Payer',
         logo: 'payer.svg',
-        w: 117,
-        h: 24,
         link: 'http://payer.se/betallosning/',
         features: {
             '3-D secure': true,
@@ -620,8 +578,6 @@ let PSPs = [
     {
         name: 'Paylike',
         logo: 'paylike.svg',
-        w: 99,
-        h: 31,
         link: 'https://paylike.dk',
         features: {
             '3-D secure': true,
@@ -641,8 +597,6 @@ let PSPs = [
     {
         name: 'Paymill',
         logo: 'paymill.svg',
-        w: 129,
-        h: 24,
         link: 'https://paymill.com',
         features: {
             '3-D secure': true,
@@ -667,8 +621,6 @@ let PSPs = [
     {
         name: 'PayPal',
         logo: 'paypal.svg',
-        w: 127,
-        h: 31,
         link: 'https://www.paypal.com/dk/webapps/mpp/merchant',
         features: {
             '3-D secure': true,
@@ -699,8 +651,6 @@ let PSPs = [
     {
         name: 'Payson',
         logo: 'payson.png',
-        w: 121,
-        h: 32,
         link: 'https://www.payson.se',
         features: {
             '3-D secure': true,
@@ -720,8 +670,6 @@ let PSPs = [
     {
         name: 'Payza',
         logo: 'payza.svg',
-        w: 107,
-        h: 31,
         link: 'https://payza.com',
         features: {
             '3-D secure': true,
@@ -743,8 +691,6 @@ let PSPs = [
     {
         name: 'QuickPay Basic',
         logo: 'quickpay.svg',
-        w: 138,
-        h: 27,
         link: 'https://quickpay.net/dk',
         features: {
             '3-D secure': true,
@@ -780,8 +726,6 @@ let PSPs = [
     {
         name: 'QuickPay Starter',
         logo: 'quickpay.svg',
-        w: 138,
-        h: 27,
         link: 'https://quickpay.net/dk',
         features: {
             '3-D secure': true,
@@ -817,8 +761,6 @@ let PSPs = [
     {
         name: 'QuickPay Professional',
         logo: 'quickpay.svg',
-        w: 138,
-        h: 27,
         link: 'https://quickpay.net/dk',
         features: {
             '3-D secure': true,
@@ -856,8 +798,6 @@ let PSPs = [
     {
         name: 'Stripe',
         logo: 'stripe.svg',
-        w: 75,
-        h: 31,
         link: 'https://stripe.com',
         features: {
             '3-D secure': true,
@@ -878,8 +818,6 @@ let PSPs = [
     {
         name: 'YourPay',
         logo: 'yourpay.png',
-        w: 115,
-        h: 32,
         link: 'https://www.yourpay.io',
         features: {
             '3-D secure': true,
@@ -901,8 +839,6 @@ let PSPs = [
     {
         name: '2checkout',
         logo: '2checkout.svg',
-        w: 127,
-        h: 15,
         link: 'https://www.2checkout.com',
         features: {
             '3-D secure': true,
@@ -929,8 +865,6 @@ let PSPs = [
     {
         name: 'PayEx One',
         logo: 'payex.svg',
-        w: 100,
-        h: 32,
         link: 'http://payex.dk/tjenester/e-handel/',
         features: {
             '3-D secure': true,
@@ -954,8 +888,6 @@ let PSPs = [
     {
         name: 'Wannafind',
         logo: 'wannafind.svg',
-        w: 146,
-        h: 14,
         link: 'https://www.wannafind.dk/betalingssystem/',
         features: {
             '3-D secure': {
@@ -995,8 +927,6 @@ let PSPs = [
     {
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
-        w: 143,
-        h: 14,
         link: 'https://pensopay.com/',
         features: {
             '3-D secure': true,
@@ -1022,8 +952,6 @@ let PSPs = [
     {
         name: 'PensoPay Iværksætter',
         logo: 'pensopay.svg',
-        w: 143,
-        h: 14,
         link: 'https://pensopay.com/',
         features: {
             '3-D secure': true,
@@ -1049,8 +977,6 @@ let PSPs = [
     {
         name: 'PensoPay Business',
         logo: 'pensopay.svg',
-        w: 143,
-        h: 14,
         link: 'https://pensopay.com/vores-betalingsloesninger/',
         features: {
             '3-D secure': true,
@@ -1078,8 +1004,6 @@ let PSPs = [
     {
         name: 'PensoPay Pro',
         logo: 'pensopay.svg',
-        w: 143,
-        h: 14,
         link: 'https://pensopay.com/',
         features: {
             '3-D secure': true,
@@ -1107,8 +1031,6 @@ let PSPs = [
     {
         name: 'PensoPay Premium',
         logo: 'pensopay.svg',
-        w: 143,
-        h: 14,
         link: 'https://pensopay.com/',
         features: {
             '3-D secure': true,
