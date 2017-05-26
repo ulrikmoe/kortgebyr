@@ -1134,5 +1134,136 @@ let PSPs = [
                 return fees;
             }
         }
+    },
+    {
+        name: 'Lemon Way',
+        logo: 'lemonway.svg',
+        link: 'https://www.lemonway.com/da/',
+        features: {
+            antifraud: true,
+            '3-D secure': true,
+            recurring: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(0, 'DKK'),
+            trn() {
+                return $revenue.scale(1.2 / 100).add(new Currency(0.18 * $qty, 'EUR'));
+            }
+        }
+    },
+    {
+        name: 'ScanNet',
+        logo: 'scannet.svg',
+        link: 'https://www.scannet.dk/betalingsloesning/',
+        features: {
+            '3-D secure': true,
+            antifraud: true,
+            recurring: {
+                setup: new Currency(0, 'DKK'),
+                monthly: new Currency(99, 'DKK'),
+                trn: new Currency(0, 'DKK')
+            }
+        },
+        acquirers: {
+            Nets: true,
+            Teller: true
+        },
+        cards: {
+            dankort: true,
+            visa: true,
+            mastercard: true,
+            maestro: true,
+            amex: true,
+            jcb: true,
+            unionpay: true,
+            diners: true,
+            mobilepay: CARDs.mobilepay,
+            forbrugsforeningen: CARDs.forbrugsforeningen
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(399, 'DKK'),
+            trn() {
+                return new Currency(0, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'Reepay Startup',
+        logo: 'reepay.svg',
+        link: 'https://reepay.com/da/',
+        features: {
+            '3-D secure': true,
+            'recurring': true
+        },
+        acquirers: {
+            Clearhaus: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(99, 'DKK'),
+            trn() {
+                return new Currency(4 * $qty, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'Reepay Medium',
+        logo: 'reepay.svg',
+        link: 'https://reepay.com/da/',
+        features: {
+            '3-D secure': true,
+            'recurring': true
+        },
+        acquirers: {
+            Clearhaus: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(199, 'DKK'),
+            trn() {
+                return new Currency(2 * $qty, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'Reepay Enterprise',
+        logo: 'reepay.svg',
+        link: 'https://reepay.com/da/',
+        features: {
+            '3-D secure': true,
+            'recurring': true
+        },
+        acquirers: {
+            Clearhaus: true
+        },
+        cards: {
+            visa: true,
+            mastercard: true,
+            maestro: true
+        },
+        fees: {
+            setup: new Currency(0, 'DKK'),
+            monthly: new Currency(949, 'DKK'),
+            trn() {
+                return new Currency(1.5 * $qty, 'DKK');
+            }
+        }
     }
 ];
