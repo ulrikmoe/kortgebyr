@@ -13,36 +13,36 @@ const CARDs = {
         setup: new Currency(0, 'DKK'),
         monthly: new Currency(0, 'DKK'),
         trn: new Currency(0, 'DKK')
+    },
+    dankort: {
+        setup: new Currency(250, 'DKK'),
+        monthly: new Currency(1000 / 12, 'DKK'),
+        trn: new Currency(0, 'DKK'), // Add fees later
+        trn() {
+            const avgvalue = $avgvalue.dkk();
+            const fee = (avgvalue <= 50) ? 0.7 : (avgvalue <= 100) ? 1.1 : 1.39;
+            return new Currency(fee, 'DKK');
+        }
     }
 };
+
 
 const ACQs = [
     {
         name: 'Nets',
         logo: 'nets.svg',
         link: 'https://dankort.dk/Pages/Forretninger.aspx',
-        //cardss: ['dankort', CARDs.forbrugsforeningen, 'mobilepay'],
         cards: {
             dankort: true,
             forbrugsforeningen: CARDs.forbrugsforeningen,
             mobilepay: true
         },
-        fees: {
-            setup: new Currency(250, 'DKK'),
-            monthly: new Currency(1000 / 12, 'DKK'),
-            trn(o) {
-                let avgvalue = o.avgvalue.dkk();
-                if (avgvalue <= 50) { return new Currency(0.7, 'DKK'); }
-                else if (avgvalue <= 100) { return new Currency(1.1, 'DKK'); }
-                else { return new Currency(1.39, 'DKK'); }
-            }
-        }
+        fees: CARDs.dankort
     },
     {
         name: 'Teller',
         logo: 'teller.svg',
         link: 'https://www.nets.eu/dk/payments/online-betalinger/',
-        //cardss: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'unionpay', 'diners', 'mobilepay'],
         cards: {
             visa: true,
             mastercard: true,
@@ -56,10 +56,9 @@ const ACQs = [
         fees: {
             setup: new Currency(1000, 'DKK'),
             monthly: new Currency(149, 'DKK'),
-            trn(o) {
-                let trnfee = o.avgvalue.scale(1.34 / 100).add(new Currency(0.19, 'DKK'));
-                if (trnfee.dkk() < 0.7) { trnfee = new Currency(0.7, 'DKK'); }
-                return trnfee;
+            trn() {
+                const trnfee = $avgvalue.scale(1.34 / 100).add(new Currency(0.19, 'DKK'));
+                return (trnfee.dkk() > 0.7) ? trnfee : new Currency(0.7, 'DKK');
             }
         }
     },
@@ -67,7 +66,6 @@ const ACQs = [
         name: 'Handelsbanken',
         logo: 'handelsbanken.svg',
         link: 'https://handelsbanken.dk/shb/inet/icentda.nsf/Default/qC21926A235427DE6C12578810023DBB9?Opendocument',
-        //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
             visa: true,
             mastercard: true,
@@ -76,7 +74,9 @@ const ACQs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.5 / 100); }
+            trn() {
+                return $avgvalue.scale(1.5 / 100);
+            }
         }
     },
     {
@@ -84,7 +84,6 @@ const ACQs = [
         name: 'Swedbank',
         logo: 'swedbank.png',
         link: 'https://www.swedbank.dk/card-services/produkter-og-losninger/kortindlosning-via-internet/',
-        //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
             visa: true,
             mastercard: true,
@@ -94,14 +93,15 @@ const ACQs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.1 / 100); }
+            trn() {
+                return $avgvalue.scale(1.1 / 100);
+            }
         }
     },
     {
         name: 'Valitor',
         logo: 'valitor.png',
         link: 'https://www.valitor.com/acquiring-services/online-payments/',
-        //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
             visa: true,
             mastercard: true,
@@ -110,14 +110,15 @@ const ACQs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.5 / 100); }
+            trn() {
+                return $avgvalue.scale(1.5 / 100);
+            }
         }
     },
     {
         name: 'Elavon',
         logo: 'elavon.svg',
         link: 'https://www.elavon.dk/v%C3%A5re-tjenester/sm%C3%A5-bedrifter',
-        //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
             visa: true,
             mastercard: true,
@@ -126,14 +127,15 @@ const ACQs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.6 / 100); }
+            trn() {
+                return $avgvalue.scale(1.6 / 100);
+            }
         }
     },
     {
         name: 'Clearhaus',
         logo: 'clearhaus.svg',
         link: 'https://www.clearhaus.com/dk/',
-        //cardss: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         cards: {
             visa: true,
             mastercard: true,
@@ -143,10 +145,10 @@ const ACQs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) {
-                let trnfee = o.avgvalue.scale(1.45 / 100);
-                if (trnfee.dkk() < 0.6) { trnfee = new Currency(0.6, 'DKK'); }
-                return trnfee;
+            trn() {
+                // 1.45% (min. 0.6 DKK)
+                const trnfee = $avgvalue.scale(1.45 / 100);
+                return trnfee.dkk() > 0.6 ? trnfee : new Currency(0.7, 'DKK');
             }
         }
     },
@@ -154,7 +156,6 @@ const ACQs = [
         name: 'Bambora',
         logo: 'bambora.svg',
         link: 'http://www.bambora.com/',
-        //cardss: ['visa', 'mastercard', 'maestro'],
         cards: {
             visa: true,
             mastercard: true,
@@ -163,7 +164,9 @@ const ACQs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.45 / 100); }
+            trn() {
+                return $avgvalue.scale(1.45 / 100);
+            }
         }
     }
 ];
@@ -186,7 +189,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.9 / 100).add(new Currency(2.25, 'DKK')).scale(o.transactions); }
+            trn() {
+                return $revenue.scale(1.9 / 100).add(new Currency(2.25 * $qty, 'DKK'));
+            }
         }
     },
     {
@@ -217,7 +222,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(206, 'SEK'), // 48/7*30
-            trn(o) { return o.avgvalue.scale(0.9 / 100).add(new Currency(1.5, 'SEK')).scale(o.transactions); }
+            trn() {
+                return $revenue.scale(0.9 / 100).add(new Currency(1.5 * $qty, 'SEK'));
+            }
         }
     },
     {
@@ -241,7 +248,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'EUR'),
             monthly: new Currency(0, 'EUR'),
-            trn(o) { return o.avgvalue.scale(1.5 / 100).add(new Currency(0.15, 'EUR')).scale(o.transactions); }
+            trn() {
+                return $revenue.scale(1.5 / 100).add(new Currency(0.15 * $qty, 'EUR'));
+            }
         }
     },
     {
@@ -270,7 +279,9 @@ let PSPs = [
         fees: {
             setup: new Currency(199, 'DKK'),
             monthly: new Currency(149, 'DKK'),
-            trn(o) { return new Currency(0, 'DKK'); }
+            trn() {
+                return new Currency(0, 'DKK');
+            }
         }
     },
     {
@@ -298,10 +309,12 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(149, 'DKK'),
-            trn(o) {
-                const acquiring = o.avgvalue.scale(1.45 / 100).add(new Currency(0.19, 'DKK')).scale(o.transactions);
-                const trnfee = new Currency(0.35, 'DKK').scale(Math.max(o.transactions - 250, 0));
-                return acquiring.add(trnfee);
+            trn() {
+                let fees = $revenue.scale(1.45 / 100).add(new Currency(0.19 * $qty, 'DKK'));
+                if ($qty > 250) {
+                    fees.add(new Currency(0.35 * ($qty - 250), 'DKK'));
+                }
+                return fees;
             }
         }
     },
@@ -343,7 +356,12 @@ let PSPs = [
         fees: {
             setup: new Currency(599, 'DKK'),
             monthly: new Currency(199, 'DKK'),
-            trn(o) { return new Currency(0.35, 'DKK').scale(Math.max(o.transactions - 250, 0)); }
+            trn() {
+                if ($qty > 250) {
+                    return new Currency(0.35 * ($qty - 250), 'DKK')
+                }
+                return new Currency(0, 'DKK');
+            }
         }
     },
     {
@@ -355,7 +373,9 @@ let PSPs = [
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trn(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
+                trn() {
+                    return new Currency(0.3 * $qty, 'DKK');
+                }
             }
         },
         acquirers: {
@@ -369,8 +389,11 @@ let PSPs = [
         fees: {
             setup: new Currency(399, 'DKK'),
             monthly: new Currency(99, 'DKK'),
-            trn(o) {
-                return new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0));
+            trn() {
+                if ($qty > 250) {
+                    return new Currency(0.25 * ($qty - 250), 'DKK')
+                }
+                return new Currency(0, 'DKK');
             }
         }
     },
@@ -383,7 +406,9 @@ let PSPs = [
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trn(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
+                trn() {
+                    return new Currency(0.3 * $qty, 'DKK');
+                }
             }
         },
         acquirers: {
@@ -411,8 +436,11 @@ let PSPs = [
         fees: {
             setup: new Currency(599, 'DKK'),
             monthly: new Currency(199, 'DKK'),
-            trn(o) {
-                return new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0));
+            trn() {
+                if ($qty > 250) {
+                    return new Currency(0.25 * ($qty - 250), 'DKK')
+                }
+                return new Currency(0, 'DKK');
             }
         }
     },
@@ -425,11 +453,15 @@ let PSPs = [
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trn(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
+                trn() {
+                    return new Currency(0.3 * $qty, 'DKK');
+                }
             },
             recurring: {
                 setup: new Currency(0, 'DKK'),
-                monthly(o) { return (new Currency(1 / 12, 'DKK')).scale(o.transactions); },
+                monthly() {
+                    return new Currency($qty / 12, 'DKK');
+                },
                 trn: new Currency(0, 'DKK')
             }
         },
@@ -458,8 +490,11 @@ let PSPs = [
         fees: {
             setup: new Currency(999, 'DKK'),
             monthly: new Currency(299, 'DKK'),
-            trn(o) {
-                return new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 500, 0));
+            trn() {
+                if ($qty > 500) {
+                    return new Currency(0.25 * ($qty - 500), 'DKK')
+                }
+                return new Currency(0, 'DKK');
             }
         }
     },
@@ -472,7 +507,9 @@ let PSPs = [
             antifraud: {
                 setup: new Currency(0, 'DKK'),
                 monthly: new Currency(0, 'DKK'),
-                trn(o) { return new Currency(0.3, 'DKK').scale(o.transactions); }
+                trn() {
+                    return new Currency(0.3 * $qty, 'DKK');
+                }
             }
         },
         cards: {
@@ -483,10 +520,12 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(149, 'DKK'),
-            trn(o) {
-                let gatewayfee = new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0));
-                let acqfee = o.avgvalue.scale(1.45 / 100).scale(o.transactions);
-                return acqfee.add(gatewayfee);
+            trn() {
+                let fees = $revenue.scale(1.45 / 100);
+                if ($qty > 250) {
+                    fees.add(new Currency(0.25 * ($qty - 250), 'DKK'));
+                }
+                return fees;
             }
         }
     },
@@ -510,7 +549,9 @@ let PSPs = [
         fees: {
             setup: new Currency(1005, 'DKK'),
             monthly: new Currency(180, 'DKK'),
-            trn(o) { return new Currency(1.5, 'DKK').scale(o.transactions); }
+            trn() {
+                return new Currency(1.5 * $qty, 'DKK')
+            }
         }
     },
     {
@@ -545,7 +586,9 @@ let PSPs = [
         fees: {
             setup: new Currency(6000, 'DKK'),
             monthly: new Currency(500, 'DKK'),
-            trn(o) { return new Currency(0.7, 'DKK').scale(o.transactions); }
+            trn() {
+                return new Currency(0.7 * $qty, 'DKK')
+            }
         }
     },
     {
@@ -572,7 +615,9 @@ let PSPs = [
         fees: {
             setup: new Currency(1400, 'SEK'),
             monthly: new Currency(400, 'SEK'),
-            trn(o) { return new Currency(2, 'SEK').scale(o.transactions); }
+            trn() {
+                return new Currency(2 * $qty, 'SEK');
+            }
         }
     },
     {
@@ -591,7 +636,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'EUR'),
             monthly: new Currency(0, 'EUR'),
-            trn(o) { return o.avgvalue.scale(1.35 / 100).add(new Currency(0.50, 'DKK')).scale(o.transactions); }
+            trn() {
+                return $revenue.scale(1.35 / 100).add(new Currency(0.50 * $qty, 'DKK'));
+            }
         }
     },
     {
@@ -615,7 +662,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'EUR'),
             monthly: new Currency(0, 'EUR'),
-            trn(o) { return o.avgvalue.scale(2.95 / 100).add(new Currency(0.28, 'EUR')).scale(o.transactions); }
+            trn() {
+                return $revenue.scale(2.95 / 100).add(new Currency(0.28 * $qty, 'EUR'));
+            }
         }
     },
     {
@@ -637,14 +686,11 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) {
-                let oms = o.transactions * o.avgvalue.dkk();
-                let fee = 1.9;
-                if (oms <= 800000) { fee = 2.4; }
-                if (oms <= 400000) { fee = 2.7; }
-                if (oms <= 80000) { fee = 2.9; }
-                if (oms <= 20000) { fee = 3.4; }
-                return o.avgvalue.scale(fee / 100).add(new Currency(2.6, 'DKK')).scale(o.transactions);
+            trn() {
+                const k = $revenue.dkk() / 1000;
+                const fee = (k <= 20) ? 3.4 : (k <= 80) ? 2.9 :
+                            (k <= 400) ? 2.7 : (k <= 800) ? 2.4 : 1.9;
+                return $revenue.scale(fee / 100).add(new Currency(2.6 * $qty, 'DKK'));
             }
         }
     },
@@ -664,7 +710,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'SEK'),
             monthly: new Currency(0, 'SEK'),
-            trn(o) { return o.avgvalue.scale(2.85 / 100).scale(o.transactions); }
+            trn() {
+                return $revenue.scale(2.85 / 100);
+            }
         }
     },
     {
@@ -683,13 +731,13 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'EUR'),
             monthly: new Currency(0, 'EUR'),
-            trn(o) {
-                return o.avgvalue.scale(2.9 / 100).add(new Currency(0.3, 'EUR')).scale(o.transactions);
+            trn() {
+                return $revenue.scale(2.9 / 100).add(new Currency(0.3 * $qty, 'EUR'));
             }
         }
     },
     {
-        name: 'QuickPay Basic',
+        name: 'QuickPay Basis',
         logo: 'quickpay.svg',
         link: 'https://quickpay.net/dk',
         features: {
@@ -720,7 +768,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return new Currency(5, 'DKK').scale(o.transactions); }
+            trn() {
+                return new Currency(5 * $qty, 'DKK');
+            }
         }
     },
     {
@@ -755,7 +805,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(49, 'DKK'),
-            trn(o) { return new Currency(1, 'DKK').scale(o.transactions); }
+            trn() {
+                return new Currency($qty, 'DKK');
+            }
         }
     },
     {
@@ -790,8 +842,11 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(149, 'DKK'),
-            trn(o) {
-                return new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0));
+            trn() {
+                if ($qty > 250) {
+                    return new Currency(0.25 * ($qty - 250), 'DKK');
+                }
+                return new Currency(0, 'DKK');
             }
         }
     },
@@ -812,7 +867,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.4 / 100).add(new Currency(1.8, 'DKK')).scale(o.transactions); }
+            trn() {
+                return $revenue.scale(1.4 / 100).add(new Currency(1.8 * $qty, 'DKK'));
+            }
         }
     },
     {
@@ -831,8 +888,8 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) {
-                return o.avgvalue.scale(2.25 / 100).scale(o.transactions);
+            trn() {
+                return $revenue.scale(2.25 / 100);
             }
         }
     },
@@ -857,8 +914,8 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'USD'),
             monthly: new Currency(0, 'USD'),
-            trn(o) {
-                return o.avgvalue.scale(2.4 / 100).add(new Currency(0.3, 'USD')).scale(o.transactions);
+            trn() {
+                return $revenue.scale(2.4 / 100).add(new Currency(0.3 * $qty, 'USD'));
             }
         }
     },
@@ -880,8 +937,8 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(299, 'DKK'),
-            trn(o) {
-                return o.avgvalue.scale(1 / 100).add(new Currency(1.5, 'DKK')).scale(o.transactions);
+            trn() {
+                return $revenue.scale(1 / 100).add(new Currency(1.5 * $qty, 'DKK'));
             }
         }
     },
@@ -921,7 +978,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(149, 'DKK'),
-            trn(o) { return new Currency(0, 'DKK'); }
+            trn() {
+                return new Currency(0, 'DKK');
+            }
         }
     },
     {
@@ -938,6 +997,7 @@ let PSPs = [
             antifraud: true
         },
         cards: {
+            //dankort: CARDs.dankort,
             visa: true,
             mastercard: true,
             maestro: true,
@@ -946,7 +1006,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.45 / 100).add(new Currency(5, 'DKK')).scale(o.transactions); }
+            trn() {
+                return $revenue.scale(1.45 / 100).add(new Currency(5 * $qty, 'DKK'))
+            }
         }
     },
     {
@@ -963,6 +1025,7 @@ let PSPs = [
             antifraud: true
         },
         cards: {
+            //dankort: CARDs.dankort,
             visa: true,
             mastercard: true,
             maestro: true,
@@ -971,7 +1034,9 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(59, 'DKK'),
-            trn(o) { return o.avgvalue.scale(1.45 / 100).add(new Currency(1, 'DKK')).scale(o.transactions); }
+            trn() {
+                return $revenue.scale(1.45 / 100).add(new Currency($qty, 'DKK'));
+            }
         }
     },
     {
@@ -988,6 +1053,7 @@ let PSPs = [
             antifraud: true
         },
         cards: {
+            //dankort: CARDs.dankort,
             visa: true,
             mastercard: true,
             maestro: true,
@@ -996,8 +1062,12 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(99, 'DKK'),
-            trn(o) {
-                return o.avgvalue.scale(1.4 / 100).scale(o.transactions).add(new Currency(0.35, 'DKK').scale(Math.max(o.transactions - 100, 0)));
+            trn() {
+                let fees = $revenue.scale(1.4 / 100);
+                if ($qty > 100) {
+                    fees.add(new Currency(0.35 * $qty, 'DKK'));
+                }
+                return fees;
             }
         }
     },
@@ -1015,6 +1085,7 @@ let PSPs = [
             antifraud: true
         },
         cards: {
+            //dankort: CARDs.dankort,
             visa: true,
             mastercard: true,
             maestro: true,
@@ -1023,8 +1094,12 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(149, 'DKK'),
-            trn(o) {
-                return o.avgvalue.scale(1.35 / 100).scale(o.transactions).add(new Currency(0.25, 'DKK').scale(Math.max(o.transactions - 250, 0)));
+            trn() {
+                let fees = $revenue.scale(1.35 / 100);
+                if ($qty > 250) {
+                    fees.add(new Currency(0.25 * $qty, 'DKK'));
+                }
+                return fees;
             }
         }
     },
@@ -1042,6 +1117,7 @@ let PSPs = [
             antifraud: true
         },
         cards: {
+            //dankort: CARDs.dankort,
             visa: true,
             mastercard: true,
             maestro: true,
@@ -1050,8 +1126,12 @@ let PSPs = [
         fees: {
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(129, 'DKK'),
-            trn(o) {
-                return o.avgvalue.scale(1.35 / 100).scale(o.transactions).add(new Currency(0.35, 'DKK').scale(Math.max(o.transactions - 100, 0)));
+            trn() {
+                let fees = $revenue.scale(1.35 / 100);
+                if ($qty > 100) {
+                    fees.add(new Currency(0.35 * $qty, 'DKK'));
+                }
+                return fees;
             }
         }
     }
