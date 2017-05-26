@@ -21,25 +21,20 @@ const currency_map = {
     GBP: '£'
 };
 
-let gccode = 'DKK';
-
 function Currency(value, code) {
-    //this.code = code;
-    //this.value = value;
     this.amounts = {};
     this.amounts[code] = value;
 }
 
-
 Currency.prototype.print = function () {
-    const number = Math.round((this.dkk() * 100) / currency_value[gccode]) / 100;
+    const number = Math.round((this.dkk() * 100) / currency_value[$currency]) / 100;
     const parts = number.toString().split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
     if (parts.length === 2 && parts[1].length === 1) {
         parts[1] += '0';
     }
-    return parts.join(',') + ' ' + currency_map[gccode];
+    return parts.join(',') + ' ' + currency_map[$currency];
 };
 
 Currency.prototype.represent = function () {
@@ -48,7 +43,7 @@ Currency.prototype.represent = function () {
             return this.amounts[code] + ' ' + code;
         }
     }
-    return this.dkk() / currency_value[gccode] + ' ' + gccode; //currency_map[gccode];
+    return this.dkk() / currency_value[$currency] + ' ' + $currency; //currency_map[$currency];
 };
 
 Currency.prototype.string = function () {
@@ -57,7 +52,7 @@ Currency.prototype.string = function () {
             return this.amounts[code] + code;
         }
     }
-    return this.dkk() / currency_value[gccode] + gccode; //currency_map[gccode];
+    return this.dkk() / currency_value[$currency] + $currency; //currency_map[$currency];
 };
 
 Currency.prototype.dkk = function () {
@@ -140,7 +135,7 @@ Currency.prototype.scale = function (rhs) {
 
 function set_ccode(c) {
     if (currency_map.hasOwnProperty(c)) {
-        gccode = c;
+        $currency = c;
     }
 }
 
@@ -160,11 +155,11 @@ function _getCurrency(currency) {
     const a = currency.match(curregex);
     if (a === null) { return null; }
 
-    let c = a[2] ? a[2] : currency_map[gccode];
-    if (c.toLowerCase() === currency_map[gccode].toLowerCase()) {
+    let c = a[2] ? a[2] : currency_map[$currency];
+    if (c.toLowerCase() === currency_map[$currency].toLowerCase()) {
         /* there are a lot of currencies named kr and we should prefer the kr
         * that has been selected */
-        c = gccode;
+        c = $currency;
     } else {
         /* if that's not what's selected, find the currency */
         for (let k in currency_map) {
