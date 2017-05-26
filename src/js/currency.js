@@ -5,11 +5,11 @@
 
 const currency_value = {
     DKK: 1,
-    SEK: 0.781,
-    NOK: 0.827,
-    EUR: 7.434,
-    USD: 7.123,
-    GBP: 8.752
+    SEK: 0.764,
+    NOK: 0.793,
+    EUR: 7.441,
+    USD: 6.648,
+    GBP: 8.619
 };
 
 const currency_map = {
