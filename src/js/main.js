@@ -133,7 +133,8 @@ const opts = {
         dirty_bits: 1,
         get_dirty_bits() { return +(this.get() !== parseInt($('transactions').defaultValue)); },
         get(action) {
-            return $qty = getInt($('transactions'), action);
+            $qty = getInt($('transactions'), action);
+            return $qty;
         },
         set(v) {
             setInt('transactions', v);
@@ -144,7 +145,8 @@ const opts = {
         dirty_bits: 1,
         get_dirty_bits() { return +(!this.get().is_equal_to(_getCurrency($('avgvalue').defaultValue))); },
         get(action) {
-            return $avgvalue = getCurrency('avgvalue', action);
+            $avgvalue = getCurrency('avgvalue', action);
+            return $avgvalue;
         },
         set(v) { setCurrency('avgvalue', _getCurrency(v)); }
     },

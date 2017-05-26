@@ -17,7 +17,6 @@ const CARDs = {
     dankort: {
         setup: new Currency(250, 'DKK'),
         monthly: new Currency(1000 / 12, 'DKK'),
-        trn: new Currency(0, 'DKK'), // Add fees later
         trn() {
             const avgvalue = $avgvalue.dkk();
             const fee = (avgvalue <= 50) ? 0.7 : (avgvalue <= 100) ? 1.1 : 1.39;
@@ -358,7 +357,7 @@ let PSPs = [
             monthly: new Currency(199, 'DKK'),
             trn() {
                 if ($qty > 250) {
-                    return new Currency(0.35 * ($qty - 250), 'DKK')
+                    return new Currency(0.35 * ($qty - 250), 'DKK');
                 }
                 return new Currency(0, 'DKK');
             }
@@ -391,7 +390,7 @@ let PSPs = [
             monthly: new Currency(99, 'DKK'),
             trn() {
                 if ($qty > 250) {
-                    return new Currency(0.25 * ($qty - 250), 'DKK')
+                    return new Currency(0.25 * ($qty - 250), 'DKK');
                 }
                 return new Currency(0, 'DKK');
             }
@@ -438,7 +437,7 @@ let PSPs = [
             monthly: new Currency(199, 'DKK'),
             trn() {
                 if ($qty > 250) {
-                    return new Currency(0.25 * ($qty - 250), 'DKK')
+                    return new Currency(0.25 * ($qty - 250), 'DKK');
                 }
                 return new Currency(0, 'DKK');
             }
@@ -492,7 +491,7 @@ let PSPs = [
             monthly: new Currency(299, 'DKK'),
             trn() {
                 if ($qty > 500) {
-                    return new Currency(0.25 * ($qty - 500), 'DKK')
+                    return new Currency(0.25 * ($qty - 500), 'DKK');
                 }
                 return new Currency(0, 'DKK');
             }
@@ -550,7 +549,7 @@ let PSPs = [
             setup: new Currency(1005, 'DKK'),
             monthly: new Currency(180, 'DKK'),
             trn() {
-                return new Currency(1.5 * $qty, 'DKK')
+                return new Currency(1.5 * $qty, 'DKK');
             }
         }
     },
@@ -587,7 +586,7 @@ let PSPs = [
             setup: new Currency(6000, 'DKK'),
             monthly: new Currency(500, 'DKK'),
             trn() {
-                return new Currency(0.7 * $qty, 'DKK')
+                return new Currency(0.7 * $qty, 'DKK');
             }
         }
     },
@@ -1010,7 +1009,7 @@ let PSPs = [
             setup: new Currency(0, 'DKK'),
             monthly: new Currency(0, 'DKK'),
             trn() {
-                return $revenue.scale(1.45 / 100).add(new Currency(5 * $qty, 'DKK'))
+                return $revenue.scale(1.45 / 100).add(new Currency(5 * $qty, 'DKK'));
             }
         }
     },
@@ -1203,7 +1202,7 @@ let PSPs = [
         link: 'https://reepay.com/da/',
         features: {
             '3-D secure': true,
-            'recurring': true
+            recurring: true
         },
         acquirers: {
             Clearhaus: true
@@ -1227,7 +1226,7 @@ let PSPs = [
         link: 'https://reepay.com/da/',
         features: {
             '3-D secure': true,
-            'recurring': true
+            recurring: true
         },
         acquirers: {
             Clearhaus: true
@@ -1251,7 +1250,7 @@ let PSPs = [
         link: 'https://reepay.com/da/',
         features: {
             '3-D secure': true,
-            'recurring': true
+            recurring: true
         },
         acquirers: {
             Clearhaus: true
