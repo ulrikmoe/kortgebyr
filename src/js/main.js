@@ -5,6 +5,14 @@
 
 function $(s) { return document.getElementById(s); }
 
+let $currency = 'DKK';
+let $avgvalue = new Currency(500, 'DKK');
+let $qty = 200;
+let $revenue = new Currency(500 * 200, 'DKK');
+//let $acquirer = ACQs;
+//let $cards = ['visa'];
+//let $features = [];
+//let $dankortscale = 0.77; // 77% of all trans to Dankort
 
 function getInt(elem, action) {
     if (action === 'init') {
@@ -124,21 +132,30 @@ const opts = {
         type: 'string',
         dirty_bits: 1,
         get_dirty_bits() { return +(this.get() !== parseInt($('transactions').defaultValue)); },
-        get(action) { return getInt($('transactions'), action); },
-        set(v) { setInt('transactions', v); }
+        get(action) {
+            return $qty = getInt($('transactions'), action);
+        },
+        set(v) {
+            setInt('transactions', v);
+        }
     },
     avgvalue: {
         type: 'currency',
         dirty_bits: 1,
         get_dirty_bits() { return +(!this.get().is_equal_to(_getCurrency($('avgvalue').defaultValue))); },
-        get(action) { return getCurrency('avgvalue', action); },
+        get(action) {
+            return $avgvalue = getCurrency('avgvalue', action);
+        },
         set(v) { setCurrency('avgvalue', _getCurrency(v)); }
     },
     currency: {
         type: 'string',
         dirty_bits: 1,
         get_dirty_bits() { return +(this.get() !== $('currency_code_select').options[0].value); },
-        get() { return gccode; },
+        get() {
+            $revenue = $avgvalue.scale($qty);
+            return $currency;
+        },
         set(v) {
             const select = $('currency_code_select');
             for (let i = 0; i < select.length; i++) {
