@@ -219,7 +219,7 @@ const PSPs = [
         logo: 'epay.svg',
         link: 'http://epay.dk',
         acqs: ['Nets'],
-        cards: ['dankort', 'mobilepay', Mobilepay, Forbrugsforeningen],
+        cards: ['dankort', Mobilepay, Forbrugsforeningen],
         features: [
             {
                 title: 'Antifraud',
