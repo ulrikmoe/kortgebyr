@@ -1,48 +1,48 @@
 <!DOCTYPE HTML>
 <title>Betalingsløsninger - kortgebyr.dk</title>
 <meta name="description" content="Sammenlign priser på betalingsløsninger, betalingsgateways og indløsere. Find den online betalingsløsning der passer til din forretning.">
-<link rel="icon" type="image/png" href="/img/favicon.png?1">
+<link rel="icon" type="image/png" href="/img/favicon.png">
 <link rel="canonical" href="https://kortgebyr.dk">
 <link rel="stylesheet" href="/css/kortgebyr.css?{{ csstoken }}">
 <base target="_blank">
 
 <header>
-  <nav>
-    <a class="logo" href="/" target="_self">kortgebyr</a>
-    <a class="lastUpdate" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">
-      Opdateret d. {{ lastUpdate }}
-    </a>
-
-    <div class="language" onclick="alert('Denne funktion er midlertidigt disabled.')">
-      <img width="19" src="/img/dk.png" alt="kortgebyr på dansk" />
-    </div>
-
-    <div id="currency" class="currency">
-      <span id="currency_code">DKK</span>
-      <select id="currency_code_select">
-        <option value="DKK">DKK</option>
-        <option value="SEK">SEK</option>
-        <option value="NOK">NOK</option>
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-      </select>
-    </div>
-    <a href="mailto:ulrik.moe@gmail.com?Subject=Kortgebyr.dk" class="feedback">Feedback</a>
-  </nav>
-
   <form id="form" class="clearfix" autocomplete="off">
+    <nav>
+      <a class="logo" href="/" target="_self">kortgebyr</a>
+      <a class="lastUpdate" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">
+        Opdateret d. {{ lastUpdate }}
+      </a>
+
+      <div class="language" onclick="alert('Denne funktion er midlertidigt disabled.')">
+        <img width="19" height="19" src="/img/dk.png" alt="kortgebyr på dansk" />
+      </div>
+
+      <div id="currency" class="currency">
+        <span id="currency_code">DKK</span>
+        <select name="currency">
+          <option value="DKK">DKK</option>
+          <option value="SEK">SEK</option>
+          <option value="NOK">NOK</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+        </select>
+      </div>
+      <a href="mailto:ulrik.moe@gmail.com?Subject=Kortgebyr.dk" class="feedback">Feedback</a>
+    </nav>
+
     <section class="acquirer_menu">
       <label class="acqlabel"> Indløsning
-        <select id="acquirer" class="acquirer">
-          <option>Billigst mulige</option>
-          <option>Teller</option>
-          <option>Handelsbanken</option>
-          <option>Swedbank</option>
-          <option>Valitor</option>
-          <option>Elavon</option>
-          <option>Clearhaus</option>
-          <option>Bambora</option>
+        <select name="acquirer" class="acquirer">
+          <option value="auto" selected>Billigst mulige</option>
+          <option value="1">Teller</option>
+          <option value="2">Handelsbanken</option>
+          <option value="3">Swedbank</option>
+          <option value="4">Valitor</option>
+          <option value="5">Elavon</option>
+          <option value="6">Clearhaus</option>
+          <option value="7">Bambora</option>
         </select>
       </label>
       <div class="about">
@@ -51,24 +51,55 @@
     </section>
 
     <section style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
-      <label><input type="text" class="field" id="transactions" value="250"> Transaktioner pr. måned</label>
-      <label><input type="text" class="field" id="avgvalue" value="450 DKK"> Gennemsnits ordreværdi</label>
-      <label><input type="checkbox" class="ofeatures" id="antifraud" /> Svindelkontrol</label>
-      <label><input type="checkbox" class="ofeatures" id="recurring" /> Abonnementsbetalinger</label>
+      <label>
+        <input name="qty" type="number" min="0" value="200" class="field">
+        Transaktioner pr. måned
+      </label>
+      <label>
+        <input name="avgvalue" type="number" min="0" value="500" class="field">
+        Gennemsnits ordreværdi
+      </label>
+      <label>
+        <input name="features[]" value="antifraud" type="checkbox" class="ofeatures" />
+        Svindelkontrol
+      </label>
+      <label>
+        <input name="features[]" value="recurring" type="checkbox" class="ofeatures" /> Abonnementsbetalinger
+      </label>
     </section>
 
     <section style="width:19%; padding-right:0;">
-      <label><input checked="" type="checkbox" class="ocards" id="dankort" /> Dankort</label>
-      <label><input checked="" type="checkbox" class="ocards" id="visa" /> Visa / MasterCard</label>
-      <label><input type="checkbox" class="ocards" id="forbrugsforeningen" /> Forbrugsforening</label>
-      <label><input type="checkbox" class="ocards" id="diners" /> Diners</label>
-      <label><input type="checkbox" class="ocards" id="amex" /> American Express</label>
+      <label>
+        <input name="cards[]" value="dankort" type="checkbox" class="ocards" checked />
+        Dankort
+      </label>
+      <label>
+        <input name="cards[]" value="visa" type="checkbox" class="ocards" checked />
+        Visa / MasterCard
+      </label>
+      <label>
+        <input name="cards[]" value="forbrugsforeningen" type="checkbox" class="ocards" />
+        Forbrugsforening
+      </label>
+      <label>
+        <input name="cards[]" value="diners" type="checkbox" class="ocards" />
+        Diners
+      </label>
     </section>
 
     <section style="width:17%; padding-right:0; padding-left: 0;">
-      <label><input type="checkbox" class="ocards" id="jcb" /> JCB</label>
-      <label><input type="checkbox" class="ocards" id="unionpay" /> UnionPay</label>
-      <label><input type="checkbox" class="ocards" id="mobilepay" /> MobilePay</label>
+      <label>
+        <input name="cards[]" value="jcb" type="checkbox" class="ocards" />
+        JCB
+      </label>
+      <label>
+        <input name="cards[]" value="amex" type="checkbox" class="ocards" />
+        American Express
+      </label>
+      <label>
+        <input name="cards[]" value="mobilepay" type="checkbox" class="ocards" />
+        MobilePay
+      </label>
     </section>
   </form>
 </header>
