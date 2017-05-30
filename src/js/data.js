@@ -5,13 +5,11 @@
 
 const Mobilepay = {
     title: 'mobilepay',
-    setup: new Currency(0, 'DKK'),
     monthly: new Currency(49, 'DKK')
 };
 
 const Forbrugsforeningen = {
-    title: 'forbrugsforeningen',
-    setup: new Currency(0, 'DKK')
+    title: 'forbrugsforeningen'
 };
 
 const ACQs = [
