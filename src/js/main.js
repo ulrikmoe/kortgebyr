@@ -79,7 +79,8 @@ function acqcombo(psp) {
     const acqarr = [];
 
     // Check if a single acq support all cards.
-    for (let acq of A) {
+    for (let i = 0; i < A.length; i++) {
+        const acq = A[i];
         if (psp.acquirers[acq.name]) {
             // Return acq if it support all $cards.
             if (x_has_y(acq.cards, $cards)) { return [acq]; }
@@ -130,7 +131,8 @@ function build(action) {
     const frag = document.createDocumentFragment();
 
     // Calculate acquirer costs and sort by Total Costs.
-    for (let acq of $acqs) {
+    for (let i = 0; i < $acqs.length; i++) {
+        const acq = $acqs[i];
         const cardscale = (acq.name === 'Nets') ? $dankortscale : 1 - $dankortscale;
         acq.trnfees = acq.fees.trn().scale($qty).scale(cardscale);
         acq.TC = acq.trnfees;
@@ -139,7 +141,8 @@ function build(action) {
     $acqs.sort(function (obj1, obj2) { return obj1.TC.dkk() - obj2.TC.dkk(); });
 
     psploop:
-    for (let psp of PSPs) {
+    for (let i = 0; i < PSPs.length; i++) {
+        const psp = PSPs[i];
         const setup = {};
         const monthly = {};
         const trnfee = {};
@@ -172,7 +175,8 @@ function build(action) {
             acqArr = acqcombo(psp); // Find acq with full card support
 
             if (!acqArr) { continue; }
-            for (let acq of acqArr) {
+            for (let j = 0; j < acqArr.length; j++) {
+                const acq = acqArr[j];
                 if (acq.fees.setup) { setup[acq.name] = acq.fees.setup; }
                 if (acq.fees.monthly) { monthly[acq.name] = acq.fees.monthly; }
                 trnfee[acq.name] = acq.trnfees;
