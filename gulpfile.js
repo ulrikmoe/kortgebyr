@@ -80,7 +80,7 @@ function stalker() {
     gulp.watch(['src/img/**', 'src/font/*'], assets);
     gulp.watch(['src/*.html'], html);
     gulp.watch(['src/css/*.less'], gulp.series(less2css, html));
-    gulp.watch(['src/js/*.js'], gulp.series(scripts, html));
+    gulp.watch(['src/js/**/*.js'], gulp.series(scripts, html));
     gulp.watch(['i18n/*.json'], gulp.series('build'));
 }
 
