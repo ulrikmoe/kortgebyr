@@ -742,7 +742,7 @@ const PSPs = [
                 return new Currency(1.5 * $qty, 'DKK');
             }
         }
-    }/*,
+    },
     {
         name: 'Scanpay',
         logo: 'scanpay.svg',
@@ -760,7 +760,7 @@ const PSPs = [
                 return new Currency(0.25 * $qty, 'DKK');
             }
         }
-    }*/
+    }
 ];
 
 
