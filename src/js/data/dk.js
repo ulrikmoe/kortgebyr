@@ -57,7 +57,7 @@ const ACQs = [
     {
         name: 'Swedbank',
         logo: 'swedbank.png',
-        link: 'https://www.swedbank.dk/card-services/priser-og-vilkar/#!/CID_2263482',
+        link: 'https://www.swedbank.dk/erhverv/card-services/priser-og-vilkar/#!/CID_2263482',
         cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         fees: {
             trn() {
