@@ -128,10 +128,10 @@ function cost2obj(cost, obj, name) {
     for (let i in cost) {
         let value = cost[i];
         const type = typeof value;
-        if (type === 'function') {
+        if (typeof value === 'function') {
             value = value();
         }
-        if (!value || type !== 'object') { continue; }
+        if (!value || typeof value !== 'object') { continue; }
         obj[i][name] = value;
     }
 }
