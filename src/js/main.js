@@ -62,16 +62,31 @@ function x_has_y(objx, objy) {
     return true;
 }
 
-function sum() {
-    let sumobj = new Currency(0, 'DKK');
+function sum(obj) {
+    let ret = new Currency(0, 'DKK');
+    for (let fee in obj) {
+        ret = ret.add(obj[fee]);
+    }
+    return ret;
+}
+
+function merge() {
+    let obj = {};
     for (let i = 0; i < arguments.length; i++) {
-        // Combine costs
-        for (let z in arguments[i]) {
-            sumobj = sumobj.add(arguments[i][z]);
+        const costobj = arguments[i];
+        for (let z in costobj) {
+            if (obj[z]) {
+                obj[z] = obj[z].add(costobj[z]);
+            } else {
+                obj[z] = costobj[z];
+            }
         }
     }
-    return sumobj;
+    return obj;
 }
+
+
+
 
 // Find combination of acquirers that support all cards
 function acqcombo(psp) {
@@ -109,6 +124,17 @@ function acqcombo(psp) {
     return null;
 }
 
+function cost2obj(cost, obj, name) {
+    for (let i in cost) {
+        let value = cost[i];
+        const type = typeof value;
+        if (type === 'function') {
+            value = value();
+        }
+        if (!value || type !== 'object') { continue; }
+        obj[i][name] = value;
+    }
+}
 
 function sumTxt(obj) {
     const frag = document.createDocumentFragment();
@@ -143,13 +169,8 @@ function build(action) {
     psploop:
     for (let i = 0; i < PSPs.length; i++) {
         const psp = PSPs[i];
-        const setup = {};
-        const monthly = {};
-        const trnfee = {};
-
-        if (psp.fees.setup) { setup[psp.name] = psp.fees.setup; }
-        if (psp.fees.monthly) { monthly[psp.name] = psp.fees.monthly; }
-        if (psp.fees.trn && psp.fees.trn()) { trnfee[psp.name] = psp.fees.trn(); }
+        const fees = { setup: {}, monthly: {}, trn: {} };
+        cost2obj(psp.fees, fees, psp.name);
 
         // Check if psp support all enabled payment methods
         for (let card in $cards) {
@@ -160,9 +181,7 @@ function build(action) {
         for (let i in $features) {
             const feature = psp.features[i];
             if (!feature) { continue psploop; }
-            if (feature.setup) { setup[i] = feature.setup; }
-            if (feature.monthly) { monthly[i] = feature.monthly; }
-            if (feature.trn) { trnfee[i] = feature.trn; }
+            cost2obj(feature, fees, i);
         }
 
         // If an acquirer has been selected then hide the Stripes
@@ -177,9 +196,11 @@ function build(action) {
             if (!acqArr) { continue; }
             for (let j = 0; j < acqArr.length; j++) {
                 const acq = acqArr[j];
-                if (acq.fees.setup) { setup[acq.name] = acq.fees.setup; }
-                if (acq.fees.monthly) { monthly[acq.name] = acq.fees.monthly; }
-                trnfee[acq.name] = acq.trnfees;
+                cost2obj({
+                    setup: acq.fees.setup,
+                    monthly: acq.fees.monthly,
+                    trn: acq.trnfees
+                }, fees, acq.name);
 
                 const acqlink = document.createElement('a');
                 acqlink.href = acq.link;
@@ -208,9 +229,7 @@ function build(action) {
             //  Some cards/methods (e.g. mobilepay) add extra costs.
             if (typeof psp.cards[card] === 'object') {
                 if (!$cards[card]) { continue; }
-                if (psp.cards[card].setup) { setup[card] = psp.cards[card].setup; }
-                if (psp.cards[card].monthly) { monthly[card] = psp.cards[card].monthly; }
-                if (psp.cards[card].trn) { trnfee[card] = psp.cards[card].trn; }
+                cost2obj(psp.cards[card], fees, card);
             }
 
             const cardicon = new Image(22, 15);
@@ -221,7 +240,8 @@ function build(action) {
         }
 
         // Calculate TC and sort psps
-        const totalcost = sum(monthly, trnfee);
+        const totals = merge(fees.monthly, fees.trn);
+        const totalcost = sum(totals);
         let sort;
         for (sort = 0; sort < data.length; ++sort) {
             if (totalcost.dkk() < data[sort]) { break; }
@@ -256,10 +276,10 @@ function build(action) {
         tr.insertCell(-1).appendChild(pspfrag);
         tr.insertCell(-1).appendChild(acqfrag);
         tr.insertCell(-1).appendChild(cardfrag);
-        tr.insertCell(-1).appendChild(sumTxt(setup));
-        tr.insertCell(-1).appendChild(sumTxt(monthly));
-        tr.insertCell(-1).appendChild(sumTxt(trnfee));
-        tr.insertCell(-1).textContent = totalcost.print();
+        tr.insertCell(-1).appendChild(sumTxt(fees.setup));
+        tr.insertCell(-1).appendChild(sumTxt(fees.monthly));
+        tr.insertCell(-1).appendChild(sumTxt(fees.trn));
+        tr.insertCell(-1).appendChild(sumTxt(totals));
         tr.insertCell(-1).appendChild(cardfeefrag);
         frag.insertBefore(tr, frag.childNodes[sort]);
     }
@@ -271,6 +291,5 @@ function build(action) {
 //===========================
 
 build('init');
-// TODO: Fix 2x build on some input changes.
 $('form').addEventListener('change', updateSettings);
 $('form').addEventListener('input', updateSettings);
