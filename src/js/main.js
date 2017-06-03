@@ -129,7 +129,7 @@ function cost2obj(cost, obj, name) {
         let value = cost[i];
         const type = typeof value;
         if (typeof value === 'function') {
-            value = value();
+            value = value(obj);
         }
         if (!value || typeof value !== 'object') { continue; }
         obj[i][name] = value;
