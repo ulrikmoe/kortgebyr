@@ -117,6 +117,18 @@ const ACQs = [
 
 const PSPs = [
     {
+        name: '2checkout',
+        logo: '2checkout.svg',
+        link: 'https://www.2checkout.com',
+        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        fees: {
+            trn() {
+                return $revenue.scale(2.4 / 100).add(new Currency(0.3 * $qty, 'USD'));
+            }
+        }
+    },
+    {
         name: 'Braintree',
         logo: 'braintree.svg',
         link: 'https://www.braintreepayments.com',
@@ -319,6 +331,18 @@ const PSPs = [
         }
     },
     {
+        name: 'Lemon Way',
+        logo: 'lemonway.svg',
+        link: 'https://www.lemonway.com/da/',
+        cards: ['visa', 'mastercard', 'maestro'],
+        features: ['Svindelkontrol', 'Svindelkontrol'],
+        fees: {
+            trn() {
+                return $revenue.scale(1.2 / 100).add(new Currency(0.18 * $qty, 'EUR'));
+            }
+        }
+    },
+    {
         name: 'Netaxept Start',
         logo: 'netaxept.svg',
         link: 'https://shop.nets.eu/da/web/dk/e-commerce',
@@ -371,6 +395,19 @@ const PSPs = [
             monthly: new Currency(400, 'SEK'),
             trn() {
                 return new Currency(2 * $qty, 'SEK');
+            }
+        }
+    },
+    {
+        name: 'PayEx One',
+        logo: 'payex.svg',
+        link: 'http://payex.dk/tjenester/e-handel/',
+        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        fees: {
+            monthly: new Currency(299, 'DKK'),
+            trn() {
+                return $revenue.scale(1 / 100).add(new Currency(1.5 * $qty, 'DKK'));
             }
         }
     },
@@ -440,124 +477,7 @@ const PSPs = [
             }
         }
     },
-    {
-        name: 'QuickPay Basis',
-        logo: 'quickpay.svg',
-        link: 'https://quickpay.net/dk',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
-        fees: {
-            trn() {
-                return new Currency(5 * $qty, 'DKK');
-            }
-        }
-    },
-    {
-        name: 'QuickPay Starter',
-        logo: 'quickpay.svg',
-        link: 'https://quickpay.net/dk',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
-        fees: {
-            monthly: new Currency(49, 'DKK'),
-            trn() {
-                return new Currency($qty, 'DKK');
-            }
-        }
-    },
-    {
-        name: 'QuickPay Professional',
-        logo: 'quickpay.svg',
-        link: 'https://quickpay.net/dk',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
-        fees: {
-            monthly: new Currency(149, 'DKK'),
-            trn() {
-                if ($qty > 250) {
-                    return new Currency(0.25 * ($qty - 250), 'DKK');
-                }
-                return false;
-            }
-        }
-    },
-    {
-        name: 'Stripe',
-        logo: 'stripe.svg',
-        link: 'https://stripe.com',
-        cards: ['visa', 'mastercard', 'amex'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
-        fees: {
-            trn() {
-                return $revenue.scale(1.4 / 100).add(new Currency(1.8 * $qty, 'DKK'));
-            }
-        }
-    },
-    {
-        name: 'YourPay',
-        logo: 'yourpay.png',
-        link: 'https://www.yourpay.io',
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Svindelkontrol'],
-        fees: {
-            trn() {
-                return $revenue.scale(2.25 / 100);
-            }
-        }
-    },
-    {
-        name: '2checkout',
-        logo: '2checkout.svg',
-        link: 'https://www.2checkout.com',
-        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
-        fees: {
-            trn() {
-                return $revenue.scale(2.4 / 100).add(new Currency(0.3 * $qty, 'USD'));
-            }
-        }
-    },
-    {
-        name: 'PayEx One',
-        logo: 'payex.svg',
-        link: 'http://payex.dk/tjenester/e-handel/',
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
-        fees: {
-            monthly: new Currency(299, 'DKK'),
-            trn() {
-                return $revenue.scale(1 / 100).add(new Currency(1.5 * $qty, 'DKK'));
-            }
-        }
-    },
-    {
-        name: 'Wannafind',
-        logo: 'wannafind.svg',
-        link: 'https://www.wannafind.dk/betalingssystem/',
-        acqs: ['Nets', 'Teller'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-                'diners', Mobilepay, Forbrugsforeningen],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(99, 'DKK'),
-            },
-            'Svindelkontrol'
-        ],
-        fees: {
-            monthly(o) {
-                o.monthly['3-D Secure'] = new Currency(49, 'DKK');
-                return new Currency(149, 'DKK');
-            }
-        }
-    },
-    {
+   {
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/',
@@ -674,33 +594,50 @@ const PSPs = [
         }
     },
     {
-        name: 'Lemon Way',
-        logo: 'lemonway.svg',
-        link: 'https://www.lemonway.com/da/',
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Svindelkontrol', 'Svindelkontrol'],
+        name: 'QuickPay Basis',
+        logo: 'quickpay.svg',
+        link: 'https://quickpay.net/dk',
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
+                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             trn() {
-                return $revenue.scale(1.2 / 100).add(new Currency(0.18 * $qty, 'EUR'));
+                return new Currency(5 * $qty, 'DKK');
             }
         }
     },
     {
-        name: 'ScanNet',
-        logo: 'scannet.svg',
-        link: 'https://www.scannet.dk/betalingsloesning/',
-        acqs: ['Nets', 'Teller'],
+        name: 'QuickPay Starter',
+        logo: 'quickpay.svg',
+        link: 'https://quickpay.net/dk',
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-                 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: [
-            'Svindelkontrol',
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(99, 'DKK'),
-            }
-        ],
+                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
-            monthly: new Currency(399, 'DKK')
+            monthly: new Currency(49, 'DKK'),
+            trn() {
+                return new Currency($qty, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'QuickPay Professional',
+        logo: 'quickpay.svg',
+        link: 'https://quickpay.net/dk',
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
+                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        fees: {
+            monthly: new Currency(149, 'DKK'),
+            trn() {
+                if ($qty > 250) {
+                    return new Currency(0.25 * ($qty - 250), 'DKK');
+                }
+                return false;
+            }
         }
     },
     {
@@ -746,6 +683,24 @@ const PSPs = [
         }
     },
     {
+        name: 'ScanNet',
+        logo: 'scannet.svg',
+        link: 'https://www.scannet.dk/betalingsloesning/',
+        acqs: ['Nets', 'Teller'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
+                 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        features: [
+            'Svindelkontrol',
+            {
+                title: 'Abonnementsbetaling',
+                monthly: new Currency(99, 'DKK'),
+            }
+        ],
+        fees: {
+            monthly: new Currency(399, 'DKK')
+        }
+    },
+    {
         name: 'Scanpay',
         logo: 'scanpay.svg',
         link: 'https://scanpay.dk',
@@ -760,6 +715,51 @@ const PSPs = [
         fees: {
             trn() {
                 return new Currency(0.25 * $qty, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'Stripe',
+        logo: 'stripe.svg',
+        link: 'https://stripe.com',
+        cards: ['visa', 'mastercard', 'amex'],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        fees: {
+            trn() {
+                return $revenue.scale(1.4 / 100).add(new Currency(1.8 * $qty, 'DKK'));
+            }
+        }
+    },
+    {
+        name: 'Wannafind',
+        logo: 'wannafind.svg',
+        link: 'https://www.wannafind.dk/betalingssystem/',
+        acqs: ['Nets', 'Teller'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
+                'diners', Mobilepay, Forbrugsforeningen],
+        features: [
+            {
+                title: 'Abonnementsbetaling',
+                monthly: new Currency(99, 'DKK'),
+            },
+            'Svindelkontrol'
+        ],
+        fees: {
+            monthly(o) {
+                o.monthly['3-D Secure'] = new Currency(49, 'DKK');
+                return new Currency(149, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'YourPay',
+        logo: 'yourpay.png',
+        link: 'https://www.yourpay.io',
+        cards: ['visa', 'mastercard', 'maestro'],
+        features: ['Svindelkontrol'],
+        fees: {
+            trn() {
+                return $revenue.scale(2.25 / 100);
             }
         }
     }
