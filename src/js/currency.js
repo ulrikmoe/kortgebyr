@@ -54,12 +54,8 @@ Currency.prototype.add = function (o) {
     }
 
     for (let code in o.amounts) {
-        if (o.amounts.hasOwnProperty(code)) {
-            if (!n.amounts.hasOwnProperty(code)) {
-                n.amounts[code] = 0;
-            }
-            n.amounts[code] += o.amounts[code];
-        }
+        if (!n.amounts[code]) { n.amounts[code] = 0; }
+        n.amounts[code] += o.amounts[code];
     }
     return n;
 };

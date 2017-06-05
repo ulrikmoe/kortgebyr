@@ -3,8 +3,6 @@
 *   @license GPLv3
 **/
 
-function $(s) { return document.getElementById(s); }
-
 let $currency = 'DKK';
 let $qty = 200;
 let $avgvalue = new Currency(500, $currency);
@@ -46,11 +44,11 @@ function updateSettings() {
 
     $dankortscale = (!$cards.visa) ? 1 : ($cards.dankort || $cards.forbrugsforeningen) ? 0.77 : 0;
 
-    $('tbody').innerHTML = '';
+    document.getElementById('tbody').innerHTML = '';
     if ($cards.dankort || $cards.visa) {
         build();
     }
-    $('currency_code').textContent = $currency;
+    document.getElementById('currency_code').textContent = $currency;
 }
 
 
@@ -267,8 +265,9 @@ function build(action) {
         const cardfeefrag = document.createDocumentFragment();
         const p1 = document.createElement('p');
         const cardfee = totalcost.scale(1 / ($qty || 1));
+        const cardfeepct = '' + Math.round(cardfee.dkk() * 10000 / $avgvalue.dkk()) / 100;
         cardfeefrag.textContent = cardfee.print();
-        p1.textContent = '(' + (cardfee.scale(1 / $avgvalue.dkk()).dkk() * 100).toFixed(3).replace('.', ',') + '%)';
+        p1.textContent = '(' + cardfeepct.replace('.', ',') + '%)';
         p1.className = 'procent';
         cardfeefrag.appendChild(p1);
 
@@ -283,7 +282,7 @@ function build(action) {
         tr.insertCell(-1).appendChild(cardfeefrag);
         frag.insertBefore(tr, frag.childNodes[sort]);
     }
-    $('tbody').appendChild(frag);
+    document.getElementById('tbody').appendChild(frag);
 }
 
 //===========================
@@ -291,5 +290,5 @@ function build(action) {
 //===========================
 
 build('init');
-$('form').addEventListener('change', updateSettings);
-$('form').addEventListener('input', updateSettings);
+document.getElementById('form').addEventListener('change', updateSettings);
+document.getElementById('form').addEventListener('input', updateSettings);
