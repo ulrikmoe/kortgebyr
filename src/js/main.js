@@ -3,6 +3,7 @@
 *   @license GPLv3
 **/
 
+const country = 'DK';
 let $currency = 'DKK';
 let $qty = 200;
 let $avgvalue = new Currency(500, $currency);
@@ -23,9 +24,11 @@ function updateSettings() {
     $acqs = elems.acquirer.value; // Index
 
     if ($acqs === 'auto') {
-        $acqs = ACQs.slice(0); // Copy of ACQs
-    } else {
+        $acqs = ACQs.slice(0); // Clone of ACQs
+    } else if (country === 'DK') {
         $acqs = [ACQs[0], ACQs[$acqs]];
+    } else {
+        $acqs = [ACQs[$acqs]];
     }
 
     const cards = elems['cards[]'];
@@ -45,10 +48,10 @@ function updateSettings() {
     $dankortscale = (!$cards.visa) ? 1 : ($cards.dankort || $cards.forbrugsforeningen) ? 0.77 : 0;
 
     document.getElementById('tbody').innerHTML = '';
+    document.getElementById('currency_code').textContent = $currency;
     if ($cards.dankort || $cards.visa) {
         build();
     }
-    document.getElementById('currency_code').textContent = $currency;
 }
 
 
