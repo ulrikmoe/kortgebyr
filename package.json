@@ -1,16 +1,14 @@
 {
   "private": true,
   "dependencies": {
-    "gulp": "gulpjs/gulp#4.0",
-    "gulp-connect": "*",
-    "less": "*",
-    "nunjucks": "*",
-    "through2": "*",
-    "gulp-concat": "*",
-    "gulp-sourcemaps": "*",
-    "minimist": "*",
-    "babel-plugin-transform-es2015-shorthand-properties": "*",
     "babel-plugin-transform-es2015-block-scoping": "*",
-    "babel-plugin-transform-es2015-parameters": "*"
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-concat": "*",
+    "gulp-connect": "*",
+    "gulp-sourcemaps": "*",
+    "less": "*",
+    "minimist": "*",
+    "nunjucks": "*",
+    "through2": "*"
   }
 }
