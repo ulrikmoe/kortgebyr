@@ -1,5 +1,4 @@
+www
 www/
-/node_modules/
-publish.sh
-optimize.sh
-subsetting.sh
+node_modules/
+package-lock.json
