@@ -1,14 +1,22 @@
 {
   "private": true,
   "dependencies": {
+    "babel-cli": "*",
+    "babel-plugin-transform-es2015-arrow-functions": "*",
     "babel-plugin-transform-es2015-block-scoping": "*",
+    "babel-plugin-transform-es2015-parameters": "*",
+    "babel-plugin-transform-es2015-shorthand-properties": "*",
+    "csso": "*",
+    "csso-cli": "*",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-concat": "*",
     "gulp-connect": "*",
     "gulp-sourcemaps": "*",
+    "html-minifier": "*",
     "less": "*",
     "minimist": "*",
     "nunjucks": "*",
-    "through2": "*"
+    "through2": "*",
+    "uglify-es": "*"
   }
 }
