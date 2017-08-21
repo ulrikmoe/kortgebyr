@@ -22,7 +22,7 @@ const ACQs = [
             setup: new Currency(250, 'DKK'),
             monthly: new Currency(1000 / 12, 'DKK'),
             trn() {
-                const avgvalue = $avgvalue.dkk();
+                const avgvalue = $avgvalue.order('DKK');
                 const fee = (avgvalue <= 50) ? 0.7 : (avgvalue <= 100) ? 1.1 : 1.39;
                 return new Currency(fee, 'DKK');
             }
@@ -38,7 +38,7 @@ const ACQs = [
             monthly: new Currency(149, 'DKK'),
             trn() {
                 const trnfee = $avgvalue.scale(1.34 / 100).add(new Currency(0.19, 'DKK'));
-                return (trnfee.dkk() > 0.7) ? trnfee : new Currency(0.7, 'DKK');
+                return (trnfee.order('DKK') > 0.7) ? trnfee : new Currency(0.7, 'DKK');
             }
         }
     },
@@ -97,7 +97,7 @@ const ACQs = [
             trn() {
                 // 1.45% (min. 0.6 DKK)
                 const trnfee = $avgvalue.scale(1.45 / 100);
-                return trnfee.dkk() > 0.6 ? trnfee : new Currency(0.7, 'DKK');
+                return (trnfee.order('DKK') > 0.6) ? trnfee : new Currency(0.6, 'DKK');
             }
         }
     },
@@ -443,7 +443,7 @@ const PSPs = [
         features: ['Svindelkontrol'],
         fees: {
             trn() {
-                const k = $revenue.dkk() / 1000;
+                const k = $revenue.order('DKK') / 1000;
                 const fee = (k <= 20) ? 3.4 : (k <= 80) ? 2.9 :
                             (k <= 400) ? 2.7 : (k <= 800) ? 2.4 : 1.9;
                 return $revenue.scale(fee / 100).add(new Currency(2.6 * $qty, 'DKK'));
@@ -458,10 +458,9 @@ const PSPs = [
         cards: ['visa', 'mastercard', 'maestro'],
         fees: {
             trn() {
-                const minimum = new Currency(4.5 * $qty, 'SEK');
+                const minimum = 4.5 * $qty;
                 const fees = $revenue.scale(2.85 / 100);
-                if (minimum.dkk() > fees.dkk()) { return minimum; }
-                return fees;
+                return (fees.order('SEK') > minimum) ? fees : new Currency(minimum, 'SEK');
             }
         }
     },

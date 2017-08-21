@@ -47,6 +47,8 @@ function updateSettings() {
 
     $dankortscale = (!$cards.visa) ? 1 : ($cards.dankort || $cards.forbrugsforeningen) ? 0.77 : 0;
 
+    updateCurrency();
+
     document.getElementById('currency_code').textContent = $currency;
     if ($cards.dankort || $cards.visa) {
         build();
@@ -64,7 +66,7 @@ function x_has_y(objx, objy) {
 }
 
 function sum(obj) {
-    let ret = new Currency(0, 'DKK');
+    let ret = new Currency();
     for (let fee in obj) {
         ret = ret.add(obj[fee]);
     }
@@ -136,7 +138,7 @@ function cost2obj(cost, obj, name) {
 
 function sumTxt(obj) {
     const frag = document.createDocumentFragment();
-    frag.textContent = sum(obj).print();
+    frag.textContent = sum(obj).print($currency);
     if (Object.keys(obj).length) {
         const info = document.createElement('div');
         info.textContent = '[?]';
@@ -161,7 +163,9 @@ function build(action) {
         acq.TC = acq.trnfees;
         if (acq.fees.monthly) { acq.TC = acq.TC.add(acq.fees.monthly); }
     }
-    $acqs.sort(function (obj1, obj2) { return obj1.TC.dkk() - obj2.TC.dkk(); });
+    $acqs.sort(function (obj1, obj2) {
+        return obj1.TC.order($currency) - obj2.TC.order($currency);
+    });
 
     psploop:
     for (let i = 0; i < PSPs.length; i++) {
@@ -241,9 +245,9 @@ function build(action) {
         const totalcost = sum(totals);
         let sort;
         for (sort = 0; sort < data.length; ++sort) {
-            if (totalcost.dkk() < data[sort]) { break; }
+            if (totalcost.order($currency) < data[sort]) { break; }
         }
-        data.splice(sort, 0, totalcost.dkk());
+        data.splice(sort, 0, totalcost.order($currency));
 
         // Create PSP logo.
         const pspfrag = document.createDocumentFragment();
@@ -264,9 +268,9 @@ function build(action) {
         const cardfeefrag = document.createDocumentFragment();
         const p1 = document.createElement('p');
         const cardfee = totalcost.scale(1 / ($qty || 1));
-        const cardfeepct = '' + Math.round(cardfee.dkk() * 10000 / $avgvalue.dkk()) / 100;
-        cardfeefrag.textContent = cardfee.print();
-        p1.textContent = '(' + cardfeepct.replace('.', ',') + '%)';
+        const cardfeepct = '' + Math.round(cardfee.order($currency) * 10000 / $avgvalue.order($currency)) / 100;
+        cardfeefrag.textContent = cardfee.print($currency);
+        p1.textContent = '(' + cardfeepct.replace('.', currency_map[$currency].d) + '%)';
         p1.className = 'procent';
         cardfeefrag.appendChild(p1);
 

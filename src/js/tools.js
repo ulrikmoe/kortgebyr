@@ -15,7 +15,7 @@ function showTooltip() {
             }
 
             const li = document.createElement('li');
-            li.textContent = prop + ': ' + costobj.print();
+            li.textContent = prop + ': ' + costobj.print($currency);
             infobox.appendChild(li);
         }
         this.appendChild(infobox);
