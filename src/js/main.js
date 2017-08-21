@@ -4,14 +4,14 @@
 **/
 
 const country = 'DK';
-let $currency = 'DKK';
-let $qty = 200;
-let $avgvalue = new Currency(500, $currency);
-let $revenue = $avgvalue.scale($qty);
-let $acqs = ACQs.slice(0); // Create copy
-let $cards = { dankort: 1, visa: 1 };
-let $features = {};
-let $dankortscale = 0.77; // 77% to Dankort. 23% to Visa/MC etc.
+let $currency;
+let $qty;
+let $avgvalue;
+let $revenue;
+let $acqs;
+let $cards;
+let $features;
+let $dankortscale;
 
 function updateSettings() {
     const elems = this.elements;
@@ -47,10 +47,11 @@ function updateSettings() {
 
     $dankortscale = (!$cards.visa) ? 1 : ($cards.dankort || $cards.forbrugsforeningen) ? 0.77 : 0;
 
-    document.getElementById('tbody').innerHTML = '';
     document.getElementById('currency_code').textContent = $currency;
     if ($cards.dankort || $cards.visa) {
         build();
+    } else {
+        document.getElementById('tbody').innerHTML = '';
     }
 }
 
@@ -280,13 +281,15 @@ function build(action) {
         tr.insertCell(-1).appendChild(cardfeefrag);
         frag.insertBefore(tr, frag.childNodes[sort]);
     }
-    document.getElementById('tbody').appendChild(frag);
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+    tbody.appendChild(frag);
 }
 
 //===========================
 //    Lets build
 //===========================
 
-build('init');
+updateSettings.call(document.getElementById('form'));
 document.getElementById('form').addEventListener('change', updateSettings);
 document.getElementById('form').addEventListener('input', updateSettings);
