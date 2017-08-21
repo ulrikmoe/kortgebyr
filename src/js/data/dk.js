@@ -769,7 +769,6 @@ const PSPs = [
 
 // Temporary solution: convert arrays to objects
 (function () {
-
     function arr2obj(arr) {
         const obj = {};
         for (let i = 0; i < arr.length; i++) {
@@ -792,6 +791,4 @@ const PSPs = [
             psp.acquirers = arr2obj(psp.acqs);
         }
     }
-
 })();
-

@@ -54,7 +54,6 @@ function updateSettings() {
     }
 }
 
-
 // Check if object-x' properties is in object-y.
 function x_has_y(objx, objy) {
     for (let prop in objy) {
@@ -85,9 +84,6 @@ function merge() {
     }
     return obj;
 }
-
-
-
 
 // Find combination of acquirers that support all cards
 function acqcombo(psp) {
@@ -150,7 +146,6 @@ function sumTxt(obj) {
     }
     return frag;
 }
-
 
 // Build table
 function build(action) {
