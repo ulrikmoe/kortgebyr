@@ -35,7 +35,7 @@ function updateCurrency() {
     if (first) { initCurrency(); }
 
     const x = new XMLHttpRequest();
-    x.onload = function() {
+    x.onload = function () {
         if (this.status === 200) {
             const j = JSON.parse(this.response);
             if (j && j.rates) {
@@ -52,7 +52,7 @@ function updateCurrency() {
             }
         }
     };
-    x.open("GET", "http://api.fixer.io/latest?base=" + cur + '&symbols=' + Object.keys(currency_map).join(','));
+    x.open('GET', '/_currency/latest?base=' + cur + '&symbols=' + Object.keys(currency_map).join(','));
     x.send();
 }
 
