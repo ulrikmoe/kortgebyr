@@ -1,9 +1,6 @@
 /**
 *   @author Ulrik Moe, Christian Blach, Joakim Sindholt
 *   @license GPLv3
-*
-*   TODO: Prevent double-events
-*   TODO: Update form.
 **/
 
 const country = 'DK';
@@ -15,7 +12,6 @@ let $acqs = ACQs.slice(0); // Create copy
 let $cards = { dankort: 1, visa: 1 };
 let $features = {};
 let $dankortscale = 0.77; // 77% to Dankort. 23% to Visa/MC etc.
-
 
 function updateSettings(evt) {
     const elems = this.elements;
@@ -319,14 +315,11 @@ function build(action) {
         if (!cid) {
             localStorage._ga = cid = ((Math.random() * 10e7) | 0) + time;
         }
-
         let d = 'v=1&tid=UA-46668451-1&ds=web&cid=' + cid;
         for (let k in o) {
             d += '&' + k + '=' + o[k];
         }
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/_ga/collect?' + d + '&z=' + time);
-        xhr.send();
+        fetch('/_ga/collect?' + d + '&z=' + time);
     }
 
     _ga({
