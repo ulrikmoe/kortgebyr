@@ -4,56 +4,33 @@
 **/
 
 const currency_map = {
-    DKK: { cur: '% kr', t: '.', d: ',', rate: 1 },
-    SEK: { cur: '% kr', t: '.', d: ',', rate: 1.2797 },
-    NOK: { cur: '% kr', t: '.', d: ',', rate: 1.2491 },
-    EUR: { cur: '€%', t: '.', d: ',', rate: 0.13446 },
-    USD: { cur: '$%', t: ',', d: '.', rate: 0.15814 },
-    GBP: { cur: '£%', t: '.', d: ',', rate: 0.12278 }
+    DKK: { cur: '% kr', t: '.', d: ',' },
+    SEK: { cur: '% kr', t: '.', d: ',' },
+    NOK: { cur: '% kr', t: '.', d: ',' },
+    EUR: { cur: '€%', t: '.', d: ',' },
+    USD: { cur: '$%', t: ',', d: '.' },
+    GBP: { cur: '£%', t: '.', d: ',' }
 };
-
 const currency_value = {};
-const currency_fetched = {};
 
-function initCurrency() {
-    for (let cur in currency_map) {
-        currency_value[cur] = {};
-        for (let o in currency_map) {
-            currency_value[cur][o] = currency_map[o].rate / currency_map[cur].rate;
-        }
-        currency_value[cur][cur] = 1;
-    }
-}
 
 function updateCurrency() {
-    const cur = $currency;
+    return fetch('https://kortgebyr.dk/_currency/latest?base=' + $currency +
+        '&symbols=DKK,SEK,NOK,EUR,USD,GBP')
+    .then(res => res.json())
+    .then(j => {
+        j.rates[$currency] = 1;
 
-    if (currency_fetched[cur]) { return; }
-    currency_fetched[cur] = true;
-
-    const first = (Object.keys(currency_fetched).length == 1);
-    if (first) { initCurrency(); }
-
-    const x = new XMLHttpRequest();
-    x.onload = function () {
-        if (this.status === 200) {
-            const j = JSON.parse(this.response);
-            if (j && j.rates) {
-                if (first) {
-                    for (let o in currency_map) {
-                        if (j.rates[o]) { currency_map[o].rate = j.rates[o]; }
-                    }
-                    initCurrency();
-                }
-                for (let o in currency_map) {
-                    if (j.rates[o]) { currency_value[cur][o] = j.rates[o]; }
-                }
-                if (cur === $currency) { build(); }
+        // Init currency_value
+        for (let cur in currency_map) {
+            currency_value[cur] = {};
+            for (let o in currency_map) {
+                currency_value[cur][o] = j.rates[o] / j.rates[cur];
             }
         }
-    };
-    x.open('GET', '/_currency/latest?base=' + cur + '&symbols=' + Object.keys(currency_map).join(','));
-    x.send();
+    }).catch(e => {
+        alert('Noget gik galt. Prøv igen eller kontakt ulrik.moe@gmail.com');
+    });
 }
 
 function Currency(value, code) {
