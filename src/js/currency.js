@@ -14,6 +14,7 @@ const currency_map = {
 
 const currency_value = {};
 const currency_fetched = {};
+let currency_exact = false;
 
 function initCurrency() {
     for (let cur in currency_map) {
@@ -31,15 +32,15 @@ function updateCurrency() {
     if (currency_fetched[cur]) { return; }
     currency_fetched[cur] = true;
 
-    const first = (Object.keys(currency_fetched).length == 1);
-    if (first) { initCurrency(); }
+    if (Object.keys(currency_fetched).length == 1) { initCurrency(); }
 
     const x = new XMLHttpRequest();
     x.onload = function () {
         if (this.status === 200) {
             const j = JSON.parse(this.response);
             if (j && j.rates) {
-                if (first) {
+                if (!currency_exact) {
+                    currency_exact = true;
                     for (let o in currency_map) {
                         if (j.rates[o]) { currency_map[o].rate = j.rates[o]; }
                     }
