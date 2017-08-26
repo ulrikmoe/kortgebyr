@@ -4,6 +4,30 @@
 **/
 
 
+/*
+    Very simple fetch polyfill (for Safari < 10.1)
+*/
+if (!self.fetch) {
+    self.fetch = (url) => new Promise(function (resolve, reject) {
+        const xhr = new XMLHttpRequest();
+
+        xhr.onload = () => {
+            resolve({
+                body: xhr.response,
+                json() {
+                    return JSON.parse(xhr.response);
+                }
+            });
+        };
+
+        xhr.onerror = () => reject(new TypeError('Network request failed'));
+        xhr.ontimeout = () => reject(new TypeError('Network request failed'));
+        xhr.open('GET', url, true);
+        xhr.send();
+    });
+}
+
+
 function showTooltip() {
     if (!this.firstElementChild) {
         const infobox = document.createElement('ul');
