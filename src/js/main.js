@@ -1,21 +1,30 @@
 /**
 *   @author Ulrik Moe, Christian Blach, Joakim Sindholt
 *   @license GPLv3
+*
+*   TODO: Prevent double-events
+*   TODO: Update form.
 **/
 
 const country = 'DK';
-let $currency;
-let $qty;
-let $avgvalue;
-let $revenue;
-let $acqs;
-let $cards;
-let $features;
-let $dankortscale;
+let $currency = 'DKK';
+let $qty = 200;
+let $avgvalue = new Currency(500, $currency);
+let $revenue = $avgvalue.scale($qty);
+let $acqs = ACQs.slice(0); // Create copy
+let $cards = { dankort: 1, visa: 1 };
+let $features = {};
+let $dankortscale = 0.77; // 77% to Dankort. 23% to Visa/MC etc.
 
-function updateSettings() {
+
+function updateSettings(evt) {
     const elems = this.elements;
-    $currency = elems.currency.value;
+
+    if ($currency !== elems.currency.value) {
+        $currency = elems.currency.value;
+        return updateCurrency().then(() => updateSettings.call(this));
+    }
+
     $avgvalue = new Currency(elems.avgvalue.value | 0, $currency);
     $qty = elems.qty.value | 0;
     $revenue = $avgvalue.scale($qty);
@@ -45,9 +54,8 @@ function updateSettings() {
         }
     }
 
-    $dankortscale = (!$cards.visa) ? 1 : ($cards.dankort || $cards.forbrugsforeningen) ? 0.77 : 0;
-
-    updateCurrency();
+    $dankortscale = (!$cards.visa) ? 1 :
+        ($cards.dankort || $cards.forbrugsforeningen) ? 0.77 : 0;
 
     document.getElementById('currency_code').textContent = $currency;
     if ($cards.dankort || $cards.visa) {
@@ -298,9 +306,12 @@ function build(action) {
 
     const form = document.getElementById('form');
     if (form) {
-        updateSettings.call(document.getElementById('form'));
-        document.getElementById('form').addEventListener('change', updateSettings);
-        document.getElementById('form').addEventListener('input', updateSettings);
+        updateCurrency().then((o) => build());
+
+        // TODO: Update the HTML form
+        form.addEventListener('change', updateSettings);
+        document.getElementById('qty').addEventListener('input', updateSettings);
+        document.getElementById('avgvalue').addEventListener('input', updateSettings);
     }
 
     /**
