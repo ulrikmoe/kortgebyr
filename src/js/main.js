@@ -171,9 +171,7 @@ function build(action) {
         acq.TC = acq.trnfees;
         if (acq.fees.monthly) { acq.TC = acq.TC.add(acq.fees.monthly); }
     }
-    $acqs.sort(function (obj1, obj2) {
-        return obj1.TC.order($currency) - obj2.TC.order($currency);
-    });
+    $acqs.sort((obj1, obj2) => obj1.TC.order($currency) - obj2.TC.order($currency));
 
     psploop:
     for (let i = 0; i < PSPs.length; i++) {
@@ -302,8 +300,7 @@ function build(action) {
 //    Lets build
 //===========================
 
-(function () {
-
+(() => {
     const form = document.getElementById('form');
     if (form) {
         updateCurrency().then((o) => build());
