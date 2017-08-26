@@ -310,8 +310,7 @@ function build(action) {
 
         // TODO: Update the HTML form
         form.addEventListener('change', updateSettings);
-        document.getElementById('qty').addEventListener('input', updateSettings);
-        document.getElementById('avgvalue').addEventListener('input', updateSettings);
+        form.addEventListener('input', updateSettings);
     }
 
     /**
