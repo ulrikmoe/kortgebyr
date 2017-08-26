@@ -13,7 +13,6 @@ const currency_map = {
 };
 const currency_value = {};
 
-
 function updateCurrency() {
     return fetch('https://kortgebyr.dk/_currency/latest?base=' + $currency +
         '&symbols=DKK,SEK,NOK,EUR,USD,GBP')
