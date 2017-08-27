@@ -30,12 +30,10 @@ function settings(o) {
     if ($currency !== o.currency) {
         $currency = o.currency;
         updateCurrency().then(() => build());
+        document.getElementById('currency_code').textContent = $currency;
     } else {
         build();
     }
-
-    // Update form (TODO!!!!)
-    document.getElementById('currency_code').textContent = $currency;
 }
 
 
@@ -288,9 +286,9 @@ function formEvent(evt) {
     if (form) {
         settings(opts);
 
-        // TODO: Update the HTML form
         form.addEventListener('change', formEvent);
         form.addEventListener('input', formEvent);
+        obj2form(opts, form);
     }
 
     /**
