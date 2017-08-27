@@ -4,62 +4,40 @@
 **/
 
 const country = 'DK';
-let $currency = 'DKK';
-let $qty = 200;
-let $avgvalue = new Currency(500, $currency);
-let $revenue = $avgvalue.scale($qty);
-let $acqs = ACQs.slice(0); // Create copy
-let $cards = { dankort: 1, visa: 1 };
-let $features = {};
-let $dankortscale = 0.77; // 77% to Dankort. 23% to Visa/MC etc.
+let opts = {
+    acquirer: 'auto',
+    currency: 'DKK',
+    qty: 200,
+    avgvalue: 500,
+    cards: { dankort: 1, visa: 1 },
+    features: {}
+};
+let $qty, $avgvalue, $revenue, $acqs, $currency, $dankortscale;
 
-function updateSettings(evt) {
-    const elems = this.elements;
 
-    if ($currency !== elems.currency.value) {
-        $currency = elems.currency.value;
-        return updateCurrency().then(() => updateSettings.call(this));
-    }
-
-    $avgvalue = new Currency(elems.avgvalue.value | 0, $currency);
-    $qty = elems.qty.value | 0;
+function settings(o) {
+    $qty = o.qty;
+    $avgvalue = new Currency(o.avgvalue, o.currency);
     $revenue = $avgvalue.scale($qty);
-    $cards = {};
-    $features = {};
-    $acqs = elems.acquirer.value; // Index
 
-    if ($acqs === 'auto') {
-        $acqs = ACQs.slice(0); // Clone of ACQs
-    } else if (country === 'DK') {
-        $acqs = [ACQs[0], ACQs[$acqs]];
+    $acqs = (o.acquirer === 'auto') ? ACQs.slice(0) : (country === 'DK') ?
+        [ACQs[0], ACQs[o.acquirer]] : [ACQs[o.acquirer]];
+
+    // 77% to Dankort. 23% to Visa/MC etc.
+    $dankortscale = (!o.cards.visa) ? 1 :
+        (o.cards.dankort || o.cards.forbrugsforeningen) ? 0.77 : 0;
+
+    if ($currency !== o.currency) {
+        $currency = o.currency;
+        updateCurrency().then(() => build());
     } else {
-        $acqs = [ACQs[$acqs]];
-    }
-
-    const cards = elems['cards[]'];
-    for (let i = 0; i < cards.length; i++) {
-        if (cards[i].checked) {
-            $cards[cards[i].value] = 1;
-        }
-    }
-
-    const features = elems['features[]'];
-    for (let i = 0; i < features.length; i++) {
-        if (features[i].checked) {
-            $features[features[i].value] = 1;
-        }
-    }
-
-    $dankortscale = (!$cards.visa) ? 1 :
-        ($cards.dankort || $cards.forbrugsforeningen) ? 0.77 : 0;
-
-    document.getElementById('currency_code').textContent = $currency;
-    if ($cards.dankort || $cards.visa) {
         build();
-    } else {
-        document.getElementById('tbody').innerHTML = '';
     }
+
+    // Update form (TODO!!!!)
+    document.getElementById('currency_code').textContent = $currency;
 }
+
 
 // Check if object-x' properties is in object-y.
 function x_has_y(objx, objy) {
@@ -101,8 +79,8 @@ function acqcombo(psp) {
     for (let i = 0; i < A.length; i++) {
         const acq = A[i];
         if (psp.acquirers[acq.name]) {
-            // Return acq if it support all $cards.
-            if (x_has_y(acq.cards, $cards)) { return [acq]; }
+            // Return acq if it support all cards.
+            if (x_has_y(acq.cards, opts.cards)) { return [acq]; }
             acqarr.push(acq);
         }
     }
@@ -113,7 +91,7 @@ function acqcombo(psp) {
         const primary = acqarr[i];
         let missingCards = {};
 
-        for (let card in $cards) {
+        for (let card in opts.cards) {
             if (!primary.cards[card]) { missingCards[card] = true; }
         }
 
@@ -159,6 +137,10 @@ function build(action) {
     const data = [];
     const frag = document.createDocumentFragment();
 
+    if (!opts.cards.dankort && !opts.cards.visa) {
+        document.getElementById('tbody').innerHTML = '';
+    }
+
     // Calculate acquirer costs and sort by Total Costs.
     for (let i = 0; i < $acqs.length; i++) {
         const acq = $acqs[i];
@@ -176,12 +158,12 @@ function build(action) {
         cost2obj(psp.fees, fees, psp.name);
 
         // Check if psp support all enabled payment methods
-        for (let card in $cards) {
+        for (let card in opts.cards) {
             if (!psp.cards[card]) { continue psploop; }
         }
 
         // Check if psp support all enabled features
-        for (let i in $features) {
+        for (let i in opts.features) {
             const feature = psp.features[i];
             if (!feature) { continue psploop; }
             cost2obj(feature, fees, i);
@@ -231,7 +213,7 @@ function build(action) {
 
             //  Some cards/methods (e.g. mobilepay) add extra costs.
             if (typeof psp.cards[card] === 'object') {
-                if (!$cards[card]) { continue; }
+                if (!opts.cards[card]) { continue; }
                 cost2obj(psp.cards[card], fees, card);
             }
 
@@ -292,6 +274,11 @@ function build(action) {
     tbody.appendChild(frag);
 }
 
+function formEvent(evt) {
+    opts = form2obj(this);
+    settings(opts);
+}
+
 //===========================
 //    Lets build
 //===========================
@@ -299,11 +286,11 @@ function build(action) {
 (() => {
     const form = document.getElementById('form');
     if (form) {
-        updateCurrency().then((o) => build());
+        settings(opts);
 
         // TODO: Update the HTML form
-        form.addEventListener('change', updateSettings);
-        form.addEventListener('input', updateSettings);
+        form.addEventListener('change', formEvent);
+        form.addEventListener('input', formEvent);
     }
 
     /**
