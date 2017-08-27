@@ -4,6 +4,23 @@
 **/
 
 
+/*  form2obj(form): A simple version for kortgebyr.dk */
+function form2obj(form) {
+    const obj = {};
+    for (let i = 0; i < form.elements.length; i++) {
+        const e = form.elements[i];
+        if (!e.name || (e.type === 'radio' && !e.checked)) { continue; }
+        if (e.type === 'checkbox') {
+            const name = e.name.slice(0, -2);
+            if (!obj[name]) { obj[name] = {}; }
+            if (e.checked) { obj[name][e.value] = 1; }
+        } else {
+            obj[e.name] = (e.type === 'number') ? e.value | 0 : e.value;
+        }
+    }
+    return obj;
+}
+
 /*
     Very simple fetch polyfill (for Safari < 10.1)
 */
