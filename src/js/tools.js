@@ -21,6 +21,21 @@ function form2obj(form) {
     return obj;
 }
 
+
+/*  obj2form(obj): A simple version for kortgebyr.dk */
+function obj2form(o, form) {
+    for (let i = 0; i < form.elements.length; i++) {
+        const e = form.elements[i];
+        if (!e.name) { continue; }
+        if (e.type === 'checkbox') {
+            e.checked = !!o[e.name.slice(0, -2)][e.value];
+        } else {
+            e.value = o[e.name];
+        }
+    }
+}
+
+
 /*
     Very simple fetch polyfill (for Safari < 10.1)
 */
