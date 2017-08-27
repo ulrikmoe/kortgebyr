@@ -35,7 +35,7 @@
     <section class="acquirer_menu">
       <label class="acqlabel"> Indløsning
         <select name="acquirer" class="acquirer">
-          <option value="auto" selected>Billigst mulige</option>
+          <option value="auto">Billigst mulige</option>
           <option value="1">Teller</option>
           <option value="2">Handelsbanken</option>
           <option value="3">Swedbank</option>
@@ -52,11 +52,11 @@
 
     <section style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
       <label>
-        <input name="qty" type="number" min="0" value="200" class="field">
+        <input name="qty" type="number" min="0" class="field">
         Transaktioner pr. måned
       </label>
       <label>
-        <input name="avgvalue" type="number" min="0" value="500" class="field">
+        <input name="avgvalue" type="number" min="0" class="field">
         Gennemsnits ordreværdi
       </label>
       <label>
@@ -70,11 +70,11 @@
 
     <section style="width:19%; padding-right:0;">
       <label>
-        <input name="cards[]" value="dankort" type="checkbox" class="ocards" checked />
+        <input name="cards[]" value="dankort" type="checkbox" class="ocards" />
         Dankort
       </label>
       <label>
-        <input name="cards[]" value="visa" type="checkbox" class="ocards" checked />
+        <input name="cards[]" value="visa" type="checkbox" class="ocards" />
         Visa / MasterCard
       </label>
       <label>
