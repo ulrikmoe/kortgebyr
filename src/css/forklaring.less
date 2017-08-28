@@ -1,53 +1,29 @@
 
-/* Open Sans */
+// Noto Sans (UI): 2017-05-21
 @font-face {
-    font-family: Open Sans;
-    font-weight: 300;
-    src: local('Open Sans Light'), local('OpenSans-Light'), url('/font/OS300.woff2') format('woff2'), url('/font/OS300.woff') format('woff');
+    font-family: 'N';
+    src: url('/font/N400.woff2') format('woff2'), url('/font/N400.woff') format('woff');
 }
+
 @font-face {
-    font-family: Open Sans;
-    src: local('Open Sans'), local('OpenSans'), url('/font/OS400.woff2') format('woff2'), url('/font/OS400.woff') format('woff');
-}
-@font-face {
-    font-family: Open Sans;
-    font-style: italic;
-    src: local('Open Sans Italic'), local('OpenSans-Italic'), url('/font/OS400i.woff2') format('woff2'), url('/font/OS400i.woff') format('woff');
-}
-@font-face {
-    font-family: Open Sans;
-    font-weight: 600;
-    src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('/font/OS600.woff2') format('woff2'), url('/font/OS600.woff') format('woff');
-}
-@font-face {
-    font-family: Open Sans;
-    font-style: italic;
-    font-weight: 600;
-    src: local('Open Sans Semibold Italic'), local('OpenSans-SemiboldItalic'), url('/font/OS600i.woff2') format('woff2'), url('/font/OS600i.woff') format('woff');
-}
-@font-face {
-    font-family: Open Sans;
-    font-style: normal;
+    font-family: 'N';
     font-weight: 700;
-    src: local('Open Sans Bold'), local('OpenSans-Bold'), url('/font/OS700.woff2') format('woff2'), url('/font/OS700.woff') format('woff');
+    src: url('/font/N700.woff2') format('woff2'), url('/font/N700.woff') format('woff');
 }
 
-
-html {
-    height: 100%;
-    font: 15px/1.45 open sans, freesans, Helvetica Neue, Arial, sans-serif;
-    color: #2b2b2b;
-    -ms-text-size-adjust: 100%; // Fix text size adjust after orientation change.
-    -webkit-text-size-adjust: 100%; // Fix text size adjust after orientation change.
-    box-sizing: border-box;
-    text-rendering: geometricPrecision;
-    font-feature-settings: 'kern' 1;
-    font-kerning: normal;
+@font-face {
+    font-family: 'N';
+    font-style: italic;
+    src: url('/font/N400i.woff2') format('woff2'), url('/font/N400i.woff') format('woff');
 }
 
 body {
+    height: 100%;
+    font: 14.5px/1.48 'N', Helvetica Neue, Arial, sans-serif;
+    color: #2b2b2b;
+    -ms-text-size-adjust: 100%; // Fix text size adjust after orientation change.
+    -webkit-text-size-adjust: 100%; // Fix text size adjust after orientation change.
     background: #fff;
-    min-height: 100vh;
     margin: 0;
 }
 
@@ -58,10 +34,6 @@ a {
         outline: 0; // Improve readability of focused elements (normalize)
         color: #23527c;
     }
-}
-
-h1, h2, h3, h4 {
-    margin: 0;
 }
 
 img, svg {
@@ -80,21 +52,21 @@ img, svg {
 }
 
 h1 {
+    margin: 0;
     text-align: center;
-    font-size: 74px;
+    font-size: 70px;
     text-transform: uppercase;
 
-    a {
+    > a {
         color: inherit;
         text-decoration: none;
     }
 }
 
 h2 {
-    margin: 0.2em 0 .2em;
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
+    margin: 1.2em 0 .5em;
+    font-size: 17px;
+    color: #444;
 }
 
 p {
@@ -116,19 +88,21 @@ ul {
 }
 
 .notice {
+    font-size: 14px;
     margin: 33px 0 0;
     padding: 12px 20px 15px;
     color: rgba(0, 0, 0, 0.8);
     background: #fcf8f2;
     border-left: 3px solid #f1ae48;
-
-    h3 {
-        padding: 2px 0 3px;
-        color: #dc9e2d;
-        font-weight: 600;
-        font-size: 17px;
-    }
 }
+
+.notice--h3 {
+    margin: 2px 0 2px;
+    color: #dc9e2d;
+    font-weight: 600;
+    font-size: 15px;
+}
+
 
 section {
     margin: 1.2em 0;
