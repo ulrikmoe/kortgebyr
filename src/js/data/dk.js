@@ -415,8 +415,8 @@ const PSPs = [
         name: 'Paylike',
         logo: 'paylike.svg',
         link: 'https://paylike.dk',
-        features: ['Svindelkontrol'],
         cards: ['visa', 'mastercard', 'maestro'],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             trn() {
                 return $revenue.scale(1.35 / 100).add(new Currency(0.50 * $qty, 'DKK'));
