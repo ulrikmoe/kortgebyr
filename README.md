@@ -35,6 +35,4 @@ gulp
 
 ## License
 
-Everything in this repository is licensed under the GNU General Public License v3.0 (GPLv3). Feel free to use, study, share, copy, sell or modify it.
-
-[LICENSE](LICENSE).
+Everything in this repository is licensed under the MIT license. [LICENSE](LICENSE).
