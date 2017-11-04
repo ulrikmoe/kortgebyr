@@ -33,7 +33,7 @@
       <a href="mailto:ulrik.moe@gmail.com?Subject=Kortgebyr.dk" class="feedback">Feedback</a>
     </nav>
 
-    <section class="acquirer_menu">
+    <div class="menu acquirer_menu">
       <label class="acqlabel"> Indløsning
         <select name="acquirer" class="acquirer">
           <option value="auto">Billigst mulige</option>
@@ -49,9 +49,9 @@
       <div class="about">
         Udregningen tager udgangspunkt i listepriser for online betalingsløsninger. Vi anbefaler at du starter med at læse vores <a href="/forklaring" target="_self">forklaring</a>.
       </div>
-    </section>
+    </div>
 
-    <section style="border-left: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">
+    <div class="menu menu-2">
       <label>
         <input name="qty" type="number" min="0" class="field">
         Transaktioner pr. måned
@@ -67,9 +67,9 @@
       <label>
         <input name="features[]" value="Abonnementsbetaling" type="checkbox" class="ofeatures" /> Abonnementsbetalinger
       </label>
-    </section>
+    </div>
 
-    <section style="width:19%; padding-right:0;">
+    <div class="menu menu-3">
       <label>
         <input name="cards[]" value="dankort" type="checkbox" class="ocards" />
         Dankort
@@ -86,9 +86,9 @@
         <input name="cards[]" value="diners" type="checkbox" class="ocards" />
         Diners
       </label>
-    </section>
+    </div>
 
-    <section style="width:17%; padding-right:0; padding-left: 0;">
+    <div class="menu menu-4">
       <label>
         <input name="cards[]" value="jcb" type="checkbox" class="ocards" />
         JCB
@@ -101,7 +101,7 @@
         <input name="cards[]" value="mobilepay" type="checkbox" class="ocards" />
         MobilePay
       </label>
-    </section>
+    </div>
   </form>
 </header>
 

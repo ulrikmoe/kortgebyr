@@ -20,16 +20,13 @@
     src: url('/font/R500.woff2') format('woff2'), url('/font/R500.woff') format('woff');
 }
 
-html {
+body {
     height: 100%;
     font: 14px/1.44 'R', Helvetica Neue, Arial, sans-serif;
     color: #2c2c2c;
     -ms-text-size-adjust: 100%; // Fix text size adjust after orientation change.
     -webkit-text-size-adjust: 100%; // Fix text size adjust after orientation change.
     box-sizing: border-box;
-}
-
-body {
     margin: 0;
 }
 
@@ -37,10 +34,11 @@ a {
     color: #36b;
     text-decoration: none;
     background: transparent; // Remove grey bg from IE (normalize)
+
+    &:active, &:hover {
+        outline: 0;
+    } // Improve readability of focused elements (normalize)
 }
-a:active, a:hover {
-    outline: 0;
-} // Improve readability of focused elements (normalize)
 
 :focus {
     outline-color: transparent;
@@ -64,16 +62,6 @@ input, select {
 }
 :-ms-input-placeholder {
     color: #bfbfbf;
-}
-
-// IE fix
-svg:not(:root) {
-    overflow: hidden;
-}
-
-img, svg {
-    vertical-align: middle;
-    box-sizing: content-box;
 }
 
 .clearfix:before, .clearfix:after {
@@ -108,9 +96,7 @@ nav {
     font-weight: 700;
     text-shadow: #fff 0 1px 1px;
 
-    &:hover {
-        color: #3e79bb;
-    }
+    &:hover { color: #3e79bb; }
 }
 
 .lastUpdate {
@@ -172,7 +158,6 @@ nav {
     }
 }
 
-
 label {
     display: block;
     margin: 7px 0;
@@ -189,13 +174,29 @@ input {
     margin-right: 4px;
 }
 
-section {
+.menu {
     display: block;
     float: left;
     box-sizing: border-box;
     width: 32%;
     padding: 15px 25px 15px;
     margin: 0;
+}
+
+.menu-2 {
+    border-left: 1px solid #dfdfdf;
+    border-right: 1px solid #dfdfdf;
+}
+
+.menu-3 {
+    width:19%;
+    padding-right:0;
+}
+
+.menu-4 {
+    width:17%;
+    padding-right:0;
+    padding-left: 0;
 }
 
 .field {
@@ -338,7 +339,7 @@ td {
 
 .acquirer-included {
     font-style: italic;
-    color: #888;
+    color: #777;
 }
 
 .card {
@@ -384,7 +385,6 @@ td {
 }
 
 footer {
-    background: #fff;
     text-align: center;
     padding: 11px 0 25px;
     color: #777;
