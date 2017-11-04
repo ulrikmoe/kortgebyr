@@ -1,7 +1,5 @@
-/**
-*   @author Ulrik Moe, Christian Blach, Joakim Sindholt
-*   @license GPLv3
-**/
+/* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
+/* global $currency */
 
 const currency_map = {
     DKK: { cur: '% kr', t: '.', d: ',' },
@@ -16,20 +14,20 @@ const currency_value = {};
 function updateCurrency() {
     return fetch('https://kortgebyr.dk/_currency/latest?base=' + $currency +
         '&symbols=DKK,SEK,NOK,EUR,USD,GBP')
-    .then(res => res.json())
-    .then(j => {
-        j.rates[$currency] = 1;
+        .then(res => res.json())
+        .then((j) => {
+            j.rates[$currency] = 1;
 
-        // Init currency_value
-        for (let cur in currency_map) {
-            currency_value[cur] = {};
-            for (let o in currency_map) {
-                currency_value[cur][o] = j.rates[o] / j.rates[cur];
+            // Init currency_value
+            for (const cur in currency_map) {
+                currency_value[cur] = {};
+                for (const o in currency_map) {
+                    currency_value[cur][o] = j.rates[o] / j.rates[cur];
+                }
             }
-        }
-    }).catch(e => {
-        alert('Noget gik galt. Prøv igen eller kontakt ulrik.moe@gmail.com');
-    });
+        }).catch(() => {
+            alert('Noget gik galt. Prøv igen eller kontakt ulrik.moe@gmail.com');
+        });
 }
 
 function Currency(value, code) {
@@ -49,7 +47,7 @@ Currency.prototype.print = function (cur) {
 
 Currency.prototype.order = function (cur) {
     let sum = 0;
-    for (let code in this.amounts) {
+    for (const code in this.amounts) {
         sum += this.amounts[code] / currency_value[cur][code];
     }
     return sum;
@@ -57,10 +55,10 @@ Currency.prototype.order = function (cur) {
 
 Currency.prototype.add = function (rhs) {
     const n = new Currency();
-    for (let code in this.amounts) {
+    for (const code in this.amounts) {
         n.amounts[code] = this.amounts[code];
     }
-    for (let code in rhs.amounts) {
+    for (const code in rhs.amounts) {
         const c = n.amounts[code] ? n.amounts[code] : 0;
         n.amounts[code] = c + rhs.amounts[code];
     }
@@ -69,7 +67,7 @@ Currency.prototype.add = function (rhs) {
 
 Currency.prototype.scale = function (rhs) {
     const n = new Currency();
-    for (let code in this.amounts) {
+    for (const code in this.amounts) {
         n.amounts[code] = this.amounts[code] * rhs;
     }
     return n;

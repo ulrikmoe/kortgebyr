@@ -33,7 +33,7 @@ module.exports = {
                 "allowSingleLine": true
             }
         ],
-        "comma-dangle": 2,
+        "comma-dangle": 1,
         "comma-spacing": [
             2,
             {
@@ -45,7 +45,7 @@ module.exports = {
             2,
             "last"
         ],
-        "complexity": 2,
+        "complexity": 1,
         "computed-property-spacing": [
             2,
             "never"
@@ -125,7 +125,7 @@ module.exports = {
         "no-invalid-this": 2,
         "no-iterator": 2,
         "no-label-var": 2,
-        "no-labels": 2,
+        "no-labels": 1,
         "no-lone-blocks": 2,
         "no-lonely-if": 2,
         "no-loop-func": 2,
@@ -135,7 +135,7 @@ module.exports = {
         "no-multi-spaces": [1, { ignoreEOLComments: true }],
         "no-multi-str": 2,
         "no-native-reassign": 2,
-        "no-negated-condition": 2,
+        "no-negated-condition": 1,
         "no-negated-in-lhs": 2,
         "no-new": 2,
         "no-new-func": 2,
@@ -172,7 +172,7 @@ module.exports = {
         "no-throw-literal": 0,
         "no-trailing-spaces": 2,
         "no-undef-init": 2,
-        "no-unused-vars": 1,
+        "no-unused-vars": 0,
         "no-undefined": 2,
         "no-unmodified-loop-condition": 2,
         "no-unneeded-ternary": 2,
@@ -215,7 +215,7 @@ module.exports = {
         "prefer-const": 1,
         "prefer-numeric-literals": 2,
         "prefer-promise-reject-errors": 0,
-        "prefer-rest-params": 2,
+        "prefer-rest-params": 1,
         "prefer-spread": 2,
         "prefer-template": 0,
         "quote-props": 0,

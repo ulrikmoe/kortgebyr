@@ -1,7 +1,5 @@
-/**
-*   @author Ulrik Moe, Christian Blach, Joakim Sindholt
-*   @license GPLv3
-**/
+/* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
+/* global Currency, $currency, $avgvalue, $revenue, $qty */
 
 const Mobilepay = {
     title: 'mobilepay',
@@ -12,6 +10,7 @@ const Forbrugsforeningen = {
     title: 'forbrugsforeningen'
 };
 
+// All prices checked on November 4, 2017.
 const ACQs = [
     {
         name: 'Nets',
@@ -95,7 +94,6 @@ const ACQs = [
         cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         fees: {
             trn() {
-                // 1.45% (min. 0.6 DKK)
                 const trnfee = $avgvalue.scale(1.45 / 100);
                 return (trnfee.order('DKK') > 0.6) ? trnfee : new Currency(0.6, 'DKK');
             }
@@ -114,7 +112,7 @@ const ACQs = [
     }
 ];
 
-
+// All prices checked on November 4, 2017.
 const PSPs = [
     {
         name: '2checkout',
@@ -172,7 +170,7 @@ const PSPs = [
         link: 'https://www.dandomain.dk/webshop/betalingssystem',
         acqs: ['Nets', 'Teller'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-                'diners', Mobilepay, Forbrugsforeningen],
+            'diners', Mobilepay, Forbrugsforeningen],
         features: ['Abonnementsbetaling'],
         fees: {
             setup: new Currency(199, 'DKK'),
@@ -180,7 +178,7 @@ const PSPs = [
         }
     },
     {
-        name: 'DIBS All-in-one',
+        name: 'DIBS Easy',
         logo: 'dibs.svg',
         link: 'http://dibs.dk',
         cards: ['visa', 'mastercard', 'maestro', Mobilepay],
@@ -192,13 +190,9 @@ const PSPs = [
             }
         ],
         fees: {
-            monthly: new Currency(149, 'DKK'),
+            monthly: new Currency(399, 'DKK'),
             trn() {
-                let fees = $revenue.scale(1.45 / 100).add(new Currency(0.19 * $qty, 'DKK'));
-                if ($qty > 250) {
-                    fees.add(new Currency(0.35 * ($qty - 250), 'DKK'));
-                }
-                return fees;
+                return $revenue.scale(2.5 / 100).add(new Currency($qty, 'DKK'));
             }
         }
     },
@@ -207,22 +201,20 @@ const PSPs = [
         logo: 'dibs.svg',
         link: 'http://dibs.dk',
         acqs: ['Nets', 'Teller', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
+            'diners', Mobilepay],
         features: [
             {
                 title: 'Abonnementsbetaling',
                 setup: new Currency(495, 'DKK'),
-                monthly: new Currency(49, 'DKK'),
+                monthly: new Currency(49, 'DKK')
             }
         ],
         fees: {
             setup: new Currency(599, 'DKK'),
-            monthly: new Currency(199, 'DKK'),
+            monthly: new Currency(149, 'DKK'),
             trn() {
-                if ($qty > 250) {
-                    return new Currency(0.35 * ($qty - 250), 'DKK');
-                }
-                return false;
+                return new Currency(0.35 * $qty, 'DKK');
             }
         }
     },
@@ -256,9 +248,9 @@ const PSPs = [
         logo: 'epay.svg',
         link: 'http://epay.dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Swedbank', 'Handelsbanken',
-                'Valitor', 'Elavon', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+            'Valitor', 'Elavon', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
+            'diners', Mobilepay, Forbrugsforeningen],
         features: [
             {
                 title: 'Svindelkontrol',
@@ -283,9 +275,9 @@ const PSPs = [
         logo: 'epay.svg',
         link: 'http://epay.dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Swedbank', 'Handelsbanken',
-                'Valitor', 'Elavon', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+            'Valitor', 'Elavon', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
+            'diners', Mobilepay, Forbrugsforeningen],
         features: [
             'Abonnementsbetaling',
             {
@@ -324,7 +316,7 @@ const PSPs = [
             trn() {
                 let fees = $revenue.scale(1.45 / 100);
                 if ($qty > 250) {
-                    fees.add(new Currency(0.25 * ($qty - 250), 'DKK'));
+                    fees = fees.add(new Currency(0.25 * ($qty - 250), 'DKK'));
                 }
                 return fees;
             }
@@ -444,8 +436,8 @@ const PSPs = [
         fees: {
             trn() {
                 const k = $revenue.order('DKK') / 1000;
-                const fee = (k <= 20) ? 3.4 : (k <= 80) ? 2.9 :
-                            (k <= 400) ? 2.7 : (k <= 800) ? 2.4 : 1.9;
+                const fee = (k <= 20) ? 3.4 : (k <= 80) ? 2.9
+                    : (k <= 400) ? 2.7 : (k <= 800) ? 2.4 : 1.9;
                 return $revenue.scale(fee / 100).add(new Currency(2.6 * $qty, 'DKK'));
             }
         }
@@ -476,7 +468,7 @@ const PSPs = [
             }
         }
     },
-   {
+    {
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/',
@@ -492,7 +484,7 @@ const PSPs = [
         ],
         fees: {
             trn() {
-                return $revenue.scale(1.45 / 100).add(new Currency(5 * $qty, 'DKK'));
+                return $revenue.scale(1.45 / 100).add(new Currency(4 * $qty, 'DKK'));
             }
         }
     },
@@ -536,7 +528,7 @@ const PSPs = [
             trn() {
                 let fees = $revenue.scale(1.4 / 100);
                 if ($qty > 100) {
-                    fees.add(new Currency(0.35 * $qty, 'DKK'));
+                    fees = fees.add(new Currency(0.35 * ($qty - 100), 'DKK'));
                 }
                 return fees;
             }
@@ -561,7 +553,7 @@ const PSPs = [
             trn() {
                 let fees = $revenue.scale(1.35 / 100);
                 if ($qty > 250) {
-                    fees.add(new Currency(0.25 * $qty, 'DKK'));
+                    fees = fees.add(new Currency(0.25 * ($qty - 250), 'DKK'));
                 }
                 return fees;
             }
@@ -586,7 +578,7 @@ const PSPs = [
             trn() {
                 let fees = $revenue.scale(1.35 / 100);
                 if ($qty > 100) {
-                    fees.add(new Currency(0.35 * $qty, 'DKK'));
+                    fees = fees.add(new Currency(0.35 * ($qty - 100), 'DKK'));
                 }
                 return fees;
             }
@@ -598,7 +590,7 @@ const PSPs = [
         link: 'https://quickpay.net/dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             trn() {
@@ -612,7 +604,7 @@ const PSPs = [
         link: 'https://quickpay.net/dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             monthly: new Currency(49, 'DKK'),
@@ -627,7 +619,7 @@ const PSPs = [
         link: 'https://quickpay.net/dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-                'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -687,12 +679,12 @@ const PSPs = [
         link: 'https://www.scannet.dk/betalingsloesning/',
         acqs: ['Nets', 'Teller'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-                 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: [
             'Svindelkontrol',
             {
                 title: 'Abonnementsbetaling',
-                monthly: new Currency(99, 'DKK'),
+                monthly: new Currency(99, 'DKK')
             }
         ],
         fees: {
@@ -704,13 +696,9 @@ const PSPs = [
         logo: 'scanpay.svg',
         link: 'https://scanpay.dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners',
-                Forbrugsforeningen,
-                {
-                    title: 'mobilepay',
-                    monthly: new Currency(48.67, 'DKK') // 1.6 * 365 / 12
-                }],
-        features: [],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
+            'diners', Mobilepay],
+        features: ['Svindelkontrol'],
         fees: {
             trn() {
                 return new Currency(0.25 * $qty, 'DKK');
@@ -735,16 +723,17 @@ const PSPs = [
         link: 'https://www.wannafind.dk/betalingssystem/',
         acqs: ['Nets', 'Teller'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-                'diners', Mobilepay, Forbrugsforeningen],
+            'diners', Mobilepay, Forbrugsforeningen],
         features: [
             {
                 title: 'Abonnementsbetaling',
-                monthly: new Currency(99, 'DKK'),
+                monthly: new Currency(99, 'DKK')
             },
             'Svindelkontrol'
         ],
         fees: {
             monthly(o) {
+                // Hacky solution to add 3-D Secure (mandatory)
                 o.monthly['3-D Secure'] = new Currency(49, 'DKK');
                 return new Currency(149, 'DKK');
             }
@@ -765,9 +754,8 @@ const PSPs = [
 ];
 
 
-
 // Temporary solution: convert arrays to objects
-(function () {
+(() => {
     function arr2obj(arr) {
         const obj = {};
         for (let i = 0; i < arr.length; i++) {
@@ -778,11 +766,11 @@ const PSPs = [
         return obj;
     }
 
-    for (let i in ACQs) {
+    for (const i in ACQs) {
         ACQs[i].cards = arr2obj(ACQs[i].cards);
     }
 
-    for (let i in PSPs) {
+    for (const i in PSPs) {
         const psp = PSPs[i];
         psp.cards = arr2obj(psp.cards);
         psp.features = arr2obj(psp.features);

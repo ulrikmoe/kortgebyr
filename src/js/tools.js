@@ -1,7 +1,5 @@
-/**
-*   @author Ulrik Moe, Christian Blach, Joakim Sindholt
-*   @license GPLv3
-**/
+/* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
+/* global $currency */
 
 
 /*  form2obj(form): A simple version for kortgebyr.dk */
@@ -21,26 +19,25 @@ function form2obj(form) {
     return obj;
 }
 
-
 /*  obj2form(obj): A simple version for kortgebyr.dk */
 function obj2form(o, form) {
     for (let i = 0; i < form.elements.length; i++) {
         const e = form.elements[i];
-        if (!e.name) { continue; }
-        if (e.type === 'checkbox') {
-            e.checked = !!o[e.name.slice(0, -2)][e.value];
-        } else {
-            e.value = o[e.name];
+        if (e.name) {
+            if (e.type === 'checkbox') {
+                e.checked = !!o[e.name.slice(0, -2)][e.value];
+            } else {
+                e.value = o[e.name];
+            }
         }
     }
 }
 
-
 /*
     Very simple fetch polyfill (for Safari < 10.1)
 */
-if (!self.fetch) {
-    self.fetch = (url) => new Promise(function (resolve, reject) {
+if (!window.fetch) {
+    window.fetch = url => new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
 
         xhr.onload = () => {
@@ -59,14 +56,14 @@ if (!self.fetch) {
     });
 }
 
-
 function showTooltip() {
     if (!this.firstElementChild) {
         const infobox = document.createElement('ul');
         const obj = this.ttdata;
-        for (let prop in obj) {
+        for (const prop in obj) {
             let costobj = obj[prop];
             if (typeof costobj === 'function') {
+                console.log('wtf!!!!');
                 costobj = costobj(settings);
             }
 

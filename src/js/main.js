@@ -1,7 +1,5 @@
-/**
-*   @author Ulrik Moe, Christian Blach, Joakim Sindholt
-*   @license GPLv3
-**/
+/* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
+/* global Currency, ACQs, PSPs, updateCurrency, showTooltip, currency_map, form2obj, obj2form */
 
 const country = 'DK';
 let opts = {
@@ -12,34 +10,38 @@ let opts = {
     cards: { dankort: 1, visa: 1 },
     features: {}
 };
-let $qty, $avgvalue, $revenue, $acqs, $currency, $dankortscale;
-
+let $acqs;
+let $avgvalue;
+let $currency;
+let $dankortscale;
+let $revenue;
+let $qty;
 
 function settings(o) {
     $qty = o.qty;
     $avgvalue = new Currency(o.avgvalue, o.currency);
     $revenue = $avgvalue.scale($qty);
 
-    $acqs = (o.acquirer === 'auto') ? ACQs.slice(0) : (country === 'DK') ?
-        [ACQs[0], ACQs[o.acquirer]] : [ACQs[o.acquirer]];
+    $acqs = (o.acquirer === 'auto') ? ACQs.slice(0) : (country === 'DK')
+        ? [ACQs[0], ACQs[o.acquirer]] : [ACQs[o.acquirer]];
 
     // 77% to Dankort. 23% to Visa/MC etc.
-    $dankortscale = (!o.cards.visa) ? 1 :
-        (o.cards.dankort || o.cards.forbrugsforeningen) ? 0.77 : 0;
+    $dankortscale = (!o.cards.visa) ? 1
+        : (o.cards.dankort || o.cards.forbrugsforeningen) ? 0.77 : 0;
 
-    if ($currency !== o.currency) {
+    if ($currency === o.currency) {
+        build();
+    } else {
         $currency = o.currency;
         updateCurrency().then(() => build());
         document.getElementById('currency_code').textContent = $currency;
-    } else {
-        build();
     }
 }
 
 
 // Check if object-x' properties is in object-y.
 function x_has_y(objx, objy) {
-    for (let prop in objy) {
+    for (const prop in objy) {
         if (!objx[prop]) { return false; }
     }
     return true;
@@ -47,17 +49,17 @@ function x_has_y(objx, objy) {
 
 function sum(obj) {
     let ret = new Currency();
-    for (let fee in obj) {
+    for (const fee in obj) {
         ret = ret.add(obj[fee]);
     }
     return ret;
 }
 
 function merge() {
-    let obj = {};
+    const obj = {};
     for (let i = 0; i < arguments.length; i++) {
         const costobj = arguments[i];
-        for (let z in costobj) {
+        for (const z in costobj) {
             if (obj[z]) {
                 obj[z] = obj[z].add(costobj[z]);
             } else {
@@ -87,15 +89,15 @@ function acqcombo(psp) {
     const len = acqarr.length;
     for (let i = 0; i < len; i++) {
         const primary = acqarr[i];
-        let missingCards = {};
+        const missingCards = {};
 
-        for (let card in opts.cards) {
+        for (const card in opts.cards) {
             if (!primary.cards[card]) { missingCards[card] = true; }
         }
 
         // Find secondary acquirer with the missing cards.
         for (let j = i + 1; j < len; j++) {
-            let secondary = acqarr[j];
+            const secondary = acqarr[j];
             if (x_has_y(secondary.cards, missingCards)) {
                 return [primary, secondary];
             }
@@ -105,7 +107,7 @@ function acqcombo(psp) {
 }
 
 function cost2obj(cost, obj, name) {
-    for (let i in cost) {
+    for (const i in cost) {
         let value = cost[i];
         const type = typeof value;
         if (typeof value === 'function') {
@@ -156,12 +158,12 @@ function build(action) {
         cost2obj(psp.fees, fees, psp.name);
 
         // Check if psp support all enabled payment methods
-        for (let card in opts.cards) {
+        for (const card in opts.cards) {
             if (!psp.cards[card]) { continue psploop; }
         }
 
         // Check if psp support all enabled features
-        for (let i in opts.features) {
+        for (const i in opts.features) {
             const feature = psp.features[i];
             if (!feature) { continue psploop; }
             cost2obj(feature, fees, i);
@@ -196,7 +198,7 @@ function build(action) {
                 acqfrag.appendChild(document.createElement('br'));
 
                 // Construct a new acqcards
-                for (let card in acq.cards) { acqcards[card] = acq.cards[card]; }
+                for (const card in acq.cards) { acqcards[card] = acq.cards[card]; }
             }
         } else {
             const acqtext = document.createElement('p');
@@ -206,7 +208,7 @@ function build(action) {
         }
 
         const cardfrag = document.createDocumentFragment();
-        for (let card in psp.cards) {
+        for (const card in psp.cards) {
             if (psp.acquirers && !acqcards[card]) { continue; }
 
             //  Some cards/methods (e.g. mobilepay) add extra costs.
@@ -238,7 +240,7 @@ function build(action) {
         psplink.href = psp.link;
         psplink.className = 'psp';
         const psplogo = new Image();
-        psplogo.src = '/img/psp/' + psp.logo + '?{{ imgtoken }}';
+        psplogo.src = '/img/psp/' + psp.logo + '?{{ imgt }}';
         psplogo.alt = psp.name;
         const pspname = document.createElement('span');
         pspname.textContent = psp.name;
@@ -250,7 +252,8 @@ function build(action) {
         const cardfeefrag = document.createDocumentFragment();
         const p1 = document.createElement('p');
         const cardfee = totalcost.scale(1 / ($qty || 1));
-        const cardfeepct = '' + Math.round(cardfee.order($currency) * 10000 / $avgvalue.order($currency)) / 100;
+        const cardfeepct = String(Math.round(cardfee.order($currency) * 10000 / $avgvalue
+            .order($currency)) / 100);
         cardfeefrag.textContent = cardfee.print($currency);
         p1.textContent = '(' + cardfeepct.replace('.', currency_map[$currency].d) + '%)';
         p1.className = 'procent';
@@ -277,9 +280,6 @@ function formEvent(evt) {
     settings(opts);
 }
 
-//===========================
-//    Lets build
-//===========================
 
 (() => {
     const form = document.getElementById('form');
@@ -292,19 +292,22 @@ function formEvent(evt) {
     }
 
     /**
-    *   A tiny Google Analytics client
+    *   A tiny Google Analytics client (Measurement Protocol)
     */
     function _ga(o) {
-        const time = '' + Date.now();
+        const time = Date.now();
         let cid = localStorage._ga;
         if (!cid) {
-            localStorage._ga = cid = ((Math.random() * 10e7) | 0) + time;
+            // Pseudo-unique string with 32 chars UUIDv4 w/o hyphens.
+            localStorage._ga = cid = (Math.random() +
+                '00000000000000000000').substring(2, 21) + time;
         }
-        let d = 'v=1&tid=UA-46668451-1&ds=web&cid=' + cid;
-        for (let k in o) {
-            d += '&' + k + '=' + o[k];
+        let url = '/_ga/collect?v=1&tid=UA-45595918-1&ds=web&cid=' +
+                    cid + '&z=' + time;
+        for (const k in o) {
+            url += '&' + k + '=' + o[k];
         }
-        fetch('/_ga/collect?' + d + '&z=' + time);
+        fetch(url);
     }
 
     _ga({
@@ -317,7 +320,8 @@ function formEvent(evt) {
 
         // System Info
         sr: screen.width + 'x' + screen.height,
-        vp: document.documentElement.clientWidth + 'x' + document.documentElement.clientHeight,
+        vp: document.documentElement.clientWidth + 'x' +
+            document.documentElement.clientHeight,
         sd: screen.colorDepth + '-bits',
         ul: navigator.language
     });
