@@ -154,7 +154,7 @@ nav {
 .language {
     width: 56px;
     > img {
-        margin: 0 0 0 11px;
+        margin: 11px 0 0 11px;
     }
 }
 
@@ -283,9 +283,13 @@ td {
     padding: 3px 0 0 16px;
     text-align: left;
 
+    > img {
+        vertical-align: middle;
+    }
+
     > span {
         display: block;
-        margin-top: 5px;
+        margin: 3px 0 0;
         padding: 0;
     }
 }
