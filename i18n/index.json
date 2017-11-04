@@ -1,0 +1,17 @@
+{
+    "da": {
+        "index.html": {
+            "title": "Betalingsløsninger - kortgebyr.dk",
+            "meta": "Sammenlign priser på betalingsløsninger, betalingsgateways og indløsere. Find den online betalingsløsning der passer til din forretning.",
+            "url": "kortgebyr.dk/"
+        },
+        "foklaring.html": {
+            "title": "Kortgebyr - foklaring",
+            "meta": "",
+            "url": "kortgebyr.dk/forklaring"
+        },
+        "faq.html": {
+            "hidden": true
+        }
+    }
+}
