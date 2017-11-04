@@ -32,13 +32,14 @@ function updateCurrency() {
 
 function Currency(value, code) {
     this.amounts = {};
-    if (code !== undefined) { this.amounts[code] = value; }
+    if (code) { this.amounts[code] = value; }
 }
 
 Currency.prototype.print = function (cur) {
     const n = this.order(cur).toFixed(2).split('.');
     const ints = [];
-    const frac = (parseInt(n[1]) != 0) ? currency_map[cur].d + n[1] : '';
+    const frac = (parseInt(n[1], 10) === 0) ? '' : currency_map[cur].d + n[1];
+
     for (let i = n[0].length; i > 0; i -= 3) {
         ints.unshift(n[0].substring(i - 3, i));
     }

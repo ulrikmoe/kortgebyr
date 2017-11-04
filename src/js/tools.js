@@ -61,14 +61,8 @@ function showTooltip() {
         const infobox = document.createElement('ul');
         const obj = this.ttdata;
         for (const prop in obj) {
-            let costobj = obj[prop];
-            if (typeof costobj === 'function') {
-                console.log('wtf!!!!');
-                costobj = costobj(settings);
-            }
-
             const li = document.createElement('li');
-            li.textContent = prop + ': ' + costobj.print($currency);
+            li.textContent = prop + ': ' + obj[prop].print($currency);
             infobox.appendChild(li);
         }
         this.appendChild(infobox);
