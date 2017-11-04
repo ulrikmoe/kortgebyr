@@ -13,9 +13,9 @@
     "gulp-connect": "*",
     "gulp-sourcemaps": "*",
     "html-minifier": "*",
-    "less": "*",
     "minimist": "*",
-    "nunjucks": "*",
+    "mo3place": "latest",
+    "node-sass": "latest",
     "through2": "*",
     "uglify-es": "*"
   }
