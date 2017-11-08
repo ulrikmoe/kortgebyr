@@ -1,5 +1,5 @@
 /* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
-/* global Currency, $currency, $avgvalue, $revenue, $qty */
+/* global Currency, $currency, $avgvalue, $revenue, $dankortscale, $qty */
 
 const Mobilepay = {
     title: 'mobilepay',
@@ -59,8 +59,13 @@ const ACQs = [
         link: 'https://www.swedbank.dk/erhverv/card-services/priser-og-vilkar/#!/CID_2263482',
         cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         fees: {
+            monthly(o) {
+                // Minimum fee of 50 DKK / month.
+                const TC = $revenue.scale(1 - $dankortscale).scale(1.1 / 100).order('DKK');
+                const minFee = (TC < 50) ? 50 - TC : 0;
+                return new Currency(minFee, 'DKK');
+            },
             trn() {
-                // TODO: Add minimum fee of 50 DKK / month.
                 return $avgvalue.scale(1.1 / 100);
             }
         }

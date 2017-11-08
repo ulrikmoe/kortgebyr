@@ -55,7 +55,7 @@ function sum(obj) {
     return ret;
 }
 
-function merge() {
+function merge(o1, o2) {
     const obj = {};
     for (let i = 0; i < arguments.length; i++) {
         const costobj = arguments[i];
@@ -145,9 +145,13 @@ function build(action) {
     for (let i = 0; i < $acqs.length; i++) {
         const acq = $acqs[i];
         const cardscale = (acq.name === 'Nets') ? $dankortscale : 1 - $dankortscale;
-        acq.trnfees = acq.fees.trn().scale($qty).scale(cardscale);
-        acq.TC = acq.trnfees;
-        if (acq.fees.monthly) { acq.TC = acq.TC.add(acq.fees.monthly); }
+        acq.TC = acq.trnfees = acq.fees.trn().scale($qty).scale(cardscale);
+
+        if (acq.fees.monthly) {
+            let monthly = acq.fees.monthly;
+            if (typeof monthly === 'function') { monthly = monthly(); }
+            acq.TC = acq.TC.add(monthly);
+        }
     }
     $acqs.sort((obj1, obj2) => obj1.TC.order($currency) - obj2.TC.order($currency));
 
