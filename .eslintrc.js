@@ -90,7 +90,7 @@ module.exports = {
         ],
         "lines-around-directive": 2,
         "max-depth": 2,
-        "max-len": [1, 90],
+        "max-len": [1, 120],
         "max-nested-callbacks": 2,
         "max-params": 2,
         "max-statements": 0,
