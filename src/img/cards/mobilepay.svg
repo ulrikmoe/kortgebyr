@@ -1,13 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188 129">
-  <rect width="188" height="129" fill="#D6E2E8" rx="5"/>
+<svg id="svg--mobilepay" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+ width="25" height="17.1" viewBox="0 0 188 129">
+  <defs>
+    <linearGradient id="svg--mobilepay--grad" x1="90%" x2="100%" y1="100%" y2="20%">
+      <stop stop-color="#4157CB" offset="5%"/>
+      <stop stop-color="#4a5fcd" offset="60%"/>
+      <stop stop-color="#5A78FF" offset="80%"/>
+    </linearGradient>
+    </defs>
   <g transform="rotate(-21 78.02 -91.53)">
-    <rect width="61" height="114" fill="#003F63" rx="8"/>
-    <path fill="#D6E2E8" d="M8.3 13h44.4v83H8.3"/>
-    <rect width="20.7" height="3.5" x="21.2" y="103.5" fill="#D6E2E8" rx="1.8"/>
+    <rect width="61" height="114" fill="none" stroke="#5A78FF" stroke-width="6" rx="8"/>
   </g>
-  <path fill="#003F63" d="M76.8 55c-.5-1-.2-2.5.8-3 0 0 12.4-9.3 26.5-16 15-7 28-10.3 28-10.3 1-.3 2.8.2 3 1.2l13 26c.8 1 0 2-1 2 0 0-11.3 3-26.2 10.7-14.7 8-27 16.6-27 16.6-1 .6-2 .3-2.5-.7L77 55z"/>
-  <ellipse cx="112.1" cy="51.5" fill="#003F63" stroke="#D6E2E8" stroke-width="3" rx="9.8" ry="9.5"/>
-  <path fill="#D6E2E8" d="M85.7 58.8c0-2.2 1.6-4.5 3.8-5.2 0 0 13.5-4.7 29.5-5.4 16-.6 32.8.4 32.8.4l-.4 33.3h-65l-.7-24z"/>
-  <path fill="#003F63" d="M123 52c12.8 0 28.5 2 28.5 2 1 0 2 1 2 2.2l.7 30.3c0 1-1 2-2 1.8 0 0-11.4-1.4-29.6-1.4-18.2 0-31.3 3-31.3 3-1 0-2-1-2-2V57s20.7-5 33.7-5z"/>
-  <ellipse cx="121.4" cy="69.5" fill="#003F63" stroke="#D6E2E8" stroke-width="3" rx="9.8" ry="9.5"/>
+
+  <path fill="url(#svg--mobilepay--grad)" d="M76.8 55c-.5-1-.2-2.5.8-3 0 0 12.4-9.3 26.5-16 15-7 28-10.3 28-10.3 1-.3 3 .2 3 1.2l13 26c1 1 0 2-1 2 0 0-11.2 3-26 10.6-14.8 8-27 16.6-27 16.6-1 .6-2 .3-2.6-.7L77 55z"/>
+
+  <path id="g1" fill="#5A78FF" d="M123 52c12.8 0 28.5 2 28.5 2 1 0 2 1 2 2.2l.7 30.3c0 1-1 2-2 1.8 0 0-11.4-1.4-29.6-1.4-18.2 0-31.3 3-31.3 3-1 0-2-1-2-2V57s20.7-5 33.7-5z"/>
+
 </svg>

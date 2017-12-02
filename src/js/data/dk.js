@@ -702,7 +702,7 @@ const PSPs = [
         link: 'https://scanpay.dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Mobilepay],
+            'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol'],
         fees: {
             trn() {
