@@ -1,5 +1,5 @@
 /* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
-/* global Currency, $currency, $avgvalue, $revenue, $dankortscale, $qty */
+/* global opts, Currency, $currency, $avgvalue, $revenue, $dankortscale, $qty */
 
 const Mobilepay = {
     title: 'mobilepay',
@@ -752,6 +752,9 @@ const PSPs = [
         features: ['Svindelkontrol'],
         fees: {
             trn() {
+                if (opts.avgvalue * opts.qty * 12 > 100000) {
+                    return $revenue.scale(1.35 / 100);
+                }
                 return $revenue.scale(2.25 / 100);
             }
         }
