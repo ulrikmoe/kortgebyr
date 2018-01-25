@@ -752,7 +752,7 @@ const PSPs = [
         features: ['Svindelkontrol'],
         fees: {
             trn() {
-                if (opts.avgvalue * opts.qty * 12 > 100000) {
+                if ($revenue.order('DKK') >= 100000) {
                     return $revenue.scale(1.35 / 100);
                 }
                 return $revenue.scale(2.25 / 100);
