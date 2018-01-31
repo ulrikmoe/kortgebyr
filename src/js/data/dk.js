@@ -19,11 +19,13 @@ const ACQs = [
         cards: ['dankort', 'forbrugsforeningen', 'mobilepay'],
         fees: {
             setup: new Currency(250, 'DKK'),
-            monthly: new Currency(1000 / 12, 'DKK'),
+            monthly: new Currency(1100 / 12, 'DKK'),
             trn() {
-                const avgvalue = $avgvalue.order('DKK');
-                const fee = (avgvalue <= 50) ? 0.7 : (avgvalue <= 100) ? 1.1 : 1.39;
-                return new Currency(fee, 'DKK');
+                const fee = $avgvalue.scale(0.19 / 100).add(new Currency(0.54, 'DKK'));
+                if (fee.order('DKK') > 2.5) {
+                    return new Currency(2.5, 'DKK');
+                }
+                return fee;
             }
         }
     },
