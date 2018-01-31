@@ -219,7 +219,7 @@ const PSPs = [
         ],
         fees: {
             setup: new Currency(599, 'DKK'),
-            monthly: new Currency(149, 'DKK'),
+            monthly: new Currency(199, 'DKK'),
             trn() {
                 return new Currency(0.35 * $qty, 'DKK');
             }
