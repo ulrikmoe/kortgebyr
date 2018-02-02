@@ -29,7 +29,7 @@ function scripts() {
     return gulp.src(['src/js/data/dk.js', 'src/js/currency.js',
         'src/js/tools.js', 'src/js/main.js'])
         .pipe(through.obj((file, enc, cb) => {
-            file.contents = Buffer.from(mo3.render(file.contents.toString(), env));
+            mo3.render(file, env);
             cb(null, file);
         }))
         .pipe(sourcemaps.init())
@@ -53,7 +53,10 @@ function css() {
 function html() {
     return gulp.src(['src/*.html'])
         .pipe(through.obj((file, enc, cb) => {
-            file.contents = Buffer.from(mo3.render(file.contents.toString(), env));
+            mo3.render(file, env);
+            if (file.path.substring(__dirname.length) === '/src/index.html') {
+                file.stat.mtime = fs.statSync('www/js/all.js').mtime;
+            }
             cb(null, file);
         }))
         .pipe(gulp.dest('www'))
