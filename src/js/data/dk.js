@@ -146,17 +146,26 @@ const PSPs = [
         }
     },
     {
-        name: 'Certitrade',
+        name: 'Certitrade all-in-one',
+        logo: 'certitrade.svg',
+        link: 'https://certitrade.se',
+        cards: ['visa', 'mastercard', 'maestro'],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        fees: {
+            trn() {
+                return $revenue.scale(2.1 / 100).add(new Currency(2.1 * $qty, 'SEK'));
+            }
+        }
+    },
+    {
+        name: 'Certitrade Fast',
         logo: 'certitrade.svg',
         link: 'https://certitrade.se',
         acqs: ['Bambora', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Elavon'],
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
-            monthly: new Currency(206, 'SEK'), // 48/7*30
-            trn() {
-                return $revenue.scale(0.9 / 100).add(new Currency(1.5 * $qty, 'SEK'));
-            }
+            monthly: new Currency(1000, 'SEK')
         }
     },
     {
@@ -167,7 +176,7 @@ const PSPs = [
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             trn() {
-                return $revenue.scale(0.95 / 100).add(new Currency(0.20 * $qty, 'GBP'));
+                return $revenue.scale(2.95 / 100).add(new Currency(0.20 * $qty, 'GBP'));
             }
         }
     },
@@ -226,34 +235,9 @@ const PSPs = [
         }
     },
     {
-        name: 'ePay Light',
-        logo: 'epay.svg',
-        link: 'http://epay.dk',
-        acqs: ['Nets'],
-        cards: ['dankort', Mobilepay, Forbrugsforeningen],
-        features: [
-            {
-                title: 'Svindelkontrol',
-                trn() {
-                    return new Currency(0.3 * $qty, 'DKK');
-                }
-            }
-        ],
-        fees: {
-            setup: new Currency(399, 'DKK'),
-            monthly: new Currency(99, 'DKK'),
-            trn() {
-                if ($qty > 250) {
-                    return new Currency(0.25 * ($qty - 250), 'DKK');
-                }
-                return false;
-            }
-        }
-    },
-    {
-        name: 'ePay Pro',
-        logo: 'epay.svg',
-        link: 'http://epay.dk',
+        name: 'Online Pro',
+        logo: 'bambora-psp.svg',
+        link: 'https://www.bambora.com/da/dk/online/priser/',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Swedbank', 'Handelsbanken',
             'Valitor', 'Elavon', 'Bambora'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
@@ -270,17 +254,15 @@ const PSPs = [
             setup: new Currency(599, 'DKK'),
             monthly: new Currency(199, 'DKK'),
             trn() {
-                if ($qty > 250) {
-                    return new Currency(0.25 * ($qty - 250), 'DKK');
-                }
-                return false;
+                if ($qty <= 250) { return false; }
+                return new Currency(0.25 * ($qty - 250), 'DKK');
             }
         }
     },
     {
-        name: 'ePay Business',
-        logo: 'epay.svg',
-        link: 'http://epay.dk',
+        name: 'Online Business',
+        logo: 'bambora-psp.svg',
+        link: 'https://www.bambora.com/da/dk/online/priser/',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Swedbank', 'Handelsbanken',
             'Valitor', 'Elavon', 'Bambora'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
@@ -298,18 +280,17 @@ const PSPs = [
             setup: new Currency(999, 'DKK'),
             monthly: new Currency(299, 'DKK'),
             trn() {
-                if ($qty > 500) {
-                    return new Currency(0.25 * ($qty - 500), 'DKK');
-                }
-                return false;
+                if ($qty <= 500) { return false; }
+                return new Currency(0.25 * ($qty - 500), 'DKK');
             }
         }
     },
     {
-        name: 'ePay Pro+', // Bambora
-        logo: 'epay.svg',
-        link: 'http://www.epay.dk/bambora/',
-        cards: ['visa', 'mastercard', 'maestro'],
+        name: 'Online',
+        logo: 'bambora-psp.svg',
+        link: 'https://www.bambora.com/da/dk/online/priser/',
+        acqs: ['Nets', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay, Forbrugsforeningen],
         features: [
             {
                 title: 'Svindelkontrol',
@@ -321,11 +302,8 @@ const PSPs = [
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
-                let fees = $revenue.scale(1.45 / 100);
-                if ($qty > 250) {
-                    fees = fees.add(new Currency(0.25 * ($qty - 250), 'DKK'));
-                }
-                return fees;
+                if ($qty <= 250) { return false; }
+                return new Currency(0.25 * ($qty - 250), 'DKK');
             }
         }
     },
@@ -460,18 +438,6 @@ const PSPs = [
                 const minimum = 4.5 * $qty;
                 const fees = $revenue.scale(2.85 / 100);
                 return (fees.order('SEK') > minimum) ? fees : new Currency(minimum, 'SEK');
-            }
-        }
-    },
-    {
-        name: 'Payza',
-        logo: 'payza.svg',
-        link: 'https://payza.com',
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Svindelkontrol'],
-        fees: {
-            trn() {
-                return $revenue.scale(2.9 / 100).add(new Currency(0.3 * $qty, 'EUR'));
             }
         }
     },
@@ -631,10 +597,8 @@ const PSPs = [
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
-                if ($qty > 250) {
-                    return new Currency(0.25 * ($qty - 250), 'DKK');
-                }
-                return false;
+                if ($qty <= 250) { return false; }
+                return new Currency(0.25 * ($qty - 250), 'DKK');
             }
         }
     },
