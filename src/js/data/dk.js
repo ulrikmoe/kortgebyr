@@ -667,7 +667,7 @@ const PSPs = [
         name: 'Scanpay',
         logo: 'scanpay.svg',
         link: 'https://scanpay.dk',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol'],
