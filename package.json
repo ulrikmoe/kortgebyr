@@ -8,7 +8,7 @@
     "babel-plugin-transform-es2015-shorthand-properties": "latest",
     "csso": "latest",
     "csso-cli": "latest",
-    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp": "^4.0",
     "gulp-concat": "latest",
     "gulp-connect": "latest",
     "gulp-sourcemaps": "latest",
