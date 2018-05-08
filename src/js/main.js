@@ -21,13 +21,37 @@ function settings(o) {
     $qty = o.qty;
     $avgvalue = new Currency(o.avgvalue, o.currency);
     $revenue = $avgvalue.scale($qty);
+    $dankortscale = 0.77; // 77% to Dankort. 23% to Visa/MC etc.
+    let disableCards = {};
 
     $acqs = (o.acquirer === 'auto') ? ACQs.slice(0) : (country === 'DK')
         ? [ACQs[0], ACQs[o.acquirer]] : [ACQs[o.acquirer]];
 
-    // 77% to Dankort. 23% to Visa/MC etc.
-    $dankortscale = (!o.cards.visa) ? 1
-        : (o.cards.dankort || o.cards.forbrugsforeningen) ? 0.77 : 0;
+    if (!o.cards.visa) {
+        $dankortscale = 1;
+        disableCards.diners = true;
+        disableCards.jcb = true;
+        disableCards.amex = true;
+
+        if (!o.cards.dankort) {
+            document.getElementById('tbody').innerHTML = '';
+            return alert('Du skal vælge enten dankort eller Visa/Mastercard.');
+        }
+    } else if (!o.cards.dankort) {
+        $dankortscale = 0;
+        disableCards.forbrugsforeningen = true;
+    }
+
+    // Disable cards (tmp. solution)
+    const ocards = document.getElementsByClassName('ocards');
+    for (let elem of ocards) {
+        if (disableCards[elem.value]) {
+            elem.checked = false;
+            elem.disabled = true;
+        } else {
+            elem.disabled = false;
+        }
+    }
 
     if ($currency === o.currency) {
         build();
@@ -37,7 +61,6 @@ function settings(o) {
         document.getElementById('currency_code').textContent = $currency;
     }
 }
-
 
 // Check if object-x' properties is in object-y.
 function x_has_y(objx, objy) {
@@ -136,10 +159,6 @@ function sumTxt(obj) {
 function build(action) {
     const data = [];
     const frag = document.createDocumentFragment();
-
-    if (!opts.cards.dankort && !opts.cards.visa) {
-        document.getElementById('tbody').innerHTML = '';
-    }
 
     // Calculate acquirer costs and sort by Total Costs.
     for (let i = 0; i < $acqs.length; i++) {
@@ -290,7 +309,7 @@ function formEvent(evt) {
     if (form) {
         settings(opts);
 
-        form.addEventListener('change', formEvent);
+        //form.addEventListener('change', formEvent);
         form.addEventListener('input', formEvent);
         obj2form(opts, form);
     }
