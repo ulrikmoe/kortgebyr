@@ -16,7 +16,7 @@
       <a class="lastUpdate" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master"> Opdateret d. {{ lastUpdate }} </a>
 
       <div class="language" onclick="alert('Denne funktion er midlertidigt disabled.')">
-        <img width="19" height="19" src="/img/dk.png" alt="kortgebyr på dansk" />
+        <img width="19" height="19" src="/img/dk.png" alt="kortgebyr på dansk">
       </div>
 
       <div id="currency" class="currency">
@@ -35,7 +35,7 @@
 
     <div class="menu acquirer_menu">
       <label class="acqlabel"> Indløsning
-        <select name="acquirer" class="acquirer">
+        <select name="acquirer" id="acquirer">
           <option value="auto">Billigst mulige</option>
           <option value="1">Teller</option>
           <option value="2">Handelsbanken</option>
@@ -61,44 +61,44 @@
         Gennemsnits ordreværdi
       </label>
       <label>
-        <input name="features[]" value="Svindelkontrol" type="checkbox" class="ofeatures" />
+        <input name="features[]" value="Svindelkontrol" type="checkbox" class="ofeatures">
         Svindelkontrol
       </label>
       <label>
-        <input name="features[]" value="Abonnementsbetaling" type="checkbox" class="ofeatures" /> Abonnementsbetalinger
+        <input name="features[]" value="Abonnementsbetaling" type="checkbox" class="ofeatures"> Abonnementsbetalinger
       </label>
     </div>
 
     <div class="menu menu-3">
       <label>
-        <input name="cards[]" value="dankort" type="checkbox" class="ocards" />
+        <input name="cards[]" value="dankort" type="checkbox" class="ocards">
         Dankort
       </label>
       <label>
-        <input name="cards[]" value="visa" type="checkbox" class="ocards" />
+        <input name="cards[]" value="visa" type="checkbox" class="ocards">
         Visa / MasterCard
       </label>
       <label>
-        <input name="cards[]" value="forbrugsforeningen" type="checkbox" class="ocards" />
+        <input name="cards[]" value="forbrugsforeningen" type="checkbox" class="ocards">
         Forbrugsforening
       </label>
       <label>
-        <input name="cards[]" value="diners" type="checkbox" class="ocards" />
+        <input name="cards[]" value="diners" type="checkbox" class="ocards">
         Diners
       </label>
     </div>
 
     <div class="menu menu-4">
       <label>
-        <input name="cards[]" value="jcb" type="checkbox" class="ocards" />
+        <input name="cards[]" value="jcb" type="checkbox" class="ocards">
         JCB
       </label>
       <label>
-        <input name="cards[]" value="amex" type="checkbox" class="ocards" />
+        <input name="cards[]" value="amex" type="checkbox" class="ocards">
         American Express
       </label>
       <label>
-        <input name="cards[]" value="mobilepay" type="checkbox" class="ocards" />
+        <input name="cards[]" value="mobilepay" type="checkbox" class="ocards">
         MobilePay
       </label>
     </div>
