@@ -10,10 +10,10 @@ let opts = {
     cards: { dankort: 1, visa: 1 },
     features: {}
 };
+let $dankortscale;
 let $acqs;
 let $avgvalue;
 let $currency;
-let $dankortscale;
 let $revenue;
 let $qty;
 
@@ -21,36 +21,23 @@ function settings(o) {
     $qty = o.qty;
     $avgvalue = new Currency(o.avgvalue, o.currency);
     $revenue = $avgvalue.scale($qty);
-    $dankortscale = 0.77; // 77% to Dankort. 23% to Visa/MC etc.
-    let disableCards = {};
-
     $acqs = (o.acquirer === 'auto') ? ACQs.slice(0) : (country === 'DK')
         ? [ACQs[0], ACQs[o.acquirer]] : [ACQs[o.acquirer]];
 
     if (!o.cards.visa) {
         $dankortscale = 1;
-        disableCards.diners = true;
-        disableCards.jcb = true;
-        disableCards.amex = true;
+        disableCards(['diners', 'jcb', 'amex']);
 
         if (!o.cards.dankort) {
             document.getElementById('tbody').innerHTML = '';
-            return alert('Du skal vælge enten dankort eller Visa/Mastercard.');
+            return disableCards(['forbrugsforeningen', 'diners', 'jcb', 'amex', 'mobilepay']);
         }
     } else if (!o.cards.dankort) {
         $dankortscale = 0;
-        disableCards.forbrugsforeningen = true;
-    }
-
-    // Disable cards (tmp. solution)
-    const ocards = document.getElementsByClassName('ocards');
-    for (let elem of ocards) {
-        if (disableCards[elem.value]) {
-            elem.checked = false;
-            elem.disabled = true;
-        } else {
-            elem.disabled = false;
-        }
+        disableCards(['forbrugsforeningen']);
+    } else {
+        $dankortscale = 0.77;
+        disableCards([]);
     }
 
     if ($currency === o.currency) {
@@ -298,9 +285,33 @@ function build(action) {
     tbody.appendChild(frag);
 }
 
+function disableCards(arr) {
+    const o = {};
+    for (let card of arr) { o[card] = 1; }
+
+    const ocards = document.getElementsByClassName('ocards');
+    for (let elem of ocards) {
+        if (o[elem.value]) {
+            if (opts.cards[elem.value]) {
+                // Deselect the card and remove from opts
+                elem.checked = false;
+                delete opts.cards[elem.value];
+            }
+            elem.disabled = true;
+        } else {
+            elem.disabled = false;
+        }
+    }
+}
+
+let cachedString;
 function formEvent(evt) {
     opts = form2obj(this);
-    settings(opts);
+    const optsString = JSON.stringify(opts);
+    if (optsString !== cachedString) {
+        settings(opts);
+    }
+    cachedString = optsString;
 }
 
 
@@ -308,8 +319,7 @@ function formEvent(evt) {
     const form = document.getElementById('form');
     if (form) {
         settings(opts);
-
-        //form.addEventListener('change', formEvent);
+        form.addEventListener('change', formEvent);
         form.addEventListener('input', formEvent);
         obj2form(opts, form);
     }
