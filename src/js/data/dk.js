@@ -137,7 +137,7 @@ const PSPs = [
     {
         name: 'Braintree',
         logo: 'braintree.svg',
-        link: 'https://www.braintreepayments.com',
+        link: 'https://www.braintreepayments.com/en-dk/braintree-pricing',
         cards: ['visa', 'mastercard', 'maestro'],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
@@ -166,18 +166,10 @@ const PSPs = [
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
-            monthly: new Currency(1000, 'SEK')
-        }
-    },
-    {
-        name: 'Checkout.com',
-        logo: 'checkoutcom.svg',
-        link: 'https://www.checkout.com',
-        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
-        fees: {
+            monthly: new Currency(1000, 'SEK'),
             trn() {
-                return $revenue.scale(2.95 / 100).add(new Currency(0.20 * $qty, 'GBP'));
+                if ($qty < 1001) { return false; }
+                return new Currency(0.50 * ($qty - 1000), 'SEK');
             }
         }
     },
@@ -719,7 +711,7 @@ const PSPs = [
         features: ['Svindelkontrol'],
         fees: {
             trn() {
-                if ($revenue.order('DKK') >= 100000) {
+                if ($revenue.order('DKK') > 100000) {
                     return $revenue.scale(1.35 / 100);
                 }
                 return $revenue.scale(2.25 / 100);
