@@ -10,12 +10,11 @@ const Forbrugsforeningen = {
     title: 'forbrugsforeningen'
 };
 
-// All prices checked on November 4, 2017.
 const ACQs = [
     {
         name: 'Nets',
         logo: 'nets.svg',
-        link: 'https://dankort.dk/Pages/Forretninger.aspx',
+        link: 'https://dankort.dk/Pages/Bestil-Dankortaftale.aspx',
         cards: ['dankort', 'forbrugsforeningen', 'mobilepay'],
         fees: {
             setup: new Currency(250, 'DKK'),
@@ -31,14 +30,14 @@ const ACQs = [
     },
     {
         name: 'Teller',
-        logo: 'teller.svg',
-        link: 'https://www.nets.eu/dk/payments/online-betalinger/',
+        logo: 'nets.svg',
+        link: 'https://www.nets.eu/dk/payments/online-betalinger/indloesningsaftale/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', 'mobilepay'],
         fees: {
             setup: new Currency(1000, 'DKK'),
             monthly: new Currency(149, 'DKK'),
             trn() {
-                const trnfee = $avgvalue.scale(1.34 / 100).add(new Currency(0.19, 'DKK'));
+                const trnfee = $avgvalue.scale(1.2 / 100).add(new Currency(0.19, 'DKK'));
                 return (trnfee.order('DKK') > 0.7) ? trnfee : new Currency(0.7, 'DKK');
             }
         }
@@ -554,7 +553,7 @@ const PSPs = [
         name: 'QuickPay Basis',
         logo: 'quickpay.svg',
         link: 'https://quickpay.net/dk',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
@@ -568,7 +567,7 @@ const PSPs = [
         name: 'QuickPay Starter',
         logo: 'quickpay.svg',
         link: 'https://quickpay.net/dk',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
@@ -583,7 +582,7 @@ const PSPs = [
         name: 'QuickPay Professional',
         logo: 'quickpay.svg',
         link: 'https://quickpay.net/dk',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken', 'Swedbank'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
@@ -659,7 +658,7 @@ const PSPs = [
         name: 'Scanpay',
         logo: 'scanpay.svg',
         link: 'https://scanpay.dk',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon', 'Handelsbanken'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol'],
