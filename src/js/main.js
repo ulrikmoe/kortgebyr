@@ -6,9 +6,10 @@ let opts = {
     acquirer: 'auto',
     currency: 'DKK',
     qty: 200,
-    avgvalue: 500,
-    cards: { dankort: 1, visa: 1 },
-    features: {}
+    avgvalue: 380,
+    cards: { dankort: 1, visa: 1, mastercard: 1, mobilepay: 1 },
+    features: {},
+    modules: {}
 };
 let $dankortscale;
 let $acqs;
