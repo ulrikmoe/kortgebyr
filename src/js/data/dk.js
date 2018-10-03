@@ -569,7 +569,7 @@ const PSPs = [
         link: 'https://quickpay.net/dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+            'jcb', 'diners', 'Mobilepay', 'Forbrugsforeningen'],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             monthly: new Currency(49, 'DKK'),
@@ -584,7 +584,7 @@ const PSPs = [
         link: 'https://quickpay.net/dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+            'jcb', 'diners', 'Mobilepay', 'Forbrugsforeningen'],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -595,47 +595,63 @@ const PSPs = [
         }
     },
     {
-        name: 'Reepay Startup',
+        name: 'Reepay Basic',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Clearhaus'],
-        cards: ['visa', 'mastercard', 'maestro'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank','Handelsbanken','Valitor','Elavon','Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
+            'jcb', 'diners', 'Mobilepay', 'Forbrugsforeningen'],
         features: ['Abonnementsbetaling'],
         fees: {
-            monthly: new Currency(99, 'DKK'),
+            monthly: new Currency(49, 'DKK'),
             trn() {
-                return new Currency(4 * $qty, 'DKK');
+                return new Currency(1 * $qty, 'DKK');
             }
         }
     },
     {
-        name: 'Reepay Medium',
+        name: 'Reepay Basic',
         logo: 'reepay.svg',
-        link: 'https://reepay.com/da/',
-        acqs: ['Clearhaus'],
-        cards: ['visa', 'mastercard', 'maestro'],
+        link: 'https://reepay.com/da',
+        cards: ['visa', 'mastercard', Mobilepay],
         features: ['Abonnementsbetaling'],
         fees: {
-            monthly: new Currency(199, 'DKK'),
+            monthly: new Currency(49, 'DKK'),
             trn() {
-                return new Currency(2 * $qty, 'DKK');
+                return $revenue.scale(1.30 / 100).add(new Currency(1 * $qty, 'DKK'));
             }
         }
     },
     {
-        name: 'Reepay Enterprise',
+        name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Clearhaus'],
-        cards: ['visa', 'mastercard', 'maestro'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank','Handelsbanken','Valitor','Elavon','Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
+            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Abonnementsbetaling'],
         fees: {
-            monthly: new Currency(949, 'DKK'),
+            monthly: new Currency(139, 'DKK'),
             trn() {
-                return new Currency(1.5 * $qty, 'DKK');
+              if ($qty <= 250) { return false; }
+              return new Currency(0.25 * ($qty - 250), 'DKK');
             }
         }
     },
+    {
+        name: 'Reepay Standard',
+        logo: 'reepay.svg',
+        link: 'https://reepay.com/da',
+        cards: ['visa', 'mastercard', Mobilepay, Forbrugsforeningen],
+        features: ['Abonnementsbetaling'],
+        fees: {
+            monthly: new Currency(139, 'DKK'),
+            trn() {
+                return $revenue.scale(1.30 / 100).add(new Currency(0.25 * ($qty - 250), 'DKK'));
+            }
+        }
+    },
+
     {
         name: 'ScanNet',
         logo: 'scannet.svg',
