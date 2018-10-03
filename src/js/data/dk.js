@@ -569,7 +569,7 @@ const PSPs = [
         link: 'https://quickpay.net/dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', 'Mobilepay', 'Forbrugsforeningen'],
+            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             monthly: new Currency(49, 'DKK'),
@@ -584,7 +584,7 @@ const PSPs = [
         link: 'https://quickpay.net/dk',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', 'Mobilepay', 'Forbrugsforeningen'],
+            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -600,7 +600,7 @@ const PSPs = [
         link: 'https://reepay.com/da/',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank','Handelsbanken','Valitor','Elavon','Bambora'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', 'Mobilepay', 'Forbrugsforeningen'],
+            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Abonnementsbetaling'],
         fees: {
             monthly: new Currency(49, 'DKK'),
@@ -642,7 +642,7 @@ const PSPs = [
         name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da',
-        cards: ['visa', 'mastercard', Mobilepay, Forbrugsforeningen],
+        cards: ['visa', 'mastercard', Mobilepay],
         features: ['Abonnementsbetaling'],
         fees: {
             monthly: new Currency(139, 'DKK'),
