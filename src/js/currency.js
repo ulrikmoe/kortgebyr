@@ -12,8 +12,8 @@ const currency_map = {
 const currency_value = {};
 
 function updateCurrency() {
-    return fetch('https://kortgebyr.dk/_currency/latest?base=' + $currency +
-        '&symbols=DKK,SEK,NOK,EUR,USD,GBP')
+
+    return fetch('https://kortgebyr.dk/_currency/latest?from=' + $currency)
         .then(res => res.json())
         .then((j) => {
             j.rates[$currency] = 1;
