@@ -101,7 +101,7 @@ const ACQs = [
         cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         fees: {
             trn() {
-                const trnfee = $avgvalue.scale(1.45 / 100);
+                const trnfee = $avgvalue.scale(1.25 / 100);
                 return (trnfee.order('DKK') > 0.6) ? trnfee : new Currency(0.6, 'DKK');
             }
         }
@@ -129,7 +129,7 @@ const PSPs = [
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             trn() {
-                return $revenue.scale(2.4 / 100).add(new Currency(0.3 * $qty, 'USD'));
+                return $revenue.scale(3.5 / 100).add(new Currency(0.3 * $qty, 'USD'));
             }
         }
     },
@@ -179,17 +179,26 @@ const PSPs = [
         acqs: ['Nets', 'Teller'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Abonnementsbetaling'],
+        features: [
+            {
+                title: 'Abonnementsbetaling',
+                monthly: new Currency(99, 'DKK')
+            },
+            'Svindelkontrol'
+        ],
         fees: {
-            setup: new Currency(199, 'DKK'),
-            monthly: new Currency(149, 'DKK')
+            monthly(o) {
+                // Hacky solution to add 3-D Secure (mandatory)
+                o.monthly['3-D Secure'] = new Currency(49, 'DKK');
+                return new Currency(149, 'DKK');
+            }
         }
     },
     {
         name: 'DIBS Easy',
         logo: 'dibs.svg',
         link: 'http://dibs.dk',
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        cards: ['visa', 'mastercard', 'maestro'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -201,28 +210,6 @@ const PSPs = [
             monthly: new Currency(299, 'DKK'),
             trn() {
                 return $revenue.scale(1.95 / 100).add(new Currency($qty, 'DKK'));
-            }
-        }
-    },
-    {
-        name: 'DIBS Basic',
-        logo: 'dibs.svg',
-        link: 'http://dibs.dk',
-        acqs: ['Nets', 'Teller', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Mobilepay],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                setup: new Currency(495, 'DKK'),
-                monthly: new Currency(49, 'DKK')
-            }
-        ],
-        fees: {
-            setup: new Currency(599, 'DKK'),
-            monthly: new Currency(199, 'DKK'),
-            trn() {
-                return new Currency(0.35 * $qty, 'DKK');
             }
         }
     },
@@ -278,6 +265,7 @@ const PSPs = [
         }
     },
     {
+        // TODO: Bambora Online should be changed into an all-in-one w. Dankort (optional)
         name: 'Online',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/priser/',
@@ -353,21 +341,6 @@ const PSPs = [
         }
     },
     {
-        name: 'Payer',
-        logo: 'payer.svg',
-        link: 'http://payer.se/betallosning/',
-        acqs: ['Swedbank', 'Handelsbanken'],
-        cards: ['visa', 'mastercard', 'maestro', 'amex', 'diners'],
-        features: ['Svindelkontrol'],
-        fees: {
-            setup: new Currency(1400, 'SEK'),
-            monthly: new Currency(400, 'SEK'),
-            trn() {
-                return new Currency(2 * $qty, 'SEK');
-            }
-        }
-    },
-    {
         name: 'PayEx One',
         logo: 'payex.svg',
         link: 'http://payex.dk/tjenester/e-handel/',
@@ -393,14 +366,28 @@ const PSPs = [
         }
     },
     {
-        name: 'Paymill',
+        name: 'Basic',
         logo: 'paymill.svg',
-        link: 'https://paymill.com',
+        link: 'https://www.paymill.com/en/pricing-2/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
+            monthly: new Currency(4.95, 'EUR'),
             trn() {
-                return $revenue.scale(2.95 / 100).add(new Currency(0.28 * $qty, 'EUR'));
+                return $revenue.scale(1.95 / 100).add(new Currency(0.25 * $qty, 'EUR'));
+            }
+        }
+    },
+    {
+        name: 'Professional',
+        logo: 'paymill.svg',
+        link: 'https://www.paymill.com/en/pricing-2/',
+        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        fees: {
+            monthly: new Currency(19.95, 'EUR'),
+            trn() {
+                return $revenue.scale(1.35 / 100).add(new Currency(0.25 * $qty, 'EUR'));
             }
         }
     },
@@ -434,6 +421,7 @@ const PSPs = [
         }
     },
     {
+        // TODO: Give mulighed for Dankort
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/',
@@ -449,12 +437,12 @@ const PSPs = [
         ],
         fees: {
             trn() {
-                return $revenue.scale(1.45 / 100).add(new Currency(4 * $qty, 'DKK'));
+                return $revenue.scale(1.25 / 100).add(new Currency(4 * $qty, 'DKK'));
             }
         }
     },
     {
-        name: 'PensoPay Iværksætter',
+        name: 'PensoPay Start-Up',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/',
         cards: ['visa', 'mastercard', 'maestro', Mobilepay],
@@ -470,7 +458,7 @@ const PSPs = [
         fees: {
             monthly: new Currency(59, 'DKK'),
             trn() {
-                return $revenue.scale(1.45 / 100).add(new Currency($qty, 'DKK'));
+                return $revenue.scale(1.25 / 100).add(new Currency($qty, 'DKK'));
             }
         }
     },
@@ -491,7 +479,32 @@ const PSPs = [
         fees: {
             monthly: new Currency(99, 'DKK'),
             trn() {
-                let fees = $revenue.scale(1.4 / 100);
+                let fees = $revenue.scale(1.25 / 100);
+                if ($qty > 100) {
+                    fees = fees.add(new Currency(0.35 * ($qty - 100), 'DKK'));
+                }
+                return fees;
+            }
+        }
+    },
+    {
+        name: 'PensoPay Premium',
+        logo: 'pensopay.svg',
+        link: 'https://pensopay.com/',
+        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
+        features: [
+            'Svindelkontrol',
+            {
+                title: 'Abonnementsbetaling',
+                trn() {
+                    return new Currency(0.2 * $qty, 'DKK');
+                }
+            }
+        ],
+        fees: {
+            monthly: new Currency(129, 'DKK'),
+            trn() {
+                let fees = $revenue.scale(1.25 / 100);
                 if ($qty > 100) {
                     fees = fees.add(new Currency(0.35 * ($qty - 100), 'DKK'));
                 }
@@ -516,34 +529,9 @@ const PSPs = [
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
-                let fees = $revenue.scale(1.35 / 100);
+                let fees = $revenue.scale(1.25 / 100);
                 if ($qty > 250) {
                     fees = fees.add(new Currency(0.25 * ($qty - 250), 'DKK'));
-                }
-                return fees;
-            }
-        }
-    },
-    {
-        name: 'PensoPay Premium',
-        logo: 'pensopay.svg',
-        link: 'https://pensopay.com/',
-        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
-        features: [
-            'Svindelkontrol',
-            {
-                title: 'Abonnementsbetaling',
-                trn() {
-                    return new Currency(0.2 * $qty, 'DKK');
-                }
-            }
-        ],
-        fees: {
-            monthly: new Currency(129, 'DKK'),
-            trn() {
-                let fees = $revenue.scale(1.35 / 100);
-                if ($qty > 100) {
-                    fees = fees.add(new Currency(0.35 * ($qty - 100), 'DKK'));
                 }
                 return fees;
             }
@@ -595,44 +583,45 @@ const PSPs = [
         }
     },
     {
-        name: 'Reepay Startup',
+        name: 'Reepay Basic',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Clearhaus'],
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling'],
+        acqs: ['Nets', 'Clearhaus'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        features: [
+            {
+                title: 'Abonnementsbetaling',
+                trn() {
+                    return new Currency($qty, 'DKK');
+                }
+            }
+        ],
         fees: {
-            monthly: new Currency(99, 'DKK'),
+            monthly: new Currency(49, 'DKK'),
             trn() {
-                return new Currency(4 * $qty, 'DKK');
+                return new Currency($qty, 'DKK');
             }
         }
     },
     {
-        name: 'Reepay Medium',
+        name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Clearhaus'],
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling'],
-        fees: {
-            monthly: new Currency(199, 'DKK'),
-            trn() {
-                return new Currency(2 * $qty, 'DKK');
+        acqs: ['Nets', 'Clearhaus'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        features: [
+            {
+                title: 'Abonnementsbetaling',
+                trn() {
+                    return new Currency($qty, 'DKK');
+                }
             }
-        }
-    },
-    {
-        name: 'Reepay Enterprise',
-        logo: 'reepay.svg',
-        link: 'https://reepay.com/da/',
-        acqs: ['Clearhaus'],
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling'],
+        ],
         fees: {
-            monthly: new Currency(949, 'DKK'),
+            monthly: new Currency(139, 'DKK'),
             trn() {
-                return new Currency(1.5 * $qty, 'DKK');
+                if ($qty <= 250) { return false; }
+                return new Currency(0.25 * ($qty - 250), 'DKK');
             }
         }
     },
@@ -706,7 +695,7 @@ const PSPs = [
         name: 'YourPay',
         logo: 'yourpay.png',
         link: 'https://www.yourpay.io',
-        cards: ['visa', 'mastercard', 'maestro'],
+        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
         features: ['Svindelkontrol'],
         fees: {
             trn() {
@@ -718,7 +707,6 @@ const PSPs = [
         }
     }
 ];
-
 
 // Temporary solution: convert arrays to objects
 (() => {
