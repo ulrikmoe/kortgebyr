@@ -731,5 +731,8 @@ const PSPs = [
         if (psp.acqs) {
             psp.acquirers = arr2obj(psp.acqs);
         }
+        if (!psp.fees.setup) { psp.fees.setup = new Currency(0, 'DKK'); }
+        if (!psp.fees.monthly) { psp.fees.monthly = new Currency(0, 'DKK'); }
+        if (!psp.fees.trn) { psp.fees.trn = new Currency(0, 'DKK'); }
     }
 })();
