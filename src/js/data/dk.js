@@ -421,11 +421,11 @@ const PSPs = [
         }
     },
     {
-        // TODO: Give mulighed for Dankort
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/',
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        acqs: ['Nets', 'Clearhaus'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             'Svindelkontrol',
             {
@@ -437,7 +437,7 @@ const PSPs = [
         ],
         fees: {
             trn() {
-                return $revenue.scale(1.25 / 100).add(new Currency(4 * $qty, 'DKK'));
+                return new Currency(4 * $qty, 'DKK');
             }
         }
     },
@@ -445,7 +445,8 @@ const PSPs = [
         name: 'PensoPay Start-Up',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/',
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        acqs: ['Nets', 'Clearhaus'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             'Svindelkontrol',
             {
@@ -458,7 +459,7 @@ const PSPs = [
         fees: {
             monthly: new Currency(59, 'DKK'),
             trn() {
-                return $revenue.scale(1.25 / 100).add(new Currency($qty, 'DKK'));
+                return new Currency($qty, 'DKK');
             }
         }
     },
@@ -466,7 +467,8 @@ const PSPs = [
         name: 'PensoPay Business',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/vores-betalingsloesninger/',
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        acqs: ['Nets', 'Clearhaus'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             'Svindelkontrol',
             {
@@ -479,11 +481,8 @@ const PSPs = [
         fees: {
             monthly: new Currency(99, 'DKK'),
             trn() {
-                let fees = $revenue.scale(1.25 / 100);
-                if ($qty > 100) {
-                    fees = fees.add(new Currency(0.35 * ($qty - 100), 'DKK'));
-                }
-                return fees;
+                if ($qty <= 100) { return false; }
+                return new Currency(0.35 * ($qty - 100), 'DKK');
             }
         }
     },
@@ -491,7 +490,8 @@ const PSPs = [
         name: 'PensoPay Premium',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/',
-        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
+        acqs: ['Nets', 'Clearhaus'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'mobilepay'],
         features: [
             'Svindelkontrol',
             {
@@ -502,13 +502,15 @@ const PSPs = [
             }
         ],
         fees: {
-            monthly: new Currency(129, 'DKK'),
-            trn() {
-                let fees = $revenue.scale(1.25 / 100);
-                if ($qty > 100) {
-                    fees = fees.add(new Currency(0.35 * ($qty - 100), 'DKK'));
+            monthly(o) {
+                if (opts.cards.mobilepay) {
+                    o.monthly['MobilePay'] = new Currency(0, 'DKK');
                 }
-                return fees;
+                return new Currency(129, 'DKK');
+            },
+            trn() {
+                if ($qty <= 100) { return false; }
+                return new Currency(0.35 * ($qty - 100), 'DKK');
             }
         }
     },
@@ -516,7 +518,8 @@ const PSPs = [
         name: 'PensoPay Pro',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/',
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        acqs: ['Nets', 'Clearhaus'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             'Svindelkontrol',
             {
@@ -529,11 +532,8 @@ const PSPs = [
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
-                let fees = $revenue.scale(1.25 / 100);
-                if ($qty > 250) {
-                    fees = fees.add(new Currency(0.25 * ($qty - 250), 'DKK'));
-                }
-                return fees;
+                if ($qty <= 250) { return false; }
+                return new Currency(0.25 * ($qty - 250), 'DKK');
             }
         }
     },
