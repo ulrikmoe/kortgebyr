@@ -29,6 +29,22 @@ const ACQs = [
         }
     },
     {
+        name: 'Nets-Reepay',
+        logo: 'nets.svg',
+        link: 'https://dankort.dk/Pages/Bestil-Dankortaftale.aspx',
+        cards: ['dankort', 'forbrugsforeningen', 'mobilepay'],
+        fees: {
+            monthly: new Currency(1100 / 12, 'DKK'),
+            trn() {
+                const fee = $avgvalue.scale(0.19 / 100).add(new Currency(0.54, 'DKK'));
+                if (fee.order('DKK') > 2.5) {
+                    return new Currency(2.5, 'DKK');
+                }
+                return fee;
+            }
+        }
+    },
+    {
         name: 'Teller',
         logo: 'nets.svg',
         link: 'https://www.nets.eu/dk/payments/online-betalinger/indloesningsaftale/',
@@ -582,99 +598,144 @@ const PSPs = [
             }
         }
     },
+    // Reepay Basic, Nets + Clearhaus
     {
         name: 'Reepay Basic',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-<<<<<<< HEAD
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank','Handelsbanken','Valitor','Elavon','Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Abonnementsbetaling'],
-        fees: {
-            monthly: new Currency(49, 'DKK'),
-            trn() {
-                return new Currency(1 * $qty, 'DKK');
-            }
-        }
-    },
-    {
-        name: 'Reepay Basic',
-        logo: 'reepay.svg',
-        link: 'https://reepay.com/da',
-        cards: ['visa', 'mastercard', Mobilepay],
-        features: ['Abonnementsbetaling'],
-        fees: {
-            monthly: new Currency(49, 'DKK'),
-            trn() {
-                return $revenue.scale(1.30 / 100).add(new Currency(1 * $qty, 'DKK'));
-=======
-        acqs: ['Nets', 'Clearhaus'],
+        acqs: ['Nets-Reepay', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                trn() {
-                    return new Currency($qty, 'DKK');
-                }
-            }
-        ],
+        features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
             monthly: new Currency(49, 'DKK'),
             trn() {
                 return new Currency($qty, 'DKK');
->>>>>>> upstream/master
             }
         }
     },
+    // Reepay Basic, Nets + Swedbank
+    {
+        name: 'Reepay Basic',
+        logo: 'reepay.svg',
+        link: 'https://reepay.com/da/',
+        acqs: ['Nets-Reepay', 'Swedbank'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        features: ['Abonnementsbetaling','Svindelkontrol'],
+        fees: {
+            monthly: new Currency(49, 'DKK'),
+            trn() {
+                return new Currency($qty, 'DKK');
+            }
+        }
+    },
+    // Reepay Basic, Nets + Bambora
+    {
+        name: 'Reepay Basic',
+        logo: 'reepay.svg',
+        link: 'https://reepay.com/da/',
+        acqs: ['Nets-Reepay', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        features: ['Abonnementsbetaling','Svindelkontrol'],
+        fees: {
+            monthly: new Currency(49, 'DKK'),
+            trn() {
+                return new Currency($qty, 'DKK');
+            }
+        }
+    },
+    // Reepay Standard, Nets + Clearhaus
     {
         name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-<<<<<<< HEAD
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank','Handelsbanken','Valitor','Elavon','Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Abonnementsbetaling'],
-        fees: {
-            monthly: new Currency(139, 'DKK'),
-            trn() {
-              if ($qty <= 250) { return false; }
-              return new Currency(0.25 * ($qty - 250), 'DKK');
-=======
-        acqs: ['Nets', 'Clearhaus'],
+        acqs: ['Nets-Reepay', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                trn() {
-                    return new Currency($qty, 'DKK');
-                }
-            }
-        ],
+        features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
             monthly: new Currency(139, 'DKK'),
             trn() {
                 if ($qty <= 250) { return false; }
                 return new Currency(0.25 * ($qty - 250), 'DKK');
->>>>>>> upstream/master
             }
         }
     },
+    // Reepay Standard, Nets + Swedbank
+    {
+        name: 'Reepay Standard',
+        logo: 'reepay.svg',
+        link: 'https://reepay.com/da/',
+        acqs: ['Nets-Reepay', 'Swedbank'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        features: ['Abonnementsbetaling','Svindelkontrol'],
+        fees: {
+            monthly: new Currency(139, 'DKK'),
+            trn() {
+                if ($qty <= 250) { return false; }
+                return new Currency(0.25 * ($qty - 250), 'DKK');
+            }
+        }
+    },
+    // Reepay Standard, Nets + Bambora
+    {
+        name: 'Reepay Standard',
+        logo: 'reepay.svg',
+        link: 'https://reepay.com/da/',
+        acqs: ['Nets-Reepay', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        features: ['Abonnementsbetaling','Svindelkontrol'],
+        fees: {
+            monthly: new Currency(139, 'DKK'),
+            trn() {
+                if ($qty <= 250) { return false; }
+                return new Currency(0.25 * ($qty - 250), 'DKK');
+            }
+        }
+    },
+    // Reepay Standard, Nets + Teller
+    {
+        name: 'Reepay Standard',
+        logo: 'reepay.svg',
+        link: 'https://reepay.com/da/',
+        acqs: ['Nets-Reepay', 'Teller'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro','amex', 'jcb','diners', Mobilepay],
+        features: ['Abonnementsbetaling','Svindelkontrol'],
+        fees: {
+            monthly: new Currency(139, 'DKK'),
+            trn() {
+                if ($qty <= 250) { return false; }
+                return new Currency(0.25 * ($qty - 250), 'DKK');
+            }
+        }
+    },
+    // Reepay Standard, Nets + Own
     {
         name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da',
         cards: ['visa', 'mastercard', Mobilepay],
-        features: ['Abonnementsbetaling'],
+        features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
             monthly: new Currency(139, 'DKK'),
             trn() {
-                return $revenue.scale(1.30 / 100).add(new Currency(0.25 * ($qty - 250), 'DKK'));
+                return $revenue.scale(1.25 / 100).add(new Currency(0.25 * ($qty - 250), 'DKK'));
             }
         }
     },
-
+    // Reepay Standard, Nets + Valitor
+    {
+        name: 'Reepay Standard',
+        logo: 'reepay.svg',
+        link: 'https://reepay.com/da',
+        acqs: ['Nets-Reepay', 'Valitor'],
+        cards: ['visa', 'mastercard', Mobilepay],
+        features: ['Abonnementsbetaling','Svindelkontrol'],
+        fees: {
+            monthly: new Currency(139, 'DKK'),
+            trn() {
+                return $revenue.scale(1.25 / 100).add(new Currency(0.25 * ($qty - 250), 'DKK'));
+            }
+        }
+    },
     {
         name: 'ScanNet',
         logo: 'scannet.svg',
