@@ -29,7 +29,7 @@ const ACQs = [
         }
     },
     {
-        name: 'Nets-Reepay',
+        name: 'Nets Via Reepay',
         logo: 'nets.svg',
         link: 'https://dankort.dk/Pages/Bestil-Dankortaftale.aspx',
         cards: ['dankort', 'forbrugsforeningen', 'mobilepay'],
@@ -603,7 +603,7 @@ const PSPs = [
         name: 'Reepay Basic',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Nets-Reepay', 'Clearhaus'],
+        acqs: ['Nets Via Reepay', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
@@ -618,7 +618,7 @@ const PSPs = [
         name: 'Reepay Basic',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Nets-Reepay', 'Swedbank'],
+        acqs: ['Nets Via Reepay', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
@@ -633,7 +633,7 @@ const PSPs = [
         name: 'Reepay Basic',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Nets-Reepay', 'Bambora'],
+        acqs: ['Nets Via Reepay', 'Bambora'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
@@ -648,7 +648,7 @@ const PSPs = [
         name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Nets-Reepay', 'Clearhaus'],
+        acqs: ['Nets Via Reepay', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
@@ -664,7 +664,7 @@ const PSPs = [
         name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Nets-Reepay', 'Swedbank'],
+        acqs: ['Nets Via Reepay', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
@@ -680,7 +680,7 @@ const PSPs = [
         name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Nets-Reepay', 'Bambora'],
+        acqs: ['Nets Via Reepay', 'Bambora'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
@@ -696,7 +696,7 @@ const PSPs = [
         name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/',
-        acqs: ['Nets-Reepay', 'Teller'],
+        acqs: ['Nets Via Reepay', 'Teller'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro','amex', 'jcb','diners', Mobilepay],
         features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
@@ -726,7 +726,7 @@ const PSPs = [
         name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da',
-        acqs: ['Nets-Reepay', 'Valitor'],
+        acqs: ['Nets Via Reepay', 'Valitor'],
         cards: ['visa', 'mastercard', Mobilepay],
         features: ['Abonnementsbetaling','Svindelkontrol'],
         fees: {
