@@ -670,7 +670,7 @@ const PSPs = [
         }
     },
     {
-        name: 'Wannafind',
+        name: 'Wannafind Start-Up',
         logo: 'wannafind.svg',
         link: 'https://www.wannafind.dk/betalingssystem/',
         acqs: ['Nets', 'Teller'],
@@ -684,10 +684,31 @@ const PSPs = [
             'Svindelkontrol'
         ],
         fees: {
-            monthly(o) {
-                // Hacky solution to add 3-D Secure (mandatory)
-                o.monthly['3-D Secure'] = new Currency(49, 'DKK');
-                return new Currency(149, 'DKK');
+            monthly: new Currency(39, 'DKK'),
+            trn() {
+                return new Currency($qty, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'Wannafind Success',
+        logo: 'wannafind.svg',
+        link: 'https://www.wannafind.dk/betalingssystem/',
+        acqs: ['Nets', 'Teller'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
+            'diners', Mobilepay, Forbrugsforeningen],
+        features: [
+            {
+                title: 'Abonnementsbetaling',
+                monthly: new Currency(99, 'DKK')
+            },
+            'Svindelkontrol'
+        ],
+        fees: {
+            monthly: new Currency(149, 'DKK'),
+            trn() {
+                if ($qty <= 500) { return false; }
+                return new Currency(0.25 * ($qty - 500), 'DKK');
             }
         }
     },
