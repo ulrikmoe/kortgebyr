@@ -27,7 +27,7 @@ So, you are interested in contributing? Welcome! Every single contribution is ve
 To build it locally, you will need [Node.js](https://nodejs.org/en/) and [Gulp 4](http://gulpjs.com).
 
 ```bash
-git clone git@github.com:ulrikmoe/kortgebyr.git
+git clone https://github.com/ulrikmoe/kortgebyr.git
 cd kortgebyr
 npm install
 gulp
