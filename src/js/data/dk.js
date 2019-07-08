@@ -505,7 +505,8 @@ const PSPs = [
         fees: {
             monthly(o) {
                 if (opts.cards.mobilepay) {
-                    o.monthly['MobilePay'] = new Currency(0, 'DKK');
+                    // PensoPay pays MobilePay fee
+                    delete o.monthly.MobilePay;
                 }
                 return new Currency(129, 'DKK');
             },
