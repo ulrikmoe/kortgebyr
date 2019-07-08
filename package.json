@@ -1,14 +1,9 @@
 {
   "private": true,
   "dependencies": {
-    "babel-cli": "*",
-    "babel-plugin-transform-es2015-arrow-functions": "latest",
-    "babel-plugin-transform-es2015-block-scoping": "latest",
-    "babel-plugin-transform-es2015-parameters": "latest",
-    "babel-plugin-transform-es2015-shorthand-properties": "latest",
     "csso": "latest",
     "csso-cli": "latest",
-    "gulp": "^4.0",
+    "gulp": "latest",
     "gulp-concat": "latest",
     "gulp-connect": "latest",
     "gulp-sourcemaps": "latest",
