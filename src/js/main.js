@@ -166,7 +166,6 @@ function build(action) {
     for (let i = 0; i < PSPs.length; i++) {
         const psp = PSPs[i];
         const fees = { setup: {}, monthly: {}, trn: {} };
-        cost2obj(psp.fees, fees, psp.name);
 
         // Check if psp support all enabled payment methods
         for (const card in opts.cards) {
@@ -234,6 +233,7 @@ function build(action) {
             cardicon.className = 'card';
             cardfrag.appendChild(cardicon);
         }
+        cost2obj(psp.fees, fees, psp.name);
 
         // Calculate TC and sort psps
         const totals = merge(fees.monthly, fees.trn);
