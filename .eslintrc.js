@@ -45,7 +45,7 @@ module.exports = {
             2,
             "last"
         ],
-        "complexity": 1,
+        "complexity": 0,
         "computed-property-spacing": [
             2,
             "never"
@@ -125,7 +125,7 @@ module.exports = {
         "no-invalid-this": 2,
         "no-iterator": 2,
         "no-label-var": 2,
-        "no-labels": 1,
+        "no-labels": 0,
         "no-lone-blocks": 2,
         "no-lonely-if": 2,
         "no-loop-func": 2,
