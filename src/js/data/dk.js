@@ -695,14 +695,11 @@ const PSPs = [
         name: 'YourPay',
         logo: 'yourpay.png',
         link: 'https://www.yourpay.io',
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
-        features: ['Svindelkontrol'],
+        cards: ['visa', 'mastercard', 'maestro', 'Mobilepay'],
+        features: ['Svindelkontrol','Abonnementsbetaling'],
         fees: {
             trn() {
-                if ($revenue.order('DKK') > 100000) {
-                    return $revenue.scale(1.35 / 100);
-                }
-                return $revenue.scale(2.25 / 100);
+                return $revenue.scale(1.25 / 100);
             }
         }
     }
