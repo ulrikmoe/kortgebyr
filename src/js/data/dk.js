@@ -695,8 +695,8 @@ const PSPs = [
         name: 'YourPay',
         logo: 'yourpay.png',
         link: 'https://www.yourpay.io',
-        cards: ['visa', 'mastercard', 'maestro', 'Mobilepay'],
-        features: ['Svindelkontrol','Abonnementsbetaling'],
+        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             trn() {
                 return $revenue.scale(1.25 / 100);
