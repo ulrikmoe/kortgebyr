@@ -4,20 +4,6 @@
 
 ![Screenshot of Kortgebyr](/screenshot.png?raw=true "kortgebyr screenshot")
 
-
-## Browser support
-
-Compatibility table where struckthrough means fixed with babel:
-
-Feature               | Chrome | Safari | Firefox |  Edge  |  IE    |  Opera
---------------------- | :-----:| :----: | :-----: | :----: | :----: | :----:
-TLS 1.2               | 30     | 7      | 27      | 12     | 9/11*  | 17
-~~Let~~               | 49     | 10     | 44      | 12     | 11     | 36
-~~Const~~             | 49     | 10     | 36      | 12     | 11     | 36
-~~Arrow Functions~~   | 45     | 10     | 22      | 12     | :x:    | 32
-~~Default params.~~   | 49     | 10     | 15      | 14     | :x:    | 45
-~~Shorthand props.~~  | 39     | 9      | 34      | 12     | :x:    | 29
-
 ## Contributing
 
 So, you are interested in contributing? Welcome! Every single contribution is very much encouraged and appreciated. If you find a bug, typo or something that could be improved, please create an issue on the [issue tracker](https://github.com/ulrikmoe/kortgebyr/issues).
