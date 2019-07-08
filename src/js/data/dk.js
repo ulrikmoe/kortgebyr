@@ -598,6 +598,10 @@ const PSPs = [
             }
         ],
         fees: {
+            setup(o) {
+                // Reepay pays the Nets setup fee
+                delete o.setup.Nets;
+            },
             monthly: new Currency(49, 'DKK'),
             trn() {
                 return new Currency($qty, 'DKK');
@@ -619,6 +623,10 @@ const PSPs = [
             }
         ],
         fees: {
+            setup(o) {
+                // Reepay pays the Nets setup fee
+                delete o.setup.Nets;
+            },
             monthly: new Currency(139, 'DKK'),
             trn() {
                 if ($qty <= 250) { return false; }
