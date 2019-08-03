@@ -9,7 +9,7 @@ module.exports = {
     "extends": "eslint:recommended",
     "rules": {
         "accessor-pairs": 2,
-        "array-bracket-spacing": 2,
+        "array-bracket-spacing": 1,
         "array-callback-return": 2,
         "arrow-body-style": 1,
         "arrow-parens": [
@@ -27,7 +27,7 @@ module.exports = {
         "block-scoped-var": 2,
         "block-spacing": 2,
         "brace-style": [
-            2,
+            1,
             "1tbs",
             {
                 "allowSingleLine": true
@@ -51,7 +51,7 @@ module.exports = {
             "never"
         ],
         "consistent-return": 0,
-        "curly": 2,
+        "curly": 0,
         "dot-location": [
             2,
             "property"
@@ -68,6 +68,7 @@ module.exports = {
         "function-paren-newline": 1,
         "generator-star-spacing": 2,
         "getter-return": 2,
+        //"global-require": 2,
         "handle-callback-err": 2,
         "id-blacklist": 2,
         "id-length": 0,
@@ -75,7 +76,7 @@ module.exports = {
         "indent": [1, 4, { "SwitchCase": 1 }],
         "init-declarations": 0,
         "jsx-quotes": 2,
-        "key-spacing": 2,
+        "key-spacing": 1,
         "keyword-spacing": [
             2,
             {
@@ -89,13 +90,12 @@ module.exports = {
             "unix"
         ],
         "lines-around-directive": 2,
-        "max-depth": 2,
-        "max-len": [1, 120],
+        "max-depth": 1,
+        "max-len": [1, 130],
         "max-nested-callbacks": 2,
         "max-params": 2,
         "max-statements": 0,
         "max-statements-per-line": 0,
-        "new-cap": 2,
         "new-parens": 2,
         "newline-after-var": 0,
         "newline-before-return": 0,
@@ -108,6 +108,7 @@ module.exports = {
         "no-confusing-arrow": 2,
         "no-constant-condition": 0,
         "no-console": 0,
+        "no-continue": 0,
         "no-div-regex": 2,
         "no-duplicate-imports": 2,
         "no-else-return": 2,
@@ -125,7 +126,7 @@ module.exports = {
         "no-invalid-this": 2,
         "no-iterator": 2,
         "no-label-var": 2,
-        "no-labels": 0,
+        "no-labels": 2,
         "no-lone-blocks": 2,
         "no-lonely-if": 2,
         "no-loop-func": 2,
@@ -143,7 +144,7 @@ module.exports = {
         "no-new-require": 2,
         "no-new-wrappers": 2,
         "no-octal-escape": 2,
-        "no-param-reassign": 2,
+        "no-param-reassign": 1,
         "no-path-concat": 2,
         "no-process-env": 2,
         "no-process-exit": 2,
@@ -171,12 +172,13 @@ module.exports = {
         "no-template-curly-in-string": 2,
         "no-throw-literal": 0,
         "no-trailing-spaces": 2,
+        "no-undef": 0,
         "no-undef-init": 2,
         "no-unused-vars": 0,
-        "no-undefined": 2,
+        "no-undefined": 1,
         "no-unmodified-loop-condition": 2,
         "no-unneeded-ternary": 2,
-        "no-unused-expressions": 2,
+        "no-unused-expressions": 0,
         "no-use-before-define": [2, "nofunc"],
         "no-useless-call": 2,
         "no-useless-computed-key": 2,
@@ -205,17 +207,17 @@ module.exports = {
         "one-var": 0,
         "one-var-declaration-per-line": 2,
         "operator-assignment": [
-            2,
+            1,
             "always"
         ],
         "operator-linebreak": 2,
         "padded-blocks": 0,
         "padding-line-between-statements": 2,
-        "prefer-arrow-callback": 2,
+        "prefer-arrow-callback": 1,
         "prefer-const": 1,
         "prefer-numeric-literals": 2,
         "prefer-promise-reject-errors": 0,
-        "prefer-rest-params": 1,
+        "prefer-rest-params": 2,
         "prefer-spread": 2,
         "prefer-template": 0,
         "quote-props": 0,
@@ -228,7 +230,7 @@ module.exports = {
         "require-await": 2,
         "require-jsdoc": 0,
         "rest-spread-spacing": 2,
-        "semi": 2,
+        "semi": 1,
         "semi-spacing": 2,
         "semi-style": [
             2,
@@ -243,14 +245,10 @@ module.exports = {
             2,
             "never"
         ],
-        "space-infix-ops": 0,
         "space-unary-ops": 2,
-        "spaced-comment": [
-            1,
-            "always"
-        ],
         "switch-colon-spacing": 2,
         "symbol-description": 2,
+        "template-curly-spacing": 2,
         "template-tag-spacing": 2,
         "unicode-bom": [
             2,
