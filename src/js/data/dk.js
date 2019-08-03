@@ -215,13 +215,12 @@ const PSPs = [
         }
     },
     {
-        name: 'Online Pro',
+        name: 'Pro',
         logo: 'bambora-psp.svg',
-        link: 'https://www.bambora.com/da/dk/online/priser/',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Swedbank', 'Handelsbanken',
+        link: 'https://www.bambora.com/da/dk/online/',
+        acqs: ['Teller', 'Clearhaus', 'Swedbank', 'Handelsbanken',
             'Valitor', 'Elavon', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Mobilepay, Forbrugsforeningen],
+        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay],
         features: [
             {
                 title: 'Svindelkontrol',
@@ -240,13 +239,33 @@ const PSPs = [
         }
     },
     {
-        name: 'Online Business',
+        name: 'Pro+',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/priser/',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Swedbank', 'Handelsbanken',
-            'Valitor', 'Elavon', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Mobilepay, Forbrugsforeningen],
+        acqs: ['Bambora'],
+        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        features: [
+            {
+                title: 'Svindelkontrol',
+                trn() {
+                    return new Currency(0.3 * $qty, 'DKK');
+                }
+            }
+        ],
+        fees: {
+            monthly: new Currency(149, 'DKK'),
+            trn() {
+                if ($qty <= 250) { return false; }
+                return new Currency(0.25 * ($qty - 250), 'DKK');
+            }
+        }
+    },
+    {
+        name: 'Business',
+        logo: 'bambora-psp.svg',
+        link: 'https://www.bambora.com/da/dk/online/',
+        acqs: ['Teller', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
+        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: [
             'Abonnementsbetaling',
             {
@@ -262,29 +281,6 @@ const PSPs = [
             trn() {
                 if ($qty <= 500) { return false; }
                 return new Currency(0.25 * ($qty - 500), 'DKK');
-            }
-        }
-    },
-    {
-        // TODO: Bambora Online should be changed into an all-in-one w. Dankort (optional)
-        name: 'Online',
-        logo: 'bambora-psp.svg',
-        link: 'https://www.bambora.com/da/dk/online/priser/',
-        acqs: ['Nets', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay, Forbrugsforeningen],
-        features: [
-            {
-                title: 'Svindelkontrol',
-                trn() {
-                    return new Currency(0.3 * $qty, 'DKK');
-                }
-            }
-        ],
-        fees: {
-            monthly: new Currency(149, 'DKK'),
-            trn() {
-                if ($qty <= 250) { return false; }
-                return new Currency(0.25 * ($qty - 250), 'DKK');
             }
         }
     },
