@@ -410,10 +410,12 @@ const PSPs = [
         features: ['Svindelkontrol'],
         cards: ['visa', 'mastercard', 'maestro'],
         fees: {
-            trn() {
-                const minimum = 4.5 * $qty;
-                const fees = $revenue.scale(2.85 / 100);
-                return (fees.order('SEK') > minimum) ? fees : new Currency(minimum, 'SEK');
+            trn(o) {
+                const revenue = $revenue.order('SEK') * 12;
+                let fee = 2.85;
+                if (revenue > 1000000) fee = 2.55;
+                if (revenue > 3000000) fee = 1.95;
+                return $revenue.scale(fee / 100);
             }
         }
     },
