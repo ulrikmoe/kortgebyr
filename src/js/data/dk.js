@@ -658,7 +658,7 @@ const PSPs = [
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Svindelkontrol'],
+        features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
             trn() {
                 return new Currency(0.25 * $qty, 'DKK');
