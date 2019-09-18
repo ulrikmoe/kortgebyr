@@ -435,6 +435,9 @@ const PSPs = [
             }
         ],
         fees: {
+            setup(o) {
+                delete o.setup.Nets; // Free sign-up
+            },
             trn() {
                 return new Currency(4 * $qty, 'DKK');
             }
@@ -456,6 +459,9 @@ const PSPs = [
             }
         ],
         fees: {
+            setup(o) {
+                delete o.setup.Nets; // Free sign-up
+            },
             monthly: new Currency(59, 'DKK'),
             trn() {
                 return new Currency($qty, 'DKK');
@@ -478,6 +484,9 @@ const PSPs = [
             }
         ],
         fees: {
+            setup(o) {
+                delete o.setup.Nets; // Free sign-up
+            },
             monthly: new Currency(99, 'DKK'),
             trn() {
                 if ($qty <= 100) { return false; }
@@ -501,6 +510,9 @@ const PSPs = [
             }
         ],
         fees: {
+            setup(o) {
+                delete o.setup.Nets; // Free sign-up
+            },
             monthly(o) {
                 if (opts.cards.mobilepay) {
                     // PensoPay pays MobilePay fee
@@ -530,6 +542,9 @@ const PSPs = [
             }
         ],
         fees: {
+            setup(o) {
+                delete o.setup.Nets; // Free sign-up
+            },
             monthly: new Currency(149, 'DKK'),
             trn() {
                 if ($qty <= 250) { return false; }
