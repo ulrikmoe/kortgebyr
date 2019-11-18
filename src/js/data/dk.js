@@ -173,7 +173,7 @@ const PSPs = [
         }
     },
     {
-        name: 'DanDomain',
+        name: 'DanDomain Start-Up',
         logo: 'dandomain.svg',
         link: 'https://www.dandomain.dk/webshop/betalingssystem',
         acqs: ['Nets', 'Teller', 'Clearhaus'],
@@ -187,10 +187,31 @@ const PSPs = [
             'Svindelkontrol'
         ],
         fees: {
-            monthly(o) {
-                // Hacky solution to add 3-D Secure (mandatory)
-                o.monthly['3-D Secure'] = new Currency(49, 'DKK');
-                return new Currency(149, 'DKK');
+            monthly: new Currency(39, 'DKK'),
+            trn() {
+                return new Currency($qty, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'DanDomain Success',
+        logo: 'dandomain.svg',
+        link: 'https://www.dandomain.dk/webshop/betalingssystem',
+        acqs: ['Nets', 'Teller', 'Clearhaus'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
+            'diners', Mobilepay, Forbrugsforeningen],
+        features: [
+            {
+                title: 'Abonnementsbetaling',
+                monthly: new Currency(99, 'DKK')
+            },
+            'Svindelkontrol'
+        ],
+        fees: {
+            monthly: new Currency(149, 'DKK'),
+            trn() {
+                if ($qty <= 500) { return false; }
+                return new Currency(0.25 * ($qty - 500), 'DKK');
             }
         }
     },
