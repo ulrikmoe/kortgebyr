@@ -359,19 +359,6 @@ const PSPs = [
         }
     },
     {
-        name: 'PayEx One',
-        logo: 'payex.svg',
-        link: 'http://payex.dk/tjenester/e-handel/',
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
-        fees: {
-            monthly: new Currency(299, 'DKK'),
-            trn() {
-                return $revenue.scale(1 / 100).add(new Currency(1.5 * $qty, 'DKK'));
-            }
-        }
-    },
-    {
         name: 'Paylike',
         logo: 'paylike.svg',
         link: 'https://paylike.dk',
