@@ -230,7 +230,6 @@ const PSPs = [
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
-                // TODO: check again in November 2019
                 return $revenue.scale(1.5 / 100).add(new Currency(0.5 * $qty, 'DKK'));
             }
         }
@@ -614,8 +613,8 @@ const PSPs = [
         features: [
             {
                 title: 'Abonnementsbetaling',
-                trn() {
-                    return new Currency($qty, 'DKK');
+                monthly() {
+                    return new Currency(249, 'DKK');
                 }
             }
         ],
@@ -639,8 +638,8 @@ const PSPs = [
         features: [
             {
                 title: 'Abonnementsbetaling',
-                trn() {
-                    return new Currency($qty, 'DKK');
+                monthly() {
+                    return new Currency(249, 'DKK');
                 }
             }
         ],
