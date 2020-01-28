@@ -1,17 +1,13 @@
 {
   "private": true,
   "dependencies": {
-    "csso": "latest",
-    "csso-cli": "latest",
     "gulp": "latest",
     "gulp-concat": "latest",
     "gulp-connect": "latest",
     "gulp-sourcemaps": "latest",
-    "html-minifier": "latest",
     "minimist": "latest",
     "mo3place": "latest",
     "node-sass": "latest",
-    "through2": "latest",
-    "uglify-es": "latest"
+    "through2": "latest"
   }
 }
