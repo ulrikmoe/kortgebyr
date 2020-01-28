@@ -10,7 +10,7 @@ const sass = require('node-sass');
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const env = require('minimist')(process.argv.slice(2));
-if (!env.publish) { env.jst = env.imgt = env.csst = '1'; }
+if (!env.git) { env.git = '1'; }
 
 //  Last changed
 const months = ['jan', 'feb', 'mar', 'apr', 'maj', 'juni',
