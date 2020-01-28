@@ -216,25 +216,6 @@ const PSPs = [
         }
     },
     {
-        name: 'DIBS Easy',
-        logo: 'dibs.svg',
-        link: 'http://dibs.dk',
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                setup: new Currency(495, 'DKK'),
-                monthly: new Currency(49, 'DKK')
-            }
-        ],
-        fees: {
-            monthly: new Currency(149, 'DKK'),
-            trn() {
-                return $revenue.scale(1.5 / 100).add(new Currency(0.5 * $qty, 'DKK'));
-            }
-        }
-    },
-    {
         name: 'Pro',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/',
@@ -354,6 +335,25 @@ const PSPs = [
             monthly: new Currency(500, 'DKK'),
             trn() {
                 return new Currency(0.7 * $qty, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'Nets Easy',
+        logo: 'netaxept.svg',
+        link: 'https://www.nets.eu/dk/payments/online/easy/',
+        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        features: [
+            {
+                title: 'Abonnementsbetaling',
+                setup: new Currency(495, 'DKK'),
+                monthly: new Currency(49, 'DKK')
+            }
+        ],
+        fees: {
+            monthly: new Currency(149, 'DKK'),
+            trn() {
+                return $revenue.scale(1.5 / 100).add(new Currency(0.5 * $qty, 'DKK'));
             }
         }
     },
