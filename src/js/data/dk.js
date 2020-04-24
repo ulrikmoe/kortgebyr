@@ -351,9 +351,9 @@ const PSPs = [
             }
         ],
         fees: {
-            monthly: new Currency(149, 'DKK'),
+            monthly: new Currency(199, 'DKK'),
             trn() {
-                return $revenue.scale(1.5 / 100).add(new Currency(0.5 * $qty, 'DKK'));
+                return $revenue.scale(1.35 / 100).add(new Currency(0.5 * $qty, 'DKK'));
             }
         }
     },
