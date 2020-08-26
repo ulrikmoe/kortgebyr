@@ -656,7 +656,7 @@ const PSPs = [
         }
     },
     {
-        name: 'ScanNet',
+        name: 'ScanNet Start-Up',
         logo: 'scannet.svg',
         link: 'https://www.scannet.dk/betalingsloesning/',
         acqs: ['Nets', 'Teller', 'Clearhaus'],
@@ -677,7 +677,7 @@ const PSPs = [
         }
     },
     {
-        name: 'ScanNet',
+        name: 'ScanNet Success',
         logo: 'scannet.svg',
         link: 'https://www.scannet.dk/betalingsloesning/',
         acqs: ['Nets', 'Teller', 'Clearhaus'],
