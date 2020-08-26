@@ -670,7 +670,32 @@ const PSPs = [
             }
         ],
         fees: {
-            monthly: new Currency(399, 'DKK')
+            trn() {
+                return new Currency($qty, 'DKK');
+            },
+            monthly: new Currency(39, 'DKK')
+        }
+    },
+    {
+        name: 'ScanNet',
+        logo: 'scannet.svg',
+        link: 'https://www.scannet.dk/betalingsloesning/',
+        acqs: ['Nets', 'Teller', 'Clearhaus'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
+            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        features: [
+            'Svindelkontrol',
+            {
+                title: 'Abonnementsbetaling',
+                monthly: new Currency(99, 'DKK')
+            }
+        ],
+        fees: {
+            trn() {
+                if ($qty <= 500) { return false; }
+                return new Currency(0.25 * ($qty - 500), 'DKK');
+            },
+            monthly: new Currency(149, 'DKK')
         }
     },
     {
