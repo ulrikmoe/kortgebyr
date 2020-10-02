@@ -47,7 +47,7 @@ const ACQs = [
         logo: 'handelsbanken.svg',
         link: 'https://handelsbanken.dk/shb/inet/icentda.nsf/Default/' +
             'qC21926A235427DE6C12578810023DBB9?Opendocument',
-        cards: ['visa', 'mastercard', 'maestro'],
+        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         fees: {
             trn() {
                 return $avgvalue.scale(1.5 / 100);
@@ -76,7 +76,7 @@ const ACQs = [
         name: 'Valitor',
         logo: 'valitor.png',
         link: 'https://www.valitor.com/acquiring-services/online-payments/',
-        cards: ['visa', 'mastercard', 'maestro'],
+        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         fees: {
             trn() {
                 return $avgvalue.scale(1.5 / 100);
@@ -87,7 +87,7 @@ const ACQs = [
         name: 'Elavon',
         logo: 'elavon.svg',
         link: 'https://www.elavon.dk/v%C3%A5re-tjenester/sm%C3%A5-bedrifter',
-        cards: ['visa', 'mastercard', 'maestro'],
+        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         fees: {
             trn() {
                 return $avgvalue.scale(1.6 / 100);
@@ -110,7 +110,7 @@ const ACQs = [
         name: 'Bambora',
         logo: 'bambora.svg',
         link: 'http://www.bambora.com/',
-        cards: ['visa', 'mastercard', 'maestro'],
+        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         fees: {
             trn() {
                 return $avgvalue.scale(1.45 / 100);
