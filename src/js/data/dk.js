@@ -187,7 +187,15 @@ const PSPs = [
             'Svindelkontrol'
         ],
         fees: {
-            monthly: new Currency(39, 'DKK'),
+            monthly(o) {
+                o.monthly.Nets = new Currency(0, 'DKK'); // Free subscription
+                o.monthly.Teller = new Currency(0, 'DKK'); // Free subscription
+                return new Currency(39, 'DKK');
+            },
+            setup(o) {
+                delete o.setup.Nets; // Free sign-up
+                delete o.setup.Teller; // Free sign-up
+            },
             trn() {
                 return new Currency($qty, 'DKK');
             }
@@ -208,7 +216,15 @@ const PSPs = [
             'Svindelkontrol'
         ],
         fees: {
-            monthly: new Currency(149, 'DKK'),
+            monthly(o) {
+                o.monthly.Nets = new Currency(0, 'DKK'); // Free subscription
+                o.monthly.Teller = new Currency(0, 'DKK'); // Free subscription
+                return new Currency(149, 'DKK');
+            },
+            setup(o) {
+                delete o.setup.Nets; // Free sign-up
+                delete o.setup.Teller; // Free sign-up
+            },
             trn() {
                 if ($qty <= 500) { return false; }
                 return new Currency(0.25 * ($qty - 500), 'DKK');
