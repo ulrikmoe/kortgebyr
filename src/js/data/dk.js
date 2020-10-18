@@ -188,13 +188,13 @@ const PSPs = [
         ],
         fees: {
             monthly(o) {
-                o.monthly.Nets = new Currency(0, 'DKK'); // Free subscription
-                o.monthly.Teller = new Currency(0, 'DKK'); // Free subscription
+                if (o.monthly.Nets) o.monthly.Nets = new Currency(0, 'DKK'); // Free subscription
+                if (o.monthly.Teller) o.monthly.Teller = new Currency(0, 'DKK'); // Free subscription
                 return new Currency(39, 'DKK');
             },
             setup(o) {
-                delete o.setup.Nets; // Free sign-up
-                delete o.setup.Teller; // Free sign-up
+                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
+                if (o.setup.Teller) delete o.setup.Teller; // Free sign-up
             },
             trn() {
                 return new Currency($qty, 'DKK');
@@ -217,13 +217,13 @@ const PSPs = [
         ],
         fees: {
             monthly(o) {
-                o.monthly.Nets = new Currency(0, 'DKK'); // Free subscription
-                o.monthly.Teller = new Currency(0, 'DKK'); // Free subscription
+                if (o.monthly.Nets) o.monthly.Nets = new Currency(0, 'DKK'); // Free subscription
+                if (o.monthly.Teller) o.monthly.Teller = new Currency(0, 'DKK'); // Free subscription
                 return new Currency(149, 'DKK');
             },
             setup(o) {
-                delete o.setup.Nets; // Free sign-up
-                delete o.setup.Teller; // Free sign-up
+                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
+                if (o.setup.Teller) delete o.setup.Teller; // Free sign-up
             },
             trn() {
                 if ($qty <= 500) { return false; }
@@ -459,7 +459,7 @@ const PSPs = [
         ],
         fees: {
             setup(o) {
-                delete o.setup.Nets; // Free sign-up
+                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
             },
             trn() {
                 return new Currency(4 * $qty, 'DKK');
@@ -483,7 +483,7 @@ const PSPs = [
         ],
         fees: {
             setup(o) {
-                delete o.setup.Nets; // Free sign-up
+                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
             },
             monthly: new Currency(59, 'DKK'),
             trn() {
@@ -508,7 +508,7 @@ const PSPs = [
         ],
         fees: {
             setup(o) {
-                delete o.setup.Nets; // Free sign-up
+                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
             },
             monthly: new Currency(99, 'DKK'),
             trn() {
@@ -534,7 +534,7 @@ const PSPs = [
         ],
         fees: {
             setup(o) {
-                delete o.setup.Nets; // Free sign-up
+                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
             },
             monthly(o) {
                 if (opts.cards.mobilepay) {
@@ -566,7 +566,7 @@ const PSPs = [
         ],
         fees: {
             setup(o) {
-                delete o.setup.Nets; // Free sign-up
+                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
             },
             monthly: new Currency(149, 'DKK'),
             trn() {
