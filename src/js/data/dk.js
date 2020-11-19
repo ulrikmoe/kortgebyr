@@ -190,7 +190,7 @@ const PSPs = [
             monthly(o) {
                 if (o.monthly.Nets) o.monthly.Nets = new Currency(0, 'DKK'); // Free subscription
                 if (o.monthly.Teller) o.monthly.Teller = new Currency(0, 'DKK'); // Free subscription
-                return new Currency(39, 'DKK');
+                return new Currency(0, 'DKK');
             },
             setup(o) {
                 if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
