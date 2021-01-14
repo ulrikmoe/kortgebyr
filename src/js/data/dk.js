@@ -175,8 +175,8 @@ const PSPs = [
     {
         name: 'DanDomain Start-Up',
         logo: 'dandomain.svg',
-        link: 'https://www.dandomain.dk/webshop/betalingssystem',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora'],
+        link: 'https://dandomain.dk/betalingssystem/overblik',
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: [
@@ -204,8 +204,8 @@ const PSPs = [
     {
         name: 'DanDomain Success',
         logo: 'dandomain.svg',
-        link: 'https://www.dandomain.dk/webshop/betalingssystem',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora'],
+        link: 'https://dandomain.dk/betalingssystem/overblik',
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: [
@@ -675,7 +675,7 @@ const PSPs = [
         name: 'ScanNet Start-Up',
         logo: 'scannet.svg',
         link: 'https://www.scannet.dk/betalingsloesning/',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: [
@@ -696,7 +696,7 @@ const PSPs = [
         name: 'ScanNet Success',
         logo: 'scannet.svg',
         link: 'https://www.scannet.dk/betalingsloesning/',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: [
@@ -744,7 +744,7 @@ const PSPs = [
         name: 'Wannafind Start-Up',
         logo: 'wannafind.svg',
         link: 'https://www.wannafind.dk/betalingssystem/',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: [
@@ -765,7 +765,7 @@ const PSPs = [
         name: 'Wannafind Success',
         logo: 'wannafind.svg',
         link: 'https://www.wannafind.dk/betalingssystem/',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora'],
+        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: [
