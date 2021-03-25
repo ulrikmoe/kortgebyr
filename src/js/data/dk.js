@@ -656,7 +656,9 @@ const PSPs = [
         features: ['Abonnementsbetaling'],
         fees: {
             trn() {
-                return $revenue.scale(1.25 / 100);
+                // TODO: consider adding a 'payout time' dropdown
+                if ($avgvalue.scale(1.45 / 100).order('DKK') < 0.7) return new Currency(0.7 * $qty, 'DKK');
+                return $revenue.scale(1.45 / 100);
             }
         }
     }
