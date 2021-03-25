@@ -121,7 +121,7 @@ const PSPs = [
         logo: '2checkout.svg',
         link: 'https://www.2checkout.com/pricing/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             trn() {
                 return $revenue.scale(3.5 / 100).add(new Currency(0.3 * $qty, 'USD'));
@@ -133,7 +133,7 @@ const PSPs = [
         logo: 'braintree.svg',
         link: 'https://www.braintreepayments.com/dk/braintree-pricing',
         cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             trn() {
                 return $revenue.scale(1.9 / 100).add(new Currency(2.25 * $qty, 'DKK'));
@@ -145,7 +145,7 @@ const PSPs = [
         logo: 'certitrade.svg',
         link: 'https://certitrade.se',
         cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             trn() {
                 return $revenue.scale(2.1 / 100).add(new Currency(2.1 * $qty, 'SEK'));
@@ -158,7 +158,7 @@ const PSPs = [
         link: 'https://certitrade.se',
         acqs: ['Bambora', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Elavon'],
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             monthly: new Currency(1000, 'SEK'),
             trn() {
@@ -179,8 +179,7 @@ const PSPs = [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
-            },
-            'Svindelkontrol'
+            }
         ],
         fees: {
             trn() {
@@ -199,8 +198,7 @@ const PSPs = [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
-            },
-            'Svindelkontrol'
+            }
         ],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -215,17 +213,9 @@ const PSPs = [
         name: 'Pro',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
-        acqs: ['Nets', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
-        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay],
-        features: [
-            {
-                title: 'Svindelkontrol',
-                trn() {
-                    return new Currency(0.3 * $qty, 'DKK');
-                }
-            },
-            'Abonnementsbetaling'
-        ],
+        acqs: ['Dankort', 'Nets', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay],
+        features: ['Abonnementsbetaling'],
         fees: {
             setup: new Currency(599, 'DKK'),
             monthly: new Currency(199, 'DKK'),
@@ -240,17 +230,9 @@ const PSPs = [
         name: 'Pro+',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
-        acqs: ['Bambora'],
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
-        features: [
-            {
-                title: 'Svindelkontrol',
-                trn() {
-                    return new Currency(0.3 * $qty, 'DKK');
-                }
-            },
-            'Abonnementsbetaling'
-        ],
+        acqs: ['Dankort', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        features: ['Abonnementsbetaling'],
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
@@ -264,17 +246,9 @@ const PSPs = [
         name: 'Business',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
-        acqs: ['Nets', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
-        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: [
-            'Abonnementsbetaling',
-            {
-                title: 'Svindelkontrol',
-                trn() {
-                    return new Currency(0.3 * $qty, 'DKK');
-                }
-            }
-        ],
+        acqs: ['Dankort', 'Nets', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        features: ['Abonnementsbetaling'],
         fees: {
             setup: new Currency(999, 'DKK'),
             monthly: new Currency(299, 'DKK'),
@@ -315,7 +289,7 @@ const PSPs = [
         logo: 'paylike.svg',
         link: 'https://paylike.dk/pricing',
         cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             trn() {
                 return $revenue.scale(1.35 / 100).add(new Currency(0.50 * $qty, 'DKK'));
@@ -327,7 +301,7 @@ const PSPs = [
         logo: 'paymill.svg',
         link: 'https://www.paymill.com/en/pricing-2/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             monthly: new Currency(4.95, 'EUR'),
             trn() {
@@ -340,7 +314,7 @@ const PSPs = [
         logo: 'paymill.svg',
         link: 'https://www.paymill.com/en/pricing-2/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             monthly: new Currency(19.95, 'EUR'),
             trn() {
@@ -353,7 +327,7 @@ const PSPs = [
         logo: 'paypal.svg',
         link: 'https://www.paypal.com/dk/webapps/mpp/merchant-fees',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: ['Svindelkontrol'],
+        features: [],
         fees: {
             trn() {
                 return $revenue.scale(3.4 / 100).add(new Currency(2.6 * $qty, 'DKK'));
@@ -364,7 +338,7 @@ const PSPs = [
         name: 'Payson',
         logo: 'payson.png',
         link: 'https://www.payson.se/en/company/price-list/',
-        features: ['Svindelkontrol'],
+        features: [],
         cards: ['visa', 'mastercard', 'maestro'],
         fees: {
             trn(o) {
@@ -383,7 +357,6 @@ const PSPs = [
         acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
-            'Svindelkontrol',
             {
                 title: 'Abonnementsbetaling',
                 trn() {
@@ -404,7 +377,6 @@ const PSPs = [
         acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
-            'Svindelkontrol',
             {
                 title: 'Abonnementsbetaling',
                 trn() {
@@ -426,7 +398,6 @@ const PSPs = [
         acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
-            'Svindelkontrol',
             {
                 title: 'Abonnementsbetaling',
                 trn() {
@@ -450,7 +421,6 @@ const PSPs = [
         acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
-            'Svindelkontrol',
             {
                 title: 'Abonnementsbetaling',
                 trn() {
@@ -474,7 +444,7 @@ const PSPs = [
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             trn() {
                 return new Currency(5 * $qty, 'DKK');
@@ -488,7 +458,7 @@ const PSPs = [
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             monthly: new Currency(49, 'DKK'),
             trn() {
@@ -503,7 +473,7 @@ const PSPs = [
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
@@ -565,7 +535,6 @@ const PSPs = [
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: [
-            'Svindelkontrol',
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
@@ -586,7 +555,6 @@ const PSPs = [
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: [
-            'Svindelkontrol',
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
@@ -608,7 +576,7 @@ const PSPs = [
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Elavon'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             trn() {
                 return new Currency(0.25 * $qty, 'DKK');
@@ -620,7 +588,7 @@ const PSPs = [
         logo: 'stripe.svg',
         link: 'https://stripe.com/en-dk/pricing',
         cards: ['visa', 'mastercard', 'amex'],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             trn() {
                 return $revenue.scale(1.4 / 100).add(new Currency(1.8 * $qty, 'DKK'));
@@ -638,8 +606,7 @@ const PSPs = [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
-            },
-            'Svindelkontrol'
+            }
         ],
         fees: {
             monthly: new Currency(39, 'DKK'),
@@ -659,8 +626,7 @@ const PSPs = [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
-            },
-            'Svindelkontrol'
+            }
         ],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -676,7 +642,7 @@ const PSPs = [
         logo: 'yourpay.png',
         link: 'https://www.yourpay.io',
         cards: ['visa', 'mastercard', 'maestro', Mobilepay],
-        features: ['Svindelkontrol', 'Abonnementsbetaling'],
+        features: ['Abonnementsbetaling'],
         fees: {
             trn() {
                 return $revenue.scale(1.25 / 100);
