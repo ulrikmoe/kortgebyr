@@ -21,9 +21,7 @@ const ACQs = [
             monthly: new Currency(1100 / 12, 'DKK'),
             trn() {
                 const fee = $avgvalue.scale(0.19 / 100).add(new Currency(0.54, 'DKK'));
-                if (fee.order('DKK') > 2.5) {
-                    return new Currency(2.5, 'DKK');
-                }
+                if (fee.order('DKK') > 2.5) return new Currency(2.5, 'DKK');
                 return fee;
             }
         }
@@ -90,7 +88,7 @@ const ACQs = [
         cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
         fees: {
             trn() {
-                return $avgvalue.scale(1.6 / 100);
+                return $avgvalue.scale(1.5 / 100);
             }
         }
     },
@@ -166,8 +164,9 @@ const PSPs = [
         fees: {
             monthly: new Currency(1000, 'SEK'),
             trn() {
-                if ($qty < 1001) { return false; }
-                return new Currency(0.50 * ($qty - 1000), 'SEK');
+                const freeTrns = 1000;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.50 * ($qty - freeTrns), 'SEK');
             }
         }
     },
@@ -208,8 +207,9 @@ const PSPs = [
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
-                if ($qty <= 500) { return false; }
-                return new Currency(0.25 * ($qty - 500), 'DKK');
+                const freeTrns = 500;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
     },
@@ -232,8 +232,9 @@ const PSPs = [
             setup: new Currency(599, 'DKK'),
             monthly: new Currency(199, 'DKK'),
             trn() {
-                if ($qty <= 250) { return false; }
-                return new Currency(0.25 * ($qty - 250), 'DKK');
+                const freeTrns = 250;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
     },
@@ -255,8 +256,9 @@ const PSPs = [
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
-                if ($qty <= 250) { return false; }
-                return new Currency(0.25 * ($qty - 250), 'DKK');
+                const freeTrns = 250;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
     },
@@ -279,8 +281,9 @@ const PSPs = [
             setup: new Currency(999, 'DKK'),
             monthly: new Currency(299, 'DKK'),
             trn() {
-                if ($qty <= 500) { return false; }
-                return new Currency(0.25 * ($qty - 500), 'DKK');
+                const freeTrns = 500;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
     },
@@ -483,8 +486,9 @@ const PSPs = [
         fees: {
             monthly: new Currency(99, 'DKK'),
             trn() {
-                if ($qty <= 100) { return false; }
-                return new Currency(0.35 * ($qty - 100), 'DKK');
+                const freeTrns = 100;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.35 * ($qty - freeTrns), 'DKK');
             }
         }
     },
@@ -506,8 +510,9 @@ const PSPs = [
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
-                if ($qty <= 250) { return false; }
-                return new Currency(0.25 * ($qty - 250), 'DKK');
+                const freeTrns = 250;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
     },
@@ -551,8 +556,9 @@ const PSPs = [
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
-                if ($qty <= 250) { return false; }
-                return new Currency(0.25 * ($qty - 250), 'DKK');
+                const freeTrns = 250;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
     },
@@ -594,8 +600,9 @@ const PSPs = [
         fees: {
             monthly: new Currency(139, 'DKK'),
             trn() {
-                if ($qty <= 250) { return false; }
-                return new Currency(0.25 * ($qty - 250), 'DKK');
+                const freeTrns = 250;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
     },
@@ -636,8 +643,9 @@ const PSPs = [
         ],
         fees: {
             trn() {
-                if ($qty <= 500) { return false; }
-                return new Currency(0.25 * ($qty - 500), 'DKK');
+                const freeTrns = 500;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             },
             monthly: new Currency(149, 'DKK')
         }
@@ -706,8 +714,9 @@ const PSPs = [
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
-                if ($qty <= 500) { return false; }
-                return new Currency(0.25 * ($qty - 500), 'DKK');
+                const freeTrns = 500;
+                if ($qty <= freeTrns) return false;
+                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
     },
