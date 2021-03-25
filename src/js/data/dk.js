@@ -288,51 +288,10 @@ const PSPs = [
         }
     },
     {
-        name: 'Netaxept Start',
-        logo: 'netaxept.svg',
-        link: 'https://shop.nets.eu/da/web/dk/e-commerce',
-        acqs: ['Nets', 'Teller'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: [],
-        fees: {
-            setup: new Currency(1005, 'DKK'),
-            monthly: new Currency(180, 'DKK'),
-            trn() {
-                return new Currency(1.5 * $qty, 'DKK');
-            }
-        }
-    },
-    {
-        name: 'Netaxept Advanced',
-        logo: 'netaxept.svg',
-        link: 'https://shop.nets.eu/da/web/dk/e-commerce',
-        acqs: ['Nets', 'Teller', 'Swedbank', 'Elavon'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: [
-            {
-                title: 'Svindelkontrol',
-                trn() {
-                    return new Currency(0.25 * $qty, 'DKK');
-                }
-            },
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(250, 'DKK')
-            }
-        ],
-        fees: {
-            setup: new Currency(6000, 'DKK'),
-            monthly: new Currency(500, 'DKK'),
-            trn() {
-                return new Currency(0.7 * $qty, 'DKK');
-            }
-        }
-    },
-    {
         name: 'Nets Easy',
         logo: 'netaxept.svg',
         link: 'https://www.nets.eu/dk/payments/online/easy/',
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -342,8 +301,14 @@ const PSPs = [
         ],
         fees: {
             monthly: new Currency(199, 'DKK'),
-            trn() {
-                return $revenue.scale(1.35 / 100).add(new Currency(0.5 * $qty, 'DKK'));
+            trn(o) {
+                if (!$dankortscale) {
+                    return $revenue.scale(1.35 / 100).add(new Currency(0.5 * $qty, 'DKK'));
+                }
+                o.trn['Dankort (0,39% + 1 DKK)'] = $revenue.scale($dankortscale).scale(0.39 / 100)
+                    .add(new Currency($dankortscale * $qty, 'DKK'));
+                o.trn['Int. kort (1,35% + 0,5 DKK)'] = $revenue.scale(1 - $dankortscale).scale(1.35 / 100)
+                    .add(new Currency((1 - $dankortscale) * $qty * 0.5, 'DKK'));
             }
         }
     },
