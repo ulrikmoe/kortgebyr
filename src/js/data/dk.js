@@ -68,7 +68,7 @@ const ACQs = [
             },
             trn() {
                 // Debetcard: 1%, Creditcard: 1.1%, Company cards (1.75%)
-                return $avgvalue.scale(1.2 / 100);
+                return $avgvalue.scale(1.25 / 100);
             }
         }
     },
@@ -119,12 +119,11 @@ const ACQs = [
     }
 ];
 
-// All prices checked on November 4, 2017.
 const PSPs = [
     {
         name: '2checkout',
         logo: '2checkout.svg',
-        link: 'https://www.2checkout.com',
+        link: 'https://www.2checkout.com/pricing/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
@@ -136,7 +135,7 @@ const PSPs = [
     {
         name: 'Braintree',
         logo: 'braintree.svg',
-        link: 'https://www.braintreepayments.com/en-dk/braintree-pricing',
+        link: 'https://www.braintreepayments.com/dk/braintree-pricing',
         cards: ['visa', 'mastercard', 'maestro'],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
@@ -175,7 +174,7 @@ const PSPs = [
     {
         name: 'DanDomain Start-Up',
         logo: 'dandomain.svg',
-        link: 'https://dandomain.dk/betalingssystem/overblik',
+        link: 'https://dandomain.dk/betalingssystem/priser',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
@@ -187,15 +186,6 @@ const PSPs = [
             'Svindelkontrol'
         ],
         fees: {
-            monthly(o) {
-                if (o.monthly.Nets) o.monthly.Nets = new Currency(0, 'DKK'); // Free subscription
-                if (o.monthly.Teller) o.monthly.Teller = new Currency(0, 'DKK'); // Free subscription
-                return new Currency(0, 'DKK');
-            },
-            setup(o) {
-                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
-                if (o.setup.Teller) delete o.setup.Teller; // Free sign-up
-            },
             trn() {
                 return new Currency($qty, 'DKK');
             }
@@ -204,7 +194,7 @@ const PSPs = [
     {
         name: 'DanDomain Success',
         logo: 'dandomain.svg',
-        link: 'https://dandomain.dk/betalingssystem/overblik',
+        link: 'https://dandomain.dk/betalingssystem/priser',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
@@ -216,15 +206,7 @@ const PSPs = [
             'Svindelkontrol'
         ],
         fees: {
-            monthly(o) {
-                if (o.monthly.Nets) o.monthly.Nets = new Currency(0, 'DKK'); // Free subscription
-                if (o.monthly.Teller) o.monthly.Teller = new Currency(0, 'DKK'); // Free subscription
-                return new Currency(149, 'DKK');
-            },
-            setup(o) {
-                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
-                if (o.setup.Teller) delete o.setup.Teller; // Free sign-up
-            },
+            monthly: new Currency(149, 'DKK'),
             trn() {
                 if ($qty <= 500) { return false; }
                 return new Currency(0.25 * ($qty - 500), 'DKK');
@@ -234,9 +216,8 @@ const PSPs = [
     {
         name: 'Pro',
         logo: 'bambora-psp.svg',
-        link: 'https://www.bambora.com/da/dk/online/',
-        acqs: ['Teller', 'Clearhaus', 'Swedbank', 'Handelsbanken',
-            'Valitor', 'Elavon', 'Bambora'],
+        link: 'https://www.bambora.com/da/dk/online/bambora-online/',
+        acqs: ['Teller', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay],
         features: [
             {
@@ -244,7 +225,8 @@ const PSPs = [
                 trn() {
                     return new Currency(0.3 * $qty, 'DKK');
                 }
-            }
+            },
+            'Abonnementsbetaling'
         ],
         fees: {
             setup: new Currency(599, 'DKK'),
@@ -258,7 +240,7 @@ const PSPs = [
     {
         name: 'Pro+',
         logo: 'bambora-psp.svg',
-        link: 'https://www.bambora.com/da/dk/online/priser/',
+        link: 'https://www.bambora.com/da/dk/online/bambora-online/',
         acqs: ['Bambora'],
         cards: ['visa', 'mastercard', 'maestro', Mobilepay],
         features: [
@@ -267,7 +249,8 @@ const PSPs = [
                 trn() {
                     return new Currency(0.3 * $qty, 'DKK');
                 }
-            }
+            },
+            'Abonnementsbetaling'
         ],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -280,8 +263,8 @@ const PSPs = [
     {
         name: 'Business',
         logo: 'bambora-psp.svg',
-        link: 'https://www.bambora.com/da/dk/online/',
-        acqs: ['Teller', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
+        link: 'https://www.bambora.com/da/dk/online/bambora-online/',
+        acqs: ['Teller', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: [
             'Abonnementsbetaling',
@@ -376,7 +359,7 @@ const PSPs = [
     {
         name: 'Paylike',
         logo: 'paylike.svg',
-        link: 'https://paylike.dk',
+        link: 'https://paylike.dk/pricing',
         cards: ['visa', 'mastercard', 'maestro'],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
@@ -414,22 +397,19 @@ const PSPs = [
     {
         name: 'PayPal',
         logo: 'paypal.svg',
-        link: 'https://www.paypal.com/dk/webapps/mpp/merchant',
+        link: 'https://www.paypal.com/dk/webapps/mpp/merchant-fees',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
         features: ['Svindelkontrol'],
         fees: {
             trn() {
-                const k = $revenue.order('DKK') / 1000;
-                const fee = (k <= 20) ? 3.4 : (k <= 80) ? 2.9
-                    : (k <= 400) ? 2.7 : (k <= 800) ? 2.4 : 1.9;
-                return $revenue.scale(fee / 100).add(new Currency(2.6 * $qty, 'DKK'));
+                return $revenue.scale(3.4 / 100).add(new Currency(2.6 * $qty, 'DKK'));
             }
         }
     },
     {
         name: 'Payson',
         logo: 'payson.png',
-        link: 'https://www.payson.se',
+        link: 'https://www.payson.se/en/company/price-list/',
         features: ['Svindelkontrol'],
         cards: ['visa', 'mastercard', 'maestro'],
         fees: {
@@ -445,7 +425,7 @@ const PSPs = [
     {
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
-        link: 'https://pensopay.com/',
+        link: 'https://pensopay.com/priser/',
         acqs: ['Nets', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
@@ -458,9 +438,6 @@ const PSPs = [
             }
         ],
         fees: {
-            setup(o) {
-                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
-            },
             trn() {
                 return new Currency(4 * $qty, 'DKK');
             }
@@ -469,7 +446,7 @@ const PSPs = [
     {
         name: 'PensoPay Start-Up',
         logo: 'pensopay.svg',
-        link: 'https://pensopay.com/',
+        link: 'https://pensopay.com/priser/',
         acqs: ['Nets', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
@@ -482,10 +459,7 @@ const PSPs = [
             }
         ],
         fees: {
-            setup(o) {
-                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
-            },
-            monthly: new Currency(59, 'DKK'),
+            monthly: new Currency(49, 'DKK'),
             trn() {
                 return new Currency($qty, 'DKK');
             }
@@ -494,7 +468,7 @@ const PSPs = [
     {
         name: 'PensoPay Business',
         logo: 'pensopay.svg',
-        link: 'https://pensopay.com/vores-betalingsloesninger/',
+        link: 'https://pensopay.com/priser/',
         acqs: ['Nets', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
@@ -507,42 +481,7 @@ const PSPs = [
             }
         ],
         fees: {
-            setup(o) {
-                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
-            },
             monthly: new Currency(99, 'DKK'),
-            trn() {
-                if ($qty <= 100) { return false; }
-                return new Currency(0.35 * ($qty - 100), 'DKK');
-            }
-        }
-    },
-    {
-        name: 'PensoPay Premium',
-        logo: 'pensopay.svg',
-        link: 'https://pensopay.com/',
-        acqs: ['Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'mobilepay'],
-        features: [
-            'Svindelkontrol',
-            {
-                title: 'Abonnementsbetaling',
-                trn() {
-                    return new Currency(0.2 * $qty, 'DKK');
-                }
-            }
-        ],
-        fees: {
-            setup(o) {
-                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
-            },
-            monthly(o) {
-                if (opts.cards.mobilepay) {
-                    // PensoPay pays MobilePay fee
-                    delete o.monthly.MobilePay;
-                }
-                return new Currency(129, 'DKK');
-            },
             trn() {
                 if ($qty <= 100) { return false; }
                 return new Currency(0.35 * ($qty - 100), 'DKK');
@@ -552,7 +491,7 @@ const PSPs = [
     {
         name: 'PensoPay Pro',
         logo: 'pensopay.svg',
-        link: 'https://pensopay.com/',
+        link: 'https://pensopay.com/priser/',
         acqs: ['Nets', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
@@ -565,9 +504,6 @@ const PSPs = [
             }
         ],
         fees: {
-            setup(o) {
-                if (o.setup.Nets) delete o.setup.Nets; // Free sign-up
-            },
             monthly: new Currency(149, 'DKK'),
             trn() {
                 if ($qty <= 250) { return false; }
@@ -578,7 +514,7 @@ const PSPs = [
     {
         name: 'QuickPay Basis',
         logo: 'quickpay.svg',
-        link: 'https://quickpay.net/dk',
+        link: 'https://quickpay.net/dk/pricing',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
@@ -592,7 +528,7 @@ const PSPs = [
     {
         name: 'QuickPay Starter',
         logo: 'quickpay.svg',
-        link: 'https://quickpay.net/dk',
+        link: 'https://quickpay.net/dk/pricing',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
@@ -607,7 +543,7 @@ const PSPs = [
     {
         name: 'QuickPay Professional',
         logo: 'quickpay.svg',
-        link: 'https://quickpay.net/dk',
+        link: 'https://quickpay.net/dk/pricing',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
@@ -623,7 +559,7 @@ const PSPs = [
     {
         name: 'Reepay Basic',
         logo: 'reepay.svg',
-        link: 'https://reepay.com/da/',
+        link: 'https://reepay.com/da/priser/',
         acqs: ['Nets', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
@@ -635,10 +571,6 @@ const PSPs = [
             }
         ],
         fees: {
-            setup(o) {
-                // Reepay pays the Nets setup fee
-                delete o.setup.Nets;
-            },
             monthly: new Currency(49, 'DKK'),
             trn() {
                 return new Currency($qty, 'DKK');
@@ -648,7 +580,7 @@ const PSPs = [
     {
         name: 'Reepay Standard',
         logo: 'reepay.svg',
-        link: 'https://reepay.com/da/',
+        link: 'https://reepay.com/da/priser/',
         acqs: ['Nets', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
@@ -660,10 +592,6 @@ const PSPs = [
             }
         ],
         fees: {
-            setup(o) {
-                // Reepay pays the Nets setup fee
-                delete o.setup.Nets;
-            },
             monthly: new Currency(139, 'DKK'),
             trn() {
                 if ($qty <= 250) { return false; }
@@ -674,7 +602,7 @@ const PSPs = [
     {
         name: 'ScanNet Start-Up',
         logo: 'scannet.svg',
-        link: 'https://www.scannet.dk/betalingsloesning/',
+        link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
@@ -695,7 +623,7 @@ const PSPs = [
     {
         name: 'ScanNet Success',
         logo: 'scannet.svg',
-        link: 'https://www.scannet.dk/betalingsloesning/',
+        link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
@@ -731,7 +659,7 @@ const PSPs = [
     {
         name: 'Stripe',
         logo: 'stripe.svg',
-        link: 'https://stripe.com',
+        link: 'https://stripe.com/en-dk/pricing',
         cards: ['visa', 'mastercard', 'amex'],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
         fees: {
@@ -743,7 +671,7 @@ const PSPs = [
     {
         name: 'Wannafind Start-Up',
         logo: 'wannafind.svg',
-        link: 'https://www.wannafind.dk/betalingssystem/',
+        link: 'https://www.wannafind.dk/betalingssystem/Priser/',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
@@ -764,7 +692,7 @@ const PSPs = [
     {
         name: 'Wannafind Success',
         logo: 'wannafind.svg',
-        link: 'https://www.wannafind.dk/betalingssystem/',
+        link: 'https://www.wannafind.dk/betalingssystem/Priser/',
         acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
