@@ -6,7 +6,7 @@ let opts = {
     acquirer: 'auto',
     currency: 'DKK',
     qty: 200,
-    avgvalue: 380,
+    avgvalue: 645,
     cards: { dankort: 1, visa: 1, mastercard: 1 },
     features: {},
     modules: {}
