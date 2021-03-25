@@ -7,7 +7,7 @@ let opts = {
     currency: 'DKK',
     qty: 200,
     avgvalue: 380,
-    cards: { dankort: 1, visa: 1, mastercard: 1, mobilepay: 1 },
+    cards: { dankort: 1, visa: 1, mastercard: 1 },
     features: {},
     modules: {}
 };
@@ -151,7 +151,7 @@ function build(action) {
     // Calculate acquirer costs and sort by Total Costs.
     for (let i = 0; i < $acqs.length; i++) {
         const acq = $acqs[i];
-        const cardscale = (acq.name === 'Nets') ? $dankortscale : 1 - $dankortscale;
+        const cardscale = (acq.name === 'Dankort') ? $dankortscale : 1 - $dankortscale;
         acq.TC = acq.trnfees = acq.fees.trn().scale($qty).scale(cardscale);
 
         if (acq.fees.monthly) {

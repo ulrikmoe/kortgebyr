@@ -12,7 +12,7 @@ const Forbrugsforeningen = {
 
 const ACQs = [
     {
-        name: 'Nets',
+        name: 'Dankort',
         logo: 'nets.svg',
         link: 'https://dankort.dk/dk/betaling-i-webshop/',
         cards: ['dankort', 'forbrugsforeningen', 'mobilepay'],
@@ -25,7 +25,7 @@ const ACQs = [
         }
     },
     {
-        name: 'Teller',
+        name: 'Nets',
         logo: 'nets.svg',
         link: 'https://www.nets.eu/dk/payments/online-betalinger/indloesningsaftale/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', 'mobilepay'],
@@ -172,7 +172,7 @@ const PSPs = [
         name: 'DanDomain Start-Up',
         logo: 'dandomain.svg',
         link: 'https://dandomain.dk/betalingssystem/priser',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
+        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: [
@@ -192,7 +192,7 @@ const PSPs = [
         name: 'DanDomain Success',
         logo: 'dandomain.svg',
         link: 'https://dandomain.dk/betalingssystem/priser',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
+        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: [
@@ -215,7 +215,7 @@ const PSPs = [
         name: 'Pro',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
-        acqs: ['Teller', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
+        acqs: ['Nets', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay],
         features: [
             {
@@ -264,7 +264,7 @@ const PSPs = [
         name: 'Business',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
-        acqs: ['Teller', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
+        acqs: ['Nets', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: [
             'Abonnementsbetaling',
@@ -380,7 +380,7 @@ const PSPs = [
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/priser/',
-        acqs: ['Nets', 'Clearhaus'],
+        acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             'Svindelkontrol',
@@ -401,7 +401,7 @@ const PSPs = [
         name: 'PensoPay Start-Up',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/priser/',
-        acqs: ['Nets', 'Clearhaus'],
+        acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             'Svindelkontrol',
@@ -423,7 +423,7 @@ const PSPs = [
         name: 'PensoPay Business',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/priser/',
-        acqs: ['Nets', 'Clearhaus'],
+        acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             'Svindelkontrol',
@@ -447,7 +447,7 @@ const PSPs = [
         name: 'PensoPay Pro',
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/priser/',
-        acqs: ['Nets', 'Clearhaus'],
+        acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             'Svindelkontrol',
@@ -471,7 +471,7 @@ const PSPs = [
         name: 'QuickPay Basis',
         logo: 'quickpay.svg',
         link: 'https://quickpay.net/dk/pricing',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
+        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
@@ -485,7 +485,7 @@ const PSPs = [
         name: 'QuickPay Starter',
         logo: 'quickpay.svg',
         link: 'https://quickpay.net/dk/pricing',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
+        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
@@ -500,7 +500,7 @@ const PSPs = [
         name: 'QuickPay Professional',
         logo: 'quickpay.svg',
         link: 'https://quickpay.net/dk/pricing',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
+        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
@@ -517,7 +517,7 @@ const PSPs = [
         name: 'Reepay Basic',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/priser/',
-        acqs: ['Nets', 'Clearhaus'],
+        acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             {
@@ -538,7 +538,7 @@ const PSPs = [
         name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/priser/',
-        acqs: ['Nets', 'Clearhaus'],
+        acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             {
@@ -561,7 +561,7 @@ const PSPs = [
         name: 'ScanNet Start-Up',
         logo: 'scannet.svg',
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
+        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: [
@@ -582,7 +582,7 @@ const PSPs = [
         name: 'ScanNet Success',
         logo: 'scannet.svg',
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
+        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
         features: [
@@ -605,7 +605,7 @@ const PSPs = [
         name: 'Scanpay',
         logo: 'scanpay.svg',
         link: 'https://scanpay.dk',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Elavon'],
+        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Elavon'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: ['Svindelkontrol', 'Abonnementsbetaling'],
@@ -631,7 +631,7 @@ const PSPs = [
         name: 'Wannafind Start-Up',
         logo: 'wannafind.svg',
         link: 'https://www.wannafind.dk/betalingssystem/Priser/',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
+        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: [
@@ -652,7 +652,7 @@ const PSPs = [
         name: 'Wannafind Success',
         logo: 'wannafind.svg',
         link: 'https://www.wannafind.dk/betalingssystem/Priser/',
-        acqs: ['Nets', 'Teller', 'Clearhaus', 'Bambora', 'Swedbank'],
+        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
             'diners', Mobilepay, Forbrugsforeningen],
         features: [
