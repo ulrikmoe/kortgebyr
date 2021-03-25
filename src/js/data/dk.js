@@ -210,6 +210,17 @@ const PSPs = [
         }
     },
     {
+        name: 'Checkout',
+        logo: 'bambora-psp.svg',
+        link: 'https://www.bambora.com/da/dk/online/bambora-checkout/',
+        acqs: ['Dankort', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        features: ['Abonnementsbetaling'],
+        fees: {
+            monthly: new Currency(195, 'DKK')
+        }
+    },
+    {
         name: 'Pro',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
