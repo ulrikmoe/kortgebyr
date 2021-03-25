@@ -288,18 +288,6 @@ const PSPs = [
         }
     },
     {
-        name: 'Lemon Way',
-        logo: 'lemonway.svg',
-        link: 'https://www.lemonway.com/da/',
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Svindelkontrol', 'Svindelkontrol'],
-        fees: {
-            trn() {
-                return $revenue.scale(1.2 / 100).add(new Currency(0.18 * $qty, 'EUR'));
-            }
-        }
-    },
-    {
         name: 'Netaxept Start',
         logo: 'netaxept.svg',
         link: 'https://shop.nets.eu/da/web/dk/e-commerce',
