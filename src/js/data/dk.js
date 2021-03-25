@@ -14,11 +14,9 @@ const ACQs = [
     {
         name: 'Nets',
         logo: 'nets.svg',
-        link: 'https://dankort.dk/Pages/Bestil-Dankortaftale.aspx',
+        link: 'https://dankort.dk/dk/betaling-i-webshop/',
         cards: ['dankort', 'forbrugsforeningen', 'mobilepay'],
         fees: {
-            setup: new Currency(250, 'DKK'),
-            monthly: new Currency(1100 / 12, 'DKK'),
             trn() {
                 const fee = $avgvalue.scale(0.19 / 100).add(new Currency(0.54, 'DKK'));
                 if (fee.order('DKK') > 2.5) return new Currency(2.5, 'DKK');
