@@ -251,7 +251,7 @@ function build(action) {
         psplink.href = psp.link;
         psplink.className = 'psp';
         const psplogo = new Image();
-        psplogo.src = '/img/psp/' + psp.logo + '?{{ git }}';
+        psplogo.src = '/img/psp/' + psp.logo;
         psplogo.alt = psp.name;
         const pspname = document.createElement('span');
         pspname.textContent = psp.name;
