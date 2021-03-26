@@ -133,7 +133,7 @@ const PSPs = [
         logo: 'braintree.svg',
         link: 'https://www.braintreepayments.com/dk/braintree-pricing',
         cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling'],
+        features: ['Abonnementsbetaling', 'Apple Pay'],
         fees: {
             trn() {
                 return $revenue.scale(1.9 / 100).add(new Currency(2.25 * $qty, 'DKK'));
@@ -179,7 +179,8 @@ const PSPs = [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
-            }
+            },
+            'Apple Pay'
         ],
         fees: {
             trn() {
@@ -198,7 +199,8 @@ const PSPs = [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
-            }
+            },
+            'Apple Pay'
         ],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -210,7 +212,7 @@ const PSPs = [
         }
     },
     {
-        name: 'Checkout',
+        name: 'Bambora Checkout',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-checkout/',
         acqs: ['Dankort', 'Bambora'],
@@ -221,7 +223,7 @@ const PSPs = [
         }
     },
     {
-        name: 'Pro',
+        name: 'Bambora Pro',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
         acqs: ['Dankort', 'Nets', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
@@ -238,7 +240,7 @@ const PSPs = [
         }
     },
     {
-        name: 'Pro+',
+        name: 'Bambora Pro+',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
         acqs: ['Dankort', 'Bambora'],
@@ -254,7 +256,7 @@ const PSPs = [
         }
     },
     {
-        name: 'Business',
+        name: 'Bambora Business',
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
         acqs: ['Dankort', 'Nets', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
@@ -301,7 +303,7 @@ const PSPs = [
         link: 'https://nordeaconnect.com/solutions/prices/',
         acqs: ['Dankort', 'Nets', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: [],
+        features: ['Apple Pay'],
         fees: {
             monthly: new Currency(99, 'DKK'),
             trn() {
@@ -315,7 +317,7 @@ const PSPs = [
         link: 'https://nordeaconnect.com/solutions/prices/',
         acqs: ['Dankort', 'Nets', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: [],
+        features: ['Apple Pay'],
         fees: {
             monthly: new Currency(249, 'DKK'),
             trn() {
@@ -328,7 +330,7 @@ const PSPs = [
         logo: 'paylike.svg',
         link: 'https://paylike.dk/pricing',
         cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling'],
+        features: ['Abonnementsbetaling', 'Apple Pay'],
         fees: {
             trn() {
                 return $revenue.scale(1.35 / 100).add(new Currency(0.50 * $qty, 'DKK'));
@@ -336,7 +338,7 @@ const PSPs = [
         }
     },
     {
-        name: 'Basic',
+        name: 'Paymill Basic',
         logo: 'paymill.svg',
         link: 'https://www.paymill.com/en/pricing-2/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
@@ -349,7 +351,7 @@ const PSPs = [
         }
     },
     {
-        name: 'Professional',
+        name: 'Paymill Professional',
         logo: 'paymill.svg',
         link: 'https://www.paymill.com/en/pricing-2/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
@@ -377,8 +379,8 @@ const PSPs = [
         name: 'Payson',
         logo: 'payson.png',
         link: 'https://www.payson.se/en/company/price-list/',
-        features: [],
         cards: ['visa', 'mastercard', 'maestro'],
+        features: [],
         fees: {
             trn(o) {
                 const revenue = $revenue.order('SEK') * 12;
@@ -401,6 +403,10 @@ const PSPs = [
                 trn() {
                     return new Currency(0.2 * $qty, 'DKK');
                 }
+            },
+            {
+                title: 'Apple Pay',
+                monthly: new Currency(19, 'DKK')
             }
         ],
         fees: {
@@ -421,6 +427,10 @@ const PSPs = [
                 trn() {
                     return new Currency(0.2 * $qty, 'DKK');
                 }
+            },
+            {
+                title: 'Apple Pay',
+                monthly: new Currency(19, 'DKK')
             }
         ],
         fees: {
@@ -442,6 +452,10 @@ const PSPs = [
                 trn() {
                     return new Currency(0.2 * $qty, 'DKK');
                 }
+            },
+            {
+                title: 'Apple Pay',
+                monthly: new Currency(19, 'DKK')
             }
         ],
         fees: {
@@ -465,6 +479,10 @@ const PSPs = [
                 trn() {
                     return new Currency(0.2 * $qty, 'DKK');
                 }
+            },
+            {
+                title: 'Apple Pay',
+                monthly: new Currency(19, 'DKK')
             }
         ],
         fees: {
@@ -483,7 +501,13 @@ const PSPs = [
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Abonnementsbetaling'],
+        features: [
+            'Abonnementsbetaling',
+            {
+                title: 'Apple Pay',
+                monthly: new Currency(19, 'DKK')
+            }
+        ],
         fees: {
             trn() {
                 return new Currency(5 * $qty, 'DKK');
@@ -497,7 +521,13 @@ const PSPs = [
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Abonnementsbetaling'],
+        features: [
+            'Abonnementsbetaling',
+            {
+                title: 'Apple Pay',
+                monthly: new Currency(19, 'DKK')
+            }
+        ],
         fees: {
             monthly: new Currency(49, 'DKK'),
             trn() {
@@ -512,7 +542,13 @@ const PSPs = [
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
             'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Abonnementsbetaling'],
+        features: [
+            'Abonnementsbetaling',
+            {
+                title: 'Apple Pay',
+                monthly: new Currency(19, 'DKK')
+            }
+        ],
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
@@ -555,7 +591,8 @@ const PSPs = [
                 monthly() {
                     return new Currency(249, 'DKK');
                 }
-            }
+            },
+            'Apple Pay'
         ],
         fees: {
             monthly: new Currency(139, 'DKK'),
@@ -577,7 +614,8 @@ const PSPs = [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
-            }
+            },
+            'Apple Pay'
         ],
         fees: {
             trn() {
@@ -597,7 +635,8 @@ const PSPs = [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
-            }
+            },
+            'Apple Pay'
         ],
         fees: {
             trn() {
@@ -627,7 +666,7 @@ const PSPs = [
         logo: 'stripe.svg',
         link: 'https://stripe.com/en-dk/pricing',
         cards: ['visa', 'mastercard', 'amex'],
-        features: ['Abonnementsbetaling'],
+        features: ['Abonnementsbetaling', 'Apple Pay'],
         fees: {
             trn() {
                 return $revenue.scale(1.4 / 100).add(new Currency(1.8 * $qty, 'DKK'));
@@ -645,7 +684,8 @@ const PSPs = [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
-            }
+            },
+            'Apple Pay'
         ],
         fees: {
             monthly: new Currency(39, 'DKK'),
@@ -665,7 +705,8 @@ const PSPs = [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
-            }
+            },
+            'Apple Pay'
         ],
         fees: {
             monthly: new Currency(149, 'DKK'),
