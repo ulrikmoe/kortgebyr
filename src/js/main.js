@@ -7,8 +7,8 @@ let opts = {
     currency: 'DKK',
     qty: 200,
     avgvalue: 645,
-    cards: { dankort: 1, visa: 1, mastercard: 1, mobilepay: 1 },
-    features: {},
+    cards: { dankort: 1, visa: 1, mastercard: 1 },
+    features: { MobilePay: 1 },
     modules: {}
 };
 let $dankortscale;

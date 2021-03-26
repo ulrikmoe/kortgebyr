@@ -1,8 +1,8 @@
 /* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
 /* global opts, Currency, $currency, $avgvalue, $revenue, $dankortscale, $qty */
 
-const Mobilepay = {
-    title: 'mobilepay',
+const MobilePay = {
+    title: 'MobilePay',
     monthly: new Currency(49, 'DKK')
 };
 
@@ -15,7 +15,7 @@ const ACQs = [
         name: 'Dankort',
         logo: 'nets.svg',
         link: 'https://dankort.dk/dk/betaling-i-webshop/',
-        cards: ['dankort', 'forbrugsforeningen', 'mobilepay'],
+        cards: ['dankort', 'forbrugsforeningen'],
         fees: {
             trn() {
                 const fee = $avgvalue.scale(0.19 / 100).add(new Currency(0.54, 'DKK'));
@@ -28,7 +28,7 @@ const ACQs = [
         name: 'Nets',
         logo: 'nets.svg',
         link: 'https://www.nets.eu/dk/payments/online-betalinger/indloesningsaftale/',
-        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', 'mobilepay'],
+        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
         fees: {
             setup: new Currency(1000, 'DKK'),
             monthly: new Currency(149, 'DKK'),
@@ -43,7 +43,7 @@ const ACQs = [
         logo: 'handelsbanken.svg',
         link: 'https://handelsbanken.dk/shb/inet/icentda.nsf/Default/' +
             'qC21926A235427DE6C12578810023DBB9?Opendocument',
-        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
+        cards: ['visa', 'mastercard', 'maestro'],
         fees: {
             trn() {
                 return $avgvalue.scale(1.5 / 100);
@@ -54,7 +54,7 @@ const ACQs = [
         name: 'Swedbank',
         logo: 'swedbank.png',
         link: 'https://www.swedbank.dk/erhverv/card-services/priser-og-vilkar/#!/CID_2263482',
-        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
+        cards: ['visa', 'mastercard', 'maestro'],
         fees: {
             monthly(o) {
                 // Minimum fee of 50 DKK / month.
@@ -72,7 +72,7 @@ const ACQs = [
         name: 'Valitor',
         logo: 'valitor.png',
         link: 'https://www.valitor.com/acquiring-services/online-payments/',
-        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
+        cards: ['visa', 'mastercard', 'maestro'],
         fees: {
             trn() {
                 return $avgvalue.scale(1.5 / 100);
@@ -83,7 +83,7 @@ const ACQs = [
         name: 'Elavon',
         logo: 'elavon.svg',
         link: 'https://www.elavon.dk/v%C3%A5re-tjenester/sm%C3%A5-bedrifter',
-        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
+        cards: ['visa', 'mastercard', 'maestro'],
         fees: {
             trn() {
                 return $avgvalue.scale(1.5 / 100);
@@ -94,7 +94,7 @@ const ACQs = [
         name: 'Clearhaus',
         logo: 'clearhaus.svg',
         link: 'https://www.clearhaus.com/dk/',
-        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
+        cards: ['visa', 'mastercard', 'maestro'],
         fees: {
             trn() {
                 const trnfee = $avgvalue.scale(1.25 / 100);
@@ -106,7 +106,7 @@ const ACQs = [
         name: 'Bambora',
         logo: 'bambora.svg',
         link: 'http://www.bambora.com/',
-        cards: ['visa', 'mastercard', 'maestro', 'mobilepay'],
+        cards: ['visa', 'mastercard', 'maestro'],
         fees: {
             trn() {
                 return $avgvalue.scale(1.45 / 100);
@@ -174,13 +174,14 @@ const PSPs = [
         link: 'https://dandomain.dk/betalingssystem/priser',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Mobilepay, Forbrugsforeningen],
+            'diners', Forbrugsforeningen],
         features: [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
             },
-            'Apple Pay'
+            'Apple Pay',
+            MobilePay
         ],
         fees: {
             trn() {
@@ -194,13 +195,14 @@ const PSPs = [
         link: 'https://dandomain.dk/betalingssystem/priser',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Mobilepay, Forbrugsforeningen],
+            'diners', Forbrugsforeningen],
         features: [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
             },
-            'Apple Pay'
+            'Apple Pay',
+            MobilePay
         ],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -216,8 +218,8 @@ const PSPs = [
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-checkout/',
         acqs: ['Dankort', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
-        features: ['Abonnementsbetaling'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        features: ['Abonnementsbetaling', MobilePay],
         fees: {
             monthly: new Currency(195, 'DKK')
         }
@@ -227,8 +229,8 @@ const PSPs = [
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
         acqs: ['Dankort', 'Nets', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay],
-        features: ['Abonnementsbetaling'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
+        features: ['Abonnementsbetaling', MobilePay],
         fees: {
             setup: new Currency(599, 'DKK'),
             monthly: new Currency(199, 'DKK'),
@@ -244,8 +246,8 @@ const PSPs = [
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
         acqs: ['Dankort', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
-        features: ['Abonnementsbetaling'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        features: ['Abonnementsbetaling', MobilePay],
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
@@ -260,8 +262,8 @@ const PSPs = [
         logo: 'bambora-psp.svg',
         link: 'https://www.bambora.com/da/dk/online/bambora-online/',
         acqs: ['Dankort', 'Nets', 'Swedbank', 'Handelsbanken', 'Valitor', 'Elavon', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Abonnementsbetaling'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        features: ['Abonnementsbetaling', MobilePay],
         fees: {
             setup: new Currency(999, 'DKK'),
             monthly: new Currency(299, 'DKK'),
@@ -276,13 +278,14 @@ const PSPs = [
         name: 'Nets Easy',
         logo: 'netaxept.svg',
         link: 'https://www.nets.eu/dk/payments/online/easy/',
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
         features: [
             {
                 title: 'Abonnementsbetaling',
                 setup: new Currency(495, 'DKK'),
                 monthly: new Currency(49, 'DKK')
-            }
+            },
+            MobilePay
         ],
         fees: {
             monthly: new Currency(199, 'DKK'),
@@ -302,8 +305,8 @@ const PSPs = [
         logo: 'nordea-connect.svg',
         link: 'https://nordeaconnect.com/solutions/prices/',
         acqs: ['Dankort', 'Nets', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Apple Pay'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        features: ['Apple Pay', 'MobilePay'],
         fees: {
             monthly: new Currency(99, 'DKK'),
             trn() {
@@ -316,8 +319,8 @@ const PSPs = [
         logo: 'nordea-connect.svg',
         link: 'https://nordeaconnect.com/solutions/prices/',
         acqs: ['Dankort', 'Nets', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Apple Pay'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        features: ['Apple Pay', 'MobilePay'],
         fees: {
             monthly: new Currency(249, 'DKK'),
             trn() {
@@ -396,7 +399,7 @@ const PSPs = [
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/priser/',
         acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -407,7 +410,8 @@ const PSPs = [
             {
                 title: 'Apple Pay',
                 monthly: new Currency(19, 'DKK')
-            }
+            },
+            MobilePay
         ],
         fees: {
             trn() {
@@ -420,7 +424,7 @@ const PSPs = [
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/priser/',
         acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -431,7 +435,8 @@ const PSPs = [
             {
                 title: 'Apple Pay',
                 monthly: new Currency(19, 'DKK')
-            }
+            },
+            MobilePay
         ],
         fees: {
             monthly: new Currency(49, 'DKK'),
@@ -445,7 +450,7 @@ const PSPs = [
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/priser/',
         acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -456,7 +461,8 @@ const PSPs = [
             {
                 title: 'Apple Pay',
                 monthly: new Currency(19, 'DKK')
-            }
+            },
+            MobilePay
         ],
         fees: {
             monthly: new Currency(99, 'DKK'),
@@ -472,7 +478,7 @@ const PSPs = [
         logo: 'pensopay.svg',
         link: 'https://pensopay.com/priser/',
         acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -483,7 +489,8 @@ const PSPs = [
             {
                 title: 'Apple Pay',
                 monthly: new Currency(19, 'DKK')
-            }
+            },
+            MobilePay
         ],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -499,14 +506,14 @@ const PSPs = [
         logo: 'quickpay.svg',
         link: 'https://quickpay.net/dk/pricing',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
         features: [
             'Abonnementsbetaling',
             {
                 title: 'Apple Pay',
                 monthly: new Currency(19, 'DKK')
-            }
+            },
+            MobilePay
         ],
         fees: {
             trn() {
@@ -519,14 +526,14 @@ const PSPs = [
         logo: 'quickpay.svg',
         link: 'https://quickpay.net/dk/pricing',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
         features: [
             'Abonnementsbetaling',
             {
                 title: 'Apple Pay',
                 monthly: new Currency(19, 'DKK')
-            }
+            },
+            MobilePay
         ],
         fees: {
             monthly: new Currency(49, 'DKK'),
@@ -540,14 +547,14 @@ const PSPs = [
         logo: 'quickpay.svg',
         link: 'https://quickpay.net/dk/pricing',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Handelsbanken', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
         features: [
             'Abonnementsbetaling',
             {
                 title: 'Apple Pay',
                 monthly: new Currency(19, 'DKK')
-            }
+            },
+            MobilePay
         ],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -563,7 +570,7 @@ const PSPs = [
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/priser/',
         acqs: ['Clearhaus', 'Swedbank'],
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
+        cards: ['visa', 'mastercard', 'maestro'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -571,7 +578,8 @@ const PSPs = [
                 trn() {
                     return new Currency(2 * $qty, 'DKK');
                 }
-            }
+            },
+            MobilePay
         ],
         fees: {
             monthly: new Currency(49, 'DKK'),
@@ -585,7 +593,7 @@ const PSPs = [
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/priser/',
         acqs: ['Dankort', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -594,7 +602,8 @@ const PSPs = [
                     return new Currency($qty, 'DKK');
                 }
             },
-            'Apple Pay'
+            'Apple Pay',
+            MobilePay
         ],
         fees: {
             monthly: new Currency(139, 'DKK'),
@@ -610,14 +619,14 @@ const PSPs = [
         logo: 'scannet.svg',
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
         features: [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
             },
-            'Apple Pay'
+            'Apple Pay',
+            MobilePay
         ],
         fees: {
             trn() {
@@ -631,14 +640,14 @@ const PSPs = [
         logo: 'scannet.svg',
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex',
-            'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
         features: [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
             },
-            'Apple Pay'
+            'Apple Pay',
+            MobilePay
         ],
         fees: {
             trn() {
@@ -654,9 +663,8 @@ const PSPs = [
         logo: 'scanpay.svg',
         link: 'https://scanpay.dk',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Elavon'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Mobilepay, Forbrugsforeningen],
-        features: ['Abonnementsbetaling'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        features: ['Abonnementsbetaling', MobilePay],
         fees: {
             trn() {
                 return new Currency(0.25 * $qty, 'DKK');
@@ -680,14 +688,14 @@ const PSPs = [
         logo: 'wannafind.svg',
         link: 'https://www.wannafind.dk/betalingssystem/Priser/',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Mobilepay, Forbrugsforeningen],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
         features: [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
             },
-            'Apple Pay'
+            'Apple Pay',
+            MobilePay
         ],
         fees: {
             monthly: new Currency(39, 'DKK'),
@@ -701,14 +709,14 @@ const PSPs = [
         logo: 'wannafind.svg',
         link: 'https://www.wannafind.dk/betalingssystem/Priser/',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Mobilepay, Forbrugsforeningen],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
         features: [
             {
                 title: 'Abonnementsbetaling',
                 monthly: new Currency(99, 'DKK')
             },
-            'Apple Pay'
+            'Apple Pay',
+            MobilePay
         ],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -723,8 +731,8 @@ const PSPs = [
         name: 'YourPay',
         logo: 'yourpay.png',
         link: 'https://www.yourpay.io',
-        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
-        features: ['Abonnementsbetaling'],
+        cards: ['visa', 'mastercard', 'maestro'],
+        features: ['Abonnementsbetaling', MobilePay],
         fees: {
             trn() {
                 // TODO: consider adding a 'payout time' dropdown
