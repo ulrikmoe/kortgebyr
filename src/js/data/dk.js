@@ -296,6 +296,34 @@ const PSPs = [
         }
     },
     {
+        name: 'Nordea Connect Standard',
+        logo: 'nordea-connect.svg',
+        link: 'https://nordeaconnect.com/solutions/prices/',
+        acqs: ['Dankort', 'Nets', 'Swedbank'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        features: [],
+        fees: {
+            monthly: new Currency(99, 'DKK'),
+            trn() {
+                return new Currency($qty, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'Nordea Connect Pro',
+        logo: 'nordea-connect.svg',
+        link: 'https://nordeaconnect.com/solutions/prices/',
+        acqs: ['Dankort', 'Nets', 'Swedbank'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Mobilepay, Forbrugsforeningen],
+        features: [],
+        fees: {
+            monthly: new Currency(249, 'DKK'),
+            trn() {
+                return new Currency(0.39 * $qty, 'DKK');
+            }
+        }
+    },
+    {
         name: 'Paylike',
         logo: 'paylike.svg',
         link: 'https://paylike.dk/pricing',
