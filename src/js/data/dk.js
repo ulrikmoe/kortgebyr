@@ -63,8 +63,8 @@ const ACQs = [
                 return new Currency(minFee, 'DKK');
             },
             trn() {
-                // Debetcard: 1%, Creditcard: 1.1%, Company cards (1.75%)
-                return $avgvalue.scale(1.25 / 100);
+                // Debet 1%, Credit: 1.1%, Company cards (1.75%), EU:
+                return $avgvalue.scale(1.2 / 100);
             }
         }
     },
