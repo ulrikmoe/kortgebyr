@@ -562,13 +562,14 @@ const PSPs = [
         name: 'Reepay Basic',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/priser/',
-        acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
+        acqs: ['Clearhaus', 'Swedbank'],
+        cards: ['visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             {
                 title: 'Abonnementsbetaling',
-                monthly() {
-                    return new Currency(249, 'DKK');
+                monthly: new Currency(249, 'DKK'),
+                trn() {
+                    return new Currency(2 * $qty, 'DKK');
                 }
             }
         ],
@@ -583,13 +584,14 @@ const PSPs = [
         name: 'Reepay Standard',
         logo: 'reepay.svg',
         link: 'https://reepay.com/da/priser/',
-        acqs: ['Dankort', 'Clearhaus'],
+        acqs: ['Dankort', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Bambora'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', Mobilepay],
         features: [
             {
                 title: 'Abonnementsbetaling',
-                monthly() {
-                    return new Currency(249, 'DKK');
+                monthly: new Currency(249, 'DKK'),
+                trn() {
+                    return new Currency($qty, 'DKK');
                 }
             },
             'Apple Pay'
