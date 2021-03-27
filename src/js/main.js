@@ -258,6 +258,12 @@ function build(action) {
         psplink.appendChild(psplogo);
         psplink.appendChild(pspname);
         pspfrag.appendChild(psplink);
+        if (psp.reseller) {
+            const reseller = document.createElement('p');
+            reseller.className = 'reseller';
+            reseller.textContent = 'Reseller af ' + psp.reseller;
+            pspfrag.appendChild(reseller);
+        }
 
         // cardfee calc.
         const cardfeefrag = document.createDocumentFragment();
@@ -273,7 +279,11 @@ function build(action) {
         const tr = document.createElement('tr');
         tr.insertCell(-1).appendChild(pspfrag);
         tr.insertCell(-1).appendChild(acqfrag);
-        tr.insertCell(-1).appendChild(cardfrag);
+
+        const cardtd = tr.insertCell(-1);
+        cardtd.appendChild(cardfrag);
+        cardtd.className = 'cardtd';
+
         tr.insertCell(-1).appendChild(sumTxt(fees.setup));
         tr.insertCell(-1).appendChild(sumTxt(fees.monthly));
         tr.insertCell(-1).appendChild(sumTxt(fees.trn));

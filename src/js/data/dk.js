@@ -397,6 +397,7 @@ const PSPs = [
     {
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
+        reseller: 'QuickPay',
         link: 'https://pensopay.com/priser/',
         acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro'],
@@ -422,6 +423,7 @@ const PSPs = [
     {
         name: 'PensoPay Start-Up',
         logo: 'pensopay.svg',
+        reseller: 'QuickPay',
         link: 'https://pensopay.com/priser/',
         acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro'],
@@ -448,6 +450,7 @@ const PSPs = [
     {
         name: 'PensoPay Business',
         logo: 'pensopay.svg',
+        reseller: 'QuickPay',
         link: 'https://pensopay.com/priser/',
         acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro'],
@@ -476,6 +479,7 @@ const PSPs = [
     {
         name: 'PensoPay Pro',
         logo: 'pensopay.svg',
+        reseller: 'QuickPay',
         link: 'https://pensopay.com/priser/',
         acqs: ['Dankort', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro'],

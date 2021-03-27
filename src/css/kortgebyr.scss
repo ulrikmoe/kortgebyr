@@ -74,11 +74,22 @@ input, select {
 }
 
 header, table {
-    width: 97.5%;
-    max-width: 1140px;
+    width: 98%;
+    max-width: 1200px;
     min-width: 860px;
     margin: 14px auto;
     border: 1px solid #dbdbdb;
+}
+
+footer {
+    width: 98%;
+    max-width: 1140px;
+    margin: auto;
+    text-align: center;
+    padding: 5px 0 30px;
+    color: #555;
+    line-height: 23px;
+    font-size: 14px;
 }
 
 nav {
@@ -106,7 +117,7 @@ nav {
 
 .feedback {
     float: right;
-    margin-right: 18px;
+    margin-right: 12px;
     line-height: 43px;
 }
 
@@ -222,12 +233,12 @@ input {
     display: block;
     width: 100%;
     height: 30px;
-    padding: 0 6px 0 4px;
+    //padding: 0 6px 0 4px;
     margin: 7px 0 15px;
     font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fdfdfd;
+    //border: 1px solid #ccc;
+    //border-radius: 3px;
+    //background: #fdfdfd;
 }
 
 table {
@@ -267,13 +278,20 @@ td {
 }
 
 .cardsth {
-    width: 150px;
+    width: 120px;
     box-sizing: border-box;
-    padding: 0 13px;
+}
+
+.cardtd {
+    padding: 6px 10px 0;
+}
+
+.acqth {
+    width: 120px;
 }
 
 .pspth {
-    width: 170px;
+    width: 180px;
     padding-left: 16px;
     text-align: left;
 }
@@ -294,6 +312,16 @@ td {
         padding: 0;
     }
 }
+
+.reseller {
+    text-align: left;
+    font-size: 13px;
+    margin: 0;
+    padding: 1px 0 0 16px;
+    font-style: italic;
+    color: #8c3a3a;
+}
+
 
 .info {
     margin-left: 5px;
@@ -350,7 +378,7 @@ td {
 .card {
     width: 22px;
     height: 15px;
-    margin: 4px 3px;
+    margin: 3px 3px;
 }
 
 .equal {
@@ -389,10 +417,3 @@ td {
     margin: 5px 0 0;
 }
 
-footer {
-    text-align: center;
-    padding: 11px 0 25px;
-    color: #777;
-    line-height: 23px;
-    font-size: 14px;
-}
