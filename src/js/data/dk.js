@@ -730,20 +730,6 @@ const PSPs = [
                 return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
-    },
-    {
-        name: 'YourPay',
-        logo: 'yourpay.png',
-        link: 'https://www.yourpay.io',
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling', MobilePay],
-        fees: {
-            trn() {
-                // TODO: consider adding a 'payout time' dropdown
-                if ($avgvalue.scale(1.45 / 100).order('DKK') < 0.7) return new Currency(0.7 * $qty, 'DKK');
-                return $revenue.scale(1.45 / 100);
-            }
-        }
     }
 ];
 
