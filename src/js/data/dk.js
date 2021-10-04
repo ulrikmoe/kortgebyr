@@ -408,10 +408,7 @@ const PSPs = [
                     return new Currency(0.2 * $qty, 'DKK');
                 }
             },
-            {
-                title: 'Apple Pay',
-                monthly: new Currency(19, 'DKK')
-            },
+            'Apple Pay',
             MobilePay
         ],
         fees: {
@@ -434,10 +431,7 @@ const PSPs = [
                     return new Currency(0.2 * $qty, 'DKK');
                 }
             },
-            {
-                title: 'Apple Pay',
-                monthly: new Currency(19, 'DKK')
-            },
+            'Apple Pay',
             MobilePay
         ],
         fees: {
@@ -461,10 +455,7 @@ const PSPs = [
                     return new Currency(0.2 * $qty, 'DKK');
                 }
             },
-            {
-                title: 'Apple Pay',
-                monthly: new Currency(19, 'DKK')
-            },
+            'Apple Pay',
             MobilePay
         ],
         fees: {
@@ -490,10 +481,7 @@ const PSPs = [
                     return new Currency(0.2 * $qty, 'DKK');
                 }
             },
-            {
-                title: 'Apple Pay',
-                monthly: new Currency(19, 'DKK')
-            },
+            'Apple Pay',
             MobilePay
         ],
         fees: {
@@ -513,10 +501,7 @@ const PSPs = [
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
         features: [
             'Abonnementsbetaling',
-            {
-                title: 'Apple Pay',
-                monthly: new Currency(19, 'DKK')
-            },
+            'Apple Pay',
             MobilePay
         ],
         fees: {
@@ -533,10 +518,7 @@ const PSPs = [
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
         features: [
             'Abonnementsbetaling',
-            {
-                title: 'Apple Pay',
-                monthly: new Currency(19, 'DKK')
-            },
+            'Apple Pay',
             MobilePay
         ],
         fees: {
@@ -554,10 +536,7 @@ const PSPs = [
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
         features: [
             'Abonnementsbetaling',
-            {
-                title: 'Apple Pay',
-                monthly: new Currency(19, 'DKK')
-            },
+            'Apple Pay',
             MobilePay
         ],
         fees: {
