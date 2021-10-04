@@ -572,7 +572,7 @@ const PSPs = [
     {
         name: 'Reepay Basic',
         logo: 'reepay.svg',
-        link: 'https://reepay.com/da/priser/',
+        link: 'https://reepay.com/da/pricing/',
         acqs: ['Clearhaus', 'Swedbank'],
         cards: ['visa', 'mastercard', 'maestro'],
         features: [
@@ -595,7 +595,7 @@ const PSPs = [
     {
         name: 'Reepay Standard',
         logo: 'reepay.svg',
-        link: 'https://reepay.com/da/priser/',
+        link: 'https://reepay.com/da/pricing/',
         acqs: ['Dankort', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Bambora'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro'],
         features: [
