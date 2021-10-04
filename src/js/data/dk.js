@@ -109,7 +109,7 @@ const ACQs = [
         cards: ['visa', 'mastercard', 'maestro'],
         fees: {
             trn() {
-                return $avgvalue.scale(1.45 / 100);
+                return $avgvalue.scale(1.25 / 100);
             }
         }
     }
@@ -663,6 +663,36 @@ const PSPs = [
         fees: {
             trn() {
                 return $revenue.scale(1.4 / 100).add(new Currency(1.8 * $qty, 'DKK'));
+            }
+        }
+    },
+    {
+        name: 'Swiipe Basic',
+        logo: 'swiipe.svg',
+        reseller: 'Bambora',
+        link: 'https://swiipe.com/',
+        acqs: ['Dankort', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        features: [MobilePay],
+        fees: {
+            monthly: new Currency(49, 'DKK'),
+            trn() {
+                return new Currency($qty, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'Swiipe Business',
+        logo: 'swiipe.svg',
+        reseller: 'Bambora',
+        link: 'https://swiipe.com/',
+        acqs: ['Dankort', 'Bambora'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        features: [MobilePay],
+        fees: {
+            monthly: new Currency(129, 'DKK'),
+            trn() {
+                return new Currency(0.25 * $qty, 'DKK');
             }
         }
     },
