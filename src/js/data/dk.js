@@ -277,7 +277,7 @@ const PSPs = [
     {
         name: 'Nets Easy',
         logo: 'netaxept.svg',
-        link: 'https://www.nets.eu/dk/payments/online/easy/',
+        link: 'https://www.nets.eu/da-DK/payments/online',
         cards: ['dankort', 'visa', 'mastercard', 'maestro'],
         features: [
             {
