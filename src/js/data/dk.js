@@ -275,6 +275,25 @@ const PSPs = [
         }
     },
     {
+        name: 'Freepay',
+        logo: 'freepay.svg',
+        link: 'https://freepay.dk/da/betalingsgateway/priser',
+        acqs: ['Dankort', 'Nets', 'Clearhaus'],
+        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        features: [
+            'Abonnementsbetaling',
+            MobilePay
+        ],
+        fees: {
+            monthly: new Currency(0, 'DKK'),
+            trn(o) {
+                o.trn.Clearhaus = new Currency(0, 'DKK');
+                o.trn.Dankort = new Currency(0.21 * $qty, 'DKK');
+                return true;
+            }
+        }
+    },
+    {
         name: 'Nets Easy',
         logo: 'netaxept.svg',
         link: 'https://www.nets.eu/da-DK/payments/online',
