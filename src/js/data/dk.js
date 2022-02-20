@@ -273,7 +273,7 @@ const PSPs = [
                 return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
-    },
+    },/*
     {
         name: 'Freepay',
         logo: 'freepay.svg',
@@ -292,7 +292,7 @@ const PSPs = [
                 return true;
             }
         }
-    },
+    },*/
     {
         name: 'Nets Easy',
         logo: 'netaxept.svg',
