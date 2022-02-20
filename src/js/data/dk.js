@@ -240,7 +240,20 @@ const PSPs = [
                 return true;
             }
         }
-    },*/
+    },
+    */
+    {
+        name: 'Mollie',
+        logo: 'mollie.svg',
+        link: 'https://www.mollie.com/en/pricing',
+        cards: ['visa', 'mastercard', 'maestro', 'amex'],
+        features: ['Abonnementsbetaling', 'Apple Pay'],
+        fees: {
+            trn() {
+                return $revenue.scale(1.8 / 100).add(new Currency(0.25 * $qty, 'EUR'));
+            }
+        }
+    },
     {
         name: 'Nets Easy',
         logo: 'netaxept.svg',
