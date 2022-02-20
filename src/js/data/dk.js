@@ -18,9 +18,7 @@ const ACQs = [
         cards: ['dankort', 'forbrugsforeningen'],
         fees: {
             trn() {
-                const fee = $avgvalue.scale(0.19 / 100).add(new Currency(0.54, 'DKK'));
-                if (fee.order('DKK') > 2.5) return new Currency(2.5, 'DKK');
-                return fee;
+                return $avgvalue.scale(0.32 / 100);
             }
         }
     },
