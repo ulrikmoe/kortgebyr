@@ -31,6 +31,7 @@ const ACQs = [
             setup: new Currency(1000, 'DKK'),
             monthly: new Currency(149, 'DKK'),
             trn() {
+                // EØS: 0.99% + 0,25% (if credit card) + 1,95% (if company card)
                 const trnfee = $avgvalue.scale(1.2 / 100).add(new Currency(0.19, 'DKK'));
                 return (trnfee.order('DKK') > 0.7) ? trnfee : new Currency(0.7, 'DKK');
             }
@@ -139,7 +140,7 @@ const PSPs = [
             monthly: new Currency(1000, 'SEK'),
             trn() {
                 const freeTrns = 1000;
-                if ($qty <= freeTrns) return false;
+                if ($qty <= freeTrns) return new Currency(0, 'SEK');
                 return new Currency(0.50 * ($qty - freeTrns), 'SEK');
             }
         }
@@ -184,7 +185,7 @@ const PSPs = [
             monthly: new Currency(149, 'DKK'),
             trn() {
                 const freeTrns = 500;
-                if ($qty <= freeTrns) return false;
+                if ($qty <= freeTrns) return new Currency(0, 'DKK');
                 return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
@@ -216,7 +217,7 @@ const PSPs = [
             monthly: new Currency(149, 'DKK'),
             trn() {
                 const freeTrns = 250;
-                if ($qty <= freeTrns) return false;
+                if ($qty <= freeTrns) return new Currency(0, 'DKK');
                 return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
@@ -388,7 +389,7 @@ const PSPs = [
             monthly: new Currency(99, 'DKK'),
             trn() {
                 const freeTrns = 100;
-                if ($qty <= freeTrns) return false;
+                if ($qty <= freeTrns) return new Currency(0, 'DKK');
                 return new Currency(0.35 * ($qty - freeTrns), 'DKK');
             }
         }
@@ -414,7 +415,7 @@ const PSPs = [
             monthly: new Currency(149, 'DKK'),
             trn() {
                 const freeTrns = 250;
-                if ($qty <= freeTrns) return false;
+                if ($qty <= freeTrns) return new Currency(0, 'DKK');
                 return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
@@ -469,7 +470,7 @@ const PSPs = [
             monthly: new Currency(149, 'DKK'),
             trn() {
                 const freeTrns = 250;
-                if ($qty <= freeTrns) return false;
+                if ($qty <= freeTrns) return new Currency(0, 'DKK');
                 return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
@@ -518,7 +519,7 @@ const PSPs = [
             monthly: new Currency(139, 'DKK'),
             trn() {
                 const freeTrns = 250;
-                if ($qty <= freeTrns) return false;
+                if ($qty <= freeTrns) return new Currency(0, 'DKK');
                 return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
@@ -561,7 +562,7 @@ const PSPs = [
         fees: {
             trn() {
                 const freeTrns = 500;
-                if ($qty <= freeTrns) return false;
+                if ($qty <= freeTrns) return new Currency(0, 'DKK');
                 return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             },
             monthly: new Currency(149, 'DKK')
@@ -661,7 +662,7 @@ const PSPs = [
             monthly: new Currency(149, 'DKK'),
             trn() {
                 const freeTrns = 500;
-                if ($qty <= freeTrns) return false;
+                if ($qty <= freeTrns) return new Currency(0, 'DKK');
                 return new Currency(0.25 * ($qty - freeTrns), 'DKK');
             }
         }
