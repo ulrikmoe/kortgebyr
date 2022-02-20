@@ -9,10 +9,36 @@ const currency_map = {
     USD: { cur: '$%', t: ',', d: '.' },
     GBP: { cur: '£%', t: '.', d: ',' }
 };
-const currency_value = {};
 
+const currency_value = {
+    'DKK': {
+        'DKK': 1,
+        'SEK': 1.4223,
+        'NOK': 1.3641,
+        'EUR': 0.13444,
+        'USD': 0.15264,
+        'GBP': 0.11216
+    },
+    'SEK': {
+        'DKK': 0.7030865499542994,
+        'SEK': 1,
+        'NOK': 0.95908036279266,
+        'EUR': 0.09452295577585602,
+        'USD': 0.10731913098502427,
+        'GBP': 0.07885818744287422
+    },
+    'NOK': {
+        'DKK': 0.7330840847445201,
+        'SEK': 1.042665493732131,
+        'NOK': 1,
+        'EUR': 0.0985558243530533,
+        'USD': 0.11189795469540355,
+        'GBP': 0.08222271094494538
+    }
+};
+
+/*
 function updateCurrency() {
-
     return fetch('https://kortgebyr.dk/_currency/latest?from=' + $currency)
         .then(res => res.json())
         .then((j) => {
@@ -29,6 +55,7 @@ function updateCurrency() {
             alert('Noget gik galt. Prøv igen eller kontakt ulrik.moe@gmail.com');
         });
 }
+*/
 
 function Currency(value, code) {
     this.amounts = {};

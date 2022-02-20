@@ -41,13 +41,8 @@ function settings(o) {
         disableCards([]);
     }
 
-    if ($currency === o.currency) {
-        build();
-    } else {
-        $currency = o.currency;
-        updateCurrency().then(() => build());
-        document.getElementById('currency_code').textContent = $currency;
-    }
+    $currency = o.currency;
+    build();
 }
 
 // Check if object-x' properties is in object-y.
