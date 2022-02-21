@@ -1,140 +1,158 @@
 <!DOCTYPE HTML><html lang="da">
 <script defer src="/js/all.js?{{ git }}"></script>
-
 <link rel="stylesheet" href="/css/kortgebyr.css?{{ git }}">
 <link rel="preload" href="/font/R400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/font/R400i.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/font/R500.woff2" as="font" type="font/woff2" crossorigin>
-
 <title>Find den billigste betalingsløsning | Kortgebyr</title>
 <meta name="description" content="Kortgebyr er en open source og nonprofit prissammenligning af betalingsløsninger. Find den billigste betalingsløsning, der passer til din netbutik.">
 <link rel="icon" type="image/png" href="/img/favicon.png">
 <link rel="canonical" href="https://kortgebyr.dk/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <base target="_blank">
-
 <body>
-  <header>
-    <form id="form" class="clearfix" autocomplete="off">
-      <nav>
-        <a class="logo" href="/" target="_self">kortgebyr</a>
-        <a class="lastUpdate" lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">Opdateret d. {{ lastUpdate }} </a>
 
-        <div class="language" onclick="alert('Denne funktion er midlertidigt disabled.')">
-          <img width="19" height="19" src="/img/dk.png" alt="kortgebyr på dansk">
+  <div class="c c--header">
+    <header>
+      <form id="form" autocomplete="off">
+        <nav>
+          <a class="logo" href="/" target="_self">kortgebyr</a>
+          <a class="lastUpdate" lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">
+            Opdateret d. {{ lastUpdate }}
+          </a>
+
+          <div class="language mobile--hide" onclick="alert('Denne funktion er midlertidigt disabled.')">
+            <img width="19" height="19" src="/img/dk.png" alt="kortgebyr på dansk">
+          </div>
+
+          <div id="currency" class="currency mobile--hide">
+            <span id="currency_code">DKK</span>
+            <select name="currency" disabled>
+              <option value="DKK">DKK</option>
+              <option value="SEK">SEK</option>
+              <option value="NOK">NOK</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+          <a lang="en" href="https://github.com/ulrikmoe/kortgebyr" class="feedback mobile--hide">
+            GitHub
+          </a>
+        </nav>
+
+        <div class="settings">
+          <div>
+            <div class="field">
+              <label for="acquirer" class="label">Indløser</label>
+              <select id="acquirer" name="acquirer" class="form-select">
+                <option value="auto">Vælg indløser</option>
+                <option value="1">Nets</option>
+                <option value="4">Clearhaus</option>
+                <option value="2">Handelsbanken</option>
+                <option value="3">Swedbank</option>
+                <option value="5">Bambora</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="module" class="label">Shopsystem (kommer snart)</label>
+              <select name="module" id="module" class="form-select" disabled>
+                <option value="">Vælg shopsystem</option>
+                <option value="woocommerce">WooCommerce</option>
+                <option value="magento2">Magento2</option>
+                <option value="prestashop">PrestaShop</option>
+                <option value="thirtybees">ThirtyBees</option>
+                <option value="opencart">OpenCart</option>
+                <option value="shopify">Shopify</option>
+                <option value="shoporama">Shoporama</option>
+                <option value="dandomain">DanDomain / Wannafind / ScanNet</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1em;">
+              <div class="field">
+                <label for="avgvalue" class="label">Typisk ordreværdi</label>
+                <div class="input-group">
+                  <label for="avgvalue" class="input-group-text">kr.</label>
+                  <input name="avgvalue" type="number" min="0" class="input-group-input">
+                </div>
+              </div>
+              <div class="field">
+                <label for="qty" class="label">Betalinger pr. md.</label>
+                <input id="qty" name="qty" type="number" min="0" class="form-input">
+              </div>
+            </div>
+
+            <div class="form-check" style="margin-top: 13px;">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="features[]" value="Abonnementsbetaling">
+                <span>Abonnementsbetalinger</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <p class="label mobile--hide">Tilvalg</p>
+            <div class="form-check">
+              <label>
+                <input class="form-check-input" type="checkbox" name="cards[]" value="dankort">
+                <span>Dankort</span>
+              </label>
+              <input class="hide" type="checkbox" name="cards[]" value="visa">
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="features[]" value="MobilePay" id="MobilePay">
+              <label class="form-check-label" for="MobilePay">MobilePay</label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="features[]" value="Apple Pay" id="ApplePay">
+              <label class="form-check-label" for="ApplePay">Apple Pay</label>
+            </div>
+          </div>
         </div>
+      </form>
+    </header>
+  </div>
 
-        <div id="currency" class="currency">
-          <span id="currency_code">DKK</span>
-          <select name="currency" disabled="">
-            <option value="DKK">DKK</option>
-            <option value="SEK">SEK</option>
-            <option value="NOK">NOK</option>
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
-          </select>
-        </div>
-        <a lang="en" href="https://github.com/ulrikmoe/kortgebyr" class="feedback">GitHub</a>
-      </nav>
+  <div class="c c--table">
+    <div class="responsive">
+      <table id="table">
+        <thead>
+          <tr>
+            <th class="pspth">Betalingsløsning</th>
+            <th class="acqth">Indløsning</th>
+            <th class="cardsth">Betalingskort</th>
+            <th>Oprettelse</th>
+            <th>Abonnement</th>
+            <th>Transaktions-<br>gebyrer</th>
+            <th>
+              <div class="equal right"><p class="equal--icon"></p></div>
+              Samlet pr. <br> måned
+            </th>
+            <th style="border-left:0;">
+              <div class="equal left"><p class="equal--icon"></p></div>
+              Samlet pr. <br> transaktion
+            </th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
 
-      <div class="menu acquirer_menu">
-        <label class="acqlabel"> Indløsning
-          <select name="acquirer" id="acquirer">
-            <option value="auto">Billigst mulige</option>
-            <option value="1">Nets (internationale kort)</option>
-            <option value="2">Handelsbanken</option>
-            <option value="3">Swedbank</option>
-            <option value="4">Clearhaus</option>
-            <option value="5">Bambora</option>
-          </select>
-        </label>
-        <div class="about">
-          Udregningen tager udgangspunkt i listepriser for online betalingsløsninger. Vi anbefaler at du starter med at læse vores <a href="/forklaring" target="_self">forklaring</a>.
-        </div>
-      </div>
+  <div class="c c--footer">
+    <footer>
+      <p>
+        Kortgebyr er et <a lang="en" href="https://github.com/ulrikmoe/kortgebyr">open source</a> og nonprofit værktøj til sammenligning af betalingsløsninger. Projektet startede som et regneark, der blev delt blandt e-købmænd på Amino, og i <a rel="nofollow" href="https://www.amino.dk/forums/t/208824.aspx">2013</a> lancerede vi denne side, med at ønske om at gøre det nemmere at finde den billigste betalingsløsning. I 2017 startede vi vores egen betalingsløsning, <a title="Scanpay betalingsløsning" href="https://scanpay.dk">scanpay</a>, men vi lover at holde kortgebyr upartisk og uden reklamer. Mange har hjulpet med at udvikle kortgebyr, og alle bidrag og tanker er meget velkomne på <a lang="en" href="https://github.com/ulrikmoe/kortgebyr">GitHub</a>.
+      </p>
+      <p>Kortgebyr blev sidst opdateret den <a lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">{{ lastUpdate }}</a></p>
+    </footer>
+  </div>
 
-      <div class="menu menu-2">
-        <label>
-          <input name="qty" type="number" min="0" class="field">
-          Transaktioner pr. måned
-        </label>
-        <label>
-          <input name="avgvalue" type="number" min="0" class="field">
-          Gennemsnits ordreværdi
-        </label>
-        <label>
-          <input name="features[]" value="Abonnementsbetaling" type="checkbox" class="ofeatures">
-          Abonnementsbetalinger
-        </label>
-      </div>
-
-      <div class="menu menu-3">
-        <label>
-          <input name="cards[]" value="dankort" type="checkbox" class="ocards">
-          Dankort
-        </label>
-        <label>
-          <input name="cards[]" value="visa" type="checkbox" class="ocards">
-          Visa / MasterCard
-        </label>
-        <label>
-          <input name="cards[]" value="forbrugsforeningen" type="checkbox" class="ocards">
-          Forbrugsforening
-        </label>
-        <label>
-          <input name="cards[]" value="diners" type="checkbox" class="ocards">
-          Diners
-        </label>
-      </div>
-
-      <div class="menu menu-4">
-        <label>
-          <input name="cards[]" value="jcb" type="checkbox" class="ocards">
-          JCB
-        </label>
-        <label>
-          <input name="cards[]" value="amex" type="checkbox" class="ocards">
-          American Express
-        </label>
-        <label>
-          <input name="features[]" value="MobilePay" type="checkbox" class="ofeatures">
-          MobilePay
-        </label>
-        <label>
-          <input name="features[]" value="Apple Pay" type="checkbox" class="ofeatures">
-          Apple Pay
-        </label>
-      </div>
-    </form>
-  </header>
-
-  <table id="table">
-    <thead>
-      <tr>
-        <th class="pspth">Betalingsløsning</th>
-        <th class="acqth">Indløsning</th>
-        <th class="cardsth">Betalingskort</th>
-        <th>Oprettelse</th>
-        <th>Abonnement</th>
-        <th>Transaktions-<br> gebyrer</th>
-        <th>
-          <div class="equal right"><p class="equal--icon"></p></div>
-          Samlet pr. <br> måned
-        </th>
-        <th style="border-left:0;">
-          <div class="equal left"><p class="equal--icon"></p></div>
-          Samlet pr. <br> transaktion
-        </th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-
-  <footer>
-    <p>
-      Kortgebyr er et <a lang="en" href="https://github.com/ulrikmoe/kortgebyr">open source</a> og nonprofit værktøj til sammenligning af betalingsløsninger. Projektet startede som et regneark, der blev delt blandt e-købmænd på Amino, og i <a rel="nofollow" href="https://www.amino.dk/forums/t/208824.aspx">2013</a> lancerede vi denne side, med at ønske om at gøre det nemmere at finde den billigste betalingsløsning. I 2017 startede vi vores egen betalingsløsning, <a title="Scanpay betalingsløsning" href="https://scanpay.dk">scanpay</a>, men vi lover at holde kortgebyr upartisk og uden reklamer. Mange har hjulpet med at udvikle kortgebyr, og alle bidrag og tanker er meget velkomne på <a lang="en" href="https://github.com/ulrikmoe/kortgebyr">GitHub</a>.
-    </p>
-    <p>Kortgebyr blev sidst opdateret den <a lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">{{ lastUpdate }}</a></p>
-  </footer>
 </body>

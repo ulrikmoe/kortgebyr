@@ -64,28 +64,6 @@ function merge(...args) {
     return obj;
 }
 
-/*
-    Very simple fetch polyfill (for Safari < 10.1)
-*/
-if (!window.fetch) {
-    window.fetch = url => new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-
-        xhr.onload = () => {
-            resolve({
-                body: xhr.response,
-                json() {
-                    return JSON.parse(xhr.response);
-                }
-            });
-        };
-
-        xhr.onerror = () => reject(new TypeError('Network request failed'));
-        xhr.ontimeout = () => reject(new TypeError('Network request failed'));
-        xhr.open('GET', url, true);
-        xhr.send();
-    });
-}
 
 function showTooltip() {
     if (!this.firstElementChild) {

@@ -2,7 +2,7 @@
 /* global Currency, ACQs, PSPs, updateCurrency, showTooltip, currency_map, form2obj, obj2form */
 
 const country = 'DK';
-let opts = {
+const opts = {
     acquirer: 'auto',
     module: '',
     currency: 'DKK',
@@ -24,24 +24,8 @@ function settings(o) {
     $avgvalue = new Currency(o.avgvalue, o.currency);
     $revenue = $avgvalue.scale($qty);
     $currency = o.currency;
-    $acqs = (o.acquirer === 'auto') ? ACQs.slice(0) : (country === 'DK')
-        ? [ACQs[0], ACQs[o.acquirer]] : [ACQs[o.acquirer]];
-
-    if (!o.cards.visa) {
-        $dankortscale = 1;
-        disableCards(['diners', 'jcb', 'amex']);
-
-        if (!o.cards.dankort) {
-            document.getElementById('tbody').innerHTML = '';
-            return disableCards(['forbrugsforeningen', 'diners', 'jcb', 'amex', 'mobilepay']);
-        }
-    } else if (o.cards.dankort) {
-        $dankortscale = 0.72;
-        disableCards([]);
-    } else {
-        $dankortscale = 0;
-        disableCards(['forbrugsforeningen']);
-    }
+    $dankortscale = (o.cards.dankort) ? 0.72 : 0;
+    $acqs = (o.acquirer === 'auto') ? ACQs.slice(0) : [ACQs[0], ACQs[o.acquirer]];
     build();
 }
 
@@ -108,9 +92,10 @@ function sumTxt(obj) {
 }
 
 // Build table
-function build(action) {
+function build() {
     const data = [];
-    const frag = document.createDocumentFragment();
+    const tbody = document.createElement('tbody');
+    tbody.id = 'tbody';
 
     // Calculate acquirer costs and sort by Total Costs.
     for (let i = 0; i < $acqs.length; i++) {
@@ -253,42 +238,19 @@ function build(action) {
         tr.insertCell(-1).appendChild(sumTxt(fees.trn));
         tr.insertCell(-1).appendChild(sumTxt(totals));
         tr.insertCell(-1).appendChild(cardfeefrag);
-        frag.insertBefore(tr, frag.childNodes[sort]);
+
+        // TODO: Use append. This is disgusting
+        tbody.insertBefore(tr, tbody.childNodes[sort]);
     }
-    const tbody = document.getElementById('tbody');
-    tbody.innerHTML = '';
-    tbody.appendChild(frag);
+    document.getElementById('tbody').replaceWith(tbody);
 }
 
-function disableCards(arr) {
-    const o = {};
-    for (const card of arr) { o[card] = 1; }
 
-    const ocards = document.getElementsByClassName('ocards');
-    for (const elem of ocards) {
-        if (o[elem.value]) {
-            if (opts.cards[elem.value]) {
-                // Deselect the card and remove from opts
-                elem.checked = false;
-                delete opts.cards[elem.value];
-            }
-            elem.disabled = true;
-        } else {
-            elem.disabled = false;
-        }
-    }
-}
-
-let cachedString;
 function formEvent(evt) {
-    opts = form2obj(this);
-    const optsString = JSON.stringify(opts);
-    if (optsString !== cachedString) {
-        settings(opts);
-    }
-    cachedString = optsString;
+    if (evt.type === 'input' && evt.target.type !== 'number') return;
+    if (evt.type === 'change' && evt.target.type === 'number') return;
+    settings(form2obj(this));
 }
-
 
 (() => {
     const form = document.getElementById('form');
@@ -298,5 +260,4 @@ function formEvent(evt) {
         form.addEventListener('input', formEvent);
         obj2form(opts, form);
     }
-
 })();
