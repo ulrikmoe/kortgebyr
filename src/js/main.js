@@ -2,7 +2,7 @@
 /* global Currency, ACQs, PSPs, updateCurrency, showTooltip, currency_map, form2obj, obj2form */
 
 const country = 'DK';
-const opts = {
+let opts = {
     acquirer: 'auto',
     module: '',
     currency: 'DKK',
@@ -249,7 +249,8 @@ function build() {
 function formEvent(evt) {
     if (evt.type === 'input' && evt.target.type !== 'number') return;
     if (evt.type === 'change' && evt.target.type === 'number') return;
-    settings(form2obj(this));
+    opts = form2obj(this);
+    settings(opts);
 }
 
 (() => {
