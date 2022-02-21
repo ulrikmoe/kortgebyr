@@ -15,15 +15,14 @@ let opts = {
 let $dankortscale;
 let $acqs;
 let $avgvalue;
-let $currency;
+const $currency = 'DKK';
 let $revenue;
 let $qty;
 
 function settings(o) {
     $qty = o.qty;
-    $avgvalue = new Currency(o.avgvalue, o.currency);
+    $avgvalue = new Currency(o.avgvalue, $currency);
     $revenue = $avgvalue.scale($qty);
-    $currency = o.currency;
     $dankortscale = (o.cards.dankort) ? 0.72 : 0;
     $acqs = (o.acquirer === 'auto') ? ACQs.slice(0) : [ACQs[0], ACQs[o.acquirer]];
     build();

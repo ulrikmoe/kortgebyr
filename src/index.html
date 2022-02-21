@@ -1,6 +1,6 @@
 <!DOCTYPE HTML><html lang="da">
 <script defer src="/js/all.js?{{ git }}"></script>
-<link rel="stylesheet" href="/css/kortgebyr.css?{{ git }}">
+<link rel="stylesheet" href="/css/kortgebyr.css?v2{{ git }}">
 <link rel="preload" href="/font/R400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/font/R400i.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/font/R500.woff2" as="font" type="font/woff2" crossorigin>
@@ -19,35 +19,17 @@
   gtag('js', new Date());
   gtag('config', 'UA-46668451-1');
 </script>
-
 <body>
 
   <div class="c c--header">
     <header>
       <form id="form" autocomplete="off">
         <nav>
-          <a class="logo" href="/" target="_self">kortgebyr</a>
+          <div style="flex: 1">
+            <a class="logo" href="/" target="_self" title="Kortgebyr">kortgebyr</a>
+          </div>
           <a class="lastUpdate" lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">
             Opdateret d. {{ lastUpdate }}
-          </a>
-
-          <div class="language mobile--hide" onclick="alert('Denne funktion er midlertidigt disabled.')">
-            <img width="19" height="19" src="/img/dk.png" alt="kortgebyr på dansk">
-          </div>
-
-          <div id="currency" class="currency mobile--hide">
-            <span id="currency_code">DKK</span>
-            <select name="currency" disabled>
-              <option value="DKK">DKK</option>
-              <option value="SEK">SEK</option>
-              <option value="NOK">NOK</option>
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-              <option value="GBP">GBP</option>
-            </select>
-          </div>
-          <a lang="en" href="https://github.com/ulrikmoe/kortgebyr" class="feedback mobile--hide">
-            GitHub
           </a>
         </nav>
 
@@ -70,7 +52,7 @@
               <select name="module" id="module" class="form-select" disabled>
                 <option value="">Vælg shopsystem</option>
                 <option value="woocommerce">WooCommerce</option>
-                <option value="magento2">Magento2</option>
+                <option value="magento2">Magento 2</option>
                 <option value="prestashop">PrestaShop</option>
                 <option value="thirtybees">ThirtyBees</option>
                 <option value="opencart">OpenCart</option>
@@ -79,11 +61,10 @@
                 <option value="dandomain">DanDomain / Wannafind / ScanNet</option>
               </select>
             </div>
-
           </div>
 
           <div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1em;">
+            <div class="avgqty">
               <div class="field">
                 <label for="avgvalue" class="label">Typisk ordreværdi</label>
                 <div class="input-group">
@@ -97,7 +78,7 @@
               </div>
             </div>
 
-            <div class="form-check" style="margin-top: 13px;">
+            <div class="form-check">
               <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" name="features[]" value="Abonnementsbetaling">
                 <span>Abonnementsbetalinger</span>
@@ -106,7 +87,7 @@
           </div>
 
           <div>
-            <p class="label mobile--hide">Tilvalg</p>
+            <p class="label label--tilvalg mobile--hide">Tilvalg</p>
             <div class="form-check">
               <label>
                 <input class="form-check-input" type="checkbox" name="cards[]" value="dankort">
