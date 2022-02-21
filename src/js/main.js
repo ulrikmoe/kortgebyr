@@ -4,6 +4,7 @@
 const country = 'DK';
 let opts = {
     acquirer: 'auto',
+    module: '',
     currency: 'DKK',
     qty: 200,
     avgvalue: 645,
@@ -22,6 +23,7 @@ function settings(o) {
     $qty = o.qty;
     $avgvalue = new Currency(o.avgvalue, o.currency);
     $revenue = $avgvalue.scale($qty);
+    $currency = o.currency;
     $acqs = (o.acquirer === 'auto') ? ACQs.slice(0) : (country === 'DK')
         ? [ACQs[0], ACQs[o.acquirer]] : [ACQs[o.acquirer]];
 
@@ -33,47 +35,14 @@ function settings(o) {
             document.getElementById('tbody').innerHTML = '';
             return disableCards(['forbrugsforeningen', 'diners', 'jcb', 'amex', 'mobilepay']);
         }
-    } else if (!o.cards.dankort) {
-        $dankortscale = 0;
-        disableCards(['forbrugsforeningen']);
-    } else {
+    } else if (o.cards.dankort) {
         $dankortscale = 0.72;
         disableCards([]);
+    } else {
+        $dankortscale = 0;
+        disableCards(['forbrugsforeningen']);
     }
-
-    $currency = o.currency;
     build();
-}
-
-// Check if object-x' properties is in object-y.
-function x_has_y(objx, objy) {
-    for (const prop in objy) {
-        if (!objx[prop]) { return false; }
-    }
-    return true;
-}
-
-function sum(obj) {
-    let ret = new Currency();
-    for (const fee in obj) {
-        ret = ret.add(obj[fee]);
-    }
-    return ret;
-}
-
-function merge(o1, o2) {
-    const obj = {};
-    for (let i = 0; i < arguments.length; i++) {
-        const costobj = arguments[i];
-        for (const z in costobj) {
-            if (obj[z]) {
-                obj[z] = obj[z].add(costobj[z]);
-            } else {
-                obj[z] = costobj[z];
-            }
-        }
-    }
-    return obj;
 }
 
 // Find combination of acquirers that support all cards
@@ -293,10 +262,10 @@ function build(action) {
 
 function disableCards(arr) {
     const o = {};
-    for (let card of arr) { o[card] = 1; }
+    for (const card of arr) { o[card] = 1; }
 
     const ocards = document.getElementsByClassName('ocards');
-    for (let elem of ocards) {
+    for (const elem of ocards) {
         if (o[elem.value]) {
             if (opts.cards[elem.value]) {
                 // Deselect the card and remove from opts

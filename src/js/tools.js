@@ -33,6 +33,37 @@ function obj2form(o, form) {
     }
 }
 
+// Check if object-x' properties is in object-y.
+function x_has_y(objx, objy) {
+    for (const prop in objy) {
+        if (!objx[prop]) { return false; }
+    }
+    return true;
+}
+
+function sum(obj) {
+    let ret = new Currency();
+    for (const fee in obj) {
+        ret = ret.add(obj[fee]);
+    }
+    return ret;
+}
+
+function merge(...args) {
+    const obj = {};
+    for (let i = 0; i < args.length; i++) {
+        const costobj = args[i];
+        for (const z in costobj) {
+            if (obj[z]) {
+                obj[z] = obj[z].add(costobj[z]);
+            } else {
+                obj[z] = costobj[z];
+            }
+        }
+    }
+    return obj;
+}
+
 /*
     Very simple fetch polyfill (for Safari < 10.1)
 */
