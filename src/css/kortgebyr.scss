@@ -425,7 +425,7 @@ th {
 
 td {
     height: 71px;
-    padding: 2px 0 0;
+    padding: 0 0 0;
     vertical-align: middle;
     line-height: normal;
     text-align: center;
@@ -449,12 +449,12 @@ td {
 }
 
 .acqth {
-    width: 120px;
+    width: 130px;
 }
 
 .pspth {
-    width: 170px;
-    padding-left: 16px;
+    width: 178px;
+    padding-left: 1rem;
     text-align: left;
 }
 
@@ -528,8 +528,9 @@ td {
     }
 }
 
-.acq {
-    line-height: 23px;
+.acqlogo {
+    display: block;
+    margin: 12px auto;
 }
 
 .acquirer-included {
@@ -540,7 +541,7 @@ td {
 .card {
     width: 22px;
     height: 15px;
-    margin: 3px 3px;
+    margin: 4px 4px;
 }
 
 .equal {

@@ -14,6 +14,7 @@ const ACQs = [
     {
         name: 'Dankort',
         logo: 'nets.svg',
+        wh: [50, 15],
         link: 'https://dankort.dk/dk/betaling-i-webshop/',
         cards: ['dankort', 'forbrugsforeningen'],
         fees: {
@@ -25,6 +26,7 @@ const ACQs = [
     {
         name: 'Nets',
         logo: 'nets.svg',
+        wh: [50, 15],
         link: 'https://www.nets.eu/dk/payments/online-betalinger/indloesningsaftale/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
         fees: {
@@ -40,6 +42,7 @@ const ACQs = [
     {
         name: 'Handelsbanken',
         logo: 'handelsbanken.svg',
+        wh: [90, 9],
         link: 'https://handelsbanken.dk/shb/inet/icentda.nsf/Default/' +
             'qC21926A235427DE6C12578810023DBB9?Opendocument',
         cards: ['visa', 'mastercard', 'maestro'],
@@ -52,6 +55,7 @@ const ACQs = [
     {
         name: 'Swedbank',
         logo: 'swedbank.png',
+        wh: [75, 12],
         link: 'https://www.swedbank.dk/erhverv/card-services/priser-og-vilkar/#!/CID_2263482',
         cards: ['visa', 'mastercard', 'maestro'],
         fees: {
@@ -70,6 +74,7 @@ const ACQs = [
     {
         name: 'Clearhaus',
         logo: 'clearhaus.svg',
+        wh: [77, 13],
         link: 'https://www.clearhaus.com/dk/',
         cards: ['visa', 'mastercard', 'maestro'],
         fees: {
@@ -82,6 +87,7 @@ const ACQs = [
     {
         name: 'Bambora',
         logo: 'bambora.svg',
+        wh: [71, 13],
         link: 'http://www.bambora.com/',
         cards: ['visa', 'mastercard', 'maestro'],
         fees: {
@@ -96,6 +102,7 @@ const PSPs = [
     {
         name: '2checkout',
         logo: '2checkout.svg',
+        wh: [127, 15],
         link: 'https://www.2checkout.com/pricing/',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
         features: ['Abonnementsbetaling'],
@@ -108,6 +115,7 @@ const PSPs = [
     {
         name: 'Braintree',
         logo: 'braintree.svg',
+        wh: [116, 16],
         link: 'https://www.braintreepayments.com/dk/braintree-pricing',
         cards: ['visa', 'mastercard', 'maestro'],
         features: ['Abonnementsbetaling', 'Apple Pay'],
@@ -120,6 +128,7 @@ const PSPs = [
     {
         name: 'Certitrade all-in-one',
         logo: 'certitrade.svg',
+        wh: [125, 25],
         link: 'https://certitrade.se',
         cards: ['visa', 'mastercard', 'maestro'],
         features: ['Abonnementsbetaling'],
@@ -132,6 +141,7 @@ const PSPs = [
     {
         name: 'Certitrade Fast',
         logo: 'certitrade.svg',
+        wh: [125, 25],
         link: 'https://certitrade.se',
         acqs: ['Bambora', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Elavon'],
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
@@ -148,6 +158,7 @@ const PSPs = [
     {
         name: 'DanDomain Start-Up',
         logo: 'dandomain.svg',
+        wh: [135, 25],
         link: 'https://dandomain.dk/betalingssystem/priser',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
@@ -169,6 +180,7 @@ const PSPs = [
     {
         name: 'DanDomain Success',
         logo: 'dandomain.svg',
+        wh: [135, 25],
         link: 'https://dandomain.dk/betalingssystem/priser',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
@@ -193,6 +205,7 @@ const PSPs = [
     {
         name: 'Bambora Checkout',
         logo: 'bambora-psp.svg',
+        wh: [109, 20],
         link: 'https://www.bambora.com/da/dk/online/',
         acqs: ['Dankort', 'Bambora'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro'],
@@ -209,6 +222,7 @@ const PSPs = [
     {
         name: 'Bambora Pro+',
         logo: 'bambora-psp.svg',
+        wh: [109, 20],
         link: 'https://www.bambora.com/da/dk/online/',
         acqs: ['Dankort', 'Bambora'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro'],
@@ -246,6 +260,7 @@ const PSPs = [
     {
         name: 'Mollie',
         logo: 'mollie.svg',
+        wh: [74, 22],
         link: 'https://www.mollie.com/en/pricing',
         cards: ['visa', 'mastercard', 'maestro', 'amex'],
         features: ['Abonnementsbetaling', 'Apple Pay'],
@@ -258,6 +273,7 @@ const PSPs = [
     {
         name: 'Nets Easy',
         logo: 'netaxept.svg',
+        wh: [85, 25],
         link: 'https://www.nets.eu/da-DK/payments/online',
         cards: ['dankort', 'visa', 'mastercard', 'maestro'],
         features: [
@@ -284,6 +300,7 @@ const PSPs = [
     {
         name: 'Paylike',
         logo: 'paylike.svg',
+        wh: [99, 31],
         link: 'https://paylike.dk/pricing',
         cards: ['visa', 'mastercard', 'maestro'],
         features: ['Abonnementsbetaling', 'Apple Pay'],
@@ -296,6 +313,7 @@ const PSPs = [
     {
         name: 'PayPal',
         logo: 'paypal.svg',
+        wh: [127, 31],
         link: 'https://www.paypal.com/dk/webapps/mpp/merchant-fees',
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
         features: [],
@@ -308,6 +326,7 @@ const PSPs = [
     {
         name: 'Payson',
         logo: 'payson.png',
+        wh: [121, 32],
         link: 'https://www.payson.se/en/company/price-list/',
         cards: ['visa', 'mastercard', 'maestro'],
         features: [],
@@ -324,6 +343,7 @@ const PSPs = [
     {
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
+        wh: [143, 14],
         reseller: 'QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         acqs: ['Dankort', 'Clearhaus'],
@@ -347,6 +367,7 @@ const PSPs = [
     {
         name: 'PensoPay Start-Up',
         logo: 'pensopay.svg',
+        wh: [143, 14],
         reseller: 'QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         acqs: ['Dankort', 'Clearhaus'],
@@ -371,6 +392,7 @@ const PSPs = [
     {
         name: 'PensoPay Business',
         logo: 'pensopay.svg',
+        wh: [143, 14],
         reseller: 'QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         acqs: ['Dankort', 'Clearhaus'],
@@ -397,6 +419,7 @@ const PSPs = [
     {
         name: 'PensoPay Pro',
         logo: 'pensopay.svg',
+        wh: [143, 14],
         reseller: 'QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         acqs: ['Dankort', 'Clearhaus'],
@@ -423,6 +446,7 @@ const PSPs = [
     {
         name: 'QuickPay Basis',
         logo: 'quickpay.svg',
+        wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
         acqs: ['Dankort', 'Nets', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
@@ -440,6 +464,7 @@ const PSPs = [
     {
         name: 'QuickPay Starter',
         logo: 'quickpay.svg',
+        wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
         acqs: ['Dankort', 'Nets', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
@@ -458,6 +483,7 @@ const PSPs = [
     {
         name: 'QuickPay Professional',
         logo: 'quickpay.svg',
+        wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
         acqs: ['Dankort', 'Nets', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
@@ -478,6 +504,7 @@ const PSPs = [
     {
         name: 'Reepay Basic',
         logo: 'reepay.svg',
+        wh: [97, 20],
         link: 'https://reepay.com/da/pricing/',
         acqs: ['Clearhaus', 'Swedbank'],
         cards: ['visa', 'mastercard', 'maestro'],
@@ -501,6 +528,7 @@ const PSPs = [
     {
         name: 'Reepay Standard',
         logo: 'reepay.svg',
+        wh: [97, 20],
         link: 'https://reepay.com/da/pricing/',
         acqs: ['Dankort', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Bambora'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro'],
@@ -527,6 +555,7 @@ const PSPs = [
     {
         name: 'ScanNet Start-Up',
         logo: 'scannet.svg',
+        wh: [93, 23],
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
@@ -548,6 +577,7 @@ const PSPs = [
     {
         name: 'ScanNet Success',
         logo: 'scannet.svg',
+        wh: [93, 23],
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
@@ -571,6 +601,7 @@ const PSPs = [
     {
         name: 'Scanpay',
         logo: 'scanpay.svg',
+        wh: [104, 23],
         link: 'https://scanpay.dk',
         acqs: ['Dankort', 'Nets', 'Clearhaus'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
@@ -584,6 +615,7 @@ const PSPs = [
     {
         name: 'Stripe',
         logo: 'stripe.svg',
+        wh: [75, 31],
         link: 'https://stripe.com/en-dk/pricing',
         cards: ['visa', 'mastercard', 'amex'],
         features: ['Abonnementsbetaling', 'Apple Pay'],
@@ -596,6 +628,7 @@ const PSPs = [
     {
         name: 'Swiipe Basic',
         logo: 'swiipe.svg',
+        wh: [90, 26],
         reseller: 'Bambora',
         link: 'https://swiipe.com/#pris',
         acqs: ['Dankort', 'Bambora'],
@@ -611,6 +644,7 @@ const PSPs = [
     {
         name: 'Swiipe Business',
         logo: 'swiipe.svg',
+        wh: [90, 26],
         reseller: 'Bambora',
         link: 'https://swiipe.com/#pris',
         acqs: ['Dankort', 'Bambora'],
@@ -626,6 +660,7 @@ const PSPs = [
     {
         name: 'Wannafind Start-Up',
         logo: 'wannafind.svg',
+        wh: [146, 14],
         link: 'https://www.wannafind.dk/betalingssystem/Priser/',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
@@ -647,6 +682,7 @@ const PSPs = [
     {
         name: 'Wannafind Success',
         logo: 'wannafind.svg',
+        wh: [146, 14],
         link: 'https://www.wannafind.dk/betalingssystem/Priser/',
         acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
         cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],

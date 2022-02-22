@@ -145,15 +145,11 @@ function build() {
                     trn: acq.trnfees
                 }, fees, acq.name);
 
-                const acqlink = document.createElement('a');
-                acqlink.href = acq.link;
-                acqlink.className = 'acq';
-                const acqlogo = new Image();
+                const acqlogo = new Image(acq.wh[0], acq.wh[1]);
+                acqlogo.className = 'acqlogo';
                 acqlogo.src = '/img/psp/' + acq.logo;
                 acqlogo.alt = acq.name;
-                acqlink.appendChild(acqlogo);
-                acqfrag.appendChild(acqlink);
-                acqfrag.appendChild(document.createElement('br'));
+                acqfrag.appendChild(acqlogo);
 
                 // Construct a new acqcards
                 for (const card in acq.cards) { acqcards[card] = acq.cards[card]; }
@@ -198,7 +194,8 @@ function build() {
         psplink.target = '_blank';
         psplink.href = psp.link;
         psplink.className = 'psp';
-        const psplogo = new Image();
+
+        const psplogo = new Image(psp.wh[0], psp.wh[1]);
         psplogo.src = '/img/psp/' + psp.logo;
         psplogo.alt = psp.name;
         const pspname = document.createElement('span');
