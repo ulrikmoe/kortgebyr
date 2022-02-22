@@ -190,6 +190,7 @@ input {
     display: grid;
     grid-template-columns: .85fr 1.3fr .85fr;
     grid-gap: 3%;
+    column-gap: 3%;
     padding: .2rem 1.25rem 1.2rem;
     box-sizing: border-box;
     background: #fff;
@@ -369,11 +370,19 @@ input {
 
 
 .avgqty {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
+    display: flex;
     box-sizing: border-box;
     margin-bottom: .8rem;
+}
+
+.field--avg {
+    width: 50%;
+    margin-right: 2.5%;
+}
+
+.field--qty {
+    width: 50%;
+    margin-left: 2.5%;
 }
 
 
@@ -427,6 +436,7 @@ td {
 
 .field {
     padding: .7rem 0 .6em;
+    box-sizing: border-box;
 }
 
 .cardsth {
@@ -654,6 +664,7 @@ td {
 
     .settings {
         grid-template-columns: 1fr;
+        column-gap: 0;
         grid-gap: 0;
         padding-bottom: .6rem;
     }

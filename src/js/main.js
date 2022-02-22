@@ -232,7 +232,10 @@ function build() {
         cardtd.appendChild(cardfrag);
         cardtd.className = 'cardtd';
 
-        tr.insertCell(-1).appendChild(sumTxt(fees.setup));
+        const setuptd = tr.insertCell(-1);
+        setuptd.className = 'mobile--hide';
+        setuptd.appendChild(sumTxt(fees.setup));
+
         tr.insertCell(-1).appendChild(sumTxt(fees.monthly));
         tr.insertCell(-1).appendChild(sumTxt(fees.trn));
         tr.insertCell(-1).appendChild(sumTxt(totals));
