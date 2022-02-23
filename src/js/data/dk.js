@@ -1,5 +1,4 @@
 /* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
-/* global opts, Currency, $currency, $avgvalue, $revenue, $dankortscale, $qty */
 
 const MobilePay = {
     title: 'MobilePay',
@@ -10,20 +9,35 @@ const Forbrugsforeningen = {
     title: 'forbrugsforeningen'
 };
 
-const ACQs = [
-    {
-        name: 'Dankort',
-        logo: 'nets.svg',
-        wh: [50, 15],
-        link: 'https://dankort.dk/dk/betaling-i-webshop/',
-        cards: ['dankort', 'forbrugsforeningen'],
+const Dankort = {
+    name: 'Dankort',
+    logo: 'nets.svg',
+    wh: [50, 15],
+    link: 'https://dankort.dk/dk/betaling-i-webshop/',
+    cards: ['dankort', 'forbrugsforeningen'],
+    fees: {
+        trn() {
+            return $avgvalue.scale(0.32 / 100);
+        }
+    }
+};
+
+
+const ACQs = {
+    clearhaus: {
+        name: 'Clearhaus',
+        logo: 'clearhaus.svg',
+        wh: [77, 13],
+        link: 'https://www.clearhaus.com/dk/',
+        cards: ['visa', 'mastercard', 'maestro'],
         fees: {
             trn() {
-                return $avgvalue.scale(0.32 / 100);
+                const trnfee = $avgvalue.scale(1.25 / 100);
+                return (trnfee.order('DKK') > 0.6) ? trnfee : new Currency(0.6, 'DKK');
             }
         }
     },
-    {
+    nets: {
         name: 'Nets',
         logo: 'nets.svg',
         wh: [50, 15],
@@ -39,7 +53,7 @@ const ACQs = [
             }
         }
     },
-    {
+    handelsbanken: {
         name: 'Handelsbanken',
         logo: 'handelsbanken.svg',
         wh: [90, 9],
@@ -52,7 +66,7 @@ const ACQs = [
             }
         }
     },
-    {
+    swedbank: {
         name: 'Swedbank',
         logo: 'swedbank.png',
         wh: [75, 12],
@@ -71,20 +85,7 @@ const ACQs = [
             }
         }
     },
-    {
-        name: 'Clearhaus',
-        logo: 'clearhaus.svg',
-        wh: [77, 13],
-        link: 'https://www.clearhaus.com/dk/',
-        cards: ['visa', 'mastercard', 'maestro'],
-        fees: {
-            trn() {
-                const trnfee = $avgvalue.scale(1.25 / 100);
-                return (trnfee.order('DKK') > 0.6) ? trnfee : new Currency(0.6, 'DKK');
-            }
-        }
-    },
-    {
+    bambora: {
         name: 'Bambora',
         logo: 'bambora.svg',
         wh: [71, 13],
@@ -96,7 +97,7 @@ const ACQs = [
             }
         }
     }
-];
+};
 
 const PSPs = [
     {
@@ -143,7 +144,7 @@ const PSPs = [
         logo: 'certitrade.svg',
         wh: [125, 25],
         link: 'https://certitrade.se',
-        acqs: ['Bambora', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Elavon'],
+        acqs: ['bambora', 'clearhaus', 'swedbank', 'handelsbanken'],
         cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
         features: ['Abonnementsbetaling'],
         fees: {
@@ -160,9 +161,8 @@ const PSPs = [
         logo: 'dandomain.svg',
         wh: [135, 25],
         link: 'https://dandomain.dk/betalingssystem/priser',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Forbrugsforeningen],
+        acqs: ['nets', 'clearhaus', 'bambora', 'swedbank'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -182,9 +182,8 @@ const PSPs = [
         logo: 'dandomain.svg',
         wh: [135, 25],
         link: 'https://dandomain.dk/betalingssystem/priser',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Forbrugsforeningen],
+        acqs: ['nets', 'clearhaus', 'bambora', 'swedbank'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -207,8 +206,8 @@ const PSPs = [
         logo: 'bambora-psp.svg',
         wh: [109, 20],
         link: 'https://www.bambora.com/da/dk/online/',
-        acqs: ['Dankort', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        acqs: ['bambora'],
+        cards: ['dankort'],
         features: ['Abonnementsbetaling',
             {
                 title: 'MobilePay',
@@ -224,8 +223,8 @@ const PSPs = [
         logo: 'bambora-psp.svg',
         wh: [109, 20],
         link: 'https://www.bambora.com/da/dk/online/',
-        acqs: ['Dankort', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        acqs: ['bambora'],
+        cards: ['dankort'],
         features: ['Abonnementsbetaling', MobilePay],
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -241,8 +240,8 @@ const PSPs = [
         name: 'Freepay',
         logo: 'freepay.svg',
         link: 'https://freepay.dk/da/betalingsgateway/priser',
-        acqs: ['Dankort', 'Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        acqs: ['nets', 'clearhaus'],
+        cards: ['dankort'],
         features: [
             'Abonnementsbetaling',
             MobilePay
@@ -275,7 +274,7 @@ const PSPs = [
         logo: 'netaxept.svg',
         wh: [85, 25],
         link: 'https://www.nets.eu/da-DK/payments/online',
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -328,7 +327,7 @@ const PSPs = [
         logo: 'payson.png',
         wh: [121, 32],
         link: 'https://www.payson.se/en/company/price-list/',
-        cards: ['visa', 'mastercard', 'maestro'],
+        cards: ['dankort'],
         features: [],
         fees: {
             trn(o) {
@@ -346,8 +345,8 @@ const PSPs = [
         wh: [143, 14],
         reseller: 'QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
-        acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        acqs: ['clearhaus'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -370,8 +369,8 @@ const PSPs = [
         wh: [143, 14],
         reseller: 'QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
-        acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        acqs: ['clearhaus'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -395,8 +394,8 @@ const PSPs = [
         wh: [143, 14],
         reseller: 'QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
-        acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        acqs: ['clearhaus'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -422,8 +421,8 @@ const PSPs = [
         wh: [143, 14],
         reseller: 'QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
-        acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        acqs: ['clearhaus'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -448,8 +447,8 @@ const PSPs = [
         logo: 'quickpay.svg',
         wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
-        acqs: ['Dankort', 'Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        acqs: ['nets', 'clearhaus'],
+        cards: ['dankort'],
         features: [
             'Abonnementsbetaling',
             'Apple Pay',
@@ -466,8 +465,8 @@ const PSPs = [
         logo: 'quickpay.svg',
         wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
-        acqs: ['Dankort', 'Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        acqs: ['nets', 'clearhaus'],
+        cards: ['dankort'],
         features: [
             'Abonnementsbetaling',
             'Apple Pay',
@@ -485,8 +484,8 @@ const PSPs = [
         logo: 'quickpay.svg',
         wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
-        acqs: ['Dankort', 'Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        acqs: ['nets', 'clearhaus'],
+        cards: ['dankort'],
         features: [
             'Abonnementsbetaling',
             'Apple Pay',
@@ -506,8 +505,8 @@ const PSPs = [
         logo: 'reepay.svg',
         wh: [97, 20],
         link: 'https://reepay.com/da/pricing/',
-        acqs: ['Clearhaus', 'Swedbank'],
-        cards: ['visa', 'mastercard', 'maestro'],
+        acqs: ['clearhaus', 'swedbank'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -530,8 +529,8 @@ const PSPs = [
         logo: 'reepay.svg',
         wh: [97, 20],
         link: 'https://reepay.com/da/pricing/',
-        acqs: ['Dankort', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        acqs: ['clearhaus', 'swedbank', 'handelsbanken', 'bambora'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -557,8 +556,8 @@ const PSPs = [
         logo: 'scannet.svg',
         wh: [93, 23],
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        acqs: ['nets', 'clearhaus', 'swedbank'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -579,8 +578,8 @@ const PSPs = [
         logo: 'scannet.svg',
         wh: [93, 23],
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        acqs: ['nets', 'clearhaus', 'swedbank'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -603,8 +602,8 @@ const PSPs = [
         logo: 'scanpay.svg',
         wh: [104, 23],
         link: 'https://scanpay.dk',
-        acqs: ['Dankort', 'Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        acqs: ['nets', 'clearhaus'],
+        cards: ['dankort'],
         features: ['Abonnementsbetaling', MobilePay],
         fees: {
             trn() {
@@ -631,8 +630,8 @@ const PSPs = [
         wh: [90, 26],
         reseller: 'Bambora',
         link: 'https://swiipe.com/#pris',
-        acqs: ['Dankort', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        acqs: ['bambora'],
+        cards: ['dankort'],
         features: [MobilePay],
         fees: {
             monthly: new Currency(49, 'DKK'),
@@ -647,8 +646,8 @@ const PSPs = [
         wh: [90, 26],
         reseller: 'Bambora',
         link: 'https://swiipe.com/#pris',
-        acqs: ['Dankort', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
+        acqs: ['bambora'],
+        cards: ['dankort'],
         features: [MobilePay],
         fees: {
             monthly: new Currency(129, 'DKK'),
@@ -662,8 +661,8 @@ const PSPs = [
         logo: 'wannafind.svg',
         wh: [146, 14],
         link: 'https://www.wannafind.dk/betalingssystem/Priser/',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        acqs: ['nets', 'clearhaus', 'swedbank'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',
@@ -684,8 +683,8 @@ const PSPs = [
         logo: 'wannafind.svg',
         wh: [146, 14],
         link: 'https://www.wannafind.dk/betalingssystem/Priser/',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
+        acqs: ['nets', 'clearhaus', 'swedbank'],
+        cards: ['dankort'],
         features: [
             {
                 title: 'Abonnementsbetaling',

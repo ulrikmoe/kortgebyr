@@ -1,5 +1,4 @@
 /* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
-/* global $currency */
 
 
 /*  form2obj(form): A simple version for kortgebyr.dk */
@@ -33,14 +32,6 @@ function obj2form(o, form) {
     }
 }
 
-// Check if object-x' properties is in object-y.
-function x_has_y(objx, objy) {
-    for (const prop in objy) {
-        if (!objx[prop]) { return false; }
-    }
-    return true;
-}
-
 function sum(obj) {
     let ret = new Currency();
     for (const fee in obj) {
@@ -64,19 +55,6 @@ function merge(...args) {
     return obj;
 }
 
-
-function showTooltip() {
-    if (!this.firstElementChild) {
-        const infobox = document.createElement('ul');
-        const obj = this.ttdata;
-        for (const prop in obj) {
-            const li = document.createElement('li');
-            li.textContent = prop + ': ' + obj[prop].print($currency);
-            infobox.appendChild(li);
-        }
-        this.appendChild(infobox);
-    }
-}
 
 /*
 const base64_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/';

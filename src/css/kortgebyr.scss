@@ -296,6 +296,26 @@ input {
     border-bottom-left-radius: 0;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     box-sizing: border-box;
+
+    &:focus {
+        color: #212529;
+        background-color: #fff;
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    &::-moz-placeholder {
+        color: #6c757d;
+        opacity: 1
+    }
+
+    &::placeholder {
+        color: #6c757d;
+        opacity: 1
+    }
 }
 
 .form-select {
@@ -440,7 +460,7 @@ td {
 }
 
 .cardsth {
-    width: 120px;
+    width: 140px;
     box-sizing: border-box;
 }
 
@@ -449,7 +469,7 @@ td {
 }
 
 .acqth {
-    width: 130px;
+    width: 120px;
 }
 
 .pspth {

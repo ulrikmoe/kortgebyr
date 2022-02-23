@@ -1,5 +1,4 @@
 /* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
-/* global $currency */
 
 const currency_map = {
     DKK: { cur: '% kr', t: '.', d: ',' },

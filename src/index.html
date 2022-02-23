@@ -39,17 +39,17 @@
               <label for="acquirer" class="label">Indløser</label>
               <select id="acquirer" name="acquirer" class="form-select">
                 <option value="auto">Vælg indløser</option>
-                <option value="1">Nets</option>
-                <option value="4">Clearhaus</option>
-                <option value="2">Handelsbanken</option>
-                <option value="3">Swedbank</option>
-                <option value="5">Bambora</option>
+                <option value="nets">Nets</option>
+                <option value="clearhaus">Clearhaus</option>
+                <option value="handelsbanken">Handelsbanken</option>
+                <option value="swedbank">Swedbank</option>
+                <option value="bambora">Bambora</option>
               </select>
             </div>
 
             <div class="field">
-              <label for="module" class="label">Shopsystem (kommer snart)</label>
-              <select name="module" id="module" class="form-select" disabled>
+              <label for="module" class="label">Shopsystem</label>
+              <select name="module" id="module" class="form-select">
                 <option value="">Vælg shopsystem</option>
                 <option value="woocommerce">WooCommerce</option>
                 <option value="magento2">Magento 2</option>
@@ -89,14 +89,6 @@
           <div>
             <p class="label label--tilvalg mobile--hide">Tilvalg</p>
             <div class="form-check">
-              <label>
-                <input class="form-check-input" type="checkbox" name="cards[]" value="dankort">
-                <span>Dankort</span>
-              </label>
-              <input class="hide" type="checkbox" name="cards[]" value="visa">
-            </div>
-
-            <div class="form-check">
               <input class="form-check-input" type="checkbox" name="features[]" value="MobilePay" id="MobilePay">
               <label class="form-check-label" for="MobilePay">MobilePay</label>
             </div>
@@ -117,9 +109,8 @@
         <thead>
           <tr>
             <th class="pspth">Betalingsløsning</th>
-            <th class="acqth">Indløsning</th>
+            <th class="acqth">Indløser</th>
             <th class="cardsth">Betalingskort</th>
-            <th class="mobile--hide">Oprettelse</th>
             <th>Abonnement</th>
             <th>Transaktions-<br>gebyrer</th>
             <th>
