@@ -1,63 +1,59 @@
 /* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
-/* global opts, Currency, $currency, $avgvalue, $revenue, $dankortscale, $qty */
 
-const MobilePay = {
-    title: 'MobilePay',
-    monthly: new Currency(49, 'DKK')
+const DankortFees = {
+    // https://www.dankort.dk/dk/priser/
+    trn() {
+        return $avgvalue.scale(0.32 / 100);
+    }
 };
 
-const Forbrugsforeningen = {
-    title: 'forbrugsforeningen'
-};
-
-const ACQs = [
-    {
-        name: 'Dankort',
-        logo: 'nets.svg',
-        wh: [50, 15],
-        link: 'https://dankort.dk/dk/betaling-i-webshop/',
-        cards: ['dankort', 'forbrugsforeningen'],
+const ACQs = {
+    clearhaus: {
+        name: 'Clearhaus',
+        logo: 'clearhaus.svg',
+        wh: [76.66, 13],
+        link: 'https://www.clearhaus.com/dk/',
+        cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
             trn() {
-                return $avgvalue.scale(0.32 / 100);
+                const trnfee = $avgvalue.scale(1.25 / 100);
+                return (trnfee.order('DKK') > 0.6) ? trnfee : new Currency(0.6, 'DKK');
             }
         }
     },
-    {
+    nets: {
         name: 'Nets',
         logo: 'nets.svg',
-        wh: [50, 15],
+        wh: [51.3, 15],
         link: 'https://www.nets.eu/dk/payments/online-betalinger/indloesningsaftale/',
-        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
+        cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         fees: {
-            setup: new Currency(1000, 'DKK'),
-            monthly: new Currency(149, 'DKK'),
             trn() {
-                // EØS: 0.99% + 0,25% (if credit card) + 1,95% (if company card)
-                const trnfee = $avgvalue.scale(1.2 / 100).add(new Currency(0.19, 'DKK'));
-                return (trnfee.order('DKK') > 0.7) ? trnfee : new Currency(0.7, 'DKK');
+                // EØS: 0.99% + 0,25% (if credit card, ie. 23% of cards)
+                const trnfee = $avgvalue.scale(1.05 / 100);
+                return (trnfee.order('DKK') > 0.29) ? trnfee : new Currency(0.29, 'DKK');
             }
         }
     },
-    {
+    handelsbanken: {
         name: 'Handelsbanken',
         logo: 'handelsbanken.svg',
         wh: [90, 9],
         link: 'https://handelsbanken.dk/shb/inet/icentda.nsf/Default/' +
             'qC21926A235427DE6C12578810023DBB9?Opendocument',
-        cards: ['visa', 'mastercard', 'maestro'],
+        cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
             trn() {
                 return $avgvalue.scale(1.5 / 100);
             }
         }
     },
-    {
+    swedbank: {
         name: 'Swedbank',
         logo: 'swedbank.png',
         wh: [75, 12],
         link: 'https://www.swedbank.dk/erhverv/card-services/priser-og-vilkar/#!/CID_2263482',
-        cards: ['visa', 'mastercard', 'maestro'],
+        cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
             monthly(o) {
                 // Minimum fee of 50 DKK / month.
@@ -71,41 +67,29 @@ const ACQs = [
             }
         }
     },
-    {
-        name: 'Clearhaus',
-        logo: 'clearhaus.svg',
-        wh: [77, 13],
-        link: 'https://www.clearhaus.com/dk/',
-        cards: ['visa', 'mastercard', 'maestro'],
-        fees: {
-            trn() {
-                const trnfee = $avgvalue.scale(1.25 / 100);
-                return (trnfee.order('DKK') > 0.6) ? trnfee : new Currency(0.6, 'DKK');
-            }
-        }
-    },
-    {
+    worldline: {
         name: 'Bambora',
-        logo: 'bambora.svg',
-        wh: [71, 13],
+        logo: 'worldline.svg',
+        wh: [81.8, 11],
         link: 'http://www.bambora.com/',
-        cards: ['visa', 'mastercard', 'maestro'],
+        cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
             trn() {
                 return $avgvalue.scale(1.25 / 100);
             }
         }
     }
-];
+};
 
 const PSPs = [
     {
         name: '2checkout',
         logo: '2checkout.svg',
-        wh: [127, 15],
+        wh: [126.3, 15],
         link: 'https://www.2checkout.com/pricing/',
-        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: ['Abonnementsbetaling'],
+        cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
+        features: new Set(['subscriptions']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
         fees: {
             trn() {
                 return $revenue.scale(3.5 / 100).add(new Currency(0.3 * $qty, 'EUR'));
@@ -115,10 +99,11 @@ const PSPs = [
     {
         name: 'Braintree',
         logo: 'braintree.svg',
-        wh: [116, 16],
+        wh: [120.6, 16],
         link: 'https://www.braintreepayments.com/dk/braintree-pricing',
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling', 'Apple Pay'],
+        cards: new Set(['visa', 'mastercard', 'maestro']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
         fees: {
             trn() {
                 return $revenue.scale(1.9 / 100).add(new Currency(2.25 * $qty, 'DKK'));
@@ -128,10 +113,11 @@ const PSPs = [
     {
         name: 'Certitrade all-in-one',
         logo: 'certitrade.svg',
-        wh: [125, 25],
+        wh: [119.7, 25],
         link: 'https://certitrade.se',
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling'],
+        cards: new Set(['visa', 'mastercard', 'maestro']),
+        features: new Set(['subscriptions']),
+        modules: new Set(['woocommerce']),
         fees: {
             trn() {
                 return $revenue.scale(2.1 / 100).add(new Currency(2.1 * $qty, 'SEK'));
@@ -141,11 +127,11 @@ const PSPs = [
     {
         name: 'Certitrade Fast',
         logo: 'certitrade.svg',
-        wh: [125, 25],
+        wh: [119.7, 25],
         link: 'https://certitrade.se',
-        acqs: ['Bambora', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Elavon'],
-        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: ['Abonnementsbetaling'],
+        acqs: new Set(['worldline', 'clearhaus', 'swedbank', 'handelsbanken']),
+        features: new Set(['subscriptions']),
+        modules: new Set(['woocommerce']),
         fees: {
             monthly: new Currency(1000, 'SEK'),
             trn() {
@@ -158,20 +144,18 @@ const PSPs = [
     {
         name: 'DanDomain Start-Up',
         logo: 'dandomain.svg',
-        wh: [135, 25],
+        wh: [119.2, 22],
         link: 'https://dandomain.dk/betalingssystem/priser',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Forbrugsforeningen],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(99, 'DKK')
-            },
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
+        features: new Set(['subscriptions', 'applepay', 'mobilepay']),
+        modules: new Set(['woocommerce', 'thirty bees', 'prestashop', 'dandomain']),
         fees: {
+            monthly(o) {
+                if (opts.features.subscriptions) {
+                    o.monthly['DanDomain modul'] = new Currency(99, 'DKK');
+                }
+            },
             trn() {
                 return new Currency($qty, 'DKK');
             }
@@ -180,21 +164,20 @@ const PSPs = [
     {
         name: 'DanDomain Success',
         logo: 'dandomain.svg',
-        wh: [135, 25],
+        wh: [119.2, 22],
         link: 'https://dandomain.dk/betalingssystem/priser',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Bambora', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb',
-            'diners', Forbrugsforeningen],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(99, 'DKK')
-            },
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
+        features: new Set(['subscriptions', 'applepay', 'mobilepay']),
+        modules: new Set(['woocommerce', 'thirty bees', 'prestashop', 'dandomain']),
         fees: {
-            monthly: new Currency(149, 'DKK'),
+            monthly(o) {
+                if (opts.features.subscriptions) {
+            sum += this.amounts[code] / currency_value[c
+                    o.monthly['DanDomain modul'] = new Currency(99, 'DKK');
+                }
+                return new Currency(149, 'DKK');
+            },
             trn() {
                 const freeTrns = 500;
                 if ($qty <= freeTrns) return new Currency(0, 'DKK');
@@ -203,30 +186,32 @@ const PSPs = [
         }
     },
     {
-        name: 'Bambora Checkout',
-        logo: 'bambora-psp.svg',
-        wh: [109, 20],
+        name: 'Worldline Checkout',
+        logo: 'worldline.svg',
+        wh: [118.97, 16],
+        note: 'Tidl. Bambora/ePay',
         link: 'https://www.bambora.com/da/dk/online/',
-        acqs: ['Dankort', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling',
-            {
-                title: 'MobilePay',
-                monthly: new Currency(0, 'DKK')
-            }
-        ],
+        dankort: true,
+        acqs: new Set(['worldline']),
+        features: new Set(['subscriptions', 'mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
         fees: {
-            monthly: new Currency(195, 'DKK')
+            monthly(o) {
+                if (opts.features.mobilepay) delete o.monthly.MobilePay; // Included for free
+                return new Currency(195, 'DKK');
+            }
         }
     },
     {
-        name: 'Bambora Pro+',
-        logo: 'bambora-psp.svg',
-        wh: [109, 20],
+        name: 'Worldline Pro+',
+        logo: 'worldline.svg',
+        wh: [118.97, 16],
+        note: 'Tidl. Bambora/ePay',
         link: 'https://www.bambora.com/da/dk/online/',
-        acqs: ['Dankort', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling', MobilePay],
+        dankort: true,
+        acqs: new Set(['worldline']),
+        features: new Set(['subscriptions', 'mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'shopify', 'shoporama']),
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
@@ -236,34 +221,31 @@ const PSPs = [
             }
         }
     },
-    /*
     {
         name: 'Freepay',
         logo: 'freepay.svg',
+        wh: [98, 20],
         link: 'https://freepay.dk/da/betalingsgateway/priser',
-        acqs: ['Dankort', 'Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: [
-            'Abonnementsbetaling',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['clearhaus']),
+        features: new Set(['subscriptions', 'mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
-            monthly: new Currency(0, 'DKK'),
             trn(o) {
-                o.trn.Clearhaus = new Currency(0, 'DKK');
-                o.trn.Dankort = new Currency(0.21 * $qty, 'DKK');
-                return true;
+                // Dankort 3-D Secure lookup
+                o.trn['Freepay 3D-secure opslag'] =
+                    new Currency(0.21 * $qty * $dankortscale, 'DKK');
             }
         }
     },
-    */
     {
         name: 'Mollie',
         logo: 'mollie.svg',
         wh: [74, 22],
         link: 'https://www.mollie.com/en/pricing',
-        cards: ['visa', 'mastercard', 'maestro', 'amex'],
-        features: ['Abonnementsbetaling', 'Apple Pay'],
+        cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'shopify']),
         fees: {
             trn() {
                 return $revenue.scale(1.8 / 100).add(new Currency(0.25 * $qty, 'EUR'));
@@ -272,24 +254,15 @@ const PSPs = [
     },
     {
         name: 'Nets Easy',
-        logo: 'netaxept.svg',
+        logo: 'nets-easy.svg',
         wh: [85, 25],
         link: 'https://www.nets.eu/da-DK/payments/online',
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                setup: new Currency(495, 'DKK'),
-                monthly: new Currency(49, 'DKK')
-            },
-            MobilePay
-        ],
+        cards: new Set(['dankort', 'visa', 'mastercard', 'maestro']),
+        features: new Set(['subscriptions', 'mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
         fees: {
             monthly: new Currency(199, 'DKK'),
             trn(o) {
-                if (!$dankortscale) {
-                    return $revenue.scale(1.35 / 100).add(new Currency(0.5 * $qty, 'DKK'));
-                }
                 o.trn['Dankort (0,39% + 1 DKK)'] = $revenue.scale($dankortscale).scale(0.39 / 100)
                     .add(new Currency($dankortscale * $qty, 'DKK'));
                 o.trn['Int. kort (1,35% + 0,5 DKK)'] = $revenue.scale(1 - $dankortscale).scale(1.35 / 100)
@@ -302,8 +275,9 @@ const PSPs = [
         logo: 'paylike.svg',
         wh: [99, 31],
         link: 'https://paylike.dk/pricing',
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: ['Abonnementsbetaling', 'Apple Pay'],
+        cards: new Set(['visa', 'mastercard', 'maestro']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
             trn() {
                 return $revenue.scale(1.35 / 100).add(new Currency(0.50 * $qty, 'DKK'));
@@ -313,10 +287,11 @@ const PSPs = [
     {
         name: 'PayPal',
         logo: 'paypal.svg',
-        wh: [127, 31],
+        wh: [123.6, 30],
         link: 'https://www.paypal.com/dk/webapps/mpp/merchant-fees',
-        cards: ['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners'],
-        features: [],
+        cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
+        features: new Set([]),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart', 'shopify']),
         fees: {
             trn() {
                 return $revenue.scale(1.9 / 100).add(new Currency(2.6 * $qty, 'DKK'));
@@ -328,8 +303,9 @@ const PSPs = [
         logo: 'payson.png',
         wh: [121, 32],
         link: 'https://www.payson.se/en/company/price-list/',
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: [],
+        cards: new Set(['visa', 'mastercard', 'maestro']),
+        features: new Set([]),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
             trn(o) {
                 const revenue = $revenue.order('SEK') * 12;
@@ -344,20 +320,12 @@ const PSPs = [
         name: 'PensoPay Basis',
         logo: 'pensopay.svg',
         wh: [143, 14],
-        reseller: 'QuickPay',
+        note: 'Reseller af QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
-        acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                trn() {
-                    return new Currency(0.2 * $qty, 'DKK');
-                }
-            },
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['clearhaus']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
         fees: {
             trn() {
                 return new Currency(4 * $qty, 'DKK');
@@ -368,20 +336,12 @@ const PSPs = [
         name: 'PensoPay Start-Up',
         logo: 'pensopay.svg',
         wh: [143, 14],
-        reseller: 'QuickPay',
+        note: 'Reseller af QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
-        acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                trn() {
-                    return new Currency(0.2 * $qty, 'DKK');
-                }
-            },
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['clearhaus']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
         fees: {
             monthly: new Currency(49, 'DKK'),
             trn() {
@@ -393,20 +353,12 @@ const PSPs = [
         name: 'PensoPay Business',
         logo: 'pensopay.svg',
         wh: [143, 14],
-        reseller: 'QuickPay',
+        note: 'Reseller af QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
-        acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                trn() {
-                    return new Currency(0.2 * $qty, 'DKK');
-                }
-            },
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['clearhaus']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
         fees: {
             monthly: new Currency(99, 'DKK'),
             trn() {
@@ -420,20 +372,12 @@ const PSPs = [
         name: 'PensoPay Pro',
         logo: 'pensopay.svg',
         wh: [143, 14],
-        reseller: 'QuickPay',
+        note: 'Reseller af QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
-        acqs: ['Dankort', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                trn() {
-                    return new Currency(0.2 * $qty, 'DKK');
-                }
-            },
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['clearhaus']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
@@ -448,13 +392,10 @@ const PSPs = [
         logo: 'quickpay.svg',
         wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
-        acqs: ['Dankort', 'Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
-        features: [
-            'Abonnementsbetaling',
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['nets', 'clearhaus']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
         fees: {
             trn() {
                 return new Currency(5 * $qty, 'DKK');
@@ -466,13 +407,10 @@ const PSPs = [
         logo: 'quickpay.svg',
         wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
-        acqs: ['Dankort', 'Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
-        features: [
-            'Abonnementsbetaling',
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['nets', 'clearhaus']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
         fees: {
             monthly: new Currency(49, 'DKK'),
             trn() {
@@ -485,13 +423,10 @@ const PSPs = [
         logo: 'quickpay.svg',
         wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
-        acqs: ['Dankort', 'Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
-        features: [
-            'Abonnementsbetaling',
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['nets', 'clearhaus']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
@@ -506,19 +441,12 @@ const PSPs = [
         logo: 'reepay.svg',
         wh: [97, 20],
         link: 'https://reepay.com/da/pricing/',
-        acqs: ['Clearhaus', 'Swedbank'],
-        cards: ['visa', 'mastercard', 'maestro'],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(249, 'DKK'),
-                trn() {
-                    return new Currency(2 * $qty, 'DKK');
-                }
-            },
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['clearhaus', 'swedbank']),
+        features: new Set(['subscriptions', 'mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
         fees: {
+            // subscriptions: 249/mdr, 2kr * qty
             monthly: new Currency(49, 'DKK'),
             trn() {
                 return new Currency($qty, 'DKK');
@@ -530,20 +458,12 @@ const PSPs = [
         logo: 'reepay.svg',
         wh: [97, 20],
         link: 'https://reepay.com/da/pricing/',
-        acqs: ['Dankort', 'Clearhaus', 'Swedbank', 'Handelsbanken', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(249, 'DKK'),
-                trn() {
-                    return new Currency($qty, 'DKK');
-                }
-            },
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['clearhaus', 'swedbank', 'handelsbanken', 'worldline']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
         fees: {
+            // subscriptions: 249/mdr, 1kr * qty
             monthly: new Currency(139, 'DKK'),
             trn() {
                 const freeTrns = 250;
@@ -557,21 +477,20 @@ const PSPs = [
         logo: 'scannet.svg',
         wh: [93, 23],
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(99, 'DKK')
-            },
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['nets', 'clearhaus', 'swedbank']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'thirty bees', 'prestashop', 'dandomain']),
         fees: {
+            monthly(o) {
+                if (opts.features.subscriptions) {
+                    o.monthly['ScanNet modul'] = new Currency(99, 'DKK');
+                }
+                return new Currency(39, 'DKK');
+            },
             trn() {
                 return new Currency($qty, 'DKK');
-            },
-            monthly: new Currency(39, 'DKK')
+            }
         }
     },
     {
@@ -579,23 +498,22 @@ const PSPs = [
         logo: 'scannet.svg',
         wh: [93, 23],
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(99, 'DKK')
-            },
-            'Apple Pay',
-            MobilePay
-        ],
+        dankort: true,
+        acqs: new Set(['nets', 'clearhaus', 'swedbank']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'thirty bees', 'prestashop', 'dandomain']),
         fees: {
+            monthly(o) {
+                if (opts.features.subscriptions) {
+                    o.monthly['ScanNet modul'] = new Currency(99, 'DKK');
+                }
+                return new Currency(99, 'DKK');
+            },
             trn() {
                 const freeTrns = 500;
                 if ($qty <= freeTrns) return new Currency(0, 'DKK');
                 return new Currency(0.25 * ($qty - freeTrns), 'DKK');
-            },
-            monthly: new Currency(149, 'DKK')
+            }
         }
     },
     {
@@ -603,9 +521,10 @@ const PSPs = [
         logo: 'scanpay.svg',
         wh: [104, 23],
         link: 'https://scanpay.dk',
-        acqs: ['Dankort', 'Nets', 'Clearhaus'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
-        features: ['Abonnementsbetaling', MobilePay],
+        dankort: true,
+        acqs: new Set(['nets', 'clearhaus']),
+        features: new Set(['subscriptions', 'mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart']),
         fees: {
             trn() {
                 return new Currency(0.25 * $qty, 'DKK');
@@ -613,27 +532,94 @@ const PSPs = [
         }
     },
     {
+        name: 'Shipmondo Payments',
+        logo: 'shipmondo.svg',
+        wh: [112, 24],
+        note: 'Reseller af QuickPay',
+        link: 'https://shipmondo.dk',
+        dankort: true,
+        acqs: new Set(['clearhaus']),
+        features: new Set(['mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
+        fees: {
+            trn() {
+                const nonChQty = $qty * $dankortscale;
+                let fee = 2; // <= 25 trns
+                if (nonChQty > 250) fee = 0.2;
+                else if (nonChQty > 100) fee = 0.5;
+                else if (nonChQty > 50) fee = 0.8;
+                else if (nonChQty > 25) fee = 1;
+                return new Currency(fee * nonChQty, 'DKK');
+            }
+        }
+    },
+    {
+        name: 'Shopify basic',
+        logo: 'shopify.svg',
+        wh: [102, 29],
+        link: 'https://www.shopify.dk/payments',
+        cards: new Set(['visa', 'mastercard', 'jcb']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['shopify']),
+        fees: {
+            trn() {
+                return $revenue.scale(1.9 / 100).add(new Currency(1.8 * $qty, 'DKK'));
+            }
+        }
+    },
+    {
+        name: 'Shopify',
+        logo: 'shopify.svg',
+        wh: [102, 29],
+        link: 'https://www.shopify.dk/payments',
+        cards: new Set(['visa', 'mastercard', 'jcb']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['shopify']),
+        fees: {
+            trn() {
+                return $revenue.scale(1.8 / 100).add(new Currency(1.8 * $qty, 'DKK'));
+            }
+        }
+    },
+    {
+        name: 'Shopify advanced',
+        logo: 'shopify.svg',
+        wh: [102, 29],
+        link: 'https://www.shopify.dk/payments',
+        cards: new Set(['visa', 'mastercard', 'jcb']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['shopify']),
+        fees: {
+            trn() {
+                return $revenue.scale(1.6 / 100).add(new Currency(1.8 * $qty, 'DKK'));
+            }
+        }
+    },
+    {
         name: 'Stripe',
         logo: 'stripe.svg',
-        wh: [75, 31],
+        wh: [74.5, 31],
         link: 'https://stripe.com/en-dk/pricing',
-        cards: ['visa', 'mastercard', 'amex'],
-        features: ['Abonnementsbetaling', 'Apple Pay'],
+        cards: new Set(['visa', 'mastercard', 'amex']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify']),
         fees: {
             trn() {
                 return $revenue.scale(1.4 / 100).add(new Currency(1.8 * $qty, 'DKK'));
             }
         }
     },
+    /*
     {
         name: 'Swiipe Basic',
         logo: 'swiipe.svg',
         wh: [90, 26],
-        reseller: 'Bambora',
+        note: 'Reseller af Bambora',
         link: 'https://swiipe.com/#pris',
-        acqs: ['Dankort', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: [MobilePay],
+        dankort: true,
+        acqs: new Set(['worldline']),
+        features: new Set(['mobilepay']),
+        modules: new Set(['woocommerce', 'magento']),
         fees: {
             monthly: new Currency(49, 'DKK'),
             trn() {
@@ -645,11 +631,12 @@ const PSPs = [
         name: 'Swiipe Business',
         logo: 'swiipe.svg',
         wh: [90, 26],
-        reseller: 'Bambora',
+        note: 'Reseller af Bambora',
         link: 'https://swiipe.com/#pris',
-        acqs: ['Dankort', 'Bambora'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro'],
-        features: [MobilePay],
+        dankort: true,
+        acqs: new Set(['worldline']),
+        features: new Set(['mobilepay']),
+        modules: new Set(['woocommerce', 'magento']),
         fees: {
             monthly: new Currency(129, 'DKK'),
             trn() {
@@ -657,79 +644,5 @@ const PSPs = [
             }
         }
     },
-    {
-        name: 'Wannafind Start-Up',
-        logo: 'wannafind.svg',
-        wh: [146, 14],
-        link: 'https://www.wannafind.dk/betalingssystem/Priser/',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(99, 'DKK')
-            },
-            'Apple Pay',
-            MobilePay
-        ],
-        fees: {
-            monthly: new Currency(39, 'DKK'),
-            trn() {
-                return new Currency($qty, 'DKK');
-            }
-        }
-    },
-    {
-        name: 'Wannafind Success',
-        logo: 'wannafind.svg',
-        wh: [146, 14],
-        link: 'https://www.wannafind.dk/betalingssystem/Priser/',
-        acqs: ['Dankort', 'Nets', 'Clearhaus', 'Swedbank'],
-        cards: ['dankort', 'visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners', Forbrugsforeningen],
-        features: [
-            {
-                title: 'Abonnementsbetaling',
-                monthly: new Currency(99, 'DKK')
-            },
-            'Apple Pay',
-            MobilePay
-        ],
-        fees: {
-            monthly: new Currency(149, 'DKK'),
-            trn() {
-                const freeTrns = 500;
-                if ($qty <= freeTrns) return new Currency(0, 'DKK');
-                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
-            }
-        }
-    }
+    */
 ];
-
-// Temporary solution: convert arrays to objects
-(() => {
-    function arr2obj(arr) {
-        const obj = {};
-        for (let i = 0; i < arr.length; i++) {
-            let key = arr[i];
-            if (typeof key === 'object') { key = key.title; }
-            obj[key] = arr[i];
-        }
-        return obj;
-    }
-
-    for (const i in ACQs) {
-        ACQs[i].cards = arr2obj(ACQs[i].cards);
-    }
-
-    for (const i in PSPs) {
-        const psp = PSPs[i];
-        psp.cards = arr2obj(psp.cards);
-        psp.features = arr2obj(psp.features);
-        if (psp.acqs) {
-            psp.acquirers = arr2obj(psp.acqs);
-        }
-        if (!psp.fees.setup) { psp.fees.setup = new Currency(0, 'DKK'); }
-        if (!psp.fees.monthly) { psp.fees.monthly = new Currency(0, 'DKK'); }
-        if (!psp.fees.trn) { psp.fees.trn = new Currency(0, 'DKK'); }
-    }
-})();

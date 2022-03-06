@@ -1,61 +1,31 @@
 /* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
-/* global $currency */
 
 const currency_map = {
-    DKK: { cur: '% kr', t: '.', d: ',' },
-    SEK: { cur: '% kr', t: '.', d: ',' },
-    NOK: { cur: '% kr', t: '.', d: ',' },
+    DKK: { cur: '% kr.', t: '.', d: ',' },
+    SEK: { cur: '% kr.', t: '.', d: ',' },
+    NOK: { cur: '% kr.', t: '.', d: ',' },
     EUR: { cur: '€%', t: '.', d: ',' },
     USD: { cur: '$%', t: ',', d: '.' },
     GBP: { cur: '£%', t: '.', d: ',' }
 };
 
+
 const currency_value = {
+    // https://api.frankfurter.app/latest?from=DKK&to=SEK,NOK,EUR,USD
     'DKK': {
-        'DKK': 1,
-        'SEK': 1.4223,
-        'NOK': 1.3641,
-        'EUR': 0.13444,
-        'USD': 0.15264,
-        'GBP': 0.11216
+        'EUR': 0.13442,
+        'NOK': 1.3221,
+        'SEK': 1.4509,
+        'USD': 0.14691
     },
+    // https://api.frankfurter.app/latest?from=SEK&to=DKK,NOK,EUR,USD
     'SEK': {
-        'DKK': 0.7030865499542994,
-        'SEK': 1,
-        'NOK': 0.95908036279266,
-        'EUR': 0.09452295577585602,
-        'USD': 0.10731913098502427,
-        'GBP': 0.07885818744287422
-    },
-    'NOK': {
-        'DKK': 0.7330840847445201,
-        'SEK': 1.042665493732131,
-        'NOK': 1,
-        'EUR': 0.0985558243530533,
-        'USD': 0.11189795469540355,
-        'GBP': 0.08222271094494538
+        'DKK': 0.68925,
+        'EUR': 0.09265,
+        'NOK': 0.91127,
+        'USD': 0.10126
     }
 };
-
-/*
-function updateCurrency() {
-    return fetch('https://kortgebyr.dk/_currency/latest?from=' + $currency)
-        .then(res => res.json())
-        .then((j) => {
-            j.rates[$currency] = 1;
-
-            // Init currency_value
-            for (const cur in currency_map) {
-                currency_value[cur] = {};
-                for (const o in currency_map) {
-                    currency_value[cur][o] = j.rates[o] / j.rates[cur];
-                }
-            }
-        }).catch(() => {
-            alert('Noget gik galt. Prøv igen eller kontakt ulrik.moe@gmail.com');
-        });
-}
-*/
 
 function Currency(value, code) {
     this.amounts = {};
@@ -73,15 +43,20 @@ Currency.prototype.print = function (cur) {
     return currency_map[cur].cur.replace('%', ints.join(currency_map[cur].t) + frac);
 };
 
-Currency.prototype.order = function (cur) {
+Currency.prototype.order = function (currency) {
     let sum = 0;
     for (const code in this.amounts) {
-        sum += this.amounts[code] / currency_value[cur][code];
+        if (code === currency) {
+            sum += this.amounts[code];
+        } else {
+            sum += this.amounts[code] / currency_value[currency][code];
+        }
     }
     return sum;
 };
 
 Currency.prototype.add = function (rhs) {
+    if (!rhs) return this;
     const n = new Currency();
     for (const code in this.amounts) {
         n.amounts[code] = this.amounts[code];
