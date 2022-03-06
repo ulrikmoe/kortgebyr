@@ -21,8 +21,16 @@ env.lastUpdate = date.getDate() + '. ' + months[date.getMonth()] + ', ' +
 
 
 function assets() {
-    return gulp.src(['src/img/**', 'src/font/*.*'], { base: 'src' })
-        .pipe(gulp.dest('www'));
+    return gulp.src(['src/assets/**'], { base: 'src/assets' })
+    .pipe(through.obj((file, enc, cb) => {
+        if (/\.scss$/.test(file.path)) {
+            file.contents = sass.renderSync({ data: file.contents.toString() }).css;
+            file.path = file.path.slice(0, -4) + 'css';
+        }
+        cb(null, file);
+    }))
+    .pipe(gulp.dest('www'))
+    .pipe(connect.reload());
 }
 
 function scripts() {
@@ -39,16 +47,6 @@ function scripts() {
         .pipe(connect.reload());
 }
 
-function css() {
-    return gulp.src(['src/css/*.scss'])
-        .pipe(through.obj((file, enc, cb) => {
-            file.contents = sass.renderSync({ data: file.contents.toString() }).css;
-            file.path = file.path.slice(0, -4) + 'css';
-            cb(null, file);
-        }))
-        .pipe(gulp.dest('www/css/'))
-        .pipe(connect.reload());
-}
 
 function html() {
     return gulp.src(['src/*.html'])
@@ -86,12 +84,10 @@ gulp.task('sitemap', (cb) => {
 
 gulp.task('serve', () => {
     connect.server({ root: 'www', livereload: true });
-
-    gulp.watch(['src/img/**', 'src/font/*'], assets);
+    gulp.watch(['src/assets/**'], assets);
     gulp.watch(['src/*.html'], html);
-    gulp.watch(['src/css/*.scss'], gulp.series(css));
     gulp.watch(['src/js/**/*.js'], gulp.series(scripts, html));
 });
 
-gulp.task('build', gulp.series(assets, scripts, css, html, 'sitemap'));
+gulp.task('build', gulp.series(assets, scripts, html, 'sitemap'));
 gulp.task('default', gulp.series('build', 'serve'));

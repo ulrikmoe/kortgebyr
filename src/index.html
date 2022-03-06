@@ -5,8 +5,8 @@
 <link rel="preload" href="/font/R400i.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/font/R500.woff2" as="font" type="font/woff2" crossorigin>
 <title>Find den billigste betalingsløsning | Kortgebyr</title>
-<meta name="description" content="Kortgebyr er en open source og nonprofit prissammenligning af betalingsløsninger. Find den billigste betalingsløsning, der passer til din netbutik.">
-<link rel="icon" type="image/png" href="/img/favicon.png">
+<meta name="description" content="Kortgebyr er en nonprofit prissammenligning af betalingsløsninger. Find den billigste betalingsløsning, der passer til din netbutik.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="canonical" href="https://kortgebyr.dk/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <base target="_blank">
@@ -25,7 +25,7 @@
     <header>
       <form id="form" autocomplete="off">
         <nav>
-          <div style="flex: 1">
+          <div class="flex1">
             <a class="logo" href="/" target="_self" title="Kortgebyr">kortgebyr</a>
           </div>
           <a class="lastUpdate" lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">
@@ -43,7 +43,7 @@
                 <option value="clearhaus">Clearhaus</option>
                 <option value="handelsbanken">Handelsbanken</option>
                 <option value="swedbank">Swedbank</option>
-                <option value="bambora">Bambora</option>
+                <option value="worldline">Worldline (tidl. Bambora)</option>
               </select>
             </div>
 
@@ -52,7 +52,7 @@
               <select name="module" id="module" class="form-select">
                 <option value="">Vælg shopsystem</option>
                 <option value="woocommerce">WooCommerce</option>
-                <option value="magento2">Magento 2</option>
+                <option value="magento">Magento 2</option>
                 <option value="prestashop">PrestaShop</option>
                 <option value="thirtybees">ThirtyBees</option>
                 <option value="opencart">OpenCart</option>
@@ -78,9 +78,9 @@
               </div>
             </div>
 
-            <div class="form-check">
+            <div class="form-check form-check--subs">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="features[]" value="Abonnementsbetaling">
+                <input class="form-check-input" type="checkbox" name="features[]" value="subscriptions">
                 <span>Abonnementsbetalinger</span>
               </label>
             </div>
@@ -89,14 +89,33 @@
           <div>
             <p class="label label--tilvalg mobile--hide">Tilvalg</p>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="features[]" value="MobilePay" id="MobilePay">
-              <label class="form-check-label" for="MobilePay">MobilePay</label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="features[]" value="mobilepay" id="mobilepay">
+                <span>MobilePay</span>
+              </label>
             </div>
 
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="features[]" value="Apple Pay" id="ApplePay">
-              <label class="form-check-label" for="ApplePay">Apple Pay</label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="features[]" value="applepay">
+                <span>Apple Pay</span>
+              </label>
             </div>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="cards[]" value="amex">
+                <span>American Express</span>
+              </label>
+            </div>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="cards[]" value="diners">
+                <span>Diners og JCB</span>
+              </label>
+            </div>
+
           </div>
         </div>
       </form>
@@ -108,16 +127,16 @@
       <table id="table">
         <thead>
           <tr>
-            <th class="pspth">Betalingsløsning</th>
-            <th class="acqth">Indløser</th>
-            <th class="cardsth">Betalingskort</th>
+            <th class="th--psp">Betalingsløsning</th>
+            <th class="th--acq">Indløser</th>
+            <th class="th--cards">Betalingskort</th>
             <th>Abonnement</th>
-            <th>Transaktions-<br>gebyrer</th>
+            <th class="th--trns">Transaktionsgebyr</th>
             <th>
               <div class="equal right"><p class="equal--icon"></p></div>
               Samlet pr. <br> måned
             </th>
-            <th style="border-left:0;">
+            <th class="th--total">
               <div class="equal left"><p class="equal--icon"></p></div>
               Samlet pr. <br> transaktion
             </th>

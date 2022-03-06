@@ -8,32 +8,28 @@ let opts = {
     currency: 'DKK',
     qty: 200,
     avgvalue: 645,
-    cards: { visa: 1 },
+    cards: {},
     features: {}
 };
-let $dankortscale;
+const $dankortscale = 0.72;
+const $mobilepay = 0.60; // https://quickpay.net/dk/quickpay-index/dk
 let $avgvalue;
 let $revenue;
 let $qty;
 
 
 function settings(o) {
-    $qty = o.qty;
+    $qty = o.qty || 1;
     $avgvalue = new Currency(o.avgvalue, $currency);
     $revenue = $avgvalue.scale($qty);
-    $dankortscale = 0; //(o.cards.dankort) ? 0.72 : 0;
     build();
 }
 
-
 function cost2obj(cost, obj, name) {
     for (const i in cost) {
-        let value = cost[i];
-        const type = typeof value;
-        if (typeof value === 'function') {
-            value = value(obj);
-        }
-        if (!value || typeof value !== 'object') { continue; }
+        const value = (typeof cost[i] === 'function') ? cost[i](obj) : cost[i];
+        if (!value) continue;
+        if (!Object.keys(value.amounts).length) continue;
         obj[i][name] = value;
     }
 }
@@ -53,177 +49,189 @@ function sumTxt(obj) {
 }
 
 
-function acqSort() {
+function calc(x) {
+    if (!x) return new Currency();
+    return (typeof x === 'function') ? x() : x;
+}
+
+
+function acqCalc(name, qty) {
+    const acq = ACQs[name];
+
+    // Skip if card not supported
+    for (const card in opts.cards) {
+        if (!acq.cards.has(card)) return false;
+    }
+
+    const obj = {
+        name: name,
+        ref: acq,
+        calc: {
+            monthly: calc(acq.fees.monthly),
+            trn: calc(acq.fees.trn).scale(qty),
+            setup: calc(acq.fees.setup)
+        }
+    };
+    obj.calc.total = obj.calc.trn.add(obj.calc.monthly);
+    return obj;
+}
+
+
+function acqSort(qty) {
     const arr = [];
     if (opts.acquirer === 'auto') {
         for (const name in ACQs) {
-            const acq = ACQs[name];
-            const scale = (acq.name === 'Dankort') ? $dankortscale : 1 - $dankortscale;
-            const obj = {
-                name: name,
-                ref: acq
-            };
-
-            obj.TC = obj.trn = acq.fees.trn().scale($qty * scale);
-
-            if (acq.fees.monthly) {
-                obj.TC = obj.TC.add((typeof acq.fees.monthly === 'function')
-                    ? acq.fees.monthly() : acq.fees.monthly);
-            }
+            const obj = acqCalc(name, qty);
+            if (!obj) continue;
             arr.push(obj);
         }
-        arr.sort((o1, o2) => o1.TC.order($currency) - o2.TC.order($currency));
+        arr.sort((o1, o2) => o1.calc.total.order($currency) -
+            o2.calc.total.order($currency));
     } else {
-        const acq = ACQs[opts.acquirer];
-        const scale = (acq.name === 'Dankort') ? $dankortscale : 1 - $dankortscale;
-        const obj = {
-            name: opts.acquirer,
-            ref: acq
-        };
-        obj.TC = obj.trn = acq.fees.trn().scale($qty * scale);
-        if (acq.fees.monthly) {
-            obj.TC = obj.TC.add((typeof acq.fees.monthly === 'function')
-                ? acq.fees.monthly() : acq.fees.monthly);
-        }
-        arr.push(obj);
+        const obj = acqCalc(opts.acquirer, qty);
+        if (obj) arr.push(obj);
     }
     return arr;
 }
 
 
 function build() {
-    // 1) Calculate acquirer costs and sort by TC.
-    const acqArr = acqSort();
+    // 1) Calculate acquirer costs and sort by total cost.
+    const acqArr = acqSort($qty);
+    // TODO: round dankortscale
+    const acqArrDK = acqSort($qty * (1 - $dankortscale));
+    const dankortFees = DankortFees.trn().scale($qty * $dankortscale);
 
     // 2) Create array of PSPs with full support
     const pspArr = PSPs.filter((psp) => {
-        if (opts.acquirer !== 'auto') {
-            if (!psp.acquirers) return false;
-            if (!psp.acquirers[opts.acquirer]) return false;
-        }
-
-        if (psp.acquirers) {
-            // Regular PSP: skip if no supported acq.
-            // TODO: Improve this!
-            let found;
-            for (const acq of acqArr) {
-                if (psp.acquirers[acq.name]) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) return false;
-        } else {
-            // All-in-ones: Skip if card not supported
-            for (const card in opts.cards) {
-                if (!psp.cards[card]) return false;
-            }
+        // Skip if PSP does not support shopping cart (module)
+        if (opts.module !== '') {
+            if (!psp.modules.has(opts.module)) return false;
         }
 
         // Skip if PSP does not support all features
         for (const feature in opts.features) {
-            if (!psp.features[feature]) return false;
+            if (!psp.features.has(feature)) return false;
+        }
+
+        if (psp.acqs) {
+            // Dankort: Pick the optimal acquirer array.
+            const arr = (psp.dankort) ? acqArrDK : acqArr;
+
+            // Skip if PSP does not support any acq in acqArr
+            psp.acq = arr.find(acq => psp.acqs.has(acq.name));
+            if (!psp.acq) return false;
+        } else {
+            // skip if acq is selected (all-in-ones have no acqs)
+            if (opts.acquirer !== 'auto') return false;
+
+            // Skip if card not supported
+            for (const card in opts.cards) {
+                if (!psp.cards.has(card)) return false;
+            }
         }
         return true;
     });
 
     // 3) Calculate PSP costs
     for (const psp of pspArr) {
-        const fees = { setup: {}, monthly: {}, trn: {} };
-
-        if (psp.acquirers) {
-            const acq = acqArr.find(o => psp.acquirers[o.name]);
-            fees.acq = acq;
+        const calc = { setup: {}, monthly: {}, trn: {} };
+        if (psp.acq) {
+            if (psp.dankort) {
+                cost2obj({
+                    trn: dankortFees
+                }, calc, 'Dankortaftale');
+            }
             cost2obj({
-                setup: acq.setup,
-                monthly: acq.monthly,
-                trn: acq.trn
-            }, fees, acq.name);
+                setup: psp.acq.calc.setup,
+                monthly: psp.acq.calc.monthly,
+                trn: psp.acq.calc.trn
+            }, calc, psp.acq.ref.name);
         }
 
-        for (const i in psp.features) {
-            cost2obj(psp.features[i], fees, i);
+        // MOBILEPAY
+        // TODO: Move to dk.js
+        if (opts.features.mobilepay) {
+            cost2obj({
+                monthly: new Currency(49, 'DKK'),
+                trn: new Currency($qty * $mobilepay, 'DKK')
+            }, calc, 'MobilePay');
         }
 
-        for (const card in psp.cards) {
-            cost2obj(psp.cards[card], fees, card);
-        }
-
-        cost2obj(psp.fees, fees, psp.name);
-        fees.TC = sum(merge(fees.monthly, fees.trn));
-        psp.fees = fees;
+        cost2obj(psp.fees, calc, psp.name);
+        psp.calc = calc;
+        psp.calc.total = sum(merge(calc.monthly, calc.trn));
     }
 
     // 4) Sort PSP array.
-    pspArr.sort((o1, o2) => o1.fees.TC.order($currency) - o2.fees.TC.order($currency));
+    pspArr.sort((o1, o2) => o1.calc.total.order($currency) - o2.calc.total.order($currency));
 
     // 5) Build table
     const tbody = document.createElement('tbody');
     tbody.id = 'tbody';
     for (const psp of pspArr) {
-        const acq = psp.fees.acq;
+        const acq = psp.acq;
         const tr = document.createElement('tr');
 
         // PSP logo
         const pspCell = tr.insertCell(-1);
-        pspCell.innerHTML = `<a href="${psp.link}" class="psp"><img width="${psp.wh[0]}"
-            height="${psp.wh[1]}" src="/img/psp/${psp.logo}" alt="${psp.name}"><span>${psp.name}</span></a>`;
+        pspCell.className = 'td--psp';
+        pspCell.innerHTML = `<a href="${psp.link}"><img class="td--psp--img" width="${psp.wh[0]}"
+            height="${psp.wh[1]}" src="/img/betalingsløsning/${psp.logo}" alt="${psp.name}"
+            title="${psp.name}"><br>
+            <span>${psp.name}</span></a>`;
 
-        if (psp.reseller) {
-            pspCell.innerHTML += `<p class="reseller">Reseller af ${psp.reseller}</p>`;
+        if (psp.note) {
+            pspCell.innerHTML += `<p class="td--psp--note">${psp.note}</p>`;
         }
 
         // Acquirer
         const acqCell = tr.insertCell(-1);
-        if (psp.acquirers) {
+        if (psp.acq) {
             acqCell.innerHTML = `<img width="${acq.ref.wh[0]}" height="${acq.ref.wh[1]}"
-                class="acqlogo" src="/img/psp/${acq.ref.logo}" alt="${acq.ref.name}">`;
+                src="/img/indløser/${acq.ref.logo}" alt="${acq.ref.name}" title="${acq.ref.name} indløsningsaftale">`;
         } else {
             acqCell.innerHTML = '<p class="acquirer-included">Inkluderet</p>';
         }
 
         // Card icons
-        const cards = (psp.acquirers) ? acq.ref.cards : psp.cards;
         const cardCell = tr.insertCell(-1);
-        cardCell.className = 'cardtd';
-        for (const card in cards) {
-            cardCell.innerHTML += `<img width="22" height="15" class="card"
-                src="/img/cards/${card}.svg">`;
+        const cardsArr = (psp.acq) ? acq.ref.cards : psp.cards;
+        cardCell.className = 'td--cards';
+        if (psp.dankort) cardCell.appendChild(addCard('dankort'));
+        for (const card of cardsArr) {
+            cardCell.appendChild(addCard(card));
         }
 
         // Monthly fees
-        tr.insertCell(-1).appendChild(sumTxt(psp.fees.monthly));
+        tr.insertCell(-1).appendChild(sumTxt(psp.calc.monthly));
 
         // Transaction fees
-        tr.insertCell(-1).appendChild(sumTxt(psp.fees.trn));
+        tr.insertCell(-1).appendChild(sumTxt(psp.calc.trn));
 
         // Total per month
-        tr.insertCell(-1).appendChild(sumTxt(psp.fees.TC));
+        tr.insertCell(-1).textContent = psp.calc.total.print($currency);
 
-        // Cost per transaction
-        const tcCell = tr.insertCell(-1);
-
-
-
-
-        // cardfee calc.
-        const cardfee = psp.fees.TC.scale(1 / ($qty || 1));
-        const cardfeepct = String(Math.round(cardfee.order($currency) * 10000 / $avgvalue
+        // Total cost per transaction
+        const kortgebyr = psp.calc.total.scale(1 / $qty);
+        const kortgebyrPct = String(Math.round(kortgebyr.order($currency) * 10000 / $avgvalue
             .order($currency)) / 100);
-
-        const cardfeefrag = document.createDocumentFragment();
-        cardfeefrag.textContent = cardfee.print($currency);
-        const p1 = document.createElement('p');
-        p1.textContent = '(' + cardfeepct.replace('.', currency_map[$currency].d) + '%)';
-        p1.className = 'procent';
-        cardfeefrag.appendChild(p1);
-
-        tcCell.appendChild(cardfeefrag);
+        const totalCell = tr.insertCell(-1);
+        totalCell.className = 'td--total';
+        totalCell.innerHTML = `${kortgebyr.print($currency)}<p class="td--total--pct">
+        (&asymp; ${kortgebyrPct.replace('.', currency_map[$currency].d)}%)</p>`;
         tbody.appendChild(tr);
     }
     document.getElementById('tbody').replaceWith(tbody);
 }
 
+function addCard(name) {
+    const img = new Image(22, 15);
+    img.className = 'card';
+    img.alt = name;
+    img.src = '/img/betalingskort/' + name + '.svg';
+    return img;
+}
 
 function showTooltip() {
     if (!this.firstElementChild) {
