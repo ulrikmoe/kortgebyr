@@ -9,7 +9,9 @@ let opts = {
     qty: 200,
     avgvalue: 645,
     cards: {},
-    features: {}
+    features: {
+
+    }
 };
 const $dankortscale = 0.72;
 const $mobilepay = 0.60; // https://quickpay.net/dk/quickpay-index/dk
@@ -120,6 +122,11 @@ function build() {
 
             // Skip if PSP does not support any acq in acqArr
             psp.acq = arr.find(acq => psp.acqs.has(acq.name));
+
+            // TMP fix for shopify
+            if (opts.module === 'shopify' && psp.logo === 'quickpay.svg') {
+                psp.acq = arr.find(acq => acq.name === 'clearhaus');
+            }
             if (!psp.acq) return false;
         } else {
             // skip if acq is selected (all-in-ones have no acqs)
@@ -149,13 +156,19 @@ function build() {
             }, calc, psp.acq.ref.name);
         }
 
-        // MOBILEPAY
         // TODO: Move to dk.js
         if (opts.features.mobilepay) {
             cost2obj({
                 monthly: new Currency(49, 'DKK'),
                 trn: new Currency($qty * $mobilepay, 'DKK')
             }, calc, 'MobilePay');
+        }
+
+        // TODO: Add tiers (2%|1%|0.5%)
+        if (opts.module === 'shopify' && psp.logo !== 'shopify.svg') {
+            cost2obj({
+                trn: $revenue.scale(2 / 100)
+            }, calc, 'Shopify gebyr (2%)');
         }
 
         cost2obj(psp.fees, calc, psp.name);
@@ -218,7 +231,7 @@ function build() {
             .order($currency)) / 100);
         const totalCell = tr.insertCell(-1);
         totalCell.className = 'td--total';
-        totalCell.innerHTML = `${kortgebyr.print($currency)}<p class="td--total--pct">
+        totalCell.innerHTML = `${kortgebyr.print($currency)} <p class="td--total--pct">
         (&asymp; ${kortgebyrPct.replace('.', currency_map[$currency].d)}%)</p>`;
         tbody.appendChild(tr);
     }
@@ -255,6 +268,10 @@ function formEvent(evt) {
 }
 
 (() => {
+    const params = (new URL(document.location)).searchParams;
+    for (const arr of params) {
+        if (arr[0] in opts) opts[arr[0]] = arr[1];
+    }
     const form = document.getElementById('form');
     if (form) {
         settings(opts);
