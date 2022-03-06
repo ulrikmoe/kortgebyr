@@ -173,7 +173,6 @@ const PSPs = [
         fees: {
             monthly(o) {
                 if (opts.features.subscriptions) {
-            sum += this.amounts[code] / currency_value[c
                     o.monthly['DanDomain modul'] = new Currency(99, 'DKK');
                 }
                 return new Currency(149, 'DKK');
