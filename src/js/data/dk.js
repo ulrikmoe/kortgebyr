@@ -538,7 +538,7 @@ const PSPs = [
         link: 'https://shipmondo.dk',
         dankort: true,
         acqs: new Set(['clearhaus']),
-        features: new Set(['mobilepay']),
+        features: new Set(['mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
         fees: {
             trn() {
