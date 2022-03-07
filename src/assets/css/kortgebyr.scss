@@ -33,7 +33,7 @@ body {
 }
 
 a {
-    color: #36b;
+    color: #2b579f; //#36b;
     text-decoration: none;
     background: transparent; // Remove grey bg from IE (normalize)
 
@@ -88,7 +88,7 @@ img, svg {
 header {
     border: 1px solid #dbdbdb;
     box-sizing: border-box;
-    box-shadow: 0 7px 7px 7px rgba(0, 0, 0, 0.01);
+    //box-shadow: 0 7px 7px 7px rgba(0, 0, 0, 0.01);
 }
 
 footer {
@@ -126,6 +126,7 @@ nav {
 .lastUpdate {
     margin: 1px 0 0;
     font-size: .9em;
+    color: #2c5191;
 }
 
 .feedback {
@@ -448,7 +449,7 @@ th {
     box-sizing: border-box;
     background: #f3f3f3;
     border-top: 0;
-    color: #333;
+    color: #222;
     overflow-x: hidden;
     word-wrap: break-word;
     hyphens: auto;
@@ -530,7 +531,7 @@ td {
 
 .info {
     margin-left: 5px;
-    color: #36b;
+    color: #2b579f; //#36b;
     position: relative;
     display: inline-block;
     cursor: help;
@@ -572,7 +573,7 @@ td {
 
 .acquirer-included {
     font-style: italic;
-    color: #666;
+    color: #585858;
 }
 
 .card {
@@ -695,7 +696,7 @@ td {
     }
 
     .c--header {
-        padding: .5rem .5rem 0;
+        padding: .7rem .5rem 0;
     }
 
     .c--table {
