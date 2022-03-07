@@ -530,6 +530,7 @@ const PSPs = [
             }
         }
     },
+    /*
     {
         name: 'Shipmondo Payments',
         logo: 'shipmondo.svg',
@@ -552,6 +553,7 @@ const PSPs = [
             }
         }
     },
+    */
     {
         name: 'Shopify basic',
         logo: 'shopify.svg',
