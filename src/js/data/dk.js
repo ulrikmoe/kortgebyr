@@ -226,14 +226,13 @@ const PSPs = [
         wh: [98, 20],
         link: 'https://freepay.dk/da/betalingsgateway/priser',
         dankort: true,
-        acqs: new Set(['clearhaus']),
+        acqs: new Set(['nets','clearhaus']),
         features: new Set(['subscriptions', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
             trn(o) {
                 // Dankort 3-D Secure lookup
-                o.trn['Freepay 3D-secure opslag'] =
-                    new Currency(0.21 * $qty * $dankortscale, 'DKK');
+                o.trn['Freepay 3D-secure opslag'] = new Currency(0.21 * $qty * $dankortscale, 'DKK');
             }
         }
     },
