@@ -189,7 +189,7 @@ function build() {
         // PSP logo
         const pspCell = tr.insertCell(-1);
         pspCell.className = 'td--psp';
-        pspCell.innerHTML = `<a href="${psp.link}"><img class="td--psp--img" width="${psp.wh[0]}"
+        pspCell.innerHTML = `<a target="_blank" href="${psp.link}"><img class="td--psp--img" width="${psp.wh[0]}"
             height="${psp.wh[1]}" src="/img/betalingsløsning/${psp.logo}" alt="${psp.name}"
             title="${psp.name}"><br>
             <span>${psp.name}</span></a>`;

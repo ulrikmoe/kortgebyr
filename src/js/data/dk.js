@@ -28,6 +28,8 @@ const ACQs = {
         link: 'https://www.nets.eu/dk/payments/online-betalinger/indloesningsaftale/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         fees: {
+            //setup: new Currency(500, 'DKK'),
+            //monthly: new Currency(129, 'DKK'),
             trn() {
                 // EØS: 0.99% + 0,25% (if credit card, ie. 23% of cards)
                 const trnfee = $avgvalue.scale(1.05 / 100);
@@ -226,13 +228,13 @@ const PSPs = [
         wh: [98, 20],
         link: 'https://freepay.dk/da/betalingsgateway/priser',
         dankort: true,
-        acqs: new Set(['nets','clearhaus']),
+        acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
             trn(o) {
-                // Dankort 3-D Secure lookup
-                o.trn['Freepay 3D-secure opslag'] = new Currency(0.21 * $qty * $dankortscale, 'DKK');
+                const qty = (o.trn.Clearhaus) ? $qty * $dankortscale : $qty;
+                o.trn['Freepay 3D-secure opslag'] = new Currency(0.21 * qty, 'DKK');
             }
         }
     },
@@ -321,7 +323,7 @@ const PSPs = [
         note: 'Reseller af QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         dankort: true,
-        acqs: new Set(['clearhaus']),
+        acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
         fees: {
@@ -337,7 +339,7 @@ const PSPs = [
         note: 'Reseller af QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         dankort: true,
-        acqs: new Set(['clearhaus']),
+        acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
         fees: {
@@ -354,7 +356,7 @@ const PSPs = [
         note: 'Reseller af QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         dankort: true,
-        acqs: new Set(['clearhaus']),
+        acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
         fees: {
@@ -373,7 +375,7 @@ const PSPs = [
         note: 'Reseller af QuickPay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         dankort: true,
-        acqs: new Set(['clearhaus']),
+        acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
         fees: {
@@ -529,15 +531,14 @@ const PSPs = [
             }
         }
     },
-    /*
     {
         name: 'Shipmondo Payments',
         logo: 'shipmondo.svg',
         wh: [112, 24],
         note: 'Reseller af QuickPay',
-        link: 'https://shipmondo.dk',
+        link: 'https://shipmondo.com/dk/shipmondo-payments/',
         dankort: true,
-        acqs: new Set(['clearhaus']),
+        acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
         fees: {
@@ -552,7 +553,6 @@ const PSPs = [
             }
         }
     },
-    */
     {
         name: 'Shopify basic',
         logo: 'shopify.svg',
@@ -609,12 +609,11 @@ const PSPs = [
             }
         }
     },
-    /*
     {
         name: 'Swiipe Basic',
         logo: 'swiipe.svg',
         wh: [90, 26],
-        note: 'Reseller af Bambora',
+        note: 'Reseller af Worldline',
         link: 'https://swiipe.com/#pris',
         dankort: true,
         acqs: new Set(['worldline']),
@@ -631,7 +630,7 @@ const PSPs = [
         name: 'Swiipe Business',
         logo: 'swiipe.svg',
         wh: [90, 26],
-        note: 'Reseller af Bambora',
+        note: 'Reseller af Worldline',
         link: 'https://swiipe.com/#pris',
         dankort: true,
         acqs: new Set(['worldline']),
@@ -643,6 +642,5 @@ const PSPs = [
                 return new Currency(0.25 * $qty, 'DKK');
             }
         }
-    },
-    */
+    }
 ];
