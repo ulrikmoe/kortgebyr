@@ -70,7 +70,7 @@ const ACQs = {
         }
     },
     worldline: {
-        name: 'Bambora',
+        name: 'Worldline',
         logo: 'worldline.svg',
         wh: [81.8, 11],
         link: 'http://www.bambora.com/',
@@ -613,10 +613,9 @@ const PSPs = [
         name: 'Swiipe Basic',
         logo: 'swiipe.svg',
         wh: [90, 26],
-        note: 'Reseller af Worldline',
         link: 'https://swiipe.com/#pris',
         dankort: true,
-        acqs: new Set(['worldline']),
+        acqs: new Set(['clearhaus']),
         features: new Set(['mobilepay']),
         modules: new Set(['woocommerce', 'magento']),
         fees: {
@@ -630,10 +629,9 @@ const PSPs = [
         name: 'Swiipe Business',
         logo: 'swiipe.svg',
         wh: [90, 26],
-        note: 'Reseller af Worldline',
         link: 'https://swiipe.com/#pris',
         dankort: true,
-        acqs: new Set(['worldline']),
+        acqs: new Set(['clearhaus']),
         features: new Set(['mobilepay']),
         modules: new Set(['woocommerce', 'magento']),
         fees: {
