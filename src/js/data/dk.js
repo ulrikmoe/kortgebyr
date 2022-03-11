@@ -239,6 +239,34 @@ const PSPs = [
         }
     },
     {
+        name: 'Lunar Solo',
+        logo: 'lunar.svg',
+        wh: [74, 26],
+        link: 'https://www.lunar.app/dk/erhverv/betalingsloesning',
+        cards: new Set(['visa', 'mastercard']),
+        features: new Set(['']),
+        modules: new Set(['woocommerce']),
+        fees: {
+            trn() {
+                return $revenue.scale(1.4 / 100).add(new Currency($qty, 'DKK'));
+            }
+        }
+    },
+    {
+        name: 'Lunar Grow',
+        logo: 'lunar.svg',
+        wh: [74, 26],
+        link: 'https://www.lunar.app/dk/erhverv/betalingsloesning',
+        cards: new Set(['visa', 'mastercard']),
+        features: new Set(['']),
+        modules: new Set(['woocommerce']),
+        fees: {
+            trn() {
+                return $revenue.scale(1 / 100).add(new Currency($qty, 'DKK'));
+            }
+        }
+    },
+    {
         name: 'Mollie',
         logo: 'mollie.svg',
         wh: [74, 22],
