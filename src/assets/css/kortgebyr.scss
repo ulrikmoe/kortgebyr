@@ -5,25 +5,15 @@
 
 @font-face {
     font-family: R;  // Roboto v2.136 (hinted)
-    src: url('/font/R400.woff2') format('woff2'), url('/font/R400.woff') format('woff');
-}
-
-@font-face {
-    font-family: R;  // Roboto v2.136 (hinted)
-    font-style: italic;
-    src: url('/font/R400i.woff2') format('woff2'), url('/font/R400i.woff') format('woff');
-}
-
-@font-face {
-    font-family: R;  // Roboto v2.136 (hinted)
     font-weight: 500;
     src: url('/font/R500.woff2') format('woff2'), url('/font/R500.woff') format('woff');
+    font-display: swap;
 }
 
 body {
     height: 100%;
     background: #fff;
-    font-family: 'R', Helvetica Neue, Arial, sans-serif;
+    font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     font-size: 1rem;
     line-height: 1.5;
     color: #212529;
@@ -154,7 +144,7 @@ input {
     display: inline-block;
     font-size: .9em;
     font-weight: 500;
-    font-family: 'R', sans-serif;
+    font-family: 'R';
     color: #333;
     margin: 0 0 .5em;
     -webkit-touch-callout: none; /* iOS Safari */
@@ -393,7 +383,10 @@ table {
 }
 
 th {
-    font: 500 13px/16px 'R', sans-serif;
+    font-family: 'R';
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
     padding: 5px 16px 4px;
     box-sizing: border-box;
     background: #f3f3f3;
