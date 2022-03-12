@@ -83,7 +83,17 @@ gulp.task('sitemap', (cb) => {
 });
 
 gulp.task('serve', () => {
-    connect.server({ root: 'www', livereload: true });
+    connect.server({
+        root: 'www',
+        livereload: true,
+        middleware: () => ([(req, res, next) => {
+            if (req.url.slice(-1) !== '/' && req.url.indexOf('.') === -1) {
+                req.url += '.html';
+            }
+            next();
+        }])
+    });
+
     gulp.watch(['src/assets/**'], assets);
     gulp.watch(['src/*.html'], html);
     gulp.watch(['src/js/**/*.js'], gulp.series(scripts, html));
