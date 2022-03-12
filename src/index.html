@@ -16,147 +16,139 @@
   gtag('js', new Date());
   gtag('config', 'UA-46668451-1');
 </script>
-<body>
-
-  <div class="c c--header">
-    <header>
-      <form id="form" autocomplete="off">
-        <nav>
-          <div class="flex1">
-            <a class="logo" href="/" target="_self" title="Kortgebyr">kortgebyr</a>
-          </div>
-          <a class="lastUpdate" lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">
-            Opdateret d. {{ lastUpdate }}
+<body><div class="c">
+  <header>
+    <form id="form" autocomplete="off">
+      <nav>
+        <div class="flex1">
+          <a class="logo" href="/" target="_self" title="Kortgebyr">
+            <img class="logo--img" height="18" alt="Kortgebyr logo" src="/img/logo.svg">
           </a>
-        </nav>
+        </div>
+        <a class="lastUpdate" lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">
+          Opdateret d. {{ lastUpdate }}
+        </a>
+      </nav>
 
-        <div class="settings">
-          <div>
-            <div class="field">
-              <label for="acquirer" class="label">Indløser</label>
-              <select id="acquirer" name="acquirer" class="form-select">
-                <option value="auto">Vælg indløser</option>
-                <option value="nets">Nets</option>
-                <option value="clearhaus">Clearhaus</option>
-                <option value="handelsbanken">Handelsbanken</option>
-                <option value="swedbank">Swedbank</option>
-                <option value="worldline">Worldline (tidl. Bambora)</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="module" class="label">Shopsystem</label>
-              <select name="module" id="module" class="form-select">
-                <option value="">Vælg shopsystem</option>
-                <option value="woocommerce">WooCommerce</option>
-                <option value="magento">Magento 2</option>
-                <option value="prestashop">PrestaShop</option>
-                <option value="thirtybees">ThirtyBees</option>
-                <option value="opencart">OpenCart</option>
-                <option value="shopify">Shopify</option>
-                <option value="shoporama">Shoporama</option>
-                <option value="dandomain">DanDomain / Wannafind / ScanNet</option>
-              </select>
-            </div>
+      <div class="settings">
+        <div>
+          <div class="field">
+            <label for="acquirer" class="label">Indløser</label>
+            <select id="acquirer" name="acquirer" class="form-select">
+              <option value="auto">Vælg indløser</option>
+              <option value="nets">Nets</option>
+              <option value="clearhaus">Clearhaus</option>
+              <option value="handelsbanken">Handelsbanken</option>
+              <option value="swedbank">Swedbank</option>
+              <option value="worldline">Worldline (tidl. Bambora)</option>
+            </select>
           </div>
 
-          <div>
-            <div class="avgqty">
-              <div class="field field--avg">
-                <label for="avgvalue" class="label">Typisk ordreværdi</label>
-                <div class="input-group">
-                  <label for="avgvalue" class="input-group-text">kr.</label>
-                  <input id="avgvalue" name="avgvalue" type="number" min="0" class="input-group-input" value="645">
-                </div>
-              </div>
-              <div class="field field--qty">
-                <label for="qty" class="label">Betalinger pr. md.</label>
-                <input id="qty" name="qty" type="number" min="0" class="form-input" value="200">
-              </div>
-            </div>
-
-            <div class="form-check form-check--subs">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="features[]" value="subscriptions">
-                <span>Abonnementsbetalinger</span>
-              </label>
-            </div>
-          </div>
-
-          <div>
-            <p class="label label--tilvalg mobile--hide">Tilvalg</p>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="features[]" value="mobilepay" id="mobilepay">
-                <span>MobilePay</span>
-              </label>
-            </div>
-
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="features[]" value="applepay">
-                <span>Apple Pay</span>
-              </label>
-            </div>
-
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="cards[]" value="amex">
-                <span>American Express</span>
-              </label>
-            </div>
-
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="cards[]" value="diners">
-                <span>Diners og JCB</span>
-              </label>
-            </div>
-
+          <div class="field">
+            <label for="module" class="label">Shopsystem</label>
+            <select name="module" id="module" class="form-select">
+              <option value="">Vælg shopsystem</option>
+              <option value="woocommerce">WooCommerce</option>
+              <option value="magento">Magento 2</option>
+              <option value="prestashop">PrestaShop</option>
+              <option value="thirtybees">ThirtyBees</option>
+              <option value="opencart">OpenCart</option>
+              <option value="shopify">Shopify</option>
+              <option value="shoporama">Shoporama</option>
+              <option value="dandomain">DanDomain / Wannafind / ScanNet</option>
+            </select>
           </div>
         </div>
-      </form>
-    </header>
+
+        <div>
+          <div class="avgqty">
+            <div class="field field--avg">
+              <label for="avgvalue" class="label">Typisk ordreværdi</label>
+              <div class="input-group">
+                <label for="avgvalue" class="input-group-text">kr.</label>
+                <input id="avgvalue" name="avgvalue" type="number" min="0" class="input-group-input" value="645">
+              </div>
+            </div>
+            <div class="field field--qty">
+              <label for="qty" class="label">Betalinger pr. md.</label>
+              <input id="qty" name="qty" type="number" min="0" class="form-input" value="200">
+            </div>
+          </div>
+
+          <div class="form-check form-check--subs">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" name="features[]" value="subscriptions">
+              <span>Abonnementsbetalinger</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <p class="label label--tilvalg mobile--hide">Tilvalg</p>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" name="features[]" value="mobilepay" id="mobilepay">
+              <span>MobilePay</span>
+            </label>
+          </div>
+
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" name="features[]" value="applepay">
+              <span>Apple Pay</span>
+            </label>
+          </div>
+
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" name="cards[]" value="amex">
+              <span>American Express</span>
+            </label>
+          </div>
+
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" name="cards[]" value="diners">
+              <span>Diners og JCB</span>
+            </label>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </header>
+
+  <div class="infobox">
+    Her kan du sammenligne priser på online betalingsløsninger, og finde den billigste betalingsløsning til din netbutik. Vi vil anbefale at du starter med at læse vores <a href="/forklaring">forklaring</a>. <span class="mobile--hide">Hvis du har feedback, eller synes vi mangler en betalingsløsning, kan du skrive til os <a href="mailto:ulrik.moe@gmail.com">her</a>.</span>
   </div>
 
-  <div class="c c--infobox">
-    <div class="infobox">
-      Velkommen til kortgebyr. Her kan du sammenligne priser på online betalingsløsninger, og finde den bedste og billigste betalingsløsning til din netbutik. Først vil vi anbefale at du læser vores <a href="/forklaring">forklaring</a>. Hvis du synes vi mangler en betalingsløsning, kan du skrive til os <a href="mailto:ulrik.moe@gmail.com">her</a>.
-    </div>
+  <div class="responsive">
+    <table id="table">
+      <thead>
+        <tr>
+          <th class="th--psp">Betalingsløsning</th>
+          <th class="th--acq">Indløser</th>
+          <th class="th--cards">Betalingskort</th>
+          <th>Abonnement</th>
+          <th class="th--trns">Transaktionsgebyr</th>
+          <th>
+            <div class="equal right"><p class="equal--icon"></p></div>
+            Samlet pr. <br> måned
+          </th>
+          <th class="th--total">
+            <div class="equal left"><p class="equal--icon"></p></div>
+            Samlet pr. <br> transaktion
+          </th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
   </div>
 
-  <div class="c c--table">
-    <div class="responsive">
-      <table id="table">
-        <thead>
-          <tr>
-            <th class="th--psp">Betalingsløsning</th>
-            <th class="th--acq">Indløser</th>
-            <th class="th--cards">Betalingskort</th>
-            <th>Abonnement</th>
-            <th class="th--trns">Transaktionsgebyr</th>
-            <th>
-              <div class="equal right"><p class="equal--icon"></p></div>
-              Samlet pr. <br> måned
-            </th>
-            <th class="th--total">
-              <div class="equal left"><p class="equal--icon"></p></div>
-              Samlet pr. <br> transaktion
-            </th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-  </div>
+  <footer>
+    <p>
+      Kortgebyr er en nonprofit prissammenligning af betalingsløsninger. Projektet startede som et regneark, der blev delt blandt netbutikker, og i 2012 blev denne side til. Formålet er at gøre det nemmere at finde den billigste betalingsløsning. I 2017 startede vi vores egen betalingsgateway, <a title="Scanpay betalingsgateway" href="https://scanpay.dk">scanpay</a>, men vi lover at holde kortgebyr upartisk. Alle bidrag og tanker er meget velkomne på <a lang="en" href="https://github.com/ulrikmoe/kortgebyr">GitHub</a>.
+    </p>
+  </footer>
 
-  <div class="c c--footer">
-    <footer>
-      <p>
-        Kortgebyr er et <a lang="en" href="https://github.com/ulrikmoe/kortgebyr">open source</a> og nonprofit værktøj til sammenligning af betalingsløsninger. Projektet startede som et regneark, der blev delt blandt e-købmænd på Amino, og i <a rel="nofollow" href="https://www.amino.dk/forums/t/208824.aspx">2013</a> lancerede vi denne side, med at ønske om at gøre det nemmere at finde den billigste betalingsløsning. I 2017 startede vi vores egen betalingsløsning, <a title="Scanpay betalingsløsning" href="https://scanpay.dk">scanpay</a>, men vi lover at holde kortgebyr upartisk og uden reklamer. Mange har hjulpet med at udvikle kortgebyr, og alle bidrag og tanker er meget velkomne på <a lang="en" href="https://github.com/ulrikmoe/kortgebyr">GitHub</a>.
-      </p>
-      <p>Kortgebyr blev sidst opdateret den <a lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">{{ lastUpdate }}</a></p>
-    </footer>
-  </div>
-
-</body>
+</div></body>

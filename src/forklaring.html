@@ -1,5 +1,7 @@
 <!DOCTYPE HTML><html lang="da">
-<title>Kortgebyr.dk foklaring</title>
+<title>Forklaring | Kortgebyr</title>
+<meta name="description" content="Her kan du sammenligne priser på online betalingsløsninger, og finde den billigste betalingsløsning til din netbutik.">
+<link rel="stylesheet" href="/css/kortgebyr.css?{{ git }}">
 <link rel="stylesheet" href="/css/forklaring.css?{{ git }}">
 <link rel="canonical" href="https://kortgebyr.dk/forklaring">
 <link rel="icon" type="image/png" href="/img/favicon.png">
@@ -17,49 +19,71 @@
 <body>
   <div class="header">
     <div class="c">
-      <h1><a href="/">kortgebyr.dk</a></h1>
+      <a href="/">
+        <img height="50" class="logo" alt="Kortgebyr logo" src="/img/logo.svg">
+      </a>
     </div>
   </div>
 
-  <div class="c">
-    <div class="notice">
-      <h3 class="notice--h3">Non-profit og GPLv3</h3>
-      Kortgebyr er non-profit og open source (GPLv3). Alle er velkomne til at bidrage og forbedringsforslag kan sendes til <a href="mailto:ulrik.moe@gmail.com?subject=kortgebyr.dk">ulrik.moe@gmail.com</a>.
+  <div class="container">
+    <div class="notice--">
+      <h3 class="notice--h3">Nonprofit og open source</h3>
+      <p>
+        Kortgebyr er nonprofit og open source (GPLv3). Alle er velkomne til at bidrage på <a lang="en" href="https://github.com/ulrikmoe/kortgebyr">GitHub</a>, og forbedringsforslag kan sendes til <a href="mailto:ulrik.moe@gmail.com?subject=kortgebyr.dk">ulrik.moe@gmail.com</a>.
+      </p>
     </div>
 
     <section>
       <p>
-        Kortgebyr er en prissammenligningside for online betalingsløsninger og betalingsgateways. Projektet startede som et excel-ark, der blev delt blandt iværksættere og e-købmænd. I midten af 2012 blev projektet offentligt tilgængeligt på <a href="https://kortgebyr.dk">kortgebyr.dk</a>. Formålet med siden er at gøre betalingsmarkedet mere overskueligt. Projektet er under løbende udvikling og priser holdes opdateret.
+        <a href="/">Kortgebyr.dk</a> er en sammenligningsside for betalingsløsninger. Projektet startede som et regneark, der blev delt blandt e-købmænd på <a rel="nofollow" title="Introduktion af Kortgebyr på Amino" href="https://www.amino.dk/forums/t/208824.aspx">Amino</a>, og siden har mere end 30 frivillige bidraget til projektet. Formålet med projektet er at gøre betalingsmarkedet mere overskueligt, samt at øge konkurrencen i markedet for betalingsløsninger.
       </p>
     </section>
 
     <section>
-      <h2>Betalingsløsninger</h2>
+      <h2 id="betalingsløsning">Hvad er en betalingsløsning?</h2>
       <p>
-        En betalingsløsning skal forstås som en en løsning, eller en kombination af løsninger, som gør det muligt at tage imod betalinger online. For at gøre sammenligningen overskuelig har vi valgt at tage udgangspunkt i betalingsløsninger, som er relevante i Skandinavien og som har offentliggjort deres priser. For betalingskort gælder desuden at vi, grundet EU lovgivning, kræver at 3-D Secure er enabled.
+        Det er et vidt begreb, men i denne sammenhæng, skal betalingsløsning forstås som en en løsning, eller en kombination af løsninger, der gør det muligt at tage imod betalinger online. En betalingsløsning vil typisk bestå af en betalingsgateway og en indløser.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="betalingsgateway">Hvad er en betalingsgateway?</h2>
+      <p>
+        En betalingsgateway har flere funktioner, men helt grundlæggende er det et teknisk bindeled mellem butikken, indløsere, e-punge og diverse betalingsløsninger og betalingsservices (e.g. 3-D Secure). Betalingsgateways opbevarer betalingskort for butikken, og er certificeret og godkendt til dette.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="indløser">Hvad er en indløser?</h2>
+      <p>
+        En kortindløser er en finansiel virksomhed, der indløser betalingskort og udbetaler pengene til butikkens bankkonto.
       </p>
     </section>
 
     <section>
       <h2>Udregningsmetode</h2>
       <p>
-        Betalingsløsninger er sorteret efter den samlede pris pr. transaktion. Denne udregner vi ved at
+        For at gøre sammenligningen overskuelig, har vi valgt kun at tage udgangspunkt i betalingsløsninger der er relevante i Skandinavien. Betalingsløsninger er sorteret efter den samlede pris pr. transaktion. Denne udregner vi ved at
         sammenlægge omkostninger til betalingsgateway, indløsning mm. Vi har valgt at tage udgangspunkt i følgende:
       </p>
 
       <ul>
-        <li>Alle kreditkort transaktioner er med dansk udstedte kreditkort.</li>
-        <li>3-D Secure eller lignende <a rel="nofollow" href="https://en.wikipedia.org/wiki/Multi-factor_authentication" hreflang="en">MFA</a> på alle EU transaktioner.</li>
-        <li>Kortfordeling: Dankort 77%, MasterCard 15%, Visa 7% og andre kort 1%</li>
-        <li>Hvis MobilePay er valgt, vil 5% af alle transaktioner tilfalde MobilePay</li>
+        <li>
+          Udelukkende europæiske betalingskort.
+        </li>
+        <li>
+          Kortfordeling: Dankort 70%, MasterCard 20%, Visa 10%.
+        </li>
+        <li>
+          Hvis MobilePay er aktiveret, vil 60% af alle transaktioner komme via MobilePay.
+        </li>
       </ul>
-      Udregningen tager udgangspunkt i en konstant mængde transaktioner og dine til- og fravalg vil således kun ændre på hvordan dine transaktioner fordeler sig.
-
     </section>
 
     <section>
       <h2>Udviklere</h2>
-      <p>Kortgebyr er udviklet af <a rel="nofollow" href="https://github.com/ulrikmoe">Ulrik Moe</a>, <a rel="nofollow" href="https://github.com/cblach">Christian Blach</a> og <a rel="nofollow" href="https://github.com/zhasha">Joakim Sindholt</a>. Du kan se alle bidragsydere på <a rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/graphs/contributors">GitHub</a>.
+      <p>
+        Kortgebyr blev startet af Ulrik Moe, som også står for den daglige vedligeholdelse. Mere end 30 udviklere har bidraget til projektet, og endnu flere er kommet med indspark og feedback. Koden er open-source og tilgængelig på <a href="https://github.com/ulrikmoe/kortgebyr">Github</a>.
       </p>
     </section>
 

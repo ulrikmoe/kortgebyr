@@ -61,65 +61,47 @@ img, svg {
     box-sizing: border-box;
 }
 
-.c--header {
-    padding-top: .7rem;
-    padding-bottom: .8rem;
-}
-
-.c--footer {
-    padding-top: .3rem;
-    padding-bottom: 1rem;
-    box-sizing: border-box;
-}
-
 header {
+    margin-top: .7rem;
     border: 1px solid #dbdbdb;
-    box-sizing: border-box;
-    //box-shadow: 0 7px 7px 7px rgba(0, 0, 0, 0.01);
 }
 
 footer {
-    box-sizing: border-box;
     text-align: center;
-    color: #555;
+    color: #444;
     line-height: 23px;
-    font-size: 14px;
+    font-size: .92em;
+    margin-top: .3rem;
+    margin-bottom: 2rem;
 }
 
 nav {
     display: flex;
-    border-bottom: 1px solid #ccc;
-    height: 41px;
-    line-height: 42px;
+    align-items: center;
+    border-bottom: 1px solid #dadada;
+    height: 40px;
     background: #f3f3f3;
-    padding: 0 1rem;
+    padding: 0 1rem 0;
+    box-sizing: border-box;
 }
 
 .flex1 {
     flex: 1;
 }
 
-.logo {
-    font-family: Helvetica Neue, Arial, sans-serif;
-    color: #204499;
-    font-size: 1.3em;
-    line-height: 41px;
-    font-weight: 700;
-    text-shadow: #fff 0 1px 1px;
-
-    &:hover { color: #3e79bb; }
+.logo--img {
+    margin-top: 1px;
 }
 
 .lastUpdate {
-    margin: 1px 0 0;
+    margin-top: 2px;
     font-size: .9em;
     color: #2c5191;
 }
 
-
 .infobox {
     background: #fff;
-    margin: 0;
+    margin: .8em 0 .9em;
     border: 1px solid #dcdcdc;
     padding: .6rem .9rem .5rem;
 }
@@ -364,6 +346,7 @@ input {
     flex: 1 1 0px
 }
 
+
 .responsive {
     overflow-x: auto;
 }
@@ -373,13 +356,12 @@ table {
     border-collapse: separate;
     box-sizing: border-box;
     border-spacing: 0;
-    border-bottom: 1px solid #d9d9d9;
+    border: 1px solid #d9d9d9;
     border-left: 0;
     color: #444;
     empty-cells: show;
     min-width: 60em;
     width: 100%;
-    padding-top: 1em;
 }
 
 th {
@@ -401,7 +383,6 @@ th {
     text-align: center;
     position: relative;
     border-left: 1px solid #dcdcdc;
-    border-top: 1px solid #dcdcdc;
 }
 
 td {
@@ -438,11 +419,6 @@ td {
 
 .th--total {
     border-left: 0;
-    border-right: 1px solid #dcdcdc;
-}
-
-.td--total {
-    border-right: 1px solid #dcdcdc;
 }
 
 .td--cards {
@@ -479,40 +455,41 @@ td {
     display: inline-block;
     cursor: help;
 
-    > ul {
-        list-style: none;
-        display: none;
-        position: absolute;
-        bottom: 13px;
-        white-space: nowrap;
-        width: auto;
-        transform: translate(-50%, 0);
-        padding: 7px 9px 7px;
-        margin-left: 5px;
-        box-sizing: border-box;
-        border-radius: 3px;
-        font-size: .85em;
-        line-height: 1.4em;
-        background: rgba(51, 51, 51, 0.9);
-        color: #fff;
-        z-index: 10;
-
-        &:after {
-            content: '';
-            position: absolute;
-            right: 50%;
-            margin-right: -6px;
-            bottom: -12px;
-            width: 0;
-            border: 6px solid transparent;
-            border-top-color: rgba(51, 51, 51, 0.87);
-        }
-    }
-
-    &:hover ul {
+    &:hover > .info--ul {
         display: block;
     }
 }
+
+.info--ul {
+    list-style: none;
+    display: none;
+    position: absolute;
+    bottom: 13px;
+    white-space: nowrap;
+    width: auto;
+    transform: translate(-50%, 0);
+    padding: 7px 9px 7px;
+    margin-left: 5px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    font-size: .85em;
+    line-height: 1.4em;
+    background: rgba(51, 51, 51, 0.9);
+    color: #fff;
+    z-index: 10;
+
+    &:after {
+        content: '';
+        position: absolute;
+        right: 50%;
+        margin-right: -6px;
+        bottom: -12px;
+        width: 0;
+        border: 6px solid transparent;
+        border-top-color: rgba(51, 51, 51, 0.87);
+    }
+}
+
 
 .acquirer-included {
     font-style: italic;
@@ -622,17 +599,21 @@ td {
 
 @media (max-width:800px)  {
 
-    body {
-        background: #fdfdfd;
-    }
-
     .c {
-        padding-left: .5rem;
-        padding-right: .5rem
+        padding-left: .4rem;
+        padding-right: .4rem
     }
 
     .mobile--hide {
         display: none;
+    }
+
+    header {
+        margin-top: .4rem;
+    }
+
+    .infobox {
+        margin: 0.6em 0;
     }
 
     .settings {

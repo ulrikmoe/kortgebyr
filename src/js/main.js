@@ -44,7 +44,7 @@ function sumTxt(obj) {
         info.textContent = '[?]';
         info.className = 'info';
         info.ttdata = obj;
-        info.addEventListener('mouseover', showTooltip);
+        info.addEventListener('click', showTooltip);
         frag.appendChild(info);
     }
     return frag;
@@ -249,6 +249,7 @@ function addCard(name) {
 function showTooltip() {
     if (!this.firstElementChild) {
         const infobox = document.createElement('ul');
+        infobox.className = 'info--ul';
         const obj = this.ttdata;
         for (const prop in obj) {
             const li = document.createElement('li');
@@ -268,10 +269,12 @@ function formEvent(evt) {
 }
 
 (() => {
+    /*
     const params = (new URL(document.location)).searchParams;
     for (const arr of params) {
         if (arr[0] in opts) opts[arr[0]] = arr[1];
     }
+    */
     const form = document.getElementById('form');
     if (form) {
         settings(opts);

@@ -3,48 +3,36 @@
 @font-face {
     font-family: 'N';
     src: url('/font/N400.woff2') format('woff2'), url('/font/N400.woff') format('woff');
+    font-display: fallback;
 }
 
 @font-face {
     font-family: 'N';
     font-weight: 700;
     src: url('/font/N700.woff2') format('woff2'), url('/font/N700.woff') format('woff');
+    font-display: fallback;
 }
 
 @font-face {
     font-family: 'N';
     font-style: italic;
     src: url('/font/N400i.woff2') format('woff2'), url('/font/N400i.woff') format('woff');
+    font-display: fallback;
 }
 
 body {
-    height: 100%;
-    font: 14.5px/1.48 'N', Helvetica Neue, Arial, sans-serif;
-    color: #2b2b2b;
-    -ms-text-size-adjust: 100%; // Fix text size adjust after orientation change.
-    -webkit-text-size-adjust: 100%; // Fix text size adjust after orientation change.
-    background: #fff;
-    margin: 0;
-}
-
-a {
-    color: #337ab7;
-
-    &:active, &:hover {
-        outline: 0; // Improve readability of focused elements (normalize)
-        color: #23527c;
-    }
-}
-
-img, svg {
-    vertical-align: middle;
-    box-sizing: content-box;
+    font-family: 'N', system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    padding-bottom: 5em;
 }
 
 
 // Here we go
 
-.c {
+.logo {
+    fill: #fff;
+}
+
+.container {
     width: 90%;
     max-width: 630px;
     margin: auto;
@@ -54,7 +42,7 @@ img, svg {
 h1 {
     margin: 0;
     text-align: center;
-    font-size: 70px;
+    font-size: 2em;
     text-transform: uppercase;
 
     > a {
@@ -79,28 +67,32 @@ ul {
 }
 
 .header {
-    padding: 2.8em 0 1.9em;
+    padding: 2.5em 0 1.9em;
     text-align: center;
     color: white;
-    background: #007be4;
+    background: #2291ef;
     position: relative;
     overflow: hidden;
 }
 
-.notice {
-    font-size: 14px;
-    margin: 33px 0 0;
-    padding: 12px 20px 15px;
-    color: rgba(0, 0, 0, 0.8);
-    background: #fcf8f2;
+.notice-- {
+    font-size: .95rem;
+    margin: 2em 0 0;
+    padding: .7em 1.1em .6em;
+    color: #2a1f0b;
+    background: #f9f0e2;
     border-left: 3px solid #f1ae48;
+
+    > p {
+        color: #423113;
+    }
 }
 
 .notice--h3 {
-    margin: 2px 0 2px;
-    color: #dc9e2d;
-    font-weight: 600;
-    font-size: 15px;
+    margin: .2em 0;
+    color: #6c511f;
+    font-weight: 700;
+    font-size: .95rem;
 }
 
 
