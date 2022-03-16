@@ -62,7 +62,7 @@ img, svg {
 }
 
 header {
-    margin-top: .7rem;
+    margin-top: .8rem;
     border: 1px solid #dbdbdb;
 }
 
@@ -367,9 +367,9 @@ table {
 th {
     font-family: 'R';
     font-weight: 500;
-    font-size: 13px;
-    line-height: 16px;
-    padding: 5px 16px 4px;
+    font-size: .85em;
+    line-height: 1.2em;
+    padding: 4px 15px 4px;
     box-sizing: border-box;
     background: #f3f3f3;
     border-top: 0;
@@ -449,30 +449,25 @@ td {
 
 
 .info {
-    margin-left: 5px;
+    margin-left: .35em;
     color: #2b579f; //#36b;
     position: relative;
     display: inline-block;
-    cursor: help;
-
-    &:hover > .info--ul {
-        display: block;
-    }
+    cursor: pointer;
 }
 
 .info--ul {
+    display: block;
     list-style: none;
-    display: none;
     position: absolute;
-    bottom: 13px;
+    margin: 0;
     white-space: nowrap;
     width: auto;
     transform: translate(-50%, 0);
-    padding: 7px 9px 7px;
-    margin-left: 5px;
+    padding: .5em .7em .5em;
     box-sizing: border-box;
     border-radius: 3px;
-    font-size: .85em;
+    font-size: .9em;
     line-height: 1.4em;
     background: rgba(51, 51, 51, 0.9);
     color: #fff;
@@ -482,10 +477,10 @@ td {
         content: '';
         position: absolute;
         right: 50%;
-        margin-right: -6px;
-        bottom: -12px;
+        margin-right: -7px;
+        bottom: -14px;
         width: 0;
-        border: 6px solid transparent;
+        border: 7px solid transparent;
         border-top-color: rgba(51, 51, 51, 0.87);
     }
 }

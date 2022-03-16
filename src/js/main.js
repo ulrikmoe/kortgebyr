@@ -9,9 +9,7 @@ let opts = {
     qty: 200,
     avgvalue: 645,
     cards: {},
-    features: {
-
-    }
+    features: {}
 };
 const $dankortscale = 0.72;
 const $mobilepay = 0.60; // https://quickpay.net/dk/quickpay-index/dk
@@ -44,7 +42,6 @@ function sumTxt(obj) {
         info.textContent = '[?]';
         info.className = 'info';
         info.ttdata = obj;
-        info.addEventListener('click', showTooltip);
         frag.appendChild(info);
     }
     return frag;
@@ -246,18 +243,20 @@ function addCard(name) {
     return img;
 }
 
-function showTooltip() {
-    if (!this.firstElementChild) {
-        const infobox = document.createElement('ul');
-        infobox.className = 'info--ul';
-        const obj = this.ttdata;
-        for (const prop in obj) {
-            const li = document.createElement('li');
-            li.textContent = prop + ': ' + obj[prop].print($currency);
-            infobox.appendChild(li);
-        }
-        this.appendChild(infobox);
+
+function showTooltip(e) {
+    const infobox = document.createElement('ul');
+    infobox.className = 'info--ul';
+    infobox.style.left = e.clientX + 'px';
+    infobox.style.bottom = (15 + window.innerHeight - window.scrollY - e.clientY) + 'px';
+
+    const obj = e.target.ttdata;
+    for (const prop in obj) {
+        const li = document.createElement('li');
+        li.textContent = prop + ': ' + obj[prop].print($currency);
+        infobox.appendChild(li);
     }
+    document.body.appendChild(infobox);
 }
 
 
@@ -269,12 +268,11 @@ function formEvent(evt) {
 }
 
 (() => {
-    /*
     const params = (new URL(document.location)).searchParams;
     for (const arr of params) {
         if (arr[0] in opts) opts[arr[0]] = arr[1];
     }
-    */
+
     const form = document.getElementById('form');
     if (form) {
         settings(opts);
@@ -282,4 +280,22 @@ function formEvent(evt) {
         form.addEventListener('input', formEvent);
         obj2form(opts, form);
     }
+
+    document.body.addEventListener('click', (e) => {
+        const elems = document.querySelectorAll('.info--ul');
+        for (const elem of elems) {
+            elem.remove();
+        }
+        if (e.target.className === 'info') {
+            showTooltip(e);
+        }
+    });
+
+    document.body.addEventListener('touchstart', (e) => {
+        const elems = document.querySelectorAll('.info--ul');
+        for (const elem of elems) {
+            elem.remove();
+        }
+    });
+
 })();
