@@ -67,7 +67,10 @@ gulp.task('sitemap', (cb) => {
         const path = (url[url.length - 1] === '/') ?
             url + 'index.html' : url + '.html';
         let stat = fs.statSync(Path.join(__dirname, 'src', path));
-        if (url === '/') stat = fs.statSync('www/js/all.js');
+        if (url === '/') {
+            const jsStat = fs.statSync('www/js/all.js');
+            if (jsStat.mtimeMs > stat.mtimeMs) stat = jsStat;
+        }
         map += `
         <url>
             <loc>https://kortgebyr.dk${url}</loc>
