@@ -52,9 +52,6 @@ function html() {
     return gulp.src(['src/*.html'])
         .pipe(through.obj((file, enc, cb) => {
             mo3.render(file, env);
-            if (file.path.substring(__dirname.length) === '/src/index.html') {
-                file.stat.mtime = fs.statSync('www/js/all.js').mtime;
-            }
             cb(null, file);
         }))
         .pipe(gulp.dest('www'))
@@ -62,18 +59,20 @@ function html() {
 }
 
 gulp.task('sitemap', (cb) => {
-    const index = JSON.parse(fs.readFileSync('./i18n/index.json')).da;
     let map = '<?xml version="1.0" encoding="UTF-8"?><urlset ' +
     'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
-    for (const x in index) {
-        const o = index[x];
-        if (o.hidden) { continue; }
-        let path = o.url.substring(o.url.indexOf('/'));
-        path += (path.slice(-1) === '/') ? 'index.html' : '.html';
-        const stat = fs.statSync(Path.join(__dirname, 'www', path));
-        map += '<url><loc>https://' + o.url + '</loc>';
-        map += '<lastmod>' + stat.mtime.toISOString() + '</lastmod></url>';
+    const pages = ['/', '/ofte-stillede-spørgsmål'];
+    for (const url of pages) {
+        const path = (url[url.length - 1] === '/') ?
+            url + 'index.html' : url + '.html';
+        let stat = fs.statSync(Path.join(__dirname, 'src', path));
+        if (url === '/') stat = fs.statSync('www/js/all.js');
+        map += `
+        <url>
+            <loc>https://kortgebyr.dk${url}</loc>
+            <lastmod>${stat.mtime.toISOString()}</lastmod>
+        </url>`
     }
     map += '</urlset>';
     const fd = fs.openSync(Path.join(__dirname, 'www', 'sitemap.xml'), 'w');
