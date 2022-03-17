@@ -346,6 +346,66 @@ const PSPs = [
         }
     },
     {
+        name: 'Payrexx Checkout',
+        logo: 'payrexx.svg',
+        wh: [100.5, 23],
+        link: 'https://www.payrexx.com/da/pricing/',
+        cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        fees: {
+            monthly: new Currency(112, 'DKK'),
+            trn() {
+                return $revenue.scale(1.3 / 100).add(new Currency(1.5 * $qty, 'DKK'));
+            }
+        }
+    },
+    {
+        name: 'Payrexx Starter',
+        logo: 'payrexx.svg',
+        wh: [100.5, 23],
+        link: 'https://www.payrexx.com/da/pricing/',
+        cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        fees: {
+            monthly: new Currency(141, 'DKK'),
+            trn() {
+                return $revenue.scale(1.5 / 100).add(new Currency(1.5 * $qty, 'DKK'));
+            }
+        }
+    },
+    {
+        name: 'Payrexx Plus',
+        logo: 'payrexx.svg',
+        wh: [100.5, 23],
+        link: 'https://www.payrexx.com/da/pricing/',
+        cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        fees: {
+            monthly: new Currency(216, 'DKK'),
+            trn() {
+                return $revenue.scale(1.4 / 100).add(new Currency(1.5 * $qty, 'DKK'));
+            }
+        }
+    },
+    {
+        name: 'Payrexx Pro',
+        logo: 'payrexx.svg',
+        wh: [100.5, 23],
+        link: 'https://www.payrexx.com/da/pricing/',
+        cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        fees: {
+            monthly: new Currency(365, 'DKK'),
+            trn() {
+                return $revenue.scale(1.3 / 100).add(new Currency(1.5 * $qty, 'DKK'));
+            }
+        }
+    },
+    {
         name: 'Payson',
         logo: 'payson.png',
         wh: [121, 32],
