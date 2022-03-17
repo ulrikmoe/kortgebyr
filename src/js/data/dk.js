@@ -108,12 +108,16 @@ const PSPs = [
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
         fees: {
-            trn() {
-                // Interchange++: Avg between 0.90% - 1.10% (offical)
-                const total = $revenue.scale(1 / 100).add(new Currency(0.1 * $qty, 'EUR'));
+            trn(o) {
+                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
+                const intl = o.trn['Visa/Mastercard mm. (1,1%)'] = $revenue.scale(1 - $dankortscale).scale(1.1 / 100);
+                const trnfee = o.trn['Adyen transaktionsgebyr (€0,1)'] = new Currency(0.1 * $qty, 'EUR');
+
                 // Minimum fee (€100)
-                if (total.order('EUR') < 100) return new Currency(100, 'EUR');
-                return total;
+                const adyenTotal = intl.add(trnfee).order('EUR');
+                if (adyenTotal < 100) {
+                    o.monthly['Adyen minimumsfaktura (€100)'] = new Currency(100 - adyenTotal, 'EUR');
+                }
             }
         }
     },
@@ -312,7 +316,7 @@ const PSPs = [
             trn(o) {
                 o.trn['Dankort (0,39% + 1 DKK)'] = $revenue.scale($dankortscale).scale(0.39 / 100)
                     .add(new Currency($dankortscale * $qty, 'DKK'));
-                o.trn['Int. kort (1,35% + 0,5 DKK)'] = $revenue.scale(1 - $dankortscale).scale(1.35 / 100)
+                o.trn['Visa/Mastercard (1,35% + 0,5 DKK)'] = $revenue.scale(1 - $dankortscale).scale(1.35 / 100)
                     .add(new Currency((1 - $dankortscale) * $qty * 0.5, 'DKK'));
             }
         }
