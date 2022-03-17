@@ -99,6 +99,25 @@ const PSPs = [
         }
     },
     {
+        name: 'Adyen',
+        logo: 'adyen.svg',
+        wh: [90, 30],
+        link: 'https://www.adyen.com/da_DK/priser',
+        dankort: true,
+        cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
+        features: new Set(['subscriptions']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
+        fees: {
+            trn() {
+                // Interchange++: Avg between 0.90% - 1.10% (offical)
+                const total = $revenue.scale(1 / 100).add(new Currency(0.1 * $qty, 'EUR'));
+                // Minimum fee (€100)
+                if (total.order('EUR') < 100) return new Currency(100, 'EUR');
+                return total;
+            }
+        }
+    },
+    {
         name: 'Braintree',
         logo: 'braintree.svg',
         wh: [120.6, 16],
