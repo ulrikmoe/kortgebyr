@@ -105,7 +105,7 @@ const PSPs = [
         link: 'https://www.adyen.com/da_DK/priser',
         dankort: true,
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
-        features: new Set(['subscriptions']),
+        features: new Set(['subscriptions', 'applepay', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
         fees: {
             trn() {
