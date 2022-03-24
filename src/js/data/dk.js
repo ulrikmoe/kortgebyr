@@ -86,6 +86,7 @@ const ACQs = {
 const PSPs = [
     {
         name: '2checkout',
+        title: '2checkout',
         logo: '2checkout.svg',
         wh: [126.3, 15],
         link: 'https://www.2checkout.com/pricing/',
@@ -100,6 +101,7 @@ const PSPs = [
     },
     {
         name: 'Adyen',
+        title: 'Adyen',
         logo: 'adyen.svg',
         wh: [90, 30],
         link: 'https://www.adyen.com/da_DK/priser',
@@ -123,6 +125,7 @@ const PSPs = [
     },
     {
         name: 'Braintree',
+        title: 'Braintree',
         logo: 'braintree.svg',
         wh: [120.6, 16],
         link: 'https://www.braintreepayments.com/dk/braintree-pricing',
@@ -136,7 +139,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Certitrade all-in-one',
+        name: 'Certitrade',
+        title: 'Certitrade all-in-one',
         logo: 'certitrade.svg',
         wh: [119.7, 25],
         link: 'https://certitrade.se',
@@ -150,7 +154,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Certitrade Fast',
+        name: 'Certitrade',
+        title: 'Certitrade Fast',
         logo: 'certitrade.svg',
         wh: [119.7, 25],
         link: 'https://certitrade.se',
@@ -167,7 +172,8 @@ const PSPs = [
         }
     },
     {
-        name: 'DanDomain Start-Up',
+        name: 'DanDomain',
+        title: 'DanDomain Start-Up',
         logo: 'dandomain.svg',
         wh: [119.2, 22],
         link: 'https://dandomain.dk/betalingssystem/priser',
@@ -187,7 +193,8 @@ const PSPs = [
         }
     },
     {
-        name: 'DanDomain Success',
+        name: 'DanDomain',
+        title: 'DanDomain Success',
         logo: 'dandomain.svg',
         wh: [119.2, 22],
         link: 'https://dandomain.dk/betalingssystem/priser',
@@ -210,7 +217,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Worldline Checkout',
+        name: 'Worldline',
+        title: 'Worldline Checkout',
         logo: 'worldline.svg',
         wh: [118.97, 16],
         note: 'Tidl. Bambora/ePay',
@@ -227,7 +235,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Worldline Pro+',
+        name: 'Worldline',
+        title: 'Worldline Pro+',
         logo: 'worldline.svg',
         wh: [118.97, 16],
         note: 'Tidl. Bambora/ePay',
@@ -247,6 +256,7 @@ const PSPs = [
     },
     {
         name: 'Freepay',
+        title: 'Freepay',
         logo: 'freepay.svg',
         wh: [98, 20],
         link: 'https://freepay.dk/da/betalingsgateway/priser',
@@ -262,7 +272,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Lunar Solo',
+        name: 'Lunar',
+        title: 'Lunar Solo',
         logo: 'lunar.svg',
         wh: [74, 26],
         link: 'https://www.lunar.app/dk/erhverv/betalingsloesning',
@@ -276,7 +287,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Lunar Grow',
+        name: 'Lunar',
+        title: 'Lunar Grow',
         logo: 'lunar.svg',
         wh: [74, 26],
         link: 'https://www.lunar.app/dk/erhverv/betalingsloesning',
@@ -291,6 +303,7 @@ const PSPs = [
     },
     {
         name: 'Mollie',
+        title: 'Mollie',
         logo: 'mollie.svg',
         wh: [74, 22],
         link: 'https://www.mollie.com/en/pricing',
@@ -304,7 +317,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Nets Easy',
+        name: 'Nets',
+        title: 'Nets Easy',
         logo: 'nets-easy.svg',
         wh: [85, 25],
         link: 'https://www.nets.eu/da-DK/payments/online',
@@ -323,6 +337,7 @@ const PSPs = [
     },
     {
         name: 'Paylike',
+        title: 'Paylike',
         logo: 'paylike.svg',
         wh: [99, 31],
         link: 'https://paylike.dk/pricing',
@@ -337,6 +352,7 @@ const PSPs = [
     },
     {
         name: 'PayPal',
+        title: 'PayPal',
         logo: 'paypal.svg',
         wh: [123.6, 30],
         link: 'https://www.paypal.com/dk/webapps/mpp/merchant-fees',
@@ -350,7 +366,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Payrexx Checkout',
+        name: 'Payrexx',
+        title: 'Payrexx Checkout',
         logo: 'payrexx.svg',
         wh: [100.5, 23],
         link: 'https://www.payrexx.com/da/pricing/',
@@ -365,7 +382,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Payrexx Starter',
+        name: 'Payrexx',
+        title: 'Payrexx Starter',
         logo: 'payrexx.svg',
         wh: [100.5, 23],
         link: 'https://www.payrexx.com/da/pricing/',
@@ -380,7 +398,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Payrexx Plus',
+        name: 'Payrexx',
+        title: 'Payrexx Plus',
         logo: 'payrexx.svg',
         wh: [100.5, 23],
         link: 'https://www.payrexx.com/da/pricing/',
@@ -395,7 +414,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Payrexx Pro',
+        name: 'Payrexx',
+        title: 'Payrexx Pro',
         logo: 'payrexx.svg',
         wh: [100.5, 23],
         link: 'https://www.payrexx.com/da/pricing/',
@@ -411,6 +431,7 @@ const PSPs = [
     },
     {
         name: 'Payson',
+        title: 'Payson',
         logo: 'payson.png',
         wh: [121, 32],
         link: 'https://www.payson.se/en/company/price-list/',
@@ -428,7 +449,8 @@ const PSPs = [
         }
     },
     {
-        name: 'PensoPay Basis',
+        name: 'PensoPay',
+        title: 'PensoPay Basis',
         logo: 'pensopay.svg',
         wh: [143, 14],
         note: 'Reseller af QuickPay',
@@ -444,7 +466,8 @@ const PSPs = [
         }
     },
     {
-        name: 'PensoPay Start-Up',
+        name: 'PensoPay',
+        title: 'PensoPay Start-Up',
         logo: 'pensopay.svg',
         wh: [143, 14],
         note: 'Reseller af QuickPay',
@@ -461,7 +484,8 @@ const PSPs = [
         }
     },
     {
-        name: 'PensoPay Business',
+        name: 'PensoPay',
+        title: 'PensoPay Business',
         logo: 'pensopay.svg',
         wh: [143, 14],
         note: 'Reseller af QuickPay',
@@ -480,7 +504,8 @@ const PSPs = [
         }
     },
     {
-        name: 'PensoPay Pro',
+        name: 'PensoPay',
+        title: 'PensoPay Pro',
         logo: 'pensopay.svg',
         wh: [143, 14],
         note: 'Reseller af QuickPay',
@@ -499,7 +524,8 @@ const PSPs = [
         }
     },
     {
-        name: 'QuickPay Basis',
+        name: 'QuickPay',
+        title: 'QuickPay Basis',
         logo: 'quickpay.svg',
         wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
@@ -514,7 +540,8 @@ const PSPs = [
         }
     },
     {
-        name: 'QuickPay Starter',
+        name: 'QuickPay',
+        title: 'QuickPay Starter',
         logo: 'quickpay.svg',
         wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
@@ -530,7 +557,8 @@ const PSPs = [
         }
     },
     {
-        name: 'QuickPay Professional',
+        name: 'QuickPay',
+        title: 'QuickPay Professional',
         logo: 'quickpay.svg',
         wh: [138, 27],
         link: 'https://quickpay.net/dk/pricing',
@@ -548,7 +576,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Reepay Basic',
+        name: 'Reepay',
+        title: 'Reepay Basic',
         logo: 'reepay.svg',
         wh: [97, 20],
         link: 'https://reepay.com/da/pricing/',
@@ -565,7 +594,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Reepay Standard',
+        name: 'Reepay',
+        title: 'Reepay Standard',
         logo: 'reepay.svg',
         wh: [97, 20],
         link: 'https://reepay.com/da/pricing/',
@@ -584,7 +614,8 @@ const PSPs = [
         }
     },
     {
-        name: 'ScanNet Start-Up',
+        name: 'ScanNet',
+        title: 'ScanNet Start-Up',
         logo: 'scannet.svg',
         wh: [93, 23],
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
@@ -605,7 +636,8 @@ const PSPs = [
         }
     },
     {
-        name: 'ScanNet Success',
+        name: 'ScanNet',
+        title: 'ScanNet Success',
         logo: 'scannet.svg',
         wh: [93, 23],
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
@@ -629,6 +661,7 @@ const PSPs = [
     },
     {
         name: 'Scanpay',
+        title: 'Scanpay',
         logo: 'scanpay.svg',
         wh: [104, 23],
         link: 'https://scanpay.dk',
@@ -643,7 +676,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Shipmondo Payments',
+        name: 'Shipmondo',
+        title: 'Shipmondo Payments',
         logo: 'shipmondo.svg',
         wh: [112, 24],
         note: 'Reseller af QuickPay',
@@ -665,7 +699,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Shopify basic',
+        name: 'Shopify',
+        title: 'Shopify basic',
         logo: 'shopify.svg',
         wh: [102, 29],
         link: 'https://www.shopify.dk/payments',
@@ -680,6 +715,7 @@ const PSPs = [
     },
     {
         name: 'Shopify',
+        title: 'Shopify',
         logo: 'shopify.svg',
         wh: [102, 29],
         link: 'https://www.shopify.dk/payments',
@@ -693,7 +729,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Shopify advanced',
+        name: 'Shopify',
+        title: 'Shopify advanced',
         logo: 'shopify.svg',
         wh: [102, 29],
         link: 'https://www.shopify.dk/payments',
@@ -708,6 +745,7 @@ const PSPs = [
     },
     {
         name: 'Stripe',
+        title: 'Stripe',
         logo: 'stripe.svg',
         wh: [74.5, 31],
         link: 'https://stripe.com/en-dk/pricing',
@@ -721,7 +759,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Swiipe Basic',
+        name: 'Swiipe',
+        title: 'Swiipe Basic',
         logo: 'swiipe.svg',
         wh: [90, 26],
         link: 'https://swiipe.com/#pris',
@@ -737,7 +776,8 @@ const PSPs = [
         }
     },
     {
-        name: 'Swiipe Business',
+        name: 'Swiipe',
+        title: 'Swiipe Business',
         logo: 'swiipe.svg',
         wh: [90, 26],
         link: 'https://swiipe.com/#pris',

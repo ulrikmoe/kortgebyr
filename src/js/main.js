@@ -168,7 +168,7 @@ function build() {
             }, calc, 'Shopify gebyr (2%)');
         }
 
-        cost2obj(psp.fees, calc, psp.name);
+        cost2obj(psp.fees, calc, psp.title);
         psp.calc = calc;
         psp.calc.total = sum(merge(calc.monthly, calc.trn));
     }
@@ -186,10 +186,14 @@ function build() {
         // PSP logo
         const pspCell = tr.insertCell(-1);
         pspCell.className = 'td--psp';
-        pspCell.innerHTML = `<a rel="nofollow" target="_blank" href="${psp.link}"><img class="td--psp--img" width="${psp.wh[0]}"
-            height="${psp.wh[1]}" src="/img/betalingsløsning/${psp.logo}" alt="${psp.name}"
-            title="${psp.name}"><br>
-            <span>${psp.name}</span></a>`;
+        pspCell.innerHTML = `
+        <a target="_blank" href="${psp.link}" title="${psp.name} betalingsløsning">
+            <img class="td--psp--img" width="${psp.wh[0]}" height="${psp.wh[1]}"
+                src="/img/betalingsløsning/${psp.logo}" alt="${psp.name} logo"
+                title="${psp.name} logo">
+            <br>
+            <span>${psp.title}</span>
+        </a>`;
 
         if (psp.note) {
             pspCell.innerHTML += `<p class="td--psp--note">${psp.note}</p>`;
