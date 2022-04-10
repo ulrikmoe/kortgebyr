@@ -453,7 +453,7 @@ const PSPs = [
         title: 'PensoPay Basis',
         logo: 'pensopay.svg',
         wh: [143, 14],
-        note: 'Reseller af QuickPay',
+        note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
@@ -470,7 +470,7 @@ const PSPs = [
         title: 'PensoPay Start-Up',
         logo: 'pensopay.svg',
         wh: [143, 14],
-        note: 'Reseller af QuickPay',
+        note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
@@ -488,7 +488,7 @@ const PSPs = [
         title: 'PensoPay Business',
         logo: 'pensopay.svg',
         wh: [143, 14],
-        note: 'Reseller af QuickPay',
+        note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
@@ -508,7 +508,7 @@ const PSPs = [
         title: 'PensoPay Pro',
         logo: 'pensopay.svg',
         wh: [143, 14],
-        note: 'Reseller af QuickPay',
+        note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
@@ -524,54 +524,20 @@ const PSPs = [
         }
     },
     {
-        name: 'QuickPay',
-        title: 'QuickPay Basis',
+        name: 'Quickpay',
+        title: 'Quickpay Professional',
         logo: 'quickpay.svg',
-        wh: [138, 27],
+        wh: [138, 22.3],
         link: 'https://quickpay.net/dk/pricing',
         dankort: true,
-        acqs: new Set(['nets', 'clearhaus']),
+        acqs: new Set(['clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
         fees: {
-            trn() {
-                return new Currency(5 * $qty, 'DKK');
-            }
-        }
-    },
-    {
-        name: 'QuickPay',
-        title: 'QuickPay Starter',
-        logo: 'quickpay.svg',
-        wh: [138, 27],
-        link: 'https://quickpay.net/dk/pricing',
-        dankort: true,
-        acqs: new Set(['nets', 'clearhaus']),
-        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
-        fees: {
-            monthly: new Currency(49, 'DKK'),
-            trn() {
-                return new Currency($qty, 'DKK');
-            }
-        }
-    },
-    {
-        name: 'QuickPay',
-        title: 'QuickPay Professional',
-        logo: 'quickpay.svg',
-        wh: [138, 27],
-        link: 'https://quickpay.net/dk/pricing',
-        dankort: true,
-        acqs: new Set(['nets', 'clearhaus']),
-        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
-        fees: {
-            monthly: new Currency(149, 'DKK'),
-            trn() {
-                const freeTrns = 250;
-                if ($qty <= freeTrns) return new Currency(0, 'DKK');
-                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
+            monthly: new Currency(99, 'DKK'),
+            trn(o) {
+                o.trn.Clearhaus = $avgvalue.scale(1.35 / 100).scale($qty * (1 - $dankortscale)); // tmp fix
+                return new Currency(0.25 * $qty, 'DKK');
             }
         }
     },
@@ -680,7 +646,7 @@ const PSPs = [
         title: 'Shipmondo Payments',
         logo: 'shipmondo.svg',
         wh: [112, 24],
-        note: 'Reseller af QuickPay',
+        note: 'Reseller af Quickpay',
         link: 'https://shipmondo.com/dk/shipmondo-payments/',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
