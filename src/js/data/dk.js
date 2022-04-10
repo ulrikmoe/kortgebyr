@@ -528,7 +528,7 @@ const PSPs = [
         title: 'Quickpay Professional',
         logo: 'quickpay.svg',
         wh: [138, 22.3],
-        link: 'https://quickpay.net/dk/pricing',
+        link: 'https://quickpay.net/prices-dk/',
         dankort: true,
         acqs: new Set(['clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
