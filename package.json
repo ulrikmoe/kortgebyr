@@ -7,7 +7,7 @@
     "gulp-sourcemaps": "latest",
     "minimist": "latest",
     "mo3place": "latest",
-    "node-sass": "latest",
+    "sass": "latest",
     "through2": "latest"
   }
 }
