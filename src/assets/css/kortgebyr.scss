@@ -134,6 +134,7 @@ nav {
     box-sizing: border-box;
     margin: 0;
     font-family: inherit;
+    box-shadow: none;
 
     &:focus {
         color: #212529;
@@ -178,6 +179,7 @@ nav {
     margin-left: -1px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    z-index: 3;
 }
 
 .form-select {
@@ -265,6 +267,12 @@ nav {
         box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
     }
 }
+
+::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
 
 .form-check-label {
     display: inline-block;
