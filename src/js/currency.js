@@ -13,24 +13,24 @@ const currency_map = {
 const currency_value = {
     // https://api.frankfurter.app/latest?from=DKK&to=SEK,NOK,EUR,USD
     'DKK': {
-        'EUR': 0.13443,
-        'NOK': 1.2813,
-        'SEK': 1.3847,
-        'USD': 0.14623
+        'EUR': 0.1344,
+        'NOK': 1.2937,
+        'SEK': 1.3814,
+        'USD': 0.14539
     },
     // https://api.frankfurter.app/latest?from=SEK&to=EUR,DKK,NOK,USD
     'SEK': {
-        'DKK': 0.72217,
-        'EUR': 0.09708,
-        'NOK': 0.9253,
-        'USD': 0.1056
+        'DKK': 0.7239,
+        'EUR': 0.0973,
+        'NOK': 0.93651,
+        'USD': 0.10524
     },
     // https://api.frankfurter.app/latest?from=EUR&to=DKK,NOK,SEK,USD
     'EUR': {
-        'DKK': 7.4389,
-        'NOK': 9.5313,
-        'SEK': 10.3008,
-        'USD': 1.0878
+        'DKK': 7.4402,
+        'NOK': 9.6255,
+        'SEK': 10.278,
+        'USD': 1.0817
     }
 };
 
