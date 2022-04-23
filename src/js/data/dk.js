@@ -244,7 +244,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['worldline']),
         features: new Set(['subscriptions', 'mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'shopify', 'shoporama']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'shopify', 'shoporama', 'ideal.shop']),
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
@@ -458,7 +458,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
         fees: {
             trn() {
                 return new Currency(4 * $qty, 'DKK');
@@ -475,7 +475,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
         fees: {
             monthly: new Currency(49, 'DKK'),
             trn() {
@@ -493,7 +493,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
         fees: {
             monthly: new Currency(99, 'DKK'),
             trn() {
@@ -513,7 +513,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn() {
@@ -532,7 +532,8 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain',
+            'shoporama', 'ideal.shop']),
         fees: {
             monthly: new Currency(99, 'DKK'),
             trn(o) {
