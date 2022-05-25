@@ -262,7 +262,7 @@ const PSPs = [
         link: 'https://freepay.dk/da/betalingsgateway/priser',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
-        features: new Set(['subscriptions', 'mobilepay']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
             trn(o) {
