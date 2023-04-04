@@ -18,7 +18,7 @@ let $qty;
 
 
 function settings(o) {
-    $qty = o.qty || 1;
+    $qty = o.qty || 0;
     $avgvalue = new Currency(o.avgvalue, $currency);
     $revenue = $avgvalue.scale($qty);
     build();
@@ -226,7 +226,7 @@ function build() {
         tr.insertCell(-1).textContent = psp.calc.total.print($currency);
 
         // Total cost per transaction
-        const kortgebyr = psp.calc.total.scale(1 / $qty);
+        const kortgebyr = psp.calc.total.scale(1 / ($qty || 1));
         const kortgebyrPct = String(Math.round(kortgebyr.order($currency) * 10000 / $avgvalue
             .order($currency)) / 100);
         const totalCell = tr.insertCell(-1);
