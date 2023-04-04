@@ -3,3 +3,4 @@ www/
 node_modules/
 package-lock.json
 publish.sh
+pnpm-lock.yaml
