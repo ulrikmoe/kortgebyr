@@ -1,13 +1,18 @@
 {
   "private": true,
   "dependencies": {
+    "eslint": "latest",
     "gulp": "latest",
     "gulp-concat": "latest",
     "gulp-connect": "latest",
+    "gulp-sass": "latest",
     "gulp-sourcemaps": "latest",
+    "html-minifier": "latest",
     "minimist": "latest",
     "mo3place": "latest",
     "sass": "latest",
-    "through2": "latest"
+    "terser": "latest",
+    "through2": "latest",
+    "vinyl-sourcemaps-apply": "latest"
   }
 }

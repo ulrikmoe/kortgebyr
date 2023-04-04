@@ -6,10 +6,16 @@ const gulp = require('gulp');
 const connect = require('gulp-connect');
 const mo3 = require('mo3place')();
 const through = require('through2');
-const sass = require('sass');
+const sass = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
+const applySourceMap = require('vinyl-sourcemaps-apply');
+const terser = require("terser");
+const htmlmin = require("html-minifier");
+const { ESLint } = require("eslint");
+const eslint = new ESLint();
 const env = require('minimist')(process.argv.slice(2));
+const config = require('./config.json');
 if (!env.git) { env.git = '1'; }
 
 //  Last changed
@@ -22,15 +28,17 @@ env.lastUpdate = date.getDate() + '. ' + months[date.getMonth()] + ', ' +
 
 function assets() {
     return gulp.src(['src/assets/**'], { base: 'src/assets' })
-    .pipe(through.obj((file, enc, cb) => {
-        if (/\.scss$/.test(file.path)) {
-            file.contents = sass.renderSync({ data: file.contents.toString() }).css;
-            file.path = file.path.slice(0, -4) + 'css';
-        }
-        cb(null, file);
-    }))
-    .pipe(gulp.dest('www'))
-    .pipe(connect.reload());
+        .pipe(gulp.dest('www'))
+        .pipe(connect.reload());
+}
+
+function css() {
+    return gulp.src(['src/css/**.scss'], { base: 'src/css' })
+        .pipe(sourcemaps.init())
+        .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('www/css'))
+        .pipe(connect.reload());
 }
 
 function scripts() {
@@ -42,7 +50,23 @@ function scripts() {
         }))
         .pipe(sourcemaps.init())
         .pipe(concat('all.js'))
-        .pipe(sourcemaps.write())
+        .pipe(through.obj(async (file, enc, cb) => {
+            const str = file.contents.toString();
+            const results = await eslint.lintText(str);
+            if (results[0].warningCount || results[0].errorCount) {
+                const formatter = await eslint.loadFormatter("stylish");
+                console.error(formatter.format(results)); // output ESlint errors
+            }
+            const opts = { ...config.terser };
+            opts.sourceMap.filename = file.sourceMap.file;
+            opts.sourceMap.content = file.sourceMap;
+
+            const minified = await terser.minify(str, opts);
+            file.contents = Buffer.from(minified.code, 'utf-8');
+            applySourceMap(file, JSON.parse(minified.map))
+            cb(null, file);
+        }))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('www/js/'))
         .pipe(connect.reload());
 }
@@ -51,7 +75,14 @@ function scripts() {
 function html() {
     return gulp.src(['src/*.html'])
         .pipe(through.obj((file, enc, cb) => {
-            mo3.render(file, env);
+            file.contents = Buffer.from(
+                htmlmin.minify(
+                    mo3.fromString(file.contents.toString(), env),
+                    config.htmlmin
+                ),
+                'utf-8'
+            );
+            file.stat.mtime = false; // bump to current time
             cb(null, file);
         }))
         .pipe(gulp.dest('www'))
@@ -97,9 +128,10 @@ gulp.task('serve', () => {
     });
 
     gulp.watch(['src/assets/**'], assets);
+    gulp.watch(['src/css/**'], css);
     gulp.watch(['src/*.html'], html);
     gulp.watch(['src/js/**/*.js'], gulp.series(scripts, html));
 });
 
-gulp.task('build', gulp.series(assets, scripts, html, 'sitemap'));
+gulp.task('build', gulp.series(assets, scripts, css, html, 'sitemap'));
 gulp.task('default', gulp.series('build', 'serve'));

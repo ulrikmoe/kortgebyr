@@ -15,7 +15,7 @@ To build it locally, you will need [Node.js](https://nodejs.org/en/) and [Gulp 4
 ```bash
 git clone https://github.com/ulrikmoe/kortgebyr.git
 cd kortgebyr
-npm install
+pnpm install
 gulp
 ```
 
