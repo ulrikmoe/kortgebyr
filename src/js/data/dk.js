@@ -57,7 +57,7 @@ const ACQs = {
         link: 'https://www.swedbank.dk/erhverv/card-services/priser-og-vilkar/#!/CID_2263482',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
-            monthly(o) {
+            monthly() {
                 // Minimum fee of 50 DKK / month.
                 const TC = $revenue.scale(1 - $dankortscale).scale(1.1 / 100).order('DKK');
                 const minFee = (TC < 50) ? 50 - TC : 0;
@@ -439,7 +439,7 @@ const PSPs = [
         features: new Set([]),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
-            trn(o) {
+            trn() {
                 const revenue = $revenue.order('SEK') * 12;
                 let fee = 2.85;
                 if (revenue > 1000000) fee = 2.55;

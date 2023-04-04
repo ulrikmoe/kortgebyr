@@ -1,6 +1,5 @@
 /* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
 
-const country = 'DK';
 const $currency = 'DKK';
 let opts = {
     acquirer: 'auto',
@@ -295,7 +294,7 @@ function formEvent(evt) {
         }
     });
 
-    document.body.addEventListener('touchstart', (e) => {
+    document.body.addEventListener('touchstart', () => {
         const elems = document.querySelectorAll('.info--ul');
         for (const elem of elems) {
             elem.remove();
