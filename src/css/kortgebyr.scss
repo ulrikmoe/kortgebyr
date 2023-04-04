@@ -506,56 +506,6 @@ td {
     margin: .7rem 0 0;
 }
 
-/*
-.overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    background: rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-}
-
-.modal {
-    position: relative;
-    width: 50em;
-    height: 46em;
-    margin: 10vh auto 0;
-    background: #fff;
-    border-radius: 3px;
-    box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
-}
-
-#modal--header {
-    background: #f2f3f8 linear-gradient(#f1f1f1, #f2f3f8, #f1f1f1);
-    padding: 0 70px 0 35px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    font: 600 1.45em/3.4em 'O';
-    height: 3.2em;
-    color: #475166;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-#modal--exit {
-    display: block;
-    position: absolute;
-    padding: 10px;
-    top: 18px;
-    right: 25px;
-    cursor: pointer;
-    stroke: #949cab;
-
-    &:hover {
-        stroke: #22ade2;
-    }
-}
-*/
-
 @media (max-width:800px)  {
 
     .c {

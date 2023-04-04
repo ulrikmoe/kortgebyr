@@ -1,0 +1,18 @@
+{
+    "terser": {
+        "ecma": 6,
+        "toplevel": true,
+        "sourceMap": {
+            "includeSources": true
+        },
+        "mangle": {
+            "properties": false
+        },
+        "compress": false,
+        "warnings": true
+    },
+    "htmlmin": {
+        "collapseWhitespace": true,
+        "removeComments": true
+    }
+}
