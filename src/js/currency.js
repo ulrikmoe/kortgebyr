@@ -41,12 +41,15 @@ function Currency(value, code) {
 
 Currency.prototype.print = function (cur) {
     const n = this.order(cur).toFixed(2).split('.');
+    const neg = (n[0][0] === '-');
+    if (neg) n[0] = n[0].substring(1);
     const ints = [];
     const frac = (parseInt(n[1], 10) === 0) ? '' : currency_map[cur].d + n[1];
 
     for (let i = n[0].length; i > 0; i -= 3) {
         ints.unshift(n[0].substring(i - 3, i));
     }
+    if (neg) ints[0] = '-' + ints[0];
     return currency_map[cur].cur.replace('%', ints.join(currency_map[cur].t) + frac);
 };
 
