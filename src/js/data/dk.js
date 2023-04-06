@@ -92,8 +92,8 @@ const PSPs = [
     {
         name: '2checkout',
         title: '2SELL',
-        logo: '2checkout.svg',
-        wh: [126.3, 15],
+        logo: 'verifone.svg',
+        wh: [120, 23],
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set([]),
@@ -109,8 +109,8 @@ const PSPs = [
     {
         name: '2checkout',
         title: '2SUBSCRIBE',
-        logo: '2checkout.svg',
-        wh: [126.3, 15],
+        logo: 'verifone.svg',
+        wh: [120, 23],
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions']),
@@ -126,8 +126,8 @@ const PSPs = [
     {
         name: '2checkout',
         title: '2MONETIZE',
-        logo: '2checkout.svg',
-        wh: [126.3, 15],
+        logo: 'verifone.svg',
+        wh: [120, 23],
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions']),
