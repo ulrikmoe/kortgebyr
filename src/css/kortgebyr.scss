@@ -5,14 +5,36 @@
 
 @font-face {
     font-family: R;  // Roboto v2.136 (hinted)
-    font-weight: 500;
-    src: url('/font/R500.woff2') format('woff2'), url('/font/R500.woff') format('woff');
+    font-weight: 400;
+    src: url('/font/R400.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: R;  // Roboto v2.136 (hinted)
+    font-weight: 400;
+    font-style: italic;
+    src: url('/font/R400i.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: N;
+    font-weight: 600;
+    src: url('/font/N600.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: LS; // Liberation Sans Mono
+    font-weight: 400;
+    src: url('/font/LS400.woff2') format('woff2');
     font-display: swap;
 }
 
 body {
     margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: 'R', Roboto, Noto Sans, sans-serif;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -87,7 +109,7 @@ nav {
     background: #fff;
     margin: .8em 0 .9em;
     border: 1px solid #dcdcdc;
-    padding: .6rem .9rem .5rem;
+    padding: .7rem .9rem .6rem;
 }
 
 .settings {
@@ -103,11 +125,11 @@ nav {
 
 .label {
     display: inline-block;
-    font-size: .9em;
-    font-weight: 500;
-    font-family: 'R';
+    font-size: .85em;
+    font-weight: 600;
+    font-family: 'N', Noto Sans, sans-serif;
     color: #333;
-    margin: 0 0 .5em;
+    margin: 0 0 .75em;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
     -moz-user-select: none;      /* Firefox */
@@ -329,9 +351,9 @@ thead, tbody, tr, td, th {
 }
 
 th {
-    font-family: 'R';
-    font-weight: 500;
-    font-size: .85em;
+    font-family: 'N', Noto Sans, sans-serif;
+    font-weight: 600;
+    font-size: .8em;
     line-height: 1.2em;
     padding: 4px 15px 4px;
     box-sizing: border-box;
@@ -423,7 +445,7 @@ td {
 .info--ul {
     display: block;
     list-style: none;
-    font-family: monospace;
+    font-family: 'LS', Liberation Mono, monospace;
     position: absolute;
     margin: 0;
     white-space: nowrap;
@@ -432,7 +454,7 @@ td {
     padding: .9em 1em .8em;
     box-sizing: border-box;
     border-radius: 3px;
-    font-size: .85em;
+    font-size: .9em;
     line-height: 1.55;
     background: rgba(51, 51, 51, 0.95);
     color: #fff;
