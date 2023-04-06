@@ -750,7 +750,7 @@ const PSPs = [
         title: 'Shipmondo Payments',
         logo: 'shipmondo.svg',
         wh: [112, 24],
-        note: 'Reseller af Billwerk+ (Fhv. reepay)',
+        note: 'Reseller af Billwerk+',
         link: 'https://help.shipmondo.com/da/articles/6015622-shipmondo-payments-tilvalg-og-priser',
         dankort: true,
         acqs: new Set(['worldline', 'valitor']),
@@ -782,46 +782,19 @@ const PSPs = [
     },
     {
         name: 'Shopify',
-        title: 'Shopify basic',
+        title: 'Shopify Payments',
         logo: 'shopify.svg',
         wh: [102, 29],
         link: 'https://www.shopify.dk/payments',
-        cards: new Set(['visa', 'mastercard', 'jcb']),
+        cards: new Set(['visa', 'mastercard', 'jcb', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['shopify']),
         fees: {
-            trn() {
-                return $revenue.scale(1.9 / 100).add(new Currency(1.8 * $qty, 'DKK'));
-            }
-        }
-    },
-    {
-        name: 'Shopify',
-        title: 'Shopify',
-        logo: 'shopify.svg',
-        wh: [102, 29],
-        link: 'https://www.shopify.dk/payments',
-        cards: new Set(['visa', 'mastercard', 'jcb']),
-        features: new Set(['subscriptions', 'applepay']),
-        modules: new Set(['shopify']),
-        fees: {
-            trn() {
-                return $revenue.scale(1.8 / 100).add(new Currency(1.8 * $qty, 'DKK'));
-            }
-        }
-    },
-    {
-        name: 'Shopify',
-        title: 'Shopify advanced',
-        logo: 'shopify.svg',
-        wh: [102, 29],
-        link: 'https://www.shopify.dk/payments',
-        cards: new Set(['visa', 'mastercard', 'jcb']),
-        features: new Set(['subscriptions', 'applepay']),
-        modules: new Set(['shopify']),
-        fees: {
-            trn() {
-                return $revenue.scale(1.6 / 100).add(new Currency(1.8 * $qty, 'DKK'));
+            trn(o) {
+                const fee = (opts.shopify === 'Basic') ? 1.9 : (opts.shopify === 'Shopify') ? 1.8 : 1.6;
+                o.trn[`Indløsning (${fee.toString().replace('.', ',')}%)`] = $revenue.scale(fee / 100);
+                o.trn['Transaktionsgebyr (1,8 kr.)'] = new Currency(1.8 * $qty, 'DKK');
+                return;
             }
         }
     },
@@ -833,10 +806,12 @@ const PSPs = [
         link: 'https://stripe.com/en-dk/pricing',
         cards: new Set(['visa', 'mastercard', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees']),
         fees: {
-            trn() {
-                return $revenue.scale(1.4 / 100).add(new Currency(1.8 * $qty, 'DKK'));
+            trn(o) {
+                o.trn[`Indløsning (1,5%)`] = $revenue.scale(1.5 / 100);
+                o.trn[`Transaktionsgebyr (1,8 kr.)`] = new Currency(1.8 * $qty, 'DKK');
+                return;
             }
         }
     },
@@ -845,15 +820,16 @@ const PSPs = [
         title: 'Swiipe Basic',
         logo: 'swiipe.svg',
         wh: [90, 26],
-        link: 'https://swiipe.com/#pris',
-        dankort: true,
-        acqs: new Set(['clearhaus']),
-        features: new Set(['mobilepay']),
+        link: 'https://swiipe.com/priser/',
+        cards: new Set(['visa', 'mastercard']),
+        features: new Set(['mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento']),
         fees: {
             monthly: new Currency(49, 'DKK'),
-            trn() {
-                return new Currency($qty, 'DKK');
+            trn(o) {
+                o.trn[`Indløsning (1,25%)`] = $revenue.scale(1.25 / 100);
+                o.trn[`Transaktionsgebyr (1 kr.)`] = new Currency($qty, 'DKK');
+                return;
             }
         }
     },
@@ -862,15 +838,18 @@ const PSPs = [
         title: 'Swiipe Business',
         logo: 'swiipe.svg',
         wh: [90, 26],
-        link: 'https://swiipe.com/#pris',
+        link: 'https://swiipe.com/priser/',
         dankort: true,
-        acqs: new Set(['clearhaus']),
-        features: new Set(['mobilepay']),
+        cards: new Set(['visa', 'mastercard']),
+        features: new Set(['mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento']),
         fees: {
             monthly: new Currency(129, 'DKK'),
-            trn() {
-                return new Currency(0.25 * $qty, 'DKK');
+            trn(o) {
+                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
+                o.trn['Indløsning (1,25%)'] = $revenue.scale(1 - $dankortscale).scale(1.25 / 100);
+                o.trn[`Transaktionsgebyr (0,25 kr.)`] = new Currency(0.25 * $qty, 'DKK');
+                return;
             }
         }
     }
