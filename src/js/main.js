@@ -8,7 +8,8 @@ let opts = {
     qty: 200,
     avgvalue: 645,
     cards: {},
-    features: {}
+    features: {},
+    shopify: 'Basic'
 };
 const $dankortscale = 0.72;
 const $mobilepay = 0.60; // https://quickpay.net/dk/quickpay-index/dk
@@ -18,6 +19,14 @@ let $qty;
 
 
 function settings(o) {
+    // o.module === 'shopify'
+    document.getElementById('shopify').classList.toggle('hide', o.module !== 'shopify');
+    document.getElementById('shopify-infobox').classList.toggle('hide', o.module !== 'shopify');
+    if (o.module === 'shopify') {
+        const tier = (opts.shopify === 'Basic') ? 2 : (opts.shopify === 'Shopify') ? 1 : 0.5;
+        document.getElementById('shopify-tier').textContent = tier.toString().replace('.', ',') + '%';
+        document.getElementById('shopify-subscription').textContent = 'Shopify ' + opts.shopify;
+    }
     $qty = o.qty || 0;
     $avgvalue = new Currency(o.avgvalue, $currency);
     $revenue = $avgvalue.scale($qty);
@@ -139,6 +148,13 @@ function build() {
     // 3) Calculate PSP costs
     for (const psp of pspArr) {
         const calc = { setup: {}, monthly: {}, trn: {} };
+        // Tmp. fix for Shopify
+        if (opts.module === 'shopify' && psp.logo !== 'shopify.svg') {
+            const tier = (opts.shopify === 'Basic') ? 2 : (opts.shopify === 'Shopify') ? 1 : 0.5;
+            cost2obj({
+                trn: $revenue.scale(tier / 100)
+            }, calc, `Shopify gebyr (${tier}%)`);
+        }
         if (psp.acq) {
             if (psp.dankort) {
                 cost2obj({
@@ -159,14 +175,6 @@ function build() {
                 trn: new Currency($qty * $mobilepay, 'DKK')
             }, calc, 'MobilePay');
         }
-
-        // TODO: Add tiers (2%|1%|0.5%)
-        if (opts.module === 'shopify' && psp.logo !== 'shopify.svg') {
-            cost2obj({
-                trn: $revenue.scale(2 / 100)
-            }, calc, 'Shopify gebyr (2%)');
-        }
-
         cost2obj(psp.fees, calc, psp.title);
         psp.calc = calc;
         psp.calc.total = sum(merge(calc.monthly, calc.trn));
@@ -261,7 +269,7 @@ function showTooltip(e) {
         const o = {
             name: prop,
             price: obj[prop].print($currency, true)
-        }
+        };
         if (prop === 'Dankortaftale') {
             o.name = 'Dankortaftale (0,32%)';
         } else if (ACQs[prop.toLowerCase()]) {

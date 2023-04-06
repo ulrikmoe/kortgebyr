@@ -25,47 +25,66 @@
       <div class="settings">
         <div>
           <div class="field">
-            <label for="acquirer" class="label">Indløser</label>
-            <select id="acquirer" name="acquirer" class="form-select">
-              <option value="auto">Vælg indløser</option>
-              <option value="nets">Nets</option>
-              <option value="clearhaus">Clearhaus</option>
-              <option value="handelsbanken">Handelsbanken</option>
-              <option value="swedbank">Swedbank</option>
-              <option value="worldline">Worldline (tidl. Bambora)</option>
-            </select>
+            <label>
+              <b class="label">Indløser</b>
+              <select name="acquirer" class="form-select">
+                <option value="auto">Vælg indløser</option>
+                <option value="nets">Nets</option>
+                <option value="clearhaus">Clearhaus</option>
+                <option value="handelsbanken">Handelsbanken</option>
+                <option value="swedbank">Swedbank</option>
+                <option value="worldline">Worldline (tidl. Bambora)</option>
+              </select>
+            </label>
           </div>
 
           <div class="field">
-            <label for="module" class="label">Shopsystem</label>
-            <select name="module" id="module" class="form-select">
-              <option value="">Vælg shopsystem</option>
-              <option value="woocommerce">WooCommerce</option>
-              <option value="magento">Magento 2</option>
-              <option value="prestashop">PrestaShop</option>
-              <option value="thirtybees">ThirtyBees</option>
-              <option value="opencart">OpenCart</option>
-              <option value="shopify">Shopify</option>
-              <option value="shoporama">Shoporama</option>
-              <option value="dandomain">DanDomain / Wannafind / ScanNet</option>
-              <option value="ideal.shop">Ideal.shop</option>
-            </select>
+            <label>
+              <b class="label">Shopsystem</b>
+              <select name="module" class="form-select">
+                <option value="">Vælg shopsystem</option>
+                <option value="woocommerce">WooCommerce</option>
+                <option value="magento">Magento 2</option>
+                <option value="prestashop">PrestaShop</option>
+                <option value="thirtybees">ThirtyBees</option>
+                <option value="opencart">OpenCart</option>
+                <option value="shopify">Shopify</option>
+                <option value="shoporama">Shoporama</option>
+                <option value="dandomain">DanDomain / Wannafind / ScanNet</option>
+                <option value="ideal.shop">Ideal.shop</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="shopify" class="field hide">
+            <label>
+              <b class="label">Shopify abonnement</b>
+              <select name="shopify" class="form-select">
+                <option value="Basic" selected>Basic ($29/md.)</option>
+                <option value="Shopify">Shopify ($79/md.)</option>
+                <option value="Advanced">Advanced ($299/md.)</option>
+              </select>
+            </label>
           </div>
         </div>
 
         <div>
           <div class="avgqty">
             <div class="field field--avg">
-              <label for="avgvalue" class="label">Typisk ordreværdi</label>
-              <div class="input-group">
-                <label for="avgvalue" class="input-group-text">kr.</label>
-                <input id="avgvalue" name="avgvalue" type="number" min="0" class="form-control input-group-input" value="645">
-              </div>
+              <label>
+                <b class="label">Typisk ordreværdi</b>
+                <div class="input-group">
+                  <div class="input-group-text">kr.</div>
+                  <input id="avgvalue" name="avgvalue" type="number" min="0" class="form-control input-group-input" value="645">
+                </div>
+              </label>
             </div>
 
             <div class="field field--qty">
-              <label for="qty" class="label">Betalinger pr. md.</label>
-              <input id="qty" name="qty" type="number" min="0" class="form-control" value="200">
+              <label>
+                <b class="label">Betalinger pr. md.</b>
+                <input id="qty" name="qty" type="number" min="0" class="form-control" value="200">
+              </label>
             </div>
           </div>
 
@@ -78,7 +97,7 @@
         </div>
 
         <div>
-          <p class="label label--tilvalg mobile--hide">Tilvalg</p>
+          <b class="label label--tilvalg mobile--hide">Tilvalg</b>
           <div class="form-check">
             <label class="form-check-label">
               <input class="form-check-input" type="checkbox" name="features[]" value="mobilepay" id="mobilepay">
@@ -106,7 +125,6 @@
               <span>Diners og JCB</span>
             </label>
           </div>
-
         </div>
       </div>
     </form>
@@ -114,6 +132,10 @@
 
   <div class="infobox">
     Her kan du sammenligne priser på online betalingsløsninger, og finde den billigste betalingsløsning til din netbutik. Vi vil anbefale at du starter med at læse vores <a title="Ofte stillede spørgsmål om betalingsløsninger mm." href="/ofte-stillede-spørgsmål">FAQ</a>. <span class="mobile--hide">Hvis du har feedback, eller synes vi mangler en betalingsløsning, kan du skrive til os <a href="mailto:ulrik.moe@gmail.com">her</a>.</span>
+  </div>
+
+  <div id="shopify-infobox" class="infobox hide">
+    <b id="shopify-subscription">Shopify Basic</b>: Ved brug af ekstern betalingsløsning, dvs. andre løsninger end Shopify Payments, pålægger Shopify et ekstra gebyr på <b id="shopify-tier">2%</b> af din omsætning. Derudover skal din indløser betale 0,4% til Shopify.
   </div>
 
   <div class="responsive">
