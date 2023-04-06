@@ -22,7 +22,7 @@ const ACQs = {
                     o.trn['Clearhaus auth gebyr (0,22 DKK)'] = new Currency(.22 * $qty, 'DKK');
                     o.trn['Clearhaus 3D Secure gebyr (0,30 DKK)'] = new Currency(.30 * $qty, 'DKK');
                 */
-                return $avgvalue.scale(1.25 / 100).add(new Currency(.52, 'DKK'))
+                return $avgvalue.scale(1.25 / 100).add(new Currency(.52, 'DKK'));
             }
         }
     },
@@ -231,9 +231,11 @@ const PSPs = [
                 if (opts.features.subscriptions) {
                     o.monthly['Abonnementsbetalinger'] = new Currency(99, 'DKK');
                 }
+                return;
             },
-            trn() {
-                return new Currency($qty, 'DKK');
+            trn(o) {
+                o.trn['Transaktionsgebyr (1 kr.)'] = new Currency($qty, 'DKK');
+                return;
             }
         }
     },
@@ -254,10 +256,11 @@ const PSPs = [
                 }
                 return new Currency(149, 'DKK');
             },
-            trn() {
-                const freeTrns = 500;
-                if ($qty <= freeTrns) return new Currency(0, 'DKK');
-                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
+            trn(o) {
+                const freeTrns = Math.min($qty, 500);
+                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                o.trn[freeTrns + ' gratis transaktioner (0,25 kr.)'] = (new Currency(-0.25 * freeTrns, 'DKK'));
+                return;
             }
         }
     },
@@ -312,7 +315,7 @@ const PSPs = [
         fees: {
             trn(o) {
                 const qty = (o.trn.Clearhaus) ? $qty * $dankortscale : $qty;
-                o.trn['Freepay 3D-secure opslag'] = new Currency(0.25 * qty, 'DKK');
+                o.trn['Freepay 3-D Secure'] = new Currency(0.25 * qty, 'DKK');
             }
         }
     },
@@ -720,7 +723,7 @@ const PSPs = [
             trn(o) {
                 const freeTrns = Math.min($qty, 500);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn[freeTrns + ' gratis transaktioner (0,25 kr.)'] = (new Currency(-0.25, 'DKK')).scale(freeTrns);
+                o.trn[freeTrns + ' gratis transaktioner (0,25 kr.)'] = (new Currency(-0.25 * freeTrns, 'DKK'));
                 return;
             }
         }
@@ -749,7 +752,7 @@ const PSPs = [
         note: 'Reseller af Quickpay',
         link: 'https://shipmondo.com/dk/shipmondo-payments/',
         dankort: true,
-        acqs: new Set(['nets', 'clearhaus']),
+        acqs: new Set(['worldline', 'valitor']),
         features: new Set(['mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
         fees: {
