@@ -8,7 +8,7 @@ module.exports = {
     },
     "extends": "eslint:recommended",
     "rules": {
-        "quotes": ["warn", "single"],
+        "quotes": ["warn", "single", { "allowTemplateLiterals": true }],
         "semi": ["warn", "always"],
         "max-depth": ["warn", 6]
     }
