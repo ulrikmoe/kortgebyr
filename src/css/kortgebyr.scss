@@ -423,19 +423,21 @@ td {
 .info--ul {
     display: block;
     list-style: none;
+    font-family: monospace;
     position: absolute;
     margin: 0;
     white-space: nowrap;
     width: auto;
     transform: translate(-50%, 0);
-    padding: .5em .7em .5em;
+    padding: .9em 1em .9em;
     box-sizing: border-box;
     border-radius: 3px;
-    font-size: .9em;
-    line-height: 1.4em;
-    background: rgba(51, 51, 51, 0.9);
+    font-size: .85em;
+    line-height: 1.55;
+    background: rgba(51, 51, 51, 0.95);
     color: #fff;
     z-index: 10;
+    white-space: pre;
 
     &:after {
         content: '';
