@@ -253,10 +253,29 @@ function showTooltip(e) {
     infobox.style.left = e.clientX + 'px';
     infobox.style.bottom = (15 + window.innerHeight - window.scrollY - e.clientY) + 'px';
 
+    let nameMaxLen = 0;
+    let priceMaxLen = 0;
+    const arr = [];
     const obj = e.target.ttdata;
     for (const prop in obj) {
+        const o = {
+            name: prop,
+            price: obj[prop].print($currency, true)
+        }
+        if (prop === 'Dankortaftale') {
+            o.name = 'Dankortaftale (0,32%)';
+        } else if (ACQs[prop.toLowerCase()]) {
+            o.name = prop + ' indløsning';
+        }
+        arr.push(o);
+        nameMaxLen = Math.max(o.name.length, nameMaxLen);
+        priceMaxLen = Math.max(o.price.length, priceMaxLen);
+    }
+
+    for (const o of arr) {
         const li = document.createElement('li');
-        li.textContent = prop + ': ' + obj[prop].print($currency);
+        const str = o.name + ': ' + ' '.repeat((nameMaxLen - o.name.length) + (priceMaxLen - o.price.length));
+        li.textContent = str + ' ' + o.price;
         infobox.appendChild(li);
     }
     document.body.appendChild(infobox);
