@@ -259,7 +259,7 @@ const PSPs = [
             trn(o) {
                 const freeTrns = Math.min($qty, 500);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn[freeTrns + ' gratis transaktioner (0,25 kr.)'] = (new Currency(-0.25 * freeTrns, 'DKK'));
+                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
                 return;
             }
         }
@@ -573,7 +573,7 @@ const PSPs = [
                 o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
                 o.trn['Indløsning (1,25%)'] = $revenue.scale(1 - $dankortscale).scale(1.25 / 100);
                 o.trn['Transaktionsgebyr (0,35 kr.)'] = new Currency(0.35 * $qty, 'DKK');
-                o.trn[freeTrns + ' gratis transaktioner (0,35 kr.)'] = new Currency(-0.35 * freeTrns, 'DKK');
+                o.trn[freeTrns + ' gratis transaktioner'] = new Currency(-0.35 * freeTrns, 'DKK');
                 const cqty = (1 - $dankortscale) * $qty;
                 o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
                 o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
@@ -599,7 +599,7 @@ const PSPs = [
                 o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
                 o.trn['Indløsning (1,25%)'] = $revenue.scale(1 - $dankortscale).scale(1.25 / 100);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn[freeTrns + ' gratis transaktioner (0,25 kr.)'] = new Currency(-0.25 * freeTrns, 'DKK');
+                o.trn[freeTrns + ' gratis transaktioner'] = new Currency(-0.25 * freeTrns, 'DKK');
                 const cqty = (1 - $dankortscale) * $qty;
                 o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
                 o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
@@ -723,7 +723,7 @@ const PSPs = [
             trn(o) {
                 const freeTrns = Math.min($qty, 500);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn[freeTrns + ' gratis transaktioner (0,25 kr.)'] = (new Currency(-0.25 * freeTrns, 'DKK'));
+                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
                 return;
             }
         }
@@ -739,8 +739,9 @@ const PSPs = [
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart']),
         fees: {
-            trn() {
-                return new Currency(0.25 * $qty, 'DKK');
+            trn(o) {
+                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                return;
             }
         }
     },
@@ -749,21 +750,33 @@ const PSPs = [
         title: 'Shipmondo Payments',
         logo: 'shipmondo.svg',
         wh: [112, 24],
-        note: 'Reseller af Quickpay',
-        link: 'https://shipmondo.com/dk/shipmondo-payments/',
+        note: 'Reseller af Billwerk+ (Fhv. reepay)',
+        link: 'https://help.shipmondo.com/da/articles/6015622-shipmondo-payments-tilvalg-og-priser',
         dankort: true,
         acqs: new Set(['worldline', 'valitor']),
         features: new Set(['mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
         fees: {
-            trn() {
-                const nonChQty = $qty * $dankortscale;
-                let fee = 2; // <= 25 trns
-                if (nonChQty > 250) fee = 0.2;
-                else if (nonChQty > 100) fee = 0.5;
-                else if (nonChQty > 50) fee = 0.8;
-                else if (nonChQty > 25) fee = 1;
-                return new Currency(fee * nonChQty, 'DKK');
+            trn(o) {
+                let num = Math.min($qty, 25);
+                o.trn[num + ' * transaktionsgebyr (1 kr.)'] = new Currency(num, 'DKK');
+
+                if ($qty > 25) {
+                    num = Math.min(($qty - 25), 25);
+                    o.trn[num + ' * transaktionsgebyr (0,8 kr.)'] = new Currency(num * 0.8, 'DKK');
+                }
+                if ($qty > 50) {
+                    num = Math.min(($qty - 50), 50);
+                    o.trn[num + ' * transaktionsgebyr (0,4 kr.)'] = new Currency(num * 0.4, 'DKK');
+                }
+                if ($qty > 100) {
+                    num = Math.min(($qty - 100), 51);
+                    o.trn[num + ' * transaktionsgebyr (0,3 kr.)'] = new Currency(num * 0.3, 'DKK');
+                }
+                if ($qty > 151) {
+                    num = $qty - 151;
+                    o.trn[num + ' * transaktionsgebyr (0,2 kr.)'] = new Currency(num * 0.2, 'DKK');
+                }
             }
         }
     },
