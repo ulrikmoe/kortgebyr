@@ -4,17 +4,17 @@
 **/
 
 @font-face {
-    font-family: R;  // Roboto v2.136 (hinted)
+    font-family: N;
     font-weight: 400;
-    src: url('/font/R400.woff2') format('woff2');
+    src: url('/font/N400.woff2') format('woff2');
     font-display: swap;
 }
 
 @font-face {
-    font-family: R;  // Roboto v2.136 (hinted)
+    font-family: N;
     font-weight: 400;
     font-style: italic;
-    src: url('/font/R400i.woff2') format('woff2');
+    src: url('/font/N400i.woff2') format('woff2');
     font-display: swap;
 }
 
@@ -34,7 +34,7 @@
 
 body {
     margin: 0;
-    font-family: 'R', Roboto, Noto Sans, sans-serif;
+    font-family: 'N', Noto Sans, sans-serif;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -107,14 +107,16 @@ nav {
 
 .infobox {
     background: #fff;
+    font-size: .95em;
     margin: .8em 0 .9em;
     border: 1px solid #dcdcdc;
-    padding: .7rem .9rem .6rem;
+    padding: .7em .9rem .7em;
 }
 
 .settings {
     background: #fff;
     width: 100%;
+    font-size: .95em;
     display: grid;
     grid-template-columns: .85fr 1.3fr .85fr;
     grid-gap: 3%;
@@ -125,11 +127,11 @@ nav {
 
 .label {
     display: inline-block;
-    font-size: .85em;
+    font-size: .9em;
     font-weight: 600;
     font-family: 'N', Noto Sans, sans-serif;
     color: #333;
-    margin: 0 0 .75em;
+    margin: 0 0 .7em;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
     -moz-user-select: none;      /* Firefox */
@@ -140,8 +142,8 @@ nav {
 .form-control {
     display: block;
     width: 100%;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
+    padding: 0.4em 0.75em;
+    font-size: .95em;
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
@@ -151,7 +153,7 @@ nav {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border-radius: 0.25rem;
+    border-radius: 0.25em;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     box-sizing: border-box;
     margin: 0;
@@ -163,7 +165,7 @@ nav {
         background-color: #fff;
         border-color: #86b7fe;
         outline: 0;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        box-shadow: 0 0 0 0.25em rgba(13, 110, 253, 0.25);
     }
 }
 
@@ -178,8 +180,8 @@ nav {
 .input-group-text {
     display: flex;
     align-items: center;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
+    padding: 0.4em 0.75em;
+    font-size: .95em;
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
@@ -187,7 +189,7 @@ nav {
     white-space: nowrap;
     background-color: #e9ecef;
     border: 1px solid #ced4da;
-    border-radius: 0.25rem;
+    border-radius: 0.25em;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     box-sizing: border-box;
@@ -207,16 +209,16 @@ nav {
 .form-select {
     display: block;
     width: 100%;
-    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
-    -moz-padding-start: calc(0.75rem - 3px);
-    font-size: 1rem;
+    padding: 0.4em 2.25em 0.4em 0.75em;
+    -moz-padding-start: calc(0.75em - 3px);
+    font-size: .95em;
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
     background-color: #fff;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
-    background-position: right 0.75rem center;
+    background-position: right 0.75em center;
     background-size: 16px 12px;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
@@ -233,7 +235,7 @@ nav {
     &:focus {
         border-color: #86b7fe;
         outline: 0;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        box-shadow: 0 0 0 0.25em rgba(13, 110, 253, 0.25);
     }
 
     &:-moz-focusring {
@@ -245,7 +247,7 @@ nav {
 
 .form-check {
     display: block;
-    min-height: 1.5rem;
+    min-height: 1.5em;
     padding-left: 1.5em;
     margin: 0.125em 0;
 }
@@ -286,7 +288,7 @@ nav {
     &:focus {
         border-color: #86b7fe;
         outline: 0;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        box-shadow: 0 0 0 0.25em rgba(13, 110, 253, 0.25);
     }
 }
 
@@ -307,14 +309,14 @@ nav {
 }
 
 .field {
-    padding: .7rem 0 .6em;
+    padding: .7em 0 .6em;
     box-sizing: border-box;
 }
 
 .avgqty {
     display: flex;
     //gap: 20px; // TODO: use at some point
-    margin-bottom: .8rem;
+    margin-bottom: .8em;
 }
 
 .field--avg {
@@ -374,7 +376,7 @@ th {
 td {
     background: #fff;
     height: 71px;
-    padding: 0 0 0;
+    padding: 0;
     vertical-align: middle;
     line-height: normal;
     text-align: center;
@@ -518,7 +520,7 @@ td {
 .td--total--pct {
     color: #555;
     font-size: .9em;
-    margin: 6px 0 0;
+    margin: 1px 0 0;
     font-style: italic;
 }
 

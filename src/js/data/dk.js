@@ -490,8 +490,8 @@ const PSPs = [
     {
         name: 'Payson',
         title: 'Payson',
-        logo: 'payson.png',
-        wh: [121, 32],
+        logo: 'payson.svg',
+        wh: [121, 27.5],
         link: 'https://www.payson.se/en/company/price-list/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set([]),
@@ -640,8 +640,8 @@ const PSPs = [
     {
         name: 'Billwerk+',
         title: 'Billwerk+ Payments',
-        logo: 'reepay.svg',
-        wh: [97, 20],
+        logo: 'billwerk.png',
+        wh: [130, 16],
         link: 'https://www.billwerk.plus/da/pricing/',
         dankort: true,
         acqs: new Set(['clearhaus', 'swedbank']),
@@ -660,8 +660,8 @@ const PSPs = [
     {
         name: 'Billwerk+',
         title: 'Billwerk+ Subscription Management (Lite)',
-        logo: 'reepay.svg',
-        wh: [97, 20],
+        logo: 'billwerk.png',
+        wh: [130, 16],
         link: 'https://www.billwerk.plus/da/pricing/',
         dankort: true,
         acqs: new Set(['clearhaus', 'swedbank', 'handelsbanken', 'worldline']),
