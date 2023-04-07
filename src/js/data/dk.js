@@ -22,7 +22,11 @@ const ACQs = {
                     o.trn['Clearhaus auth gebyr (0,22 DKK)'] = new Currency(.22 * $qty, 'DKK');
                     o.trn['Clearhaus 3D Secure gebyr (0,30 DKK)'] = new Currency(.30 * $qty, 'DKK');
                 */
-                return $avgvalue.scale(1.25 / 100).add(new Currency(.52, 'DKK'));
+                let trnfee = $avgvalue.scale(1.25 / 100);
+                if (trnfee.order('DKK') < 0.6) trnfee = new Currency(0.60, 'DKK');
+                return trnfee
+                    .add(new Currency(0.22, 'DKK'))     // Auth gebyr
+                    .add(new Currency(0.30, 'DKK'));    // 3D Secure
             }
         }
     },
@@ -624,15 +628,17 @@ const PSPs = [
                 o.monthly['Ekstra abonnement'] = new Currency(30, 'DKK');
             },
             trn(o) {
-                o.trn['Ekstra Quickpay dankortgebyr'] = new Currency(0.25 * $dankortscale * $qty, 'DKK');
-                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 if (o.trn.Clearhaus) {
                     const cqty = (1 - $dankortscale) * $qty;
                     delete o.trn.Clearhaus;
-                    o.trn['Indløsning (1,35%)'] = $revenue.scale(1 - $dankortscale).scale(1.35 / 100);
+                    let trnfee = $revenue.scale(1 - $dankortscale).scale(1.35 / 100);
+                    if (trnfee.order('DKK') < 0.75) trnfee = new Currency(0.75, 'DKK');
+                    o.trn['Indløsning (1,35%, min. 0,75 kr.)'] = trnfee;
                     o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
                     o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
                 }
+                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                o.trn['Ekstra transaktionsgebyr (Dankort)'] = new Currency(0.25 * $dankortscale * $qty, 'DKK');
                 return;
             }
         }
