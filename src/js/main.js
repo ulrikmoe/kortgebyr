@@ -240,7 +240,7 @@ function build() {
         const totalCell = tr.insertCell(-1);
         totalCell.className = 'td--total';
         totalCell.innerHTML = `${kortgebyr.print($currency)} <p class="td--total--pct">
-        (&asymp; ${kortgebyrPct.replace('.', currency_map[$currency].d)}%)</p>`;
+        (${kortgebyrPct.replace('.', currency_map[$currency].d)}%)</p>`;
         tbody.appendChild(tr);
     }
     document.getElementById('tbody').replaceWith(tbody);
