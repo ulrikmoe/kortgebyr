@@ -129,7 +129,7 @@ function build() {
             psp.acq = arr.find(acq => psp.acqs.has(acq.name));
 
             // TMP fix for shopify
-            if (opts.module === 'shopify' && psp.logo === 'quickpay.svg') {
+            if (opts.module === 'shopify' && psp.logo[0] === 'quickpay.svg') {
                 psp.acq = arr.find(acq => acq.name === 'clearhaus');
             }
             if (!psp.acq) return false;
@@ -149,7 +149,7 @@ function build() {
     for (const psp of pspArr) {
         const calc = { setup: {}, monthly: {}, trn: {} };
         // Tmp. fix for Shopify
-        if (opts.module === 'shopify' && psp.logo !== 'shopify.svg') {
+        if (opts.module === 'shopify' && psp.logo[0] !== 'shopify.svg') {
             const tier = (opts.shopify === 'Basic') ? 2 : (opts.shopify === 'Shopify') ? 1 : 0.5;
             cost2obj({
                 trn: $revenue.scale(tier / 100)
@@ -195,8 +195,8 @@ function build() {
         pspCell.className = 'td--psp';
         pspCell.innerHTML = `
         <a rel="nofollow" target="_blank" href="${psp.link}">
-            <img class="td--psp--img" width="${psp.wh[0]}" height="${psp.wh[1]}"
-                src="/img/betalingsløsning/${psp.logo}" alt="${psp.name} logo"
+            <img class="td--psp--img" width="${psp.logo[1]}" height="${psp.logo[2]}"
+                src="/img/betalingsløsning/${psp.logo[0]}" alt="${psp.name} logo"
                 title="${psp.name} logo">
             <br>
             <span>${psp.title}</span>
@@ -209,8 +209,8 @@ function build() {
         // Acquirer
         const acqCell = tr.insertCell(-1);
         if (psp.acq) {
-            acqCell.innerHTML = `<img width="${acq.ref.wh[0]}" height="${acq.ref.wh[1]}"
-                src="/img/indløser/${acq.ref.logo}" alt="${acq.ref.name}" title="${acq.ref.name} indløsningsaftale">`;
+            acqCell.innerHTML = `<img width="${acq.ref.logo[1]}" height="${acq.ref.logo[2]}"
+                src="/img/indløser/${acq.ref.logo[0]}" alt="${acq.ref.name}" title="${acq.ref.name} indløsningsaftale">`;
         } else {
             acqCell.innerHTML = '<p class="acquirer-included">Inkluderet</p>';
         }

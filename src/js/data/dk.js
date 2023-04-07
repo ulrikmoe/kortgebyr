@@ -10,8 +10,7 @@ const DankortFees = {
 const ACQs = {
     clearhaus: {
         name: 'Clearhaus',
-        logo: 'clearhaus.svg',
-        wh: [76.66, 13],
+        logo: ['clearhaus.svg', 76.66, 13],
         link: 'https://www.clearhaus.com/dk/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
@@ -32,8 +31,7 @@ const ACQs = {
     },
     nets: {
         name: 'Nets',
-        logo: 'nets.svg',
-        wh: [51.3, 15],
+        logo: ['nets.svg', 51.3, 15],
         link: 'https://www.nets.eu/dk/payments/online-betalinger/indloesningsaftale/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         fees: {
@@ -48,8 +46,7 @@ const ACQs = {
     },
     handelsbanken: {
         name: 'Handelsbanken',
-        logo: 'handelsbanken.svg',
-        wh: [90, 9],
+        logo: ['handelsbanken.svg', 90, 9],
         link: 'https://handelsbanken.dk/shb/inet/icentda.nsf/Default/' +
             'qC21926A235427DE6C12578810023DBB9?Opendocument',
         cards: new Set(['visa', 'mastercard', 'maestro']),
@@ -61,8 +58,7 @@ const ACQs = {
     },
     swedbank: {
         name: 'Swedbank',
-        logo: 'swedbank.png',
-        wh: [75, 12],
+        logo: ['swedbank.png', 75, 12],
         link: 'https://www.swedbank.dk/erhverv/card-services/priser-og-vilkar/#!/CID_2263482',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
@@ -80,8 +76,7 @@ const ACQs = {
     },
     worldline: {
         name: 'Worldline',
-        logo: 'worldline.svg',
-        wh: [81.8, 11],
+        logo: ['worldline.svg', 81.8, 11],
         link: 'http://www.bambora.com/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
@@ -96,8 +91,7 @@ const PSPs = [
     {
         name: '2checkout',
         title: '2SELL',
-        logo: 'verifone.svg',
-        wh: [120, 23],
+        logo: ['verifone.svg', 120, 23],
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set([]),
@@ -113,8 +107,7 @@ const PSPs = [
     {
         name: '2checkout',
         title: '2SUBSCRIBE',
-        logo: 'verifone.svg',
-        wh: [120, 23],
+        logo: ['verifone.svg', 120, 23],
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions']),
@@ -130,8 +123,7 @@ const PSPs = [
     {
         name: '2checkout',
         title: '2MONETIZE',
-        logo: 'verifone.svg',
-        wh: [120, 23],
+        logo: ['verifone.svg', 120, 23],
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions']),
@@ -147,8 +139,7 @@ const PSPs = [
     {
         name: 'Adyen',
         title: 'Adyen',
-        logo: 'adyen.svg',
-        wh: [90, 30],
+        logo: ['adyen.svg', 90, 30],
         link: 'https://www.adyen.com/da_DK/priser',
         dankort: true,
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
@@ -171,8 +162,7 @@ const PSPs = [
     {
         name: 'Braintree',
         title: 'Braintree',
-        logo: 'braintree.svg',
-        wh: [120.6, 16],
+        logo: ['braintree.svg', 120.5, 16],
         link: 'https://www.braintreepayments.com/dk/braintree-pricing',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'applepay']),
@@ -188,8 +178,7 @@ const PSPs = [
     {
         name: 'Certitrade',
         title: 'Certitrade all-in-one',
-        logo: 'certitrade.svg',
-        wh: [119.7, 25],
+        logo: ['certitrade.svg', 119.72, 25],
         link: 'https://certitrade.se',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions']),
@@ -205,8 +194,7 @@ const PSPs = [
     {
         name: 'Certitrade',
         title: 'Certitrade Fast',
-        logo: 'certitrade.svg',
-        wh: [119.7, 25],
+        logo: ['certitrade.svg', 119.7, 25],
         link: 'https://certitrade.se',
         acqs: new Set(['worldline', 'clearhaus', 'swedbank', 'handelsbanken']),
         features: new Set(['subscriptions']),
@@ -223,8 +211,7 @@ const PSPs = [
     {
         name: 'DanDomain',
         title: 'DanDomain Start-up',
-        logo: 'dandomain.svg',
-        wh: [119.2, 22],
+        logo: ['dandomain.svg', 119.2, 22],
         link: 'https://dandomain.dk/betalingssystem/priser',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
@@ -246,8 +233,7 @@ const PSPs = [
     {
         name: 'DanDomain',
         title: 'DanDomain Success',
-        logo: 'dandomain.svg',
-        wh: [119.2, 22],
+        logo: ['dandomain.svg', 119.2, 22],
         link: 'https://dandomain.dk/betalingssystem/priser',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
@@ -271,8 +257,7 @@ const PSPs = [
     {
         name: 'Worldline',
         title: 'Worldline Checkout',
-        logo: 'worldline.svg',
-        wh: [118.97, 16],
+        logo: ['worldline.svg', 118.98, 16],
         note: 'Tidl. Bambora',
         link: 'https://www.bambora.com/da/dk/online/',
         dankort: true,
@@ -289,8 +274,7 @@ const PSPs = [
     {
         name: 'Worldline',
         title: 'Worldline Pro+',
-        logo: 'worldline.svg',
-        wh: [118.97, 16],
+        logo: ['worldline.svg', 118.98, 16],
         note: 'Tidl. ePay platform',
         link: 'https://www.bambora.com/da/dk/online/',
         dankort: true,
@@ -309,8 +293,7 @@ const PSPs = [
     {
         name: 'Freepay',
         title: 'Freepay',
-        logo: 'freepay.svg',
-        wh: [98, 20],
+        logo: ['freepay.svg', 98, 20],
         link: 'https://freepay.dk/da/betalingsgateway/priser',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
@@ -326,8 +309,7 @@ const PSPs = [
     {
         name: 'Lunar',
         title: 'Lunar',
-        logo: 'lunar.svg',
-        wh: [74, 26],
+        logo: ['lunar.svg', 74.3, 26],
         link: 'https://www.lunar.app/dk/erhverv/online-betaling-til-webshops',
         cards: new Set(['visa', 'mastercard']),
         features: new Set(['mobilepay']),
@@ -344,8 +326,7 @@ const PSPs = [
     {
         name: 'Mollie',
         title: 'Mollie',
-        logo: 'mollie.svg',
-        wh: [74, 22],
+        logo: ['mollie.svg', 74.25, 22],
         link: 'https://www.mollie.com/en/pricing',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
@@ -358,33 +339,10 @@ const PSPs = [
             }
         }
     },
-    /*
-    2023-04-04: Nets Easy er fjernet pga. manglende prisoversigt.
-    {
-        name: 'Nets',
-        title: 'Nets Easy',
-        logo: 'nets-easy.svg',
-        wh: [85, 25],
-        link: 'https://www.nets.eu/da-DK/payments/online',
-        cards: new Set(['dankort', 'visa', 'mastercard', 'maestro']),
-        features: new Set(['subscriptions', 'mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
-        fees: {
-            monthly: new Currency(199, 'DKK'),
-            trn(o) {
-                o.trn['Dankort (0,39% + 1 DKK)'] = $revenue.scale($dankortscale).scale(0.39 / 100)
-                    .add(new Currency($dankortscale * $qty, 'DKK'));
-                o.trn['Visa/Mastercard (1,35% + 0,5 DKK)'] = $revenue.scale(1 - $dankortscale).scale(1.35 / 100)
-                    .add(new Currency((1 - $dankortscale) * $qty * 0.5, 'DKK'));
-            }
-        }
-    },
-    */
     {
         name: 'Paylike',
         title: 'Paylike',
-        logo: 'paylike.svg',
-        wh: [99, 31],
+        logo: ['paylike.svg', 99.1, 31],
         link: 'https://paylike.dk/pricing',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions']),
@@ -400,8 +358,7 @@ const PSPs = [
     {
         name: 'PayPal',
         title: 'PayPal',
-        logo: 'paypal.svg',
-        wh: [123.6, 30],
+        logo: ['paypal.svg', 123.6, 30],
         link: 'https://www.paypal.com/dk/webapps/mpp/merchant-fees',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions']),
@@ -422,8 +379,7 @@ const PSPs = [
     {
         name: 'Payrexx',
         title: 'Payrexx Checkout',
-        logo: 'payrexx.svg',
-        wh: [100.5, 23],
+        logo: ['payrexx.svg', 100.5, 23],
         link: 'https://www.payrexx.com/da/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
@@ -440,8 +396,7 @@ const PSPs = [
     {
         name: 'Payrexx',
         title: 'Payrexx Starter',
-        logo: 'payrexx.svg',
-        wh: [100.5, 23],
+        logo: ['payrexx.svg', 100.5, 23],
         link: 'https://www.payrexx.com/da/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
@@ -458,8 +413,7 @@ const PSPs = [
     {
         name: 'Payrexx',
         title: 'Payrexx Plus',
-        logo: 'payrexx.svg',
-        wh: [100.5, 23],
+        logo: ['payrexx.svg', 100.5, 23],
         link: 'https://www.payrexx.com/da/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
@@ -476,8 +430,7 @@ const PSPs = [
     {
         name: 'Payrexx',
         title: 'Payrexx Pro',
-        logo: 'payrexx.svg',
-        wh: [100.5, 23],
+        logo: ['payrexx.svg', 100.5, 23],
         link: 'https://www.payrexx.com/da/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
@@ -494,8 +447,7 @@ const PSPs = [
     {
         name: 'Payson',
         title: 'Payson',
-        logo: 'payson.svg',
-        wh: [121, 27.5],
+        logo: ['payson.svg', 121, 27.5],
         link: 'https://www.payson.se/en/company/price-list/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set([]),
@@ -515,8 +467,7 @@ const PSPs = [
     {
         name: 'PensoPay',
         title: 'PensoPay Basis',
-        logo: 'pensopay.svg',
-        wh: [143, 14],
+        logo: ['pensopay.svg', 143.15, 14],
         note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
@@ -538,8 +489,7 @@ const PSPs = [
     {
         name: 'PensoPay',
         title: 'PensoPay Start-Up',
-        logo: 'pensopay.svg',
-        wh: [143, 14],
+        logo: ['pensopay.svg', 143.15, 14],
         note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
@@ -562,8 +512,7 @@ const PSPs = [
     {
         name: 'PensoPay',
         title: 'PensoPay Business',
-        logo: 'pensopay.svg',
-        wh: [143, 14],
+        logo: ['pensopay.svg', 143.15, 14],
         note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
@@ -588,8 +537,7 @@ const PSPs = [
     {
         name: 'PensoPay',
         title: 'PensoPay Pro',
-        logo: 'pensopay.svg',
-        wh: [143, 14],
+        logo: ['pensopay.svg', 143.15, 14],
         note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
@@ -614,8 +562,7 @@ const PSPs = [
     {
         name: 'Quickpay',
         title: 'Quickpay Merchant',
-        logo: 'quickpay.svg',
-        wh: [138, 22.3],
+        logo: ['quickpay.svg', 138, 22.3],
         link: 'https://quickpay.net/prices-dk/',
         dankort: true,
         acqs: new Set(['clearhaus']),
@@ -646,8 +593,7 @@ const PSPs = [
     {
         name: 'Billwerk+',
         title: 'Billwerk+ Payments',
-        logo: 'billwerk.png',
-        wh: [130, 16],
+        logo: ['billwerk.png', 130, 16],
         link: 'https://www.billwerk.plus/da/pricing/',
         dankort: true,
         acqs: new Set(['clearhaus', 'swedbank']),
@@ -666,8 +612,7 @@ const PSPs = [
     {
         name: 'Billwerk+',
         title: 'Billwerk+ Subscription Management (Lite)',
-        logo: 'billwerk.png',
-        wh: [130, 16],
+        logo: ['billwerk.png', 130, 16],
         link: 'https://www.billwerk.plus/da/pricing/',
         dankort: true,
         acqs: new Set(['clearhaus', 'swedbank', 'handelsbanken', 'worldline']),
@@ -687,8 +632,7 @@ const PSPs = [
     {
         name: 'ScanNet',
         title: 'ScanNet Start-Up',
-        logo: 'scannet.svg',
-        wh: [93, 23],
+        logo: ['scannet.svg', 92.77, 23],
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'swedbank', 'worldline']),
@@ -711,8 +655,7 @@ const PSPs = [
     {
         name: 'ScanNet',
         title: 'ScanNet Success',
-        logo: 'scannet.svg',
-        wh: [93, 23],
+        logo: ['scannet.svg', 92.77, 23],
         link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'swedbank', 'worldline']),
@@ -737,8 +680,7 @@ const PSPs = [
     {
         name: 'Scanpay',
         title: 'Scanpay',
-        logo: 'scanpay.svg',
-        wh: [104, 23],
+        logo: ['scanpay.svg', 104, 23],
         link: 'https://scanpay.dk',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
@@ -754,8 +696,7 @@ const PSPs = [
     {
         name: 'Shipmondo',
         title: 'Shipmondo Payments',
-        logo: 'shipmondo.svg',
-        wh: [112, 24],
+        logo: ['shipmondo.svg', 112, 24],
         note: 'Reseller af Billwerk+',
         link: 'https://help.shipmondo.com/da/articles/6015622-shipmondo-payments-tilvalg-og-priser',
         dankort: true,
@@ -789,8 +730,7 @@ const PSPs = [
     {
         name: 'Shopify',
         title: 'Shopify Payments',
-        logo: 'shopify.svg',
-        wh: [102, 29],
+        logo: ['shopify.svg', 102, 29],
         link: 'https://www.shopify.dk/payments',
         cards: new Set(['visa', 'mastercard', 'jcb', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
@@ -807,8 +747,7 @@ const PSPs = [
     {
         name: 'Stripe',
         title: 'Stripe',
-        logo: 'stripe.svg',
-        wh: [74.5, 31],
+        logo: ['stripe.svg', 74.5, 31],
         link: 'https://stripe.com/en-dk/pricing',
         cards: new Set(['visa', 'mastercard', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
@@ -824,8 +763,7 @@ const PSPs = [
     {
         name: 'Swiipe',
         title: 'Swiipe Basic',
-        logo: 'swiipe.svg',
-        wh: [90, 26],
+        logo: ['swiipe.svg', 90, 26],
         link: 'https://swiipe.com/priser/',
         cards: new Set(['visa', 'mastercard']),
         features: new Set(['mobilepay', 'applepay']),
@@ -842,8 +780,7 @@ const PSPs = [
     {
         name: 'Swiipe',
         title: 'Swiipe Business',
-        logo: 'swiipe.svg',
-        wh: [90, 26],
+        logo: ['swiipe.svg', 90, 26],
         link: 'https://swiipe.com/priser/',
         dankort: true,
         cards: new Set(['visa', 'mastercard']),
