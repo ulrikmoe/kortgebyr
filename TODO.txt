@@ -1,0 +1,5 @@
+
+* Bedre shopsystem SEO: /shopify/, ?module=shopify or ?shopify
+* Få ≈ (+U2248) ind i Noto Sans (fra CJK)
+
+
