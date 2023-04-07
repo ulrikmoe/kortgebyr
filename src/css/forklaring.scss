@@ -1,35 +1,10 @@
 
-// Noto Sans (UI): 2017-05-21
-@font-face {
-    font-family: 'N';
-    src: url('/font/N400.woff2') format('woff2'), url('/font/N400.woff') format('woff');
-    font-display: fallback;
-}
-
-@font-face {
-    font-family: 'N';
-    font-weight: 700;
-    src: url('/font/N700.woff2') format('woff2'), url('/font/N700.woff') format('woff');
-    font-display: fallback;
-}
-
-@font-face {
-    font-family: 'N';
-    font-style: italic;
-    src: url('/font/N400i.woff2') format('woff2'), url('/font/N400i.woff') format('woff');
-    font-display: fallback;
-}
-
 body {
-    font-family: 'N', system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     padding-bottom: 5em;
     font-size: .95rem;
     line-height: 1.47;
     color: #333;
 }
-
-
-// Here we go
 
 .logo {
     fill: #fff;
@@ -47,12 +22,14 @@ body {
 }
 
 .header--h1 {
+    font-weight: 600;
     text-align: center;
     font-size: 1.2em;
     margin: 20px auto 5px;
 }
 
 h2 {
+    font-weight: 600;
     margin: 1.2em 0 .5em;
     font-size: 17px;
     color: #444;

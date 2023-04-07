@@ -54,6 +54,10 @@ a {
     }
 }
 
+b {
+    font-weight: 600;
+}
+
 img, svg {
     vertical-align: middle;
 }
@@ -430,7 +434,7 @@ td {
 .td--psp--note {
     text-align: left;
     font-size: 13px;
-    margin: 2px 0 0;
+    margin: 0;
     font-style: italic;
     color: #8c3a3a;
 }
