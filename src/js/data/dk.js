@@ -91,7 +91,7 @@ const PSPs = [
     {
         name: '2checkout',
         title: '2SELL',
-        logo: ['verifone.svg', 120, 23],
+        logo: ['verifone.svg', 114.78, 22],
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set([]),
@@ -107,7 +107,7 @@ const PSPs = [
     {
         name: '2checkout',
         title: '2SUBSCRIBE',
-        logo: ['verifone.svg', 120, 23],
+        logo: ['verifone.svg', 114.78, 22],
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions']),
@@ -123,7 +123,7 @@ const PSPs = [
     {
         name: '2checkout',
         title: '2MONETIZE',
-        logo: ['verifone.svg', 120, 23],
+        logo: ['verifone.svg', 114.78, 22],
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions']),
@@ -139,7 +139,7 @@ const PSPs = [
     {
         name: 'Adyen',
         title: 'Adyen',
-        logo: ['adyen.svg', 90, 30],
+        logo: ['adyen.svg', 87, 29],
         link: 'https://www.adyen.com/da_DK/priser',
         dankort: true,
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
@@ -261,13 +261,17 @@ const PSPs = [
         note: 'Tidl. Bambora',
         link: 'https://www.bambora.com/da/dk/online/',
         dankort: true,
-        acqs: new Set(['worldline']),
+        cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
             monthly(o) {
                 if (opts.features.mobilepay) delete o.monthly.MobilePay; // Included for free
                 return new Currency(195, 'DKK');
+            },
+            trn(o) {
+                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
+                o.trn['Indløsning (1,45%)'] = $revenue.scale(1 - $dankortscale).scale(1.45 / 100);
             }
         }
     },
@@ -278,22 +282,25 @@ const PSPs = [
         note: 'Tidl. ePay platform',
         link: 'https://www.bambora.com/da/dk/online/',
         dankort: true,
-        acqs: new Set(['worldline']),
+        cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'ideal.shop']),
         fees: {
             monthly: new Currency(149, 'DKK'),
-            trn() {
-                const freeTrns = 250;
-                if ($qty <= freeTrns) return new Currency(0, 'DKK');
-                return new Currency(0.25 * ($qty - freeTrns), 'DKK');
+            trn(o) {
+                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
+                o.trn['Indløsning (1,45%)'] = $revenue.scale(1 - $dankortscale).scale(1.45 / 100);
+                const freeTrns = Math.min($qty, 250);
+                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
+                return;
             }
         }
     },
     {
         name: 'Freepay',
         title: 'Freepay',
-        logo: ['freepay.svg', 98, 20],
+        logo: ['freepay.svg', 107.8, 22],
         link: 'https://freepay.dk/da/betalingsgateway/priser',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
@@ -302,7 +309,7 @@ const PSPs = [
         fees: {
             trn(o) {
                 const qty = (o.trn.Clearhaus) ? $qty * $dankortscale : $qty;
-                o.trn['Freepay 3-D Secure'] = new Currency(0.25 * qty, 'DKK');
+                o.trn['Freepay 3-D Secure (0,25 kr.)'] = new Currency(0.25 * qty, 'DKK');
             }
         }
     },
@@ -447,7 +454,7 @@ const PSPs = [
     {
         name: 'Payson',
         title: 'Payson',
-        logo: ['payson.svg', 121, 27.5],
+        logo: ['payson.svg', 114.4, 26],
         link: 'https://www.payson.se/en/company/price-list/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set([]),
@@ -467,7 +474,7 @@ const PSPs = [
     {
         name: 'PensoPay',
         title: 'PensoPay Basis',
-        logo: ['pensopay.svg', 143.15, 14],
+        logo: ['pensopay.svg', 121.85, 21],
         note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
@@ -489,7 +496,7 @@ const PSPs = [
     {
         name: 'PensoPay',
         title: 'PensoPay Start-Up',
-        logo: ['pensopay.svg', 143.15, 14],
+        logo: ['pensopay.svg', 121.85, 21],
         note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
@@ -512,7 +519,7 @@ const PSPs = [
     {
         name: 'PensoPay',
         title: 'PensoPay Business',
-        logo: ['pensopay.svg', 143.15, 14],
+        logo: ['pensopay.svg', 121.85, 21],
         note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
@@ -537,7 +544,7 @@ const PSPs = [
     {
         name: 'PensoPay',
         title: 'PensoPay Pro',
-        logo: ['pensopay.svg', 143.15, 14],
+        logo: ['pensopay.svg', 121.85, 21],
         note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
@@ -687,6 +694,12 @@ const PSPs = [
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart']),
         fees: {
+            monthly(o) {
+                if (o.monthly.MobilePay) {
+                    // Scanpay charge a daily fee of 1.6 DKK
+                    o.monthly.MobilePay = new Currency(1.6 * 365 / 12, 'DKK');
+                }
+            },
             trn(o) {
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 return;
@@ -696,7 +709,7 @@ const PSPs = [
     {
         name: 'Shipmondo',
         title: 'Shipmondo Payments',
-        logo: ['shipmondo.svg', 112, 24],
+        logo: ['shipmondo.svg', 116.67, 25],
         note: 'Reseller af Billwerk+',
         link: 'https://help.shipmondo.com/da/articles/6015622-shipmondo-payments-tilvalg-og-priser',
         dankort: true,
@@ -747,7 +760,7 @@ const PSPs = [
     {
         name: 'Stripe',
         title: 'Stripe',
-        logo: ['stripe.svg', 74.5, 31],
+        logo: ['stripe.svg', 72.1, 30],
         link: 'https://stripe.com/en-dk/pricing',
         cards: new Set(['visa', 'mastercard', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
@@ -763,7 +776,7 @@ const PSPs = [
     {
         name: 'Swiipe',
         title: 'Swiipe Basic',
-        logo: ['swiipe.svg', 90, 26],
+        logo: ['swiipe.svg', 83.8, 24],
         link: 'https://swiipe.com/priser/',
         cards: new Set(['visa', 'mastercard']),
         features: new Set(['mobilepay', 'applepay']),
@@ -780,7 +793,7 @@ const PSPs = [
     {
         name: 'Swiipe',
         title: 'Swiipe Business',
-        logo: ['swiipe.svg', 90, 26],
+        logo: ['swiipe.svg', 83.8, 24],
         link: 'https://swiipe.com/priser/',
         dankort: true,
         cards: new Set(['visa', 'mastercard']),
