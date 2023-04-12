@@ -786,6 +786,8 @@ const PSPs = [
             trn(o) {
                 o.trn[`Indløsning (1,25%)`] = $revenue.scale(1.25 / 100);
                 o.trn[`Transaktionsgebyr (1 kr.)`] = new Currency($qty, 'DKK');
+                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qty, 'DKK');
+                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qty, 'DKK');
                 return;
             }
         }
@@ -805,6 +807,9 @@ const PSPs = [
                 o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
                 o.trn['Indløsning (1,25%)'] = $revenue.scale(1 - $dankortscale).scale(1.25 / 100);
                 o.trn[`Transaktionsgebyr (0,25 kr.)`] = new Currency(0.25 * $qty, 'DKK');
+                const cqty = (1 - $dankortscale) * $qty;
+                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
+                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
                 return;
             }
         }
