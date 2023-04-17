@@ -253,15 +253,12 @@ function addCard(name) {
     return img;
 }
 
-
 function showTooltip(e) {
     const infobox = document.createElement('ul');
     infobox.className = 'info--ul';
     infobox.style.left = e.clientX + 'px';
     infobox.style.bottom = (15 + window.innerHeight - window.scrollY - e.clientY) + 'px';
 
-    let nameMaxLen = 0;
-    let priceMaxLen = 0;
     const arr = [];
     const obj = e.target.ttdata;
     for (const prop in obj) {
@@ -275,14 +272,11 @@ function showTooltip(e) {
             o.name = prop + ' indløsning';
         }
         arr.push(o);
-        nameMaxLen = Math.max(o.name.length, nameMaxLen);
-        priceMaxLen = Math.max(o.price.length, priceMaxLen);
     }
 
     for (const o of arr) {
         const li = document.createElement('li');
-        const str = o.name + ': ' + ' '.repeat((nameMaxLen - o.name.length) + (priceMaxLen - o.price.length));
-        li.textContent = str + ' ' + o.price;
+        li.innerHTML = `<div class="info--ul--div1">${o.name}:</div> <div>${o.price}</div>`;
         infobox.appendChild(li);
     }
     document.body.appendChild(infobox);
@@ -297,18 +291,10 @@ function formEvent(evt) {
 }
 
 (() => {
-    const params = (new URL(document.location)).searchParams;
-    for (const arr of params) {
-        if (arr[0] in opts) opts[arr[0]] = arr[1];
-    }
-
     const form = document.getElementById('form');
-    if (form) {
-        settings(opts);
-        form.addEventListener('change', formEvent);
-        form.addEventListener('input', formEvent);
-        obj2form(opts, form);
-    }
+    settings(opts);
+    form.addEventListener('change', formEvent);
+    form.addEventListener('input', formEvent);
 
     document.body.addEventListener('click', (e) => {
         const elems = document.querySelectorAll('.info--ul');
@@ -326,5 +312,4 @@ function formEvent(evt) {
             elem.remove();
         }
     });
-
 })();

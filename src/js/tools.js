@@ -17,6 +17,7 @@ function form2obj(form) {
 }
 
 /*  obj2form(obj): A simple version for kortgebyr.dk */
+/*
 function obj2form(o, form) {
     for (let i = 0; i < form.elements.length; i++) {
         const e = form.elements[i];
@@ -29,6 +30,7 @@ function obj2form(o, form) {
         }
     }
 }
+*/
 
 function sum(obj) {
     let ret = new Currency();

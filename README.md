@@ -54,7 +54,11 @@ Feature                     | Chrome  | Safari   | Firefox |  Edge
 -----------------------     | :------:| :------: | :-----: | :----:
 appearance                  |  ~~84~~ | ~~15.4~~ | ~~80~~  | ~~84~~
 -webkit-appearance          |   4     |   3.1    |  :x:    |  12
--moz-appearance             |   :x:   |   :x:    |  2      |  :x:
+-moz-appearance             |  :x:    |   :x:    |   2     |  :x:
+user-select                 |  ~~54~~ |   :x:    |  ~~69~~ | ~~79~~
+-webkit-user-select         |   4     |   3.1    |  :x:    |  :x:
+-ms-user-select             |  :x:    |   :x:    |  :x:    |  12
+-moz-user-select            |  :x:    |   :x:    |   2     |  :x:
 flex                        |  21     |   9.0    |  28     |  12
 flex-wrap                   |  29     |   9.0    |  28     |  12
 grid                        |  57     |  10.1    |  52     |  16
