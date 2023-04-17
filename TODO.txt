@@ -1,5 +1,7 @@
 
 * Bedre shopsystem SEO: /shopify/, ?module=shopify or ?shopify
 * Få ≈ (+U2248) ind i Noto Sans (fra CJK)
-
-
+* Tilføje bedre favicons og ikoner til sociale medier (FB primært)
+* Opdate bootstrap kode
+* Tilføje tabel med browser support
+* Flytte @media (phone) til selvstændig fil
