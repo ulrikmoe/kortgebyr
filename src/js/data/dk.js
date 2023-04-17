@@ -637,54 +637,6 @@ const PSPs = [
         }
     },
     {
-        name: 'ScanNet',
-        title: 'ScanNet Start-Up',
-        logo: ['scannet.svg', 92.77, 23],
-        link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
-        dankort: true,
-        acqs: new Set(['nets', 'clearhaus', 'swedbank', 'worldline']),
-        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'thirty bees', 'prestashop', 'dandomain']),
-        fees: {
-            monthly(o) {
-                if (opts.features.subscriptions) {
-                    o.monthly['Abonnementsbetalinger'] = new Currency(99, 'DKK');
-                }
-                o.monthly['Abonnement'] = new Currency(39, 'DKK');
-                return;
-            },
-            trn(o) {
-                o.trn['Transaktionsgebyr (1 kr.)'] = new Currency($qty, 'DKK');
-                return;
-            }
-        }
-    },
-    {
-        name: 'ScanNet',
-        title: 'ScanNet Success',
-        logo: ['scannet.svg', 92.77, 23],
-        link: 'https://www.scannet.dk/betalingsloesning/prisoversigt/',
-        dankort: true,
-        acqs: new Set(['nets', 'clearhaus', 'swedbank', 'worldline']),
-        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'thirty bees', 'prestashop', 'dandomain']),
-        fees: {
-            monthly(o) {
-                if (opts.features.subscriptions) {
-                    o.monthly['Abonnementsbetalinger'] = new Currency(99, 'DKK');
-                }
-                o.monthly['Abonnement'] = new Currency(149, 'DKK');
-                return;
-            },
-            trn(o) {
-                const freeTrns = Math.min($qty, 500);
-                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
-                return;
-            }
-        }
-    },
-    {
         name: 'Scanpay',
         title: 'Scanpay',
         logo: ['scanpay.svg', 104, 23],
