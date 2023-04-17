@@ -446,7 +446,6 @@ td {
 .info--ul {
     display: block;
     list-style: none;
-    font-family: 'LS', Liberation Mono, monospace;
     position: absolute;
     margin: 0;
     width: auto;
@@ -459,7 +458,10 @@ td {
     background: rgba(51, 51, 51, 0.95);
     color: #fff;
     z-index: 10;
-    white-space: pre;
+
+    > li {
+        display: flex;
+    }
 
     &:after {
         content: '';
@@ -473,6 +475,10 @@ td {
     }
 }
 
+.info--ul--div1 {
+    flex: 1;
+    margin-right: 2em;
+}
 
 .acquirer-included {
     font-style: italic;
