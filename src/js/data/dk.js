@@ -1,4 +1,3 @@
-/* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
 
 const DankortFees = {
     // https://www.dankort.dk/dk/priser/

@@ -1,4 +1,3 @@
-/* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
 
 const $currency = 'DKK';
 let opts = {
@@ -6,13 +5,13 @@ let opts = {
     module: '',
     currency: 'DKK',
     qty: 200,
-    avgvalue: 645,
+    avgvalue: 715,
     cards: {},
-    features: {},
+    features: { mobilepay: 1 },
     shopify: 'Basic'
 };
-const $dankortscale = 0.72;
-const $mobilepay = 0.60; // https://quickpay.net/dk/quickpay-index/dk
+const $dankortscale = 0.60;
+const $mobilepay = 0.57; // https://quickpay.net/quickpay-index/
 let $avgvalue;
 let $revenue;
 let $qty;

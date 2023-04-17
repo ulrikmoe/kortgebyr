@@ -1,4 +1,3 @@
-/* @author Ulrik Moe, Christian Blach, Joakim Sindholt */
 
 const currency_map = {
     DKK: { cur: '% kr.', t: '.', d: ',' },
@@ -9,28 +8,27 @@ const currency_map = {
     GBP: { cur: '£%', t: '.', d: ',' }
 };
 
-
 const currency_value = {
     // https://api.frankfurter.app/latest?from=DKK&to=SEK,NOK,EUR,USD
     'DKK': {
-        'EUR': 0.1342,
-        'NOK': 1.5077,
-        'SEK': 1.5101,
-        'USD': 0.1463
+        'EUR': 0.13419,
+        'NOK': 1.525,
+        'SEK': 1.5186,
+        'USD': 0.14736
     },
     // https://api.frankfurter.app/latest?from=SEK&to=EUR,DKK,NOK,USD
     'SEK': {
-        'DKK': 0.66219,
-        'EUR': 0.08887,
-        'NOK': 0.9984,
-        'USD': 0.09688
+        'DKK': 0.65852,
+        'EUR': 0.08837,
+        'NOK': 1.0042,
+        'USD': 0.09704
     },
     // https://api.frankfurter.app/latest?from=EUR&to=DKK,NOK,SEK,USD
     'EUR': {
-        'DKK': 7.4513,
-        'NOK': 11.2345,
-        'SEK': 11.2525,
-        'USD': 1.0901
+        'DKK': 7.452,
+        'NOK': 11.364,
+        'SEK': 11.3163,
+        'USD': 1.0981
     }
 };
 
