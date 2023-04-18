@@ -723,6 +723,21 @@ const PSPs = [
         }
     },
     {
+        name: 'Viva Wallet',
+        title: 'Viva Wallet',
+        logo: ['vivawallet.svg', 135, 21],
+        link: 'https://www.vivawallet.com/dk_da/pricing-dk',
+        cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
+        features: new Set(['subscriptions', 'applepay']),
+        modules: new Set(['woocommerce', 'prestashop']),
+        fees: {
+            trn(o) {
+                o.trn['Indløsning (1,9%)'] = $revenue.scale(1.9 / 100);
+                o.trn['Process-gebyr (0,5 kr.)'] = new Currency(0.5 * $qty, 'DKK');
+            }
+        }
+    },
+    {
         name: 'Worldline',
         title: 'Worldline Checkout',
         logo: ['worldline.svg', 118.98, 16],
