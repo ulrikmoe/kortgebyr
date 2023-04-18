@@ -159,6 +159,45 @@ const PSPs = [
         }
     },
     {
+        name: 'Billwerk+',
+        title: 'Billwerk+ Payments',
+        logo: ['billwerk.png', 130, 16],
+        link: 'https://www.billwerk.plus/da/pricing/',
+        dankort: true,
+        acqs: new Set(['clearhaus', 'swedbank']),
+        features: new Set(['mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
+        fees: {
+            monthly(o) {
+                o.monthly['Abonnement'] = new Currency(139, 'DKK');
+            },
+            trn(o) {
+                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                return;
+            }
+        }
+    },
+    {
+        name: 'Billwerk+',
+        title: 'Billwerk+ Subscription Management (Lite)',
+        logo: ['billwerk.png', 130, 16],
+        link: 'https://www.billwerk.plus/da/pricing/',
+        dankort: true,
+        acqs: new Set(['clearhaus', 'swedbank', 'handelsbanken', 'worldline']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
+        fees: {
+            monthly(o) {
+                o.monthly['Abonnement'] = new Currency(349, 'DKK');
+            },
+            trn(o) {
+                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                o.trn['Omæstningsgebyr (0,75%)'] = $revenue.scale(0.75 / 100);
+                return;
+            }
+        }
+    },
+    {
         name: 'Braintree',
         title: 'Braintree',
         logo: ['braintree.svg', 120.5, 16],
@@ -247,49 +286,6 @@ const PSPs = [
             },
             trn(o) {
                 const freeTrns = Math.min($qty, 500);
-                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
-                return;
-            }
-        }
-    },
-    {
-        name: 'Worldline',
-        title: 'Worldline Checkout',
-        logo: ['worldline.svg', 118.98, 16],
-        note: 'Tidl. Bambora',
-        link: 'https://www.bambora.com/da/dk/online/',
-        dankort: true,
-        cards: new Set(['visa', 'mastercard', 'maestro']),
-        features: new Set(['subscriptions', 'mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
-        fees: {
-            monthly(o) {
-                if (opts.features.mobilepay) delete o.monthly.MobilePay; // Included for free
-                return new Currency(195, 'DKK');
-            },
-            trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
-                o.trn['Indløsning (1,45%)'] = $revenue.scale(1 - $dankortscale).scale(1.45 / 100);
-            }
-        }
-    },
-    {
-        name: 'Worldline',
-        title: 'Worldline Pro+',
-        logo: ['worldline.svg', 118.98, 16],
-        note: 'Tidl. ePay platform',
-        link: 'https://www.bambora.com/da/dk/online/',
-        dankort: true,
-        cards: new Set(['visa', 'mastercard', 'maestro']),
-        features: new Set(['subscriptions', 'mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'ideal.shop']),
-        fees: {
-            monthly: new Currency(149, 'DKK'),
-            trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
-                o.trn['Indløsning (1,45%)'] = $revenue.scale(1 - $dankortscale).scale(1.45 / 100);
-                const freeTrns = Math.min($qty, 250);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
                 return;
@@ -597,45 +593,6 @@ const PSPs = [
         }
     },
     {
-        name: 'Billwerk+',
-        title: 'Billwerk+ Payments',
-        logo: ['billwerk.png', 130, 16],
-        link: 'https://www.billwerk.plus/da/pricing/',
-        dankort: true,
-        acqs: new Set(['clearhaus', 'swedbank']),
-        features: new Set(['mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
-        fees: {
-            monthly(o) {
-                o.monthly['Abonnement'] = new Currency(139, 'DKK');
-            },
-            trn(o) {
-                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                return;
-            }
-        }
-    },
-    {
-        name: 'Billwerk+',
-        title: 'Billwerk+ Subscription Management (Lite)',
-        logo: ['billwerk.png', 130, 16],
-        link: 'https://www.billwerk.plus/da/pricing/',
-        dankort: true,
-        acqs: new Set(['clearhaus', 'swedbank', 'handelsbanken', 'worldline']),
-        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
-        fees: {
-            monthly(o) {
-                o.monthly['Abonnement'] = new Currency(349, 'DKK');
-            },
-            trn(o) {
-                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn['Omæstningsgebyr (0,75%)'] = $revenue.scale(0.75 / 100);
-                return;
-            }
-        }
-    },
-    {
         name: 'Scanpay',
         title: 'Scanpay',
         logo: ['scanpay.svg', 104, 23],
@@ -761,6 +718,49 @@ const PSPs = [
                 const cqty = (1 - $dankortscale) * $qty;
                 o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
                 o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
+                return;
+            }
+        }
+    },
+    {
+        name: 'Worldline',
+        title: 'Worldline Checkout',
+        logo: ['worldline.svg', 118.98, 16],
+        note: 'Tidl. Bambora',
+        link: 'https://www.bambora.com/da/dk/online/',
+        dankort: true,
+        cards: new Set(['visa', 'mastercard', 'maestro']),
+        features: new Set(['subscriptions', 'mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
+        fees: {
+            monthly(o) {
+                if (opts.features.mobilepay) delete o.monthly.MobilePay; // Included for free
+                return new Currency(195, 'DKK');
+            },
+            trn(o) {
+                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
+                o.trn['Indløsning (1,45%)'] = $revenue.scale(1 - $dankortscale).scale(1.45 / 100);
+            }
+        }
+    },
+    {
+        name: 'Worldline',
+        title: 'Worldline Pro+',
+        logo: ['worldline.svg', 118.98, 16],
+        note: 'Tidl. ePay platform',
+        link: 'https://www.bambora.com/da/dk/online/',
+        dankort: true,
+        cards: new Set(['visa', 'mastercard', 'maestro']),
+        features: new Set(['subscriptions', 'mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'ideal.shop']),
+        fees: {
+            monthly: new Currency(149, 'DKK'),
+            trn(o) {
+                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
+                o.trn['Indløsning (1,45%)'] = $revenue.scale(1 - $dankortscale).scale(1.45 / 100);
+                const freeTrns = Math.min($qty, 250);
+                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
                 return;
             }
         }
