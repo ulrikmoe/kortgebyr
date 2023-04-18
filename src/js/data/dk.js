@@ -31,7 +31,7 @@ const ACQs = {
     nets: {
         name: 'Nets',
         logo: ['nets.svg', 51.3, 15],
-        link: 'https://www.nets.eu/dk/payments/online-betalinger/indloesningsaftale/',
+        link: 'https://my.nets.eu/landingpage?landingPageId=DK&language=da',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         fees: {
             //setup: new Currency(500, 'DKK'),
