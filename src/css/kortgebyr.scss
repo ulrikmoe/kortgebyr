@@ -331,13 +331,12 @@ table {
     border-spacing: 0;
     border: 1px solid #d9d9d9;
     border-left: 0;
-    color: #444;
     empty-cells: show;
     min-width: 60em;
     width: 100%;
 }
 
-thead, tbody, tr, td, th {
+thead, tbody, tr {
     border-color: inherit;
     border-style: solid;
     border-width: 0;
@@ -350,7 +349,6 @@ th {
     padding: 4px 15px 4px;
     box-sizing: border-box;
     background: #f3f3f3;
-    border-top: 0;
     color: #222;
     overflow-x: hidden;
     word-wrap: break-word;
@@ -360,18 +358,21 @@ th {
     hyphens: auto;
     text-align: center;
     position: relative;
+    border: 0;
     border-left: 1px solid #dcdcdc;
 }
 
 td {
+    font-size: .95em;
     background: #fff;
     height: 71px;
     padding: 0;
     vertical-align: middle;
     line-height: normal;
     text-align: center;
-    border-left: 1px solid #dcdcdc;
-    border-top: 1px solid #dcdcdc;
+    border: 0;
+    border-left: 1px solid #dadada;
+    border-top: 1px solid #dadada;
 }
 
 
@@ -398,6 +399,27 @@ td {
 .th--total {
     border-left: 0;
 }
+
+.td--acq {
+    position: relative;
+}
+
+.td--acq-list {
+    position: relative;
+    list-style: none;
+    padding: 0;
+    font-size: .85rem;
+    line-height: 1.65;
+}
+
+/*
+.td--acq-info {
+    position: absolute;
+    top: 50%;
+    margin-top: -9px;
+    right: 1em;
+}
+*/
 
 .td--cards {
     padding: 6px 10px 0;
@@ -427,10 +449,7 @@ td {
 
 
 .info {
-    margin-left: .35em;
-    color: #2b579f; //#36b;
-    position: relative;
-    display: inline-block;
+    margin: -.15em 0 0 .5em;
     cursor: pointer;
 }
 

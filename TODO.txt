@@ -5,3 +5,4 @@
 * Tilføje bedre favicons og ikoner til sociale medier (FB primært)
 * Flytte @media (phone) til selvstændig fil
 * Add Google Pay
+* Tilføj FarPay?

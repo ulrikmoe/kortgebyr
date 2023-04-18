@@ -44,11 +44,11 @@ function sumTxt(obj) {
     const frag = document.createDocumentFragment();
     frag.textContent = sum(obj).print($currency);
     if (Object.keys(obj).length) {
-        const info = document.createElement('div');
-        info.textContent = '[?]';
-        info.className = 'info';
-        info.ttdata = obj;
-        frag.appendChild(info);
+        const img = new Image(16, 16);
+        img.src = '/img/info.svg';
+        img.className = 'info';
+        img.ttdata = obj;
+        frag.appendChild(img);
     }
     return frag;
 }
@@ -205,13 +205,27 @@ function build() {
         }
 
         // Acquirer
-        const acqCell = tr.insertCell(-1);
-        if (psp.acq) {
-            acqCell.innerHTML = `<img width="${Math.round(acq.ref.logo[1])}" height="${Math.round(acq.ref.logo[2])}"
-                src="/img/indløser/${acq.ref.logo[0]}" alt="${acq.ref.name}" title="${acq.ref.name} indløsningsaftale">`;
-        } else {
-            acqCell.innerHTML = '<p class="acquirer-included">Inkluderet</p>';
+        const ol = document.createElement('ol');
+        ol.classList.add('td--acq-list');
+        if (psp.dankort) {
+            ol.classList.add('td--acq-list-plus');
+            ol.innerHTML += `<li><a target="_blank" href="https://www.dankort.dk/dk/betaling-i-webshop/" title="Tag imod Dankort med en Dankortaftale">Dankort</a></li>`;
         }
+        if (psp.acq) {
+            ol.innerHTML += `<li><a target="_blank" href="${acq.ref.link}" title="Tag imod internationale kort med ${acq.ref.name}">${acq.ref.name}</a></li>`;
+        } else {
+            ol.innerHTML += `<li class="acquirer-included">${psp.name}</li>`;
+        }
+        const acqCell = tr.insertCell(-1);
+        acqCell.className = 'td--acq';
+        acqCell.appendChild(ol);
+
+        /*
+        const img = new Image(18, 18);
+        img.src = '/img/info.svg';
+        img.className = 'info1 td--acq-info';
+        acqCell.appendChild(img);
+        */
 
         // Card icons
         const cardCell = tr.insertCell(-1);
