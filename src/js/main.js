@@ -278,6 +278,7 @@ function formEvent(evt) {
 }
 
 (() => {
+    settings(opts); // TODO: remove
     const form = document.getElementById('form');
     form.addEventListener('change', formEvent);
     form.addEventListener('input', formEvent);
