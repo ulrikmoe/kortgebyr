@@ -259,24 +259,12 @@ function showTooltip(e) {
     infobox.style.left = e.clientX + 'px';
     infobox.style.bottom = (15 + window.innerHeight - window.scrollY - e.clientY) + 'px';
 
-    const arr = [];
     const obj = e.target.ttdata;
     for (const prop in obj) {
-        const o = {
-            name: prop,
-            price: obj[prop].print($currency, true)
-        };
-        if (prop === 'Dankortaftale') {
-            o.name = 'Dankortaftale (0,32%)';
-        } else if (ACQs[prop.toLowerCase()]) {
-            o.name = prop + ' indløsning';
-        }
-        arr.push(o);
-    }
-
-    for (const o of arr) {
+        let name = (prop === 'Dankortaftale') ? 'Dankortaftale (0,32%)' : prop;
+        if (ACQs[name.toLowerCase()]) name = name + ' indløsning';
         const li = document.createElement('li');
-        li.innerHTML = `<div class="info--ul--div1">${o.name}:</div> <div>${o.price}</div>`;
+        li.innerHTML = `<div class="info--ul--div1">${name}:</div> <div>${obj[prop].print($currency, true)}</div>`;
         infobox.appendChild(li);
     }
     document.body.appendChild(infobox);
