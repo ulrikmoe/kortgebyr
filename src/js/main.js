@@ -18,8 +18,7 @@ let $qty;
 
 
 function settings(o) {
-    // o.module === 'shopify'
-    document.getElementById('shopify').classList.toggle('hide', o.module !== 'shopify');
+    document.getElementById('shopify-field').classList.toggle('hide', o.module !== 'shopify');
     document.getElementById('shopify-infobox').classList.toggle('hide', o.module !== 'shopify');
     if (o.module === 'shopify') {
         const tier = (opts.shopify === 'Basic') ? 2 : (opts.shopify === 'Shopify') ? 1 : 0.5;
@@ -194,8 +193,8 @@ function build() {
         pspCell.className = 'td--psp';
         pspCell.innerHTML = `
         <a rel="nofollow" target="_blank" href="${psp.link}">
-            <img class="td--psp--img" width="${psp.logo[1]}" height="${psp.logo[2]}"
-                src="/img/betalingsløsning/${psp.logo[0]}" alt="${psp.name} logo"
+            <img class="td--psp--img" width="${Math.round(psp.logo[1])}" height="${Math.round(psp.logo[2])}"
+                src="/img/betalingsløsning/${psp.logo[0]}" alt="${psp.name} betalingsløsning"
                 title="${psp.name} logo">
             <br>
             <span>${psp.title}</span>
@@ -208,7 +207,7 @@ function build() {
         // Acquirer
         const acqCell = tr.insertCell(-1);
         if (psp.acq) {
-            acqCell.innerHTML = `<img width="${acq.ref.logo[1]}" height="${acq.ref.logo[2]}"
+            acqCell.innerHTML = `<img width="${Math.round(acq.ref.logo[1])}" height="${Math.round(acq.ref.logo[2])}"
                 src="/img/indløser/${acq.ref.logo[0]}" alt="${acq.ref.name}" title="${acq.ref.name} indløsningsaftale">`;
         } else {
             acqCell.innerHTML = '<p class="acquirer-included">Inkluderet</p>';

@@ -15,8 +15,8 @@
     <form id="form" autocomplete="off">
       <nav>
         <div class="flex1">
-          <a class="logo" href="/" target="_self" title="Kortgebyr">
-            <img class="logo--img" width="84" height="18" alt="Kortgebyr logo" src="/img/logo.svg">
+          <a class="logo" href="/" target="_self" title="Kortgebyr prissammenligning">
+            <img class="logo--img" width="84" height="18" alt="Kortgebyr prissammenligning" src="/img/logo.svg">
           </a>
         </div>
         <a class="lastUpdate" lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">
@@ -41,52 +41,44 @@
           </div>
 
           <div class="field">
-            <label>
-              <b class="label">Shopsystem</b>
-              <select name="module" class="form-select">
-                <option value="">Vælg shopsystem</option>
-                <option value="woocommerce">WooCommerce</option>
-                <option value="magento">Magento 2</option>
-                <option value="prestashop">PrestaShop</option>
-                <option value="thirtybees">ThirtyBees</option>
-                <option value="opencart">OpenCart</option>
-                <option value="shopify">Shopify</option>
-                <option value="shoporama">Shoporama</option>
-                <option value="dandomain">DanDomain / Wannafind / ScanNet</option>
-                <option value="ideal.shop">Ideal.shop</option>
-              </select>
-            </label>
+            <label class="label" for="module">Shopsystem</label>
+            <select name="module" id="module" class="form-select">
+              <option value="">Vælg shopsystem</option>
+              <option value="woocommerce">WooCommerce</option>
+              <option value="magento">Magento 2</option>
+              <option value="prestashop">PrestaShop</option>
+              <option value="thirtybees">ThirtyBees</option>
+              <option value="opencart">OpenCart</option>
+              <option value="shopify">Shopify</option>
+              <option value="shoporama">Shoporama</option>
+              <option value="dandomain">DanDomain / Wannafind / ScanNet</option>
+              <option value="ideal.shop">Ideal.shop</option>
+            </select>
           </div>
 
-          <div id="shopify" class="field hide">
-            <label>
-              <b class="label">Shopify abonnement</b>
-              <select name="shopify" class="form-select">
-                <option value="Basic" selected>Basic ($29/md.)</option>
-                <option value="Shopify">Shopify ($79/md.)</option>
-                <option value="Advanced">Advanced ($299/md.)</option>
-              </select>
-            </label>
+          <div id="shopify-field" class="field hide">
+            <label class="label" for="shopify">Shopify abonnement</label>
+            <select name="shopify" id="shopify" class="form-select">
+              <option value="Basic" selected>Basic ($29/md.)</option>
+              <option value="Shopify">Shopify ($79/md.)</option>
+              <option value="Advanced">Advanced ($299/md.)</option>
+            </select>
           </div>
         </div>
 
         <div>
           <div class="avgqty">
             <div class="field field--avg">
-              <label>
-                <b class="label">Typisk ordreværdi</b>
-                <div class="input-group">
-                  <div class="input-group-text">kr.</div>
-                  <input id="avgvalue" name="avgvalue" type="number" min="0" class="form-control input-group-input" value="715">
-                </div>
-              </label>
+              <label class="label" for="avgvalue">Typisk ordreværdi</label>
+              <div class="input-group">
+                <div class="input-group-text">kr.</div>
+                <input id="avgvalue" name="avgvalue" type="number" min="0" class="form-control input-group-input" value="715">
+              </div>
             </div>
 
             <div class="field field--qty">
-              <label>
-                <b class="label">Betalinger pr. md.</b>
-                <input id="qty" name="qty" type="number" min="0" class="form-control" value="200">
-              </label>
+              <label class="label" for="qty">Betalinger pr. md.</label>
+              <input id="qty" name="qty" type="number" min="0" class="form-control" value="200">
             </div>
           </div>
 
@@ -99,7 +91,7 @@
         </div>
 
         <div>
-          <b class="label label--tilvalg mobile--hide">Tilvalg</b>
+          <label class="label label--tilvalg mobile--hide">Tilvalg</label>
           <div class="form-check">
             <label class="form-check-label">
               <input class="form-check-input" type="checkbox" name="features[]" value="mobilepay" id="mobilepay" checked>
