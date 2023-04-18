@@ -192,7 +192,7 @@ function build() {
         const pspCell = tr.insertCell(-1);
         pspCell.className = 'td--psp';
         pspCell.innerHTML = `
-        <a rel="nofollow" target="_blank" href="${psp.link}">
+        <a target="_blank" href="${psp.link}">
             <img class="td--psp--img" width="${Math.round(psp.logo[1])}" height="${Math.round(psp.logo[2])}"
                 src="/img/betalingsløsning/${psp.logo[0]}" alt="${psp.name} betalingsløsning"
                 title="${psp.name} logo">
