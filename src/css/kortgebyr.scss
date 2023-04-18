@@ -21,13 +21,6 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: LS; // Liberation Sans Mono
-    font-weight: 400;
-    src: url('/font/LS400.woff2') format('woff2');
-    font-display: swap;
-}
-
 body {
     margin: 0;
     font-family: 'N', Noto Sans, sans-serif;
@@ -537,7 +530,6 @@ td {
 }
 
 @media (max-width:800px)  {
-
     .c {
         padding-left: .4rem;
         padding-right: .4rem
