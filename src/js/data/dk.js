@@ -125,7 +125,7 @@ const PSPs = [
         logo: ['verifone.svg', 114.78, 22],
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
-        features: new Set(['subscriptions']),
+        features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
         fees: {
             trn(o) {
@@ -363,7 +363,7 @@ const PSPs = [
         logo: ['paypal.svg', 123.6, 30],
         link: 'https://www.paypal.com/dk/webapps/mpp/merchant-fees',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
-        features: new Set(['subscriptions']),
+        features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart', 'shopify']),
         fees: {
             trn(o) {
