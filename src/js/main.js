@@ -280,7 +280,6 @@ function formEvent(evt) {
 
 (() => {
     const form = document.getElementById('form');
-    settings(opts);
     form.addEventListener('change', formEvent);
     form.addEventListener('input', formEvent);
 
