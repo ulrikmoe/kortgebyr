@@ -449,7 +449,11 @@ td {
 
 
 .info {
-    margin: -.15em 0 0 .5em;
+    display: inline-block;
+    vertical-align: bottom;
+    background: url('/img/info.svg') no-repeat center right;
+    background-size: 16px 16px;
+    padding: 2px 24px 2px 0;
     cursor: pointer;
 }
 
@@ -468,6 +472,7 @@ td {
     background: rgba(51, 51, 51, 0.95);
     color: #fff;
     z-index: 10;
+    white-space: nowrap;
 
     > li {
         display: flex;

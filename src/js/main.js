@@ -41,16 +41,15 @@ function cost2obj(cost, obj, name) {
 }
 
 function sumTxt(obj) {
-    const frag = document.createDocumentFragment();
-    frag.textContent = sum(obj).print($currency);
     if (Object.keys(obj).length) {
-        const img = new Image(16, 16);
-        img.src = '/img/info.svg';
-        img.className = 'info';
-        img.ttdata = obj;
-        frag.appendChild(img);
+        const info = document.createElement('div');
+        info.className = 'info';
+        info.ttdata = obj;
+        info.textContent = sum(obj).print($currency);
+        return info;
+    } else {
+        return document.createTextNode(sum(obj).print($currency));
     }
-    return frag;
 }
 
 
