@@ -90,7 +90,7 @@ function html() {
 }
 
 gulp.task('sitemap', (cb) => {
-    let map = '<?xml version="1.0" encoding="UTF-8"?><urlset ' +
+    let map = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset ' +
     'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
     const pages = ['/', '/ofte-stillede-spørgsmål'];
@@ -103,12 +103,12 @@ gulp.task('sitemap', (cb) => {
             if (jsStat.mtimeMs > stat.mtimeMs) stat = jsStat;
         }
         map += `
-        <url>
-            <loc>https://kortgebyr.dk${url}</loc>
-            <lastmod>${stat.mtime.toISOString()}</lastmod>
-        </url>`
+    <url>
+        <loc>https://kortgebyr.dk${url}</loc>
+        <lastmod>${stat.mtime.toISOString()}</lastmod>
+    </url>`
     }
-    map += '</urlset>';
+    map += '\n</urlset>';
     const fd = fs.openSync(Path.join(__dirname, 'www', 'sitemap.xml'), 'w');
     fs.writeSync(fd, map);
     fs.closeSync(fd);
