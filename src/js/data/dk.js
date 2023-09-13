@@ -652,7 +652,7 @@ const PSPs = [
         name: 'Shopify',
         title: 'Shopify Payments',
         logo: ['shopify.svg', 102, 29],
-        link: 'https://www.shopify.dk/payments',
+        link: 'https://www.shopify.com/dk/payments',
         cards: new Set(['visa', 'mastercard', 'jcb', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['shopify']),
