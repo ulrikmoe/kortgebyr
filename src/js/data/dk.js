@@ -329,7 +329,7 @@ const PSPs = [
         name: 'Mollie',
         title: 'Mollie',
         logo: ['mollie.svg', 74.25, 22],
-        link: 'https://www.mollie.com/en/pricing',
+        link: 'https://www.mollie.com/pricing',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'shopify']),
