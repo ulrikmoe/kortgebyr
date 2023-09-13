@@ -551,7 +551,7 @@ const PSPs = [
         title: 'Shipmondo Payments',
         logo: ['shipmondo.svg', 116.67, 25],
         note: 'Reseller af Billwerk+',
-        link: 'https://help.shipmondo.com/da/articles/6015622-shipmondo-payments-tilvalg-og-priser',
+        link: 'https://shipmondo.com/dk/shipmondo-payments/',
         dankort: true,
         acqs: new Set(['worldline', 'valitor']),
         features: new Set(['mobilepay', 'applepay']),
