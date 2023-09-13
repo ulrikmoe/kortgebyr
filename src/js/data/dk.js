@@ -664,7 +664,7 @@ const PSPs = [
         modules: new Set(['woocommerce', 'prestashop']),
         fees: {
             trn(o) {
-                o.trn['Indløsning (1,9%)'] = $revenue.scale(1.9 / 100);
+                o.trn['Indløsning (2,19%)'] = $revenue.scale(2.19 / 100);
                 o.trn['Process-gebyr (0,5 kr.)'] = new Currency(0.5 * $qty, 'DKK');
             }
         }
