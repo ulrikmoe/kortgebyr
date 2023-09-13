@@ -162,7 +162,7 @@ const PSPs = [
         name: 'Billwerk+',
         title: 'Billwerk+ Payments',
         logo: ['billwerk.png', 130, 16],
-        link: 'https://www.billwerk.plus/da/pricing/',
+        link: 'https://www.billwerk.plus/da/prisfastsaettelse-billwerk-betalinger/',
         dankort: true,
         acqs: new Set(['clearhaus', 'swedbank']),
         features: new Set(['mobilepay', 'applepay']),
@@ -179,7 +179,7 @@ const PSPs = [
     },
     {
         name: 'Billwerk+',
-        title: 'Billwerk+ Subscription Management (Lite)',
+        title: 'Billwerk+ Lite',
         logo: ['billwerk.png', 130, 16],
         link: 'https://www.billwerk.plus/da/pricing/',
         dankort: true,
