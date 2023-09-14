@@ -14,9 +14,10 @@ const terser = require("terser");
 const htmlmin = require("html-minifier");
 const { ESLint } = require("eslint");
 const eslint = new ESLint();
-const env = require('minimist')(process.argv.slice(2));
 const config = require('./config.json');
-if (!env.git) { env.git = '1'; }
+const env = require('minimist')(process.argv.slice(2));
+env.gitStamp = env.gitStamp || '1';
+env.cssStamp = env.cssStamp || '1';
 
 //  Last changed
 const months = ['jan', 'feb', 'mar', 'apr', 'maj', 'juni',
