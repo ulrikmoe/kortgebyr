@@ -7,7 +7,7 @@ let opts = {
     qty: 200,
     avgvalue: 715,
     cards: {},
-    features: { mobilepay: 1 },
+    features: {},
     shopify: 'Basic'
 };
 const $dankortscale = 0.60;
