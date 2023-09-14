@@ -1,8 +1,0 @@
-
-* Precompile list with nodejs (and beautify)
-* Bedre shopsystem SEO: /shopify/, ?module=shopify or ?shopify
-* Få ≈ (+U2248) ind i Noto Sans (fra CJK)
-* Tilføje bedre favicons og ikoner til sociale medier (FB primært)
-* Flytte @media (phone) til selvstændig fil
-* Add Google Pay
-* Tilføj FarPay?

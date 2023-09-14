@@ -25,6 +25,14 @@ const date = new Date();
 env.lastUpdate = date.getDate() + '. ' + months[date.getMonth()] + ', ' +
     date.getFullYear();
 
+let currency_values = "'EUR':1,"
+async function getCurrencyRates() {
+    const raw = await fetch('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
+    const txt = await raw.text();
+    const array = [...txt.matchAll(/currency='([A-Z]{3})' rate='([0-9.]+)'/g)];
+    array.forEach((m) => currency_values += `'${m[1]}':${parseFloat(m[2])},`);
+    return currency_values;
+}
 
 function assets() {
     return gulp.src(['src/assets/**'], { base: 'src/assets' })
@@ -45,7 +53,11 @@ function scripts() {
     return gulp.src(['src/js/data/dk.js', 'src/js/currency.js',
         'src/js/tools.js', 'src/js/main.js'])
         .pipe(through.obj((file, enc, cb) => {
-            mo3.render(file, env);
+            let str = file.contents.toString();
+            if (file.path.slice(-11) === 'currency.js') {
+                str = str.replace("currency_values = {}", "currency_values = {" + currency_values + "}");
+            }
+            file.contents = Buffer.from(mo3.fromString(str, env), 'utf-8');
             cb(null, file);
         }))
         .pipe(sourcemaps.init())
@@ -133,5 +145,5 @@ gulp.task('serve', () => {
     gulp.watch(['src/js/**/*.js'], gulp.series(scripts, html));
 });
 
-gulp.task('build', gulp.series(assets, scripts, css, html, 'sitemap'));
+gulp.task('build', gulp.series(getCurrencyRates, assets, scripts, css, html, 'sitemap'));
 gulp.task('default', gulp.series('build', 'serve'));

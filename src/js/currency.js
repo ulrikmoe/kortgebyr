@@ -2,35 +2,10 @@
 const currency_map = {
     DKK: { cur: '% kr.', t: '.', d: ',' },
     SEK: { cur: '% kr.', t: '.', d: ',' },
-    NOK: { cur: '% kr.', t: '.', d: ',' },
     EUR: { cur: '€%', t: '.', d: ',' },
-    USD: { cur: '$%', t: ',', d: '.' },
-    GBP: { cur: '£%', t: '.', d: ',' }
+    USD: { cur: '$%', t: ',', d: '.' }
 };
-
-const currency_value = {
-    // https://api.frankfurter.app/latest?from=DKK&to=SEK,NOK,EUR,USD
-    'DKK': {
-        'EUR': 0.13419,
-        'NOK': 1.525,
-        'SEK': 1.5186,
-        'USD': 0.14736
-    },
-    // https://api.frankfurter.app/latest?from=SEK&to=EUR,DKK,NOK,USD
-    'SEK': {
-        'DKK': 0.65852,
-        'EUR': 0.08837,
-        'NOK': 1.0042,
-        'USD': 0.09704
-    },
-    // https://api.frankfurter.app/latest?from=EUR&to=DKK,NOK,SEK,USD
-    'EUR': {
-        'DKK': 7.452,
-        'NOK': 11.364,
-        'SEK': 11.3163,
-        'USD': 1.0981
-    }
-};
+const currency_values = {}; // Fetched from ECB in gulpfile.js
 
 function Currency(value, code) {
     this.amounts = {};
@@ -57,7 +32,7 @@ Currency.prototype.order = function (currency) {
         if (code === currency) {
             sum += this.amounts[code];
         } else {
-            sum += this.amounts[code] / currency_value[currency][code];
+            sum += this.amounts[code] / currency_values[code] * currency_values[currency];
         }
     }
     return sum;
