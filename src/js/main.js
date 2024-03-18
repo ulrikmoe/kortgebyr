@@ -11,11 +11,13 @@ let opts = {
     shopify: 'Basic'
 };
 const $dankortscale = 0.60;
-const $mobilepay = 0.57; // https://quickpay.net/quickpay-index/
 let $avgvalue;
 let $revenue;
+let $revenueIntl;
 let $qty;
-
+let $qtyIntl;
+let $qtyMobilepay; // https://quickpay.net/quickpay-index/
+let $trnfeeDankort;
 
 function settings(o) {
     document.getElementById('shopify-field').classList.toggle('hide', o.module !== 'shopify');
@@ -26,8 +28,12 @@ function settings(o) {
         document.getElementById('shopify-subscription').textContent = 'Shopify ' + opts.shopify;
     }
     $qty = o.qty || 0;
+    $qtyIntl = (1 - $dankortscale) * $qty;
+    $qtyMobilepay = (o.features.mobilepay) ? Math.ceil(0.6 * $qty) : 0;
     $avgvalue = new Currency(o.avgvalue, $currency);
     $revenue = $avgvalue.scale($qty);
+    $revenueIntl = $revenue.scale(1 - $dankortscale);
+    $trnfeeDankort = $revenue.scale($dankortscale).scale(0.32 / 100);
     build();
 }
 
@@ -163,14 +169,6 @@ function build() {
                 monthly: psp.acq.calc.monthly,
                 trn: psp.acq.calc.trn
             }, calc, psp.acq.ref.name);
-        }
-
-        // TODO: Move to dk.js
-        if (opts.features.mobilepay) {
-            cost2obj({
-                monthly: new Currency(49, 'DKK'),
-                trn: new Currency($qty * $mobilepay, 'DKK')
-            }, calc, 'MobilePay');
         }
         cost2obj(psp.fees, calc, psp.title);
         psp.calc = calc;

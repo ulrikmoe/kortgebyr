@@ -63,7 +63,7 @@ const ACQs = {
         fees: {
             monthly() {
                 // Minimum fee of 50 DKK / month.
-                const TC = $revenue.scale(1 - $dankortscale).scale(1.1 / 100).order('DKK');
+                const TC = $revenueIntl.scale(1.1 / 100).order('DKK');
                 const minFee = (TC < 50) ? 50 - TC : 0;
                 return new Currency(minFee, 'DKK');
             },
@@ -135,6 +135,8 @@ const PSPs = [
             }
         }
     },
+    /*
+    Adyen: Awaiting e-mail response
     {
         name: 'Adyen',
         title: 'Adyen',
@@ -146,8 +148,8 @@ const PSPs = [
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
         fees: {
             trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
-                const intl = o.trn['Indløsning (1,1%)'] = $revenue.scale(1 - $dankortscale).scale(1.1 / 100);
+                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
+                const intl = o.trn['Indløsning (1,1%)'] = $revenueIntl.scale(1.1 / 100);
                 const trnfee = o.trn['Transaktionsgebyr (€0,11)'] = new Currency(0.11 * $qty, 'EUR');
 
                 // Minimum fee (€100) https://www.adyen.com/payment-methods/benefit
@@ -155,9 +157,13 @@ const PSPs = [
                 if (adyenTotal < 100) {
                     o.monthly['Adyen minimumsfaktura (€100)'] = new Currency(100 - adyenTotal, 'EUR');
                 }
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( 1 * $qtyMobilepay, 'DKK');
+                }
             }
         }
     },
+    */
     {
         name: 'Billwerk+',
         title: 'Billwerk+ Payments',
@@ -165,19 +171,20 @@ const PSPs = [
         link: 'https://www.billwerk.plus/da/prisfastsaettelse-billwerk-betalinger/',
         dankort: true,
         acqs: new Set(['clearhaus', 'swedbank']),
-        features: new Set(['mobilepay', 'applepay']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
         fees: {
-            monthly(o) {
-                o.monthly['Abonnement'] = new Currency(139, 'DKK');
-            },
+            monthly: new Currency(139, 'DKK'),
             trn(o) {
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                return;
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 52.18, 'DKK');
+                }
             }
         }
     },
-    {
+    /*{
         name: 'Billwerk+',
         title: 'Billwerk+ Lite',
         logo: ['billwerk.png', 130, 16],
@@ -187,16 +194,17 @@ const PSPs = [
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
         fees: {
-            monthly(o) {
-                o.monthly['Abonnement'] = new Currency(349, 'DKK');
-            },
+            monthly: new Currency(349, 'DKK'),
             trn(o) {
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn['Omæstningsgebyr (0,75%)'] = $revenue.scale(0.75 / 100);
-                return;
+                o.trn['Omsætningsgebyr (0,75%)'] = $revenue.scale(0.75 / 100);
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 52.18, 'DKK');
+                }
             }
         }
-    },
+    },*/
     {
         name: 'Braintree',
         title: 'Braintree',
@@ -210,39 +218,6 @@ const PSPs = [
                 o.trn['Indløsning (1,9%)'] = $revenue.scale(1.9 / 100);
                 o.trn['Transaktionsgebyr (2,25 kr.)'] = new Currency(2.25 * $qty, 'DKK');
                 return;
-            }
-        }
-    },
-    {
-        name: 'Certitrade',
-        title: 'Certitrade all-in-one',
-        logo: ['certitrade.svg', 119.72, 25],
-        link: 'https://certitrade.se',
-        cards: new Set(['visa', 'mastercard', 'maestro']),
-        features: new Set(['subscriptions']),
-        modules: new Set(['woocommerce']),
-        fees: {
-            trn(o) {
-                o.trn['Indløsning (2,1%)'] = $revenue.scale(2.1 / 100);
-                o.trn['Transaktionsgebyr (2,1 SEK)'] = new Currency(2.1 * $qty, 'SEK');
-                return;
-            }
-        }
-    },
-    {
-        name: 'Certitrade',
-        title: 'Certitrade Fast',
-        logo: ['certitrade.svg', 119.7, 25],
-        link: 'https://certitrade.se',
-        acqs: new Set(['worldline', 'clearhaus', 'swedbank', 'handelsbanken']),
-        features: new Set(['subscriptions']),
-        modules: new Set(['woocommerce']),
-        fees: {
-            monthly: new Currency(1000, 'SEK'),
-            trn() {
-                const freeTrns = 1000;
-                if ($qty <= freeTrns) return new Currency(0, 'SEK');
-                return new Currency(0.50 * ($qty - freeTrns), 'SEK');
             }
         }
     },
@@ -264,6 +239,10 @@ const PSPs = [
             },
             trn(o) {
                 o.trn['Transaktionsgebyr (1 kr.)'] = new Currency($qty, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                }
                 return;
             }
         }
@@ -285,9 +264,62 @@ const PSPs = [
                 return new Currency(149, 'DKK');
             },
             trn(o) {
+                const freeTrns = Math.min($qty, 300);
+                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
+
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                }
+                return;
+            }
+        }
+    },
+    {
+        name: 'ePay',
+        title: 'ePay Pro',
+        logo: ['epay.svg', 97.7, 22],
+        link: 'https://epay.dk/#priser',
+        dankort: true,
+        acqs: new Set(['worldline']),
+        features: new Set(['mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        fees: {
+            monthly: new Currency(199, 'DKK'),
+            trn(o) {
+                const freeTrns = Math.min($qty, 250);
+                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
+
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                }
+                return;
+            }
+        }
+    },
+    {
+        name: 'ePay',
+        title: 'ePay Business',
+        logo: ['epay.svg', 97.7, 22],
+        link: 'https://epay.dk/#priser',
+        dankort: true,
+        acqs: new Set(['worldline']),
+        features: new Set(['subscriptions', 'mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        fees: {
+            monthly: new Currency(299, 'DKK'),
+            trn(o) {
                 const freeTrns = Math.min($qty, 500);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
+
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                }
                 return;
             }
         }
@@ -305,14 +337,19 @@ const PSPs = [
             trn(o) {
                 const qty = (o.trn.Clearhaus) ? $qty * $dankortscale : $qty;
                 o.trn['Freepay 3-D Secure (0,25 kr.)'] = new Currency(0.25 * qty, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                }
+                return;
             }
         }
     },
     {
         name: 'Lunar',
-        title: 'Lunar',
+        title: 'Lunar Payments',
         logo: ['lunar.svg', 74.3, 26],
-        link: 'https://www.lunar.app/dk/erhverv/online-betaling-til-webshops',
+        link: 'https://www.lunar.app/en/business/online-payments',
         cards: new Set(['visa', 'mastercard']),
         features: new Set(['mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
@@ -321,6 +358,10 @@ const PSPs = [
             trn(o) {
                 o.trn['Indløsning (1%)'] = $revenue.scale(1 / 100);
                 o.trn['Transaktionsgebyr (1 kr.)'] = new Currency($qty, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                }
                 return;
             }
         }
@@ -402,7 +443,6 @@ const PSPs = [
         name: 'PensoPay',
         title: 'PensoPay Basis',
         logo: ['pensopay.svg', 121.85, 21],
-        note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
@@ -410,12 +450,15 @@ const PSPs = [
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
         fees: {
             trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
-                o.trn['Indløsning (1,25%)'] = $revenue.scale(1 - $dankortscale).scale(1.25 / 100);
+                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
+                o.trn['Indløsning (1,25%)'] = $revenueIntl.scale(1.25 / 100);
                 o.trn['Transaktionsgebyr (4 kr.)'] = new Currency(4 * $qty, 'DKK');
-                const cqty = (1 - $dankortscale) * $qty;
-                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
-                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
+                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
+                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qtyIntl, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                }
                 return;
             }
         }
@@ -424,7 +467,6 @@ const PSPs = [
         name: 'PensoPay',
         title: 'PensoPay Start-Up',
         logo: ['pensopay.svg', 121.85, 21],
-        note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
@@ -433,12 +475,15 @@ const PSPs = [
         fees: {
             monthly: new Currency(49, 'DKK'),
             trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
-                o.trn['Indløsning (1,25%)'] = $revenue.scale(1 - $dankortscale).scale(1.25 / 100);
+                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
+                o.trn['Indløsning (1,25%)'] = $revenueIntl.scale(1.25 / 100);
                 o.trn['Transaktionsgebyr (1 kr.)'] = new Currency($qty, 'DKK');
-                const cqty = (1 - $dankortscale) * $qty;
-                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
-                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
+                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
+                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qtyIntl, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                }
                 return;
             }
         }
@@ -447,7 +492,6 @@ const PSPs = [
         name: 'PensoPay',
         title: 'PensoPay Business',
         logo: ['pensopay.svg', 121.85, 21],
-        note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
@@ -457,13 +501,16 @@ const PSPs = [
             monthly: new Currency(99, 'DKK'),
             trn(o) {
                 const freeTrns = Math.min($qty, 100);
-                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
-                o.trn['Indløsning (1,25%)'] = $revenue.scale(1 - $dankortscale).scale(1.25 / 100);
+                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
+                o.trn['Indløsning (1,25%)'] = $revenueIntl.scale(1.25 / 100);
                 o.trn['Transaktionsgebyr (0,35 kr.)'] = new Currency(0.35 * $qty, 'DKK');
                 o.trn[freeTrns + ' gratis transaktioner'] = new Currency(-0.35 * freeTrns, 'DKK');
-                const cqty = (1 - $dankortscale) * $qty;
-                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
-                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
+                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
+                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qtyIntl, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                }
                 return;
             }
         }
@@ -472,7 +519,6 @@ const PSPs = [
         name: 'PensoPay',
         title: 'PensoPay Pro',
         logo: ['pensopay.svg', 121.85, 21],
-        note: 'Reseller af Quickpay',
         link: 'https://pensopay.com/hvorfor-pensopay/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
@@ -482,13 +528,16 @@ const PSPs = [
             monthly: new Currency(149, 'DKK'),
             trn(o) {
                 const freeTrns = Math.min($qty, 250);
-                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
-                o.trn['Indløsning (1,25%)'] = $revenue.scale(1 - $dankortscale).scale(1.25 / 100);
+                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
+                o.trn['Indløsning (1,25%)'] = $revenueIntl.scale(1.25 / 100);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 o.trn[freeTrns + ' gratis transaktioner'] = new Currency(-0.25 * freeTrns, 'DKK');
-                const cqty = (1 - $dankortscale) * $qty;
-                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
-                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
+                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
+                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qtyIntl, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                }
                 return;
             }
         }
@@ -497,7 +546,7 @@ const PSPs = [
         name: 'Quickpay',
         title: 'Quickpay Merchant',
         logo: ['quickpay.svg', 138, 22.3],
-        link: 'https://quickpay.net/prices-dk/',
+        link: 'https://quickpay.net/dk/prices-dk/',
         dankort: true,
         acqs: new Set(['clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
@@ -506,17 +555,16 @@ const PSPs = [
         fees: {
             monthly(o) {
                 o.monthly['Abonnement'] = new Currency(99, 'DKK');
-                o.monthly['Ekstra abonnement'] = new Currency(30, 'DKK');
+                o.monthly['Ekstra månedeligt beløb'] = new Currency(30, 'DKK');
             },
             trn(o) {
                 if (o.trn.Clearhaus) {
-                    const cqty = (1 - $dankortscale) * $qty;
                     delete o.trn.Clearhaus;
-                    let trnfee = $revenue.scale(1 - $dankortscale).scale(1.35 / 100);
+                    let trnfee = $revenueIntl.scale(1.35 / 100);
                     if (trnfee.order('DKK') < 0.75) trnfee = new Currency(0.75, 'DKK');
                     o.trn['Indløsning (1,35%, min. 0,75 kr.)'] = trnfee;
-                    o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
-                    o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
+                    o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
+                    o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qtyIntl, 'DKK');
                 }
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 o.trn['Ekstra transaktionsgebyr (Dankort)'] = new Currency(0.25 * $dankortscale * $qty, 'DKK');
@@ -534,14 +582,12 @@ const PSPs = [
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart']),
         fees: {
-            monthly(o) {
-                if (o.monthly.MobilePay) {
-                    // Scanpay charge a daily fee of 1.6 DKK
-                    o.monthly.MobilePay = new Currency(1.6 * 365 / 12, 'DKK');
-                }
-            },
             trn(o) {
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( 1 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(1.6 * 365 / 12, 'DKK');
+                }
                 return;
             }
         }
@@ -551,7 +597,7 @@ const PSPs = [
         title: 'Shipmondo Payments',
         logo: ['shipmondo.svg', 116.67, 25],
         note: 'Reseller af Billwerk+',
-        link: 'https://shipmondo.com/dk/shipmondo-payments/',
+        link: 'https://help.shipmondo.com/da/articles/6015622-shipmondo-payments-tilvalg-og-priser',
         dankort: true,
         acqs: new Set(['worldline', 'valitor']),
         features: new Set(['mobilepay', 'applepay']),
@@ -559,8 +605,8 @@ const PSPs = [
         fees: {
             trn(o) {
                 let num = Math.min($qty, 25);
+                // Shipmondo trappetrinsmodel
                 o.trn[num + ' * transaktionsgebyr (1 kr.)'] = new Currency(num, 'DKK');
-
                 if ($qty > 25) {
                     num = Math.min(($qty - 25), 25);
                     o.trn[num + ' * transaktionsgebyr (0,8 kr.)'] = new Currency(num * 0.8, 'DKK');
@@ -576,6 +622,11 @@ const PSPs = [
                 if ($qty > 151) {
                     num = $qty - 151;
                     o.trn[num + ' * transaktionsgebyr (0,2 kr.)'] = new Currency(num * 0.2, 'DKK');
+                }
+
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
                 }
             }
         }
@@ -614,58 +665,22 @@ const PSPs = [
         }
     },
     {
-        name: 'Swiipe',
-        title: 'Swiipe Basic',
-        logo: ['swiipe.svg', 83.8, 24],
-        link: 'https://swiipe.com/priser/',
-        cards: new Set(['visa', 'mastercard']),
-        features: new Set(['mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento']),
-        fees: {
-            monthly: new Currency(49, 'DKK'),
-            trn(o) {
-                o.trn[`Indløsning (1,25%)`] = $revenue.scale(1.25 / 100);
-                o.trn[`Transaktionsgebyr (1 kr.)`] = new Currency($qty, 'DKK');
-                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qty, 'DKK');
-                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qty, 'DKK');
-                return;
-            }
-        }
-    },
-    {
-        name: 'Swiipe',
-        title: 'Swiipe Business',
-        logo: ['swiipe.svg', 83.8, 24],
-        link: 'https://swiipe.com/priser/',
-        dankort: true,
-        cards: new Set(['visa', 'mastercard']),
-        features: new Set(['mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento']),
-        fees: {
-            monthly: new Currency(129, 'DKK'),
-            trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
-                o.trn['Indløsning (1,25%)'] = $revenue.scale(1 - $dankortscale).scale(1.25 / 100);
-                o.trn[`Transaktionsgebyr (0,25 kr.)`] = new Currency(0.25 * $qty, 'DKK');
-                const cqty = (1 - $dankortscale) * $qty;
-                o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * cqty, 'DKK');
-                o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * cqty, 'DKK');
-                return;
-            }
-        }
-    },
-    {
-        name: 'Viva Wallet',
-        title: 'Viva Wallet',
+        name: 'Viva',
+        title: 'viva.com',
         logo: ['vivawallet.svg', 135, 21],
-        link: 'https://www.vivawallet.com/dk_da/pricing-dk',
+        link: 'https://www.viva.com/da-dk/pricing',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
-        features: new Set(['subscriptions', 'applepay']),
+        features: new Set(['subscriptions', 'applepay', 'mobilepay']),
         modules: new Set(['woocommerce', 'prestashop']),
         fees: {
             trn(o) {
                 o.trn['Indløsning (2,19%)'] = $revenue.scale(2.19 / 100);
                 o.trn['Process-gebyr (0,5 kr.)'] = new Currency(0.5 * $qty, 'DKK');
+                o.trn['3D-Secure (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 0.75 kr.)'] = new Currency( 0.75 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency( 35, 'DKK');
+                }
             }
         }
     },
@@ -673,42 +688,19 @@ const PSPs = [
         name: 'Worldline',
         title: 'Worldline Checkout',
         logo: ['worldline.svg', 118.98, 16],
-        note: 'Tidl. Bambora',
-        link: 'https://www.bambora.com/da/dk/online/',
+        link: 'https://worldline.com/da-dk/home/main-navigation/solutions/merchants/solutions-and-services/online.html',
         dankort: true,
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
-            monthly(o) {
-                if (opts.features.mobilepay) delete o.monthly.MobilePay; // Included for free
-                return new Currency(195, 'DKK');
-            },
+            monthly: new Currency(195, 'DKK'),
             trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
-                o.trn['Indløsning (1,45%)'] = $revenue.scale(1 - $dankortscale).scale(1.45 / 100);
-            }
-        }
-    },
-    {
-        name: 'Worldline',
-        title: 'Worldline Pro+',
-        logo: ['worldline.svg', 118.98, 16],
-        note: 'Tidl. ePay platform',
-        link: 'https://www.bambora.com/da/dk/online/',
-        dankort: true,
-        cards: new Set(['visa', 'mastercard', 'maestro']),
-        features: new Set(['subscriptions', 'mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'ideal.shop']),
-        fees: {
-            monthly: new Currency(149, 'DKK'),
-            trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $revenue.scale($dankortscale).scale(0.32 / 100);
-                o.trn['Indløsning (1,45%)'] = $revenue.scale(1 - $dankortscale).scale(1.45 / 100);
-                const freeTrns = Math.min($qty, 250);
-                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
-                return;
+                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
+                o.trn['Indløsning (1,45%)'] = $revenueIntl.scale(1.45 / 100);
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
+                }
             }
         }
     }
