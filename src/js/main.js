@@ -21,7 +21,7 @@ function settings(o) {
     document.getElementById('shopify-field').classList.toggle('hide', o.module !== 'shopify');
     document.getElementById('shopify-infobox').classList.toggle('hide', o.module !== 'shopify');
     if (o.module === 'shopify') {
-        const tier = (opts.shopify === 'Basic') ? 2 : (opts.shopify === 'Shopify') ? 1 : 0.5;
+        const tier = (opts.shopify === 'Basic') ? 2 : (opts.shopify === 'Shopify') ? 1 : 0.6;
         document.getElementById('shopify-tier').textContent = tier.toString().replace('.', ',') + '%';
         document.getElementById('shopify-subscription').textContent = 'Shopify ' + opts.shopify;
     }
@@ -147,7 +147,7 @@ function build() {
         const calc = { setup: {}, monthly: {}, trn: {} };
         // Tmp. fix for Shopify
         if (opts.module === 'shopify' && psp.logo[0] !== 'shopify.svg') {
-            const tier = (opts.shopify === 'Basic') ? 2 : (opts.shopify === 'Shopify') ? 1 : 0.5;
+            const tier = (opts.shopify === 'Basic') ? 2 : (opts.shopify === 'Shopify') ? 1 : 0.6;
             cost2obj({
                 trn: $revenue.scale(tier / 100)
             }, calc, `Shopify gebyr (${tier}%)`);
