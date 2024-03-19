@@ -586,7 +586,7 @@ const PSPs = [
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 if (opts.features.mobilepay) {
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( 1 * $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency(1.6 * 365 / 12, 'DKK');
+                    o.monthly['MobilePay (1,6 kr. pr. dag)'] = new Currency(1.6 * 365 / 12, 'DKK');
                 }
                 return;
             }
