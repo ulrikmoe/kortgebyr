@@ -222,9 +222,9 @@ const PSPs = [
         }
     },
     {
-        name: 'DanDomain',
-        title: 'DanDomain Start-up',
-        logo: ['dandomain.svg', 119.2, 22],
+        name: 'OnPay',
+        title: 'OnPay Start-up',
+        logo: ['onpay.svg', 75.5, 24],
         link: 'https://dandomain.dk/betalingssystem/priser',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
@@ -248,9 +248,9 @@ const PSPs = [
         }
     },
     {
-        name: 'DanDomain',
-        title: 'DanDomain Success',
-        logo: ['dandomain.svg', 119.2, 22],
+        name: 'OnPay',
+        title: 'OnPay Success',
+        logo: ['onpay.svg', 75.5, 24],
         link: 'https://dandomain.dk/betalingssystem/priser',
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
