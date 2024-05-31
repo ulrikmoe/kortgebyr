@@ -178,8 +178,8 @@ const PSPs = [
             trn(o) {
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 52.18, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(52.18, 'DKK');
                 }
             }
         }
@@ -240,8 +240,8 @@ const PSPs = [
             trn(o) {
                 o.trn['Transaktionsgebyr (1 kr.)'] = new Currency($qty, 'DKK');
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
                 return;
             }
@@ -269,8 +269,8 @@ const PSPs = [
                 o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
 
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
                 return;
             }
@@ -293,8 +293,8 @@ const PSPs = [
                 o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
 
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
                 return;
             }
@@ -317,8 +317,8 @@ const PSPs = [
                 o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
 
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
                 return;
             }
@@ -338,8 +338,8 @@ const PSPs = [
                 const qty = (o.trn.Clearhaus) ? $qty * $dankortscale : $qty;
                 o.trn['Freepay 3-D Secure (0,25 kr.)'] = new Currency(0.25 * qty, 'DKK');
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
                 return;
             }
@@ -359,8 +359,8 @@ const PSPs = [
                 o.trn['Indløsning (1%)'] = $revenue.scale(1 / 100);
                 o.trn['Transaktionsgebyr (1 kr.)'] = new Currency($qty, 'DKK');
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
                 return;
             }
@@ -456,8 +456,8 @@ const PSPs = [
                 o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
                 o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qtyIntl, 'DKK');
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
                 return;
             }
@@ -481,8 +481,8 @@ const PSPs = [
                 o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
                 o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qtyIntl, 'DKK');
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
                 return;
             }
@@ -508,8 +508,8 @@ const PSPs = [
                 o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
                 o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qtyIntl, 'DKK');
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
                 return;
             }
@@ -535,8 +535,8 @@ const PSPs = [
                 o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
                 o.trn['3D Secure gebyr (0,30 kr.)'] = new Currency(0.3 * $qtyIntl, 'DKK');
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
                 return;
             }
@@ -585,7 +585,7 @@ const PSPs = [
             trn(o) {
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( 1 * $qtyMobilepay, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency(1 * $qtyMobilepay, 'DKK');
                     o.monthly['MobilePay (1,6 kr. pr. dag)'] = new Currency(1.6 * 365 / 12, 'DKK');
                 }
                 return;
@@ -625,8 +625,8 @@ const PSPs = [
                 }
 
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 49, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
             }
         }
@@ -678,8 +678,8 @@ const PSPs = [
                 o.trn['Process-gebyr (0,5 kr.)'] = new Currency(0.5 * $qty, 'DKK');
                 o.trn['3D-Secure (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 0.75 kr.)'] = new Currency( 0.75 * $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 35, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 0.75 kr.)'] = new Currency(0.75 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(35, 'DKK');
                 }
             }
         }
@@ -699,7 +699,7 @@ const PSPs = [
                 o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
                 o.trn['Indløsning (1,45%)'] = $revenueIntl.scale(1.45 / 100);
                 if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( $qtyMobilepay, 'DKK');
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
                 }
             }
         }
