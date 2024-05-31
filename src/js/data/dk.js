@@ -346,27 +346,6 @@ const PSPs = [
         }
     },
     {
-        name: 'Lunar',
-        title: 'Lunar Payments',
-        logo: ['lunar.svg', 74.3, 26],
-        link: 'https://www.lunar.app/en/business/online-payments',
-        cards: new Set(['visa', 'mastercard']),
-        features: new Set(['mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
-        fees: {
-            monthly: new Currency(49, 'DKK'),
-            trn(o) {
-                o.trn['Indløsning (1%)'] = $revenue.scale(1 / 100);
-                o.trn['Transaktionsgebyr (1 kr.)'] = new Currency($qty, 'DKK');
-                if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
-                }
-                return;
-            }
-        }
-    },
-    {
         name: 'Mollie',
         title: 'Mollie',
         logo: ['mollie.svg', 74.25, 22],
