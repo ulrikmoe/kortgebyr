@@ -235,7 +235,7 @@ const PSPs = [
                 if (opts.features.subscriptions) {
                     o.monthly['Abonnementsbetalinger'] = new Currency(99, 'DKK');
                 }
-                return;
+                return new Currency(9, 'DKK');
             },
             trn(o) {
                 o.trn['Transaktionsgebyr (1 kr.)'] = new Currency($qty, 'DKK');
