@@ -135,35 +135,6 @@ const PSPs = [
             }
         }
     },
-    /*
-    Adyen: Awaiting e-mail response
-    {
-        name: 'Adyen',
-        title: 'Adyen',
-        logo: ['adyen.svg', 87, 29],
-        link: 'https://www.adyen.com/da_DK/priser',
-        dankort: true,
-        cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
-        features: new Set(['subscriptions', 'applepay', 'mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
-        fees: {
-            trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
-                const intl = o.trn['Indløsning (1,1%)'] = $revenueIntl.scale(1.1 / 100);
-                const trnfee = o.trn['Transaktionsgebyr (€0,11)'] = new Currency(0.11 * $qty, 'EUR');
-
-                // Minimum fee (€100) https://www.adyen.com/payment-methods/benefit
-                const adyenTotal = intl.add(trnfee).order('EUR');
-                if (adyenTotal < 100) {
-                    o.monthly['Adyen minimumsfaktura (€100)'] = new Currency(100 - adyenTotal, 'EUR');
-                }
-                if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency( 1 * $qtyMobilepay, 'DKK');
-                }
-            }
-        }
-    },
-    */
     {
         name: 'Billwerk+',
         title: 'Billwerk+ Payments',
@@ -259,20 +230,40 @@ const PSPs = [
     },
     {
         name: 'ePay',
+        title: 'ePay Light',
+        logo: ['epay.svg', 97.7, 22],
+        link: 'https://epay.dk/priser',
+        cards: new Set(['visa', 'mastercard', 'maestro']),
+        features: new Set(['mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        fees: {
+            monthly: new Currency(99, 'DKK'),
+            trn(o) {
+                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                o.trn['Indløsning (1,25%)'] = $revenue.scale(1.25 / 100);
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
+                }
+                return;
+            }
+        }
+    },
+    {
+        name: 'ePay',
         title: 'ePay Pro',
         logo: ['epay.svg', 97.7, 22],
         link: 'https://epay.dk/priser',
         dankort: true,
-        acqs: new Set(['worldline']),
+        cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop']),
         fees: {
-            monthly: new Currency(199, 'DKK'),
+            monthly: new Currency(149, 'DKK'),
             trn(o) {
-                const freeTrns = Math.min($qty, 250);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
-
+                o.trn['Indløsning (1,25%)'] = $revenueIntl.scale(1.25 / 100);
+                o.trn['Dankort (0,32%)'] = $trnfeeDankort;
                 if (opts.features.mobilepay) {
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
                     o.monthly['MobilePay'] = new Currency(49, 'DKK');
@@ -291,12 +282,9 @@ const PSPs = [
         features: new Set(['subscriptions', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop']),
         fees: {
-            monthly: new Currency(299, 'DKK'),
+            monthly: new Currency(249, 'DKK'),
             trn(o) {
-                const freeTrns = Math.min($qty, 500);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
-
                 if (opts.features.mobilepay) {
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
                     o.monthly['MobilePay'] = new Currency(49, 'DKK');
