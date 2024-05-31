@@ -362,22 +362,6 @@ const PSPs = [
         }
     },
     {
-        name: 'Paylike',
-        title: 'Paylike',
-        logo: ['paylike.svg', 99.1, 31],
-        link: 'https://paylike.dk/pricing',
-        cards: new Set(['visa', 'mastercard', 'maestro']),
-        features: new Set(['subscriptions']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
-        fees: {
-            trn(o) {
-                o.trn['Indløsning (1,35%)'] = $revenue.scale(1.35 / 100);
-                o.trn['Transaktionsgebyr (0,5 kr.)'] = new Currency(0.5 * $qty, 'DKK');
-                return;
-            }
-        }
-    },
-    {
         name: 'PayPal',
         title: 'PayPal',
         logo: ['paypal.svg', 123.6, 30],
