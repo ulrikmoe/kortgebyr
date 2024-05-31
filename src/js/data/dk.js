@@ -168,7 +168,7 @@ const PSPs = [
         name: 'Billwerk+',
         title: 'Billwerk+ Payments',
         logo: ['billwerk.png', 130, 16],
-        link: 'https://www.billwerk.plus/da/prisfastsaettelse-billwerk-betalinger/',
+        link: 'https://www.billwerk.plus/da/betalingsloesning-priser/',
         dankort: true,
         acqs: new Set(['clearhaus', 'swedbank']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
@@ -176,35 +176,16 @@ const PSPs = [
         fees: {
             monthly: new Currency(139, 'DKK'),
             trn(o) {
+                const freeTrns = Math.min($qty, 250);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
+                o.trn[freeTrns + ' gratis transaktioner'] = (new Currency(-0.25 * freeTrns, 'DKK'));
                 if (opts.features.mobilepay) {
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency(52.18, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
             }
         }
     },
-    /*{
-        name: 'Billwerk+',
-        title: 'Billwerk+ Lite',
-        logo: ['billwerk.png', 130, 16],
-        link: 'https://www.billwerk.plus/da/pricing/',
-        dankort: true,
-        acqs: new Set(['clearhaus', 'swedbank', 'handelsbanken', 'worldline']),
-        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
-        fees: {
-            monthly: new Currency(349, 'DKK'),
-            trn(o) {
-                o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
-                o.trn['Omsætningsgebyr (0,75%)'] = $revenue.scale(0.75 / 100);
-                if (opts.features.mobilepay) {
-                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency( 1.02 * $qtyMobilepay, 'DKK');
-                    o.monthly['MobilePay'] = new Currency( 52.18, 'DKK');
-                }
-            }
-        }
-    },*/
     {
         name: 'Braintree',
         title: 'Braintree',
