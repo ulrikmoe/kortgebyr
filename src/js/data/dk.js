@@ -304,8 +304,10 @@ const PSPs = [
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
             trn(o) {
-                const qty = (o.trn.Clearhaus) ? $qty * $dankortscale : $qty;
-                o.trn['Freepay 3-D Secure (0,25 kr.)'] = new Currency(0.25 * qty, 'DKK');
+                // The Freepay Nets fee apply to Dankort + Visa/Mastercard (through Nets)
+                const qty = (o.trn.Nets) ? $qty : $dankortscale * $qty;
+                o.trn['Freepay Nets gebyr (0,80 kr.)'] = new Currency(0.80 * $qty, 'DKK');
+                o.monthly['Freepay Nets gebyr (49 kr/md.)'] = new Currency(49, 'DKK');
                 if (opts.features.mobilepay) {
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
                     o.monthly['MobilePay'] = new Currency(49, 'DKK');
