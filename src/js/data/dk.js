@@ -34,24 +34,10 @@ const ACQs = {
         link: 'https://my.nets.eu/landingpage?landingPageId=DK&language=da',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         fees: {
-            //setup: new Currency(500, 'DKK'),
-            //monthly: new Currency(129, 'DKK'),
             trn() {
                 // EØS: 0.99% + 0,25% (if credit card, ie. 23% of cards)
                 const trnfee = $avgvalue.scale(1.05 / 100);
                 return (trnfee.order('DKK') > 0.29) ? trnfee : new Currency(0.29, 'DKK');
-            }
-        }
-    },
-    handelsbanken: {
-        name: 'Handelsbanken',
-        logo: ['handelsbanken.svg', 90, 9],
-        link: 'https://handelsbanken.dk/shb/inet/icentda.nsf/Default/' +
-            'qC21926A235427DE6C12578810023DBB9?Opendocument',
-        cards: new Set(['visa', 'mastercard', 'maestro']),
-        fees: {
-            trn() {
-                return $avgvalue.scale(1.5 / 100);
             }
         }
     },

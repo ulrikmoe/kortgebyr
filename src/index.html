@@ -1,165 +1,183 @@
-<!DOCTYPE HTML><html lang="da">
+<!DOCTYPE HTML>
+<html lang="da">
 <script defer src="/js/all.js?{{ gitStamp }}"></script>
 <link rel="stylesheet" href="/css/kortgebyr.css?{{ cssStamp }}">
 <link rel="preload" href="/font/N400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/font/N400i.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/font/N600.woff2" as="font" type="font/woff2" crossorigin>
 <title>Find den billigste betalingsløsning | Kortgebyr</title>
-<meta name="description" content="Her kan du sammenligne priser på online betalingsløsninger, og finde den billigste betalingsløsning til din netbutik.">
+<meta name="description"
+  content="Her kan du sammenligne priser på online betalingsløsninger, og finde den billigste betalingsløsning til din netbutik.">
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png">
 <link rel="canonical" href="https://kortgebyr.dk/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<body><div class="c">
-  <header>
-    <form id="form" autocomplete="off">
-      <nav>
-        <div class="flex1">
-          <a class="logo" href="/" target="_self" title="Kortgebyr prissammenligning">
-            <img class="logo--img" width="84" height="18" alt="Kortgebyr prissammenligning" src="/img/logo.svg">
+<body>
+  <div class="c">
+    <header>
+      <form id="form" autocomplete="off">
+        <nav>
+          <div class="flex1">
+            <a class="logo" href="/" target="_self" title="Kortgebyr prissammenligning">
+              <img class="logo--img" width="84" height="18" alt="Kortgebyr prissammenligning" src="/img/logo.svg">
+            </a>
+          </div>
+          <a class="lastUpdate" lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">
+            Opdateret d. {{ lastUpdate }}
           </a>
-        </div>
-        <a class="lastUpdate" lang="en" rel="nofollow" href="https://github.com/ulrikmoe/kortgebyr/commits/master">
-          Opdateret d. {{ lastUpdate }}
-        </a>
-      </nav>
+        </nav>
 
-      <div class="settings">
-        <div>
-          <div class="field">
-            <label>
-              <b class="label">Indløser</b>
-              <select name="acquirer" class="form-select">
-                <option value="auto">Vælg indløser</option>
-                <option value="nets">Nets</option>
-                <option value="clearhaus">Clearhaus</option>
-                <option value="handelsbanken">Handelsbanken</option>
-                <option value="swedbank">Swedbank</option>
-                <option value="worldline">Worldline (tidl. Bambora)</option>
+        <div class="settings">
+          <div>
+            <div class="field">
+              <label>
+                <b class="label">Indløser</b>
+                <select name="acquirer" class="form-select">
+                  <option value="auto">Vælg indløser</option>
+                  <option value="nets">Nets</option>
+                  <option value="clearhaus">Clearhaus</option>
+                  <option value="swedbank">Swedbank</option>
+                  <option value="worldline">Worldline (tidl. Bambora)</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="field">
+              <label class="label" for="module">Shopsystem</label>
+              <select name="module" id="module" class="form-select">
+                <option value="">Vælg shopsystem</option>
+                <option value="woocommerce">WooCommerce</option>
+                <option value="magento">Magento 2</option>
+                <option value="prestashop">PrestaShop</option>
+                <option value="thirtybees">ThirtyBees</option>
+                <option value="opencart">OpenCart</option>
+                <option value="shopify">Shopify</option>
+                <option value="shoporama">Shoporama</option>
+                <option value="dandomain">DanDomain / Wannafind / ScanNet</option>
+                <option value="ideal.shop">Ideal.shop</option>
               </select>
-            </label>
+            </div>
+
+            <div id="shopify-field" class="field hide">
+              <label class="label" for="shopify">Shopify abonnement</label>
+              <select name="shopify" id="shopify" class="form-select">
+                <option value="Basic" selected>Basic ($39/md.)</option>
+                <option value="Shopify">Shopify ($105/md.)</option>
+                <option value="Advanced">Advanced ($399/md.)</option>
+              </select>
+            </div>
           </div>
 
-          <div class="field">
-            <label class="label" for="module">Shopsystem</label>
-            <select name="module" id="module" class="form-select">
-              <option value="">Vælg shopsystem</option>
-              <option value="woocommerce">WooCommerce</option>
-              <option value="magento">Magento 2</option>
-              <option value="prestashop">PrestaShop</option>
-              <option value="thirtybees">ThirtyBees</option>
-              <option value="opencart">OpenCart</option>
-              <option value="shopify">Shopify</option>
-              <option value="shoporama">Shoporama</option>
-              <option value="dandomain">DanDomain / Wannafind / ScanNet</option>
-              <option value="ideal.shop">Ideal.shop</option>
-            </select>
-          </div>
+          <div>
+            <div class="avgqty">
+              <div class="field field--avg">
+                <label class="label" for="avgvalue">Typisk ordreværdi</label>
+                <div class="input-group">
+                  <div class="input-group-text">kr.</div>
+                  <input id="avgvalue" name="avgvalue" type="number" min="0" class="form-control input-group-input"
+                    value="715">
+                </div>
+              </div>
 
-          <div id="shopify-field" class="field hide">
-            <label class="label" for="shopify">Shopify abonnement</label>
-            <select name="shopify" id="shopify" class="form-select">
-              <option value="Basic" selected>Basic ($39/md.)</option>
-              <option value="Shopify">Shopify ($105/md.)</option>
-              <option value="Advanced">Advanced ($399/md.)</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <div class="avgqty">
-            <div class="field field--avg">
-              <label class="label" for="avgvalue">Typisk ordreværdi</label>
-              <div class="input-group">
-                <div class="input-group-text">kr.</div>
-                <input id="avgvalue" name="avgvalue" type="number" min="0" class="form-control input-group-input" value="715">
+              <div class="field field--qty">
+                <label class="label" for="qty">Betalinger pr. md.</label>
+                <input id="qty" name="qty" type="number" min="0" class="form-control" value="200">
               </div>
             </div>
 
-            <div class="field field--qty">
-              <label class="label" for="qty">Betalinger pr. md.</label>
-              <input id="qty" name="qty" type="number" min="0" class="form-control" value="200">
+            <div class="form-check form-check--subs">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="features[]" value="subscriptions">
+                <span>Abonnementsbetalinger</span>
+              </label>
             </div>
           </div>
 
-          <div class="form-check form-check--subs">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" name="features[]" value="subscriptions">
-              <span>Abonnementsbetalinger</span>
-            </label>
+          <div>
+            <label class="label label--tilvalg mobile--hide">Tilvalg</label>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="features[]" value="mobilepay" id="mobilepay">
+                <span>MobilePay</span>
+              </label>
+            </div>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="features[]" value="applepay">
+                <span>Apple Pay</span>
+              </label>
+            </div>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="cards[]" value="amex">
+                <span>American Express</span>
+              </label>
+            </div>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="cards[]" value="diners">
+                <span>Diners og JCB</span>
+              </label>
+            </div>
           </div>
         </div>
+      </form>
+    </header>
 
-        <div>
-          <label class="label label--tilvalg mobile--hide">Tilvalg</label>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" name="features[]" value="mobilepay" id="mobilepay">
-              <span>MobilePay</span>
-            </label>
-          </div>
+    <div class="infobox">
+      Her kan du sammenligne priser på online betalingsløsninger, og finde den billigste betalingsløsning til din
+      netbutik. Vi vil anbefale at du starter med at læse vores <a
+        title="Ofte stillede spørgsmål om betalingsløsninger mm." href="/ofte-stillede-spørgsmål">FAQ</a>. <span
+        class="mobile--hide">Hvis du har feedback, eller synes vi mangler en betalingsløsning, kan du skrive til os <a
+          href="mailto:ulrik.moe@gmail.com">her</a>.</span>
+    </div>
 
-          <div class="form-check">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" name="features[]" value="applepay">
-              <span>Apple Pay</span>
-            </label>
-          </div>
+    <div id="shopify-infobox" class="infobox hide">
+      <b id="shopify-subscription">Shopify Basic</b>: Ved brug af ekstern betalingsløsning, dvs. andre løsninger end
+      Shopify Payments, pålægger Shopify dig et ekstra gebyr på <b id="shopify-tier">2%</b> af din omsætning. Derudover
+      skal den eksterne betalingsløsning betale <b>0,4%</b> i servicegebyr til Shopify.
+    </div>
 
-          <div class="form-check">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" name="cards[]" value="amex">
-              <span>American Express</span>
-            </label>
-          </div>
+    <div class="responsive">
+      <table id="table">
+        <thead>
+          <tr>
+            <th class="th--psp">Betalingsløsning</th>
+            <th class="th--acq">Indløsere</th>
+            <th class="th--cards">Betalingskort</th>
+            <th>Abonnement</th>
+            <th class="th--trns">Transaktionsgebyr</th>
+            <th>
+              <div class="equal right">
+                <p class="equal--icon"></p>
+              </div>
+              Samlet pr. <br> måned
+            </th>
+            <th class="th--total">
+              <div class="equal left">
+                <p class="equal--icon"></p>
+              </div>
+              Samlet pr. <br> transaktion
+            </th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+      </table>
+    </div>
 
-          <div class="form-check">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" name="cards[]" value="diners">
-              <span>Diners og JCB</span>
-            </label>
-          </div>
-        </div>
-      </div>
-    </form>
-  </header>
+    <footer>
+      <p>
+        Kortgebyr er en nonprofit prissammenligning af betalingsløsninger. Projektet startede som et regneark, der blev
+        delt blandt netbutikker, og i 2012 blev denne side til. Formålet er at gøre det nemmere at finde den billigste
+        betalingsløsning. I 2017 startede vi vores egen betalingsgateway, <a title="Scanpay betalingsgateway"
+          href="https://scanpay.dk">scanpay</a>, men vi lover at holde kortgebyr upartisk. Alle bidrag og tanker er
+        meget velkomne på <a rel="nofollow" lang="en" href="https://github.com/ulrikmoe/kortgebyr">GitHub</a>.
+      </p>
+    </footer>
 
-  <div class="infobox">
-    Her kan du sammenligne priser på online betalingsløsninger, og finde den billigste betalingsløsning til din netbutik. Vi vil anbefale at du starter med at læse vores <a title="Ofte stillede spørgsmål om betalingsløsninger mm." href="/ofte-stillede-spørgsmål">FAQ</a>. <span class="mobile--hide">Hvis du har feedback, eller synes vi mangler en betalingsløsning, kan du skrive til os <a href="mailto:ulrik.moe@gmail.com">her</a>.</span>
   </div>
-
-  <div id="shopify-infobox" class="infobox hide">
-    <b id="shopify-subscription">Shopify Basic</b>: Ved brug af ekstern betalingsløsning, dvs. andre løsninger end Shopify Payments, pålægger Shopify dig et ekstra gebyr på <b id="shopify-tier">2%</b> af din omsætning. Derudover skal den eksterne betalingsløsning betale <b>0,4%</b> i servicegebyr til Shopify.
-  </div>
-
-  <div class="responsive">
-    <table id="table">
-      <thead>
-        <tr>
-          <th class="th--psp">Betalingsløsning</th>
-          <th class="th--acq">Indløsere</th>
-          <th class="th--cards">Betalingskort</th>
-          <th>Abonnement</th>
-          <th class="th--trns">Transaktionsgebyr</th>
-          <th>
-            <div class="equal right"><p class="equal--icon"></p></div>
-            Samlet pr. <br> måned
-          </th>
-          <th class="th--total">
-            <div class="equal left"><p class="equal--icon"></p></div>
-            Samlet pr. <br> transaktion
-          </th>
-        </tr>
-      </thead>
-      <tbody id="tbody">
-      </tbody>
-    </table>
-  </div>
-
-  <footer>
-    <p>
-      Kortgebyr er en nonprofit prissammenligning af betalingsløsninger. Projektet startede som et regneark, der blev delt blandt netbutikker, og i 2012 blev denne side til. Formålet er at gøre det nemmere at finde den billigste betalingsløsning. I 2017 startede vi vores egen betalingsgateway, <a title="Scanpay betalingsgateway" href="https://scanpay.dk">scanpay</a>, men vi lover at holde kortgebyr upartisk. Alle bidrag og tanker er meget velkomne på <a rel="nofollow" lang="en" href="https://github.com/ulrikmoe/kortgebyr">GitHub</a>.
-    </p>
-  </footer>
-
-</div></body>
+</body>
