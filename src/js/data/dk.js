@@ -181,7 +181,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
-        modules: new Set(['woocommerce', 'thirty bees', 'prestashop', 'dandomain']),
+        modules: new Set(['woocommerce', 'thirtybees', 'prestashop', 'dandomain', 'magento', 'shoporama']),
         fees: {
             monthly(o) {
                 if (opts.features.subscriptions) {
@@ -207,7 +207,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
-        modules: new Set(['woocommerce', 'thirty bees', 'prestashop', 'dandomain']),
+        modules: new Set(['woocommerce', 'thirtybees', 'prestashop', 'dandomain', 'magento', 'shoporama']),
         fees: {
             monthly(o) {
                 if (opts.features.subscriptions) {
