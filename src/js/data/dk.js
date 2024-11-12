@@ -280,6 +280,22 @@ const PSPs = [
         }
     },
     {
+        name: 'Flatpay',
+        title: 'Flatpay',
+        note: 'Reseller af Billwerk+',
+        logo: ['flatpay.svg', 104, 23],
+        link: 'https://www.flatpay.com/da/priser',
+        cards: new Set(['visa', 'mastercard', 'maestro']),
+        features: new Set(['subscriptions', 'mobilepay', 'applepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
+        fees: {
+            trn(o) {
+                o.trn['Indløsning (0.99%)'] = $revenue.scale(0.99 / 100);
+                return;
+            }
+        }
+    },
+    {
         name: 'Freepay',
         title: 'Freepay',
         logo: ['freepay.svg', 107.8, 22],
