@@ -1,0 +1,15 @@
+{
+    "tabWidth": 4,
+    "printWidth": 120,
+    "useTabs": false,
+    "singleQuote": true,
+    "overrides": [
+        {
+            "files": "*.html",
+            "options": {
+                "tabWidth": 2,
+                "maxLineLength": 120
+            }
+        }
+    ]
+}
