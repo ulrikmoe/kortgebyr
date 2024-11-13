@@ -4,9 +4,10 @@ const util = require('./util.js')();
 const { rmSync } = require('fs');
 
 // Store arguments in global `args`
+global.urls = [];
 global.args = util.argParser({
     dist: 'www',
-    git: Math.floor(Math.random() * 1000000),
+    gitHash: Math.floor(Math.random() * 1000000),
 });
 
 // Add last update date to the global args

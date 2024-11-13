@@ -17,22 +17,13 @@ const config = {
     "warnings": true
 }
 
-let currency_values;
-(async () => {
-    currency_values = "'EUR':1,"
-    const raw = await fetch('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
-    const txt = await raw.text();
-    const array = [...txt.matchAll(/currency='([A-Z]{3})' rate='([0-9.]+)'/g)];
-    array.forEach((m) => currency_values += `'${m[1]}':${parseFloat(m[2])},`);
-})();
-
 exports.src = ['src/js/data/dk.js', 'src/js/currency.js', 'src/js/tools.js', 'src/js/main.js'];
 exports.task = () => {
     return src(exports.src)
         .pipe(util.piper((file) => {
             let str = file.contents.toString();
             if (file.path.endsWith('currency.js')) {
-                str = str.replace("currency_values = {}", "currency_values = {" + currency_values + "}");
+                str = str.replace("currency_values = {}", "currency_values = {" + global.currency_values + "}");
             }
             file.contents = Buffer.from(braces.fromString(str, global.args), 'utf-8');
         }))

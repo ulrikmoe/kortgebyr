@@ -2,9 +2,9 @@
 set -e
 
 rm -rf www/*
-export PATH="$PATH:$(npm bin)"
+export PATH="$PATH:$(pnpm bin)"
 
-IP="ulrik.moe"
+IP="moe"
 FOLDER="/var/www/kortgebyr.dk/"
 
 # Timestamp of the last modified file in a folder.
@@ -41,9 +41,10 @@ find src -type f | while read f; do
 done
 
 CSS=$(gitstamp src/css)
-GIT=$(gitstamp src/js)
+JS=$(gitstamp src/js)
+HASH=$( [ "$CSS" \> "$JS" ] && echo "$CSS" || echo "$JS" )
 
-gulp build --publish --cssStamp "$CSS" --gitStamp "$GIT"
+gulp build --publish --gitHash "$HASH"
 
 # Minify JavaScript
 find -L www -iname '*.js' | while read f; do

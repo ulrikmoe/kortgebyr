@@ -6,6 +6,12 @@ const util = require('../util.js')();
 const { minify } = require('html-minifier');
 const braces = require('../lib/braces.js')();
 
+function getUrl(file) {
+    const relativePath = file.relative.replace(/\.html$/, '');
+    const url = relativePath === 'index' ? '' : relativePath;
+    return '/' + url;
+}
+
 exports.src = ['src/*.html'];
 exports.task = () => {
     return src(exports.src)
@@ -20,7 +26,9 @@ exports.task = () => {
                 ),
                 'utf-8'
             );
-            file.stat.mtime = false; // bump to current time
+            const url = getUrl(file);
+            if (url === '/') file.stat.mtime = new Date(); // bump mtime of frontpage
+            global.urls.push([getUrl(file), file.stat.mtime]);
         }))
         .pipe(dest('www'));
 }

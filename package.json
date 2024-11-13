@@ -1,18 +1,23 @@
 {
     "private": true,
     "dependencies": {
-        "eslint": "latest",
         "gulp": "latest",
-        "gulp-concat": "latest",
         "gulp-connect": "latest",
-        "gulp-sass": "latest",
-        "gulp-sourcemaps": "latest",
+        "gulp-concat": "latest",
         "html-minifier": "latest",
+        "terser": "latest",
         "minimist": "latest",
         "mo3place": "latest",
         "sass": "latest",
-        "terser": "latest",
-        "through2": "latest",
-        "vinyl-sourcemaps-apply": "latest"
-    }
+        "esbuild": "latest"
+    },
+    "devDependencies": {
+        "@eslint/js": "latest",
+        "@types/grecaptcha": "latest",
+        "eslint": "latest",
+        "globals": "latest",
+        "typescript": "latest",
+        "typescript-eslint": "rc-v8"
+    },
+    "packageManager": "pnpm@9.12.3"
 }
