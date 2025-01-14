@@ -55,7 +55,7 @@ const ACQs = {
     swedbank: {
         name: 'Swedbank',
         logo: ['swedbank.png', 75, 12],
-        link: 'https://www.swedbank.dk/erhverv/card-services/priser-og-vilkar/#!/CID_2263482',
+        link: 'https://www.swedbankpay.dk/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
             monthly() {
