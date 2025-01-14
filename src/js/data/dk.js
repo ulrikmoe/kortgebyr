@@ -118,24 +118,8 @@ const PSPs = [
         }
     },
     {
-        name: '2checkout',
-        title: '2MONETIZE',
-        logo: ['verifone.svg', 114.78, 22],
-        link: 'https://www.2checkout.com/pricing/',
-        cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
-        features: new Set(['subscriptions', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
-        fees: {
-            trn(o) {
-                o.trn['Indløsning (6%)'] = $revenue.scale(6 / 100);
-                o.trn['Transaktionsgebyr (€0,5)'] = new Currency(.5 * $qty, 'EUR');
-                return;
-            }
-        }
-    },
-    {
         name: 'Billwerk+',
-        title: 'Billwerk+ Payments',
+        title: 'Billwerk+ Pay',
         logo: ['billwerk.png', 130, 16],
         link: 'https://www.billwerk.plus/da/betalingsloesning-priser/',
         dankort: true,
@@ -159,7 +143,7 @@ const PSPs = [
         name: 'Braintree',
         title: 'Braintree',
         logo: ['braintree.svg', 120.5, 16],
-        link: 'https://www.braintreepayments.com/dk/braintree-pricing',
+        link: 'https://www.paypal.com/dk/enterprise/paypal-braintree-fees',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
@@ -300,7 +284,7 @@ const PSPs = [
         title: 'Flatpay',
         note: 'Reseller af Billwerk+',
         logo: ['flatpay.svg', 104, 23],
-        link: 'https://www.flatpay.com/da/priser',
+        link: 'https://www.flatpay.com/da/produkter/online-betalinger',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
@@ -321,15 +305,18 @@ const PSPs = [
         logo: ['freepay.svg', 107.8, 22],
         link: 'https://freepay.dk/da/betalingsgateway/priser',
         dankort: true,
-        acqs: new Set(['nets', 'clearhaus']),
+        acqs: new Set(['nets', 'clearhaus', 'nets']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
+            monthly(o) {
+                o.monthly['Freepay Nets-abonnement'] = new Currency(49, 'DKK');
+                return;
+            },
             trn(o) {
                 // The Freepay Nets fee apply to Dankort + Visa/Mastercard (through Nets)
-                const qty = (o.trn.Nets) ? $qty : $dankortscale * $qty;
-                o.trn['Freepay Nets gebyr (0,80 kr.)'] = new Currency(0.80 * qty, 'DKK');
-                o.monthly['Freepay Nets gebyr (49 kr/md.)'] = new Currency(49, 'DKK');
+                const netsTrns = (o.trn.Nets) ? $qty : $qtyDankort;
+                o.trn['Freepay Nets-gebyr (0,8 kr.)'] = new Currency(0.80 * netsTrns, 'DKK');
                 if (opts.features.mobilepay) {
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
                     o.monthly['MobilePay'] = new Currency(49, 'DKK');
@@ -358,7 +345,7 @@ const PSPs = [
         name: 'PayPal',
         title: 'PayPal',
         logo: ['paypal.svg', 123.6, 30],
-        link: 'https://www.paypal.com/dk/webapps/mpp/merchant-fees',
+        link: 'https://www.paypal.com/dk/business/paypal-business-fees',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart', 'shopify']),
@@ -376,30 +363,10 @@ const PSPs = [
         }
     },
     {
-        name: 'Payson',
-        title: 'Payson',
-        logo: ['payson.svg', 114.4, 26],
-        link: 'https://www.payson.se/en/company/price-list/',
-        cards: new Set(['visa', 'mastercard', 'maestro']),
-        features: new Set([]),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
-        fees: {
-            trn(o) {
-                const revenue = $revenue.order('SEK') * 12;
-                let fee = 2.85;
-                if (revenue > 1000000) fee = 2.55;
-                if (revenue > 3000000) fee = 1.95;
-                const str = 'Indløsning (' + fee.toString().replace('.', ',') + '%)';
-                o.trn[str] = $revenue.scale(fee / 100);
-                return;
-            }
-        }
-    },
-    {
         name: 'PensoPay',
         title: 'PensoPay Basis',
         logo: ['pensopay.svg', 121.85, 21],
-        link: 'https://pensopay.com/hvorfor-pensopay/priser/',
+        link: 'https://pensopay.com/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
@@ -423,7 +390,7 @@ const PSPs = [
         name: 'PensoPay',
         title: 'PensoPay Start-Up',
         logo: ['pensopay.svg', 121.85, 21],
-        link: 'https://pensopay.com/hvorfor-pensopay/priser/',
+        link: 'https://pensopay.com/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
@@ -448,7 +415,7 @@ const PSPs = [
         name: 'PensoPay',
         title: 'PensoPay Business',
         logo: ['pensopay.svg', 121.85, 21],
-        link: 'https://pensopay.com/hvorfor-pensopay/priser/',
+        link: 'https://pensopay.com/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
@@ -475,7 +442,7 @@ const PSPs = [
         name: 'PensoPay',
         title: 'PensoPay Pro',
         logo: ['pensopay.svg', 121.85, 21],
-        link: 'https://pensopay.com/hvorfor-pensopay/priser/',
+        link: 'https://pensopay.com/priser/',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
