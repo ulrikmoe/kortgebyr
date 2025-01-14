@@ -15,6 +15,7 @@ let $avgvalue;
 let $revenue;
 let $revenueIntl;
 let $qty;
+let $qtyDankort;
 let $qtyIntl;
 let $qtyMobilepay; // https://quickpay.net/quickpay-index/
 let $trnfeeDankort;
@@ -28,7 +29,8 @@ function settings(o) {
         document.getElementById('shopify-subscription').textContent = 'Shopify ' + opts.shopify;
     }
     $qty = o.qty || 0;
-    $qtyIntl = (1 - $dankortscale) * $qty;
+    $qtyDankort = Math.ceil($dankortscale * $qty);
+    $qtyIntl = $qty - $qtyDankort;
     $qtyMobilepay = (o.features.mobilepay) ? Math.ceil(0.6 * $qty) : 0;
     $avgvalue = new Currency(o.avgvalue, $currency);
     $revenue = $avgvalue.scale($qty);
@@ -108,9 +110,8 @@ function acqSort(qty) {
 function build() {
     // 1) Calculate acquirer costs and sort by total cost.
     const acqArr = acqSort($qty);
-    // TODO: round dankortscale
-    const acqArrDK = acqSort($qty * (1 - $dankortscale));
-    const dankortFees = DankortFees.trn().scale($qty * $dankortscale);
+    const acqArrDK = acqSort($qtyIntl);
+    const dankortFees = DankortFees.trn().scale($qtyDankort);
 
     // 2) Create array of PSPs with full support
     const pspArr = PSPs.filter((psp) => {
