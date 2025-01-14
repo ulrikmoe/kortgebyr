@@ -193,6 +193,8 @@ const PSPs = [
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
                     o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
+                const netsTrns = (o.trn.Nets) ? $qty : $qtyDankort;
+                o.trn['OnPay Nets-gebyr (0,5 kr.)'] = new Currency(0.50 * netsTrns, 'DKK');
                 return;
             }
         }
@@ -222,6 +224,8 @@ const PSPs = [
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
                     o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
+                const netsTrns = (o.trn.Nets) ? $qty : $qtyDankort;
+                o.trn['OnPay Nets-gebyr (0,5 kr.)'] = new Currency(0.50 * netsTrns, 'DKK');
                 return;
             }
         }
