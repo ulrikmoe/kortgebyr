@@ -20,9 +20,7 @@ const ACQs = {
                     o.trn['Clearhaus auth gebyr (0,22 DKK)'] = new Currency(.22 * $qty, 'DKK');
                     o.trn['Clearhaus 3D Secure gebyr (0,30 DKK)'] = new Currency(.30 * $qty, 'DKK');
                 */
-                let trnfee = $avgvalue.scale(1.25 / 100);
-                if (trnfee.order('DKK') < 0.6) trnfee = new Currency(0.60, 'DKK');
-                return trnfee
+                return $avgvalue.scale(1.25 / 100).min(0.60, 'DKK')
                     .add(new Currency(0.22, 'DKK'))     // Auth gebyr
                     .add(new Currency(0.30, 'DKK'));    // 3D Secure
             }
@@ -34,10 +32,23 @@ const ACQs = {
         link: 'https://my.nets.eu/landingpage?landingPageId=DK&language=da',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         fees: {
+            monthly: new Currency(129, 'DKK'),
             trn() {
-                // EØS: 0.99% + 0,25% (if credit card, ie. 23% of cards)
-                const trnfee = $avgvalue.scale(1.05 / 100);
-                return (trnfee.order('DKK') > 0.29) ? trnfee : new Currency(0.29, 'DKK');
+                /*
+                 * Visa/MC: 0,99 % (min. 0,29 kr.)
+                 * Card not present: + 0,30 %
+                 * Credit cards: + 0,25 %
+                 * ~23% of cards are credit cards
+                 * 1,29% + (0,25% * 23%) = 1,35%
+                 * ---
+                 * 3D secure: 0,35 kr.
+                 * Recurring: 0,05%
+                 * Visa præ-auth: 0,02%
+                 * Mastercard præ-autorisering: 0,08%
+                 * Mastercard tokenization: 0,05%
+                 */
+                return $avgvalue.scale(1.35 / 100).min(0.29, 'DKK')
+                    .add(new Currency(0.35, 'DKK'));
             }
         }
     },
@@ -48,24 +59,25 @@ const ACQs = {
         cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
             monthly() {
-                // Minimum fee of 50 DKK / month.
-                const TC = $revenueIntl.scale(1.1 / 100).order('DKK');
-                const minFee = (TC < 50) ? 50 - TC : 0;
+                // There is a minimum fee of 350 DKK / month.
+                const TC = $revenueIntl.scale(1.25 / 100).order('DKK');
+                const minFee = (TC < 350) ? 350 - TC : 0;
                 return new Currency(minFee, 'DKK');
             },
             trn() {
-                // Debet 1%, Credit: 1.1%, Company cards (1.75%), EU:
-                return $avgvalue.scale(1.2 / 100);
+                // 2025-01-14: Swedbank claims there are no auth or 3DS fees.
+                return $avgvalue.scale(1.25 / 100);
             }
         }
     },
     worldline: {
         name: 'Worldline',
         logo: ['worldline.svg', 81.8, 11],
-        link: 'http://www.bambora.com/',
+        link: 'https://worldline.com/da-dk/home',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         fees: {
             trn() {
+                // 2025-01-14: Worldline claims there are no auth or 3DS fees.
                 return $avgvalue.scale(1.25 / 100);
             }
         }
