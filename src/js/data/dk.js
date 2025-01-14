@@ -516,6 +516,10 @@ const PSPs = [
                 }
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 o.trn['Ekstra transaktionsgebyr (Dankort)'] = new Currency(0.25 * $dankortscale * $qty, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency(1 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
+                }
                 return;
             }
         }
