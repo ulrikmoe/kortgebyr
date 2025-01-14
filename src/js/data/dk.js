@@ -303,6 +303,10 @@ const PSPs = [
         fees: {
             trn(o) {
                 o.trn['Indløsning (0.99%)'] = $revenue.scale(0.99 / 100);
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 0,99 kr.)'] = new Currency(0.99 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
+                }
                 return;
             }
         }
