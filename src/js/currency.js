@@ -58,3 +58,8 @@ Currency.prototype.scale = function (rhs) {
     }
     return n;
 };
+
+Currency.prototype.min = function (value, currency) {
+    console.log(value, currency);
+    return this.order(currency) > value ? this : new Currency(value, currency);
+};
