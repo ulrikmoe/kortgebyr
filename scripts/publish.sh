@@ -44,7 +44,7 @@ CSS=$(gitstamp src/css)
 JS=$(gitstamp src/js)
 HASH=$( [ "$CSS" \> "$JS" ] && echo "$CSS" || echo "$JS" )
 
-gulp build --publish --gitHash "$HASH"
+gulp build --publish --gitHash="$HASH"
 
 # Minify JavaScript
 find -L www -iname '*.js' | while read f; do
