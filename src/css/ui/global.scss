@@ -1,0 +1,73 @@
+@font-face {
+    font-family: N;
+    font-weight: 400;
+    src: url('/font/N400.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: N;
+    font-weight: 400;
+    font-style: italic;
+    src: url('/font/N400i.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: N;
+    font-weight: 600;
+    src: url('/font/N600.woff2') format('woff2');
+    font-display: swap;
+}
+
+body {
+    margin: 0;
+    font-family: 'N', Noto Sans, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background: #fff;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+a {
+    color: #2b579f; //#36b;
+
+    &:hover {
+        color: #0a58ca;
+    }
+}
+
+b {
+    font-weight: 600;
+}
+
+img,
+svg {
+    vertical-align: middle;
+}
+
+footer {
+    text-align: center;
+    color: #444;
+    font-size: 0.92em;
+    margin-top: 0.3rem;
+    margin-bottom: 2rem;
+}
+
+.c {
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 100%;
+    max-width: 72rem;
+    min-width: 20rem;
+    box-sizing: border-box;
+}
+
+.hide {
+    display: none;
+}

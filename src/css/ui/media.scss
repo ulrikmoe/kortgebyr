@@ -1,0 +1,28 @@
+@media (max-width: 800px) {
+    .c {
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+    }
+
+    .mobile--hide {
+        display: none;
+    }
+
+    header {
+        margin-top: 0.4rem;
+    }
+
+    .infobox {
+        margin: 0.6em 0;
+    }
+
+    .settings {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        grid-gap: 0;
+        padding-bottom: 0.6rem;
+    }
+    .form-check--subs {
+        margin-bottom: 0;
+    }
+}

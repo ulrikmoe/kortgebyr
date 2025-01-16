@@ -1,0 +1,193 @@
+.responsive {
+    overflow-x: auto;
+}
+
+table {
+    background: none;
+    border-collapse: separate;
+    box-sizing: border-box;
+    border-spacing: 0;
+    border: 1px solid #d9d9d9;
+    border-left: 0;
+    empty-cells: show;
+    min-width: 60em;
+    width: 100%;
+}
+
+thead,
+tbody,
+tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+}
+
+th {
+    font-weight: 600;
+    font-size: 0.8em;
+    line-height: 1.2em;
+    padding: 4px 15px 4px;
+    box-sizing: border-box;
+    background: #f3f3f3;
+    color: #222;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    text-align: center;
+    position: relative;
+    border: 0;
+    border-left: 1px solid #dcdcdc;
+}
+
+td {
+    font-size: 0.95em;
+    background: #fff;
+    height: 71px;
+    padding: 0;
+    vertical-align: middle;
+    line-height: normal;
+    text-align: center;
+    border: 0;
+    border-left: 1px solid #dadada;
+    border-top: 1px solid #dadada;
+}
+
+.th--psp {
+    width: 11rem;
+    padding-left: 1rem;
+    text-align: left;
+}
+
+.th--acq {
+    width: 120px;
+}
+
+.th--cards {
+    width: 140px;
+    box-sizing: border-box;
+}
+
+.th--trns {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.th--total {
+    border-left: 0;
+}
+
+.td--acq {
+    position: relative;
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.td--acq-list {
+    position: relative;
+    list-style: none;
+    padding: 0;
+    font-size: 0.85rem;
+    line-height: 1.75;
+}
+
+.td--cards {
+    padding: 6px 10px 0;
+}
+
+.cardtd {
+    padding: 6px 10px 0;
+}
+
+.td--psp {
+    font-size: 0.82rem;
+    padding: 3px 0 0 16px;
+    text-align: left;
+
+    > a {
+        text-decoration: none;
+    }
+}
+
+.td--psp--img {
+    margin: 3px 0 3px;
+}
+
+.td--psp--note {
+    text-align: left;
+    font-size: 13px;
+    margin: 0;
+    font-style: italic;
+    color: #8c3a3a;
+}
+
+.acquirer-included {
+    font-style: italic;
+    color: #585858;
+}
+
+.card {
+    width: 22px;
+    height: 15px;
+    margin: 4px 4px;
+}
+
+.equal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 9;
+
+    &.right {
+        right: 0;
+    }
+    &.left {
+        left: 0;
+        border-left: 1px solid #dcdcdc;
+    }
+}
+
+.equal--icon {
+    position: relative;
+    margin-top: 18px;
+    background: #f5f5f5;
+    width: 6px;
+    height: 3px;
+    border-top: 2px solid #9f9f9f;
+    border-bottom: 2px solid #9f9f9f;
+
+    .left > & {
+        margin-left: -1px;
+        width: 7px;
+    }
+}
+
+.td--total--pct {
+    color: #555;
+    font-size: 0.9em;
+    margin: 2px 0 0;
+    font-style: italic;
+}
+
+.th--terms {
+    width: 8em;
+}
+
+.term-long {
+    color: #520202;
+}
+
+.term-warn {
+    color: #2b579f;
+    text-decoration: underline;
+    font-size: 0.85em;
+    cursor: pointer;
+
+    &:hover {
+        color: #003688;
+    }
+}
