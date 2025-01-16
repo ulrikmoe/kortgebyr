@@ -234,6 +234,23 @@ function build() {
             cardCell.appendChild(addCard(card));
         }
 
+        // Binding period (term)
+        const termCell = tr.insertCell(-1);
+        switch (psp.term) {
+            case undefined:
+                termCell.innerHTML = '<i>Ukendt</i>';
+                break;
+            case 0:
+                termCell.innerHTML = 'Nej';
+                break;
+            case 1:
+                termCell.innerHTML = '1 md.';
+                break;
+            default:
+                termCell.innerHTML = (psp.term > 12) ? `<span class="term-warn">${psp.term} mdr.</span>` : `${psp.term} mdr.`;
+                break;
+        }
+
         // Monthly fees
         tr.insertCell(-1).appendChild(sumTxt(psp.calc.monthly));
 

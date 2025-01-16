@@ -121,6 +121,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set([]),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'shopify']),
+        term: 0,
         fees: {
             trn(o) {
                 o.trn['Indløsning (3,5%)'] = $revenue.scale(3.5 / 100);
@@ -137,6 +138,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
+        term: 0,
         fees: {
             trn(o) {
                 o.trn['Indløsning (4,5%)'] = $revenue.scale(4.5 / 100);
@@ -154,6 +156,7 @@ const PSPs = [
         acqs: new Set(['clearhaus', 'swedbank']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
+        term: 3,
         fees: {
             monthly: new Currency(139, 'DKK'),
             trn(o) {
@@ -175,6 +178,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
+        term: 0,
         fees: {
             trn(o) {
                 o.trn['Indløsning (1,9%)'] = $revenue.scale(1.9 / 100);
@@ -192,6 +196,7 @@ const PSPs = [
         acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
         modules: new Set(['woocommerce', 'thirtybees', 'prestashop', 'dandomain', 'magento', 'shoporama']),
+        term: 6,
         fees: {
             monthly(o) {
                 if (opts.features.subscriptions) {
@@ -220,6 +225,7 @@ const PSPs = [
         acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
         modules: new Set(['woocommerce', 'thirtybees', 'prestashop', 'dandomain', 'magento', 'shoporama']),
+        term: 6,
         fees: {
             monthly(o) {
                 if (opts.features.subscriptions) {
@@ -250,6 +256,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        term: 3,
         fees: {
             monthly: new Currency(99, 'DKK'),
             trn(o) {
@@ -272,6 +279,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        term: 3,
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn(o) {
@@ -295,6 +303,7 @@ const PSPs = [
         acqs: new Set(['worldline']),
         features: new Set(['subscriptions', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        term: 3,
         fees: {
             monthly: new Currency(249, 'DKK'),
             trn(o) {
@@ -316,6 +325,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
+        term: 36,
         fees: {
             trn(o) {
                 o.trn['Indløsning (0.99%)'] = $revenue.scale(0.99 / 100);
@@ -336,6 +346,7 @@ const PSPs = [
         acqs: new Set(['nets', 'clearhaus', 'nets', 'shift4', 'trust']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
+        term: 0,
         fees: {
             monthly(o) {
                 o.monthly['Freepay Nets-abonnement'] = new Currency(49, 'DKK');
@@ -364,6 +375,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'shopify']),
+        term: 0,
         fees: {
             trn(o) {
                 o.trn['Indløsning (1,8%)'] = $revenue.scale(1.8 / 100);
@@ -380,6 +392,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart', 'shopify']),
+        term: 0,
         fees: {
             trn(o) {
                 // Subscriptions (https://www.paypal.com/merchantapps/appcenter/acceptpayments/subscriptions)
@@ -402,6 +415,7 @@ const PSPs = [
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
+        term: 1,
         fees: {
             trn(o) {
                 o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
@@ -426,6 +440,7 @@ const PSPs = [
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
+        term: 1,
         fees: {
             monthly: new Currency(49, 'DKK'),
             trn(o) {
@@ -451,6 +466,7 @@ const PSPs = [
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
+        term: 1,
         fees: {
             monthly: new Currency(99, 'DKK'),
             trn(o) {
@@ -478,6 +494,7 @@ const PSPs = [
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
+        term: 1,
         fees: {
             monthly: new Currency(149, 'DKK'),
             trn(o) {
@@ -506,6 +523,7 @@ const PSPs = [
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain',
             'shoporama', 'ideal.shop']),
+        term: 1,
         fees: {
             monthly(o) {
                 o.monthly['Abonnement'] = new Currency(99, 'DKK');
@@ -539,6 +557,7 @@ const PSPs = [
         acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart']),
+        term: 0,
         fees: {
             trn(o) {
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
@@ -599,6 +618,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'jcb', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['shopify']),
+        term: 0,
         fees: {
             trn(o) {
                 const fee = (opts.shopify === 'Basic') ? 1.9 : (opts.shopify === 'Shopify') ? 1.8 : 1.6;
@@ -616,6 +636,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees']),
+        term: 0,
         fees: {
             trn(o) {
                 o.trn[`Indløsning (1,5%)`] = $revenue.scale(1.5 / 100);
@@ -632,6 +653,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
         modules: new Set(['woocommerce', 'prestashop']),
+        term: 0,
         fees: {
             trn(o) {
                 o.trn['Indløsning (2,19%)'] = $revenue.scale(2.19 / 100);
@@ -653,6 +675,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
+        term: 1,
         fees: {
             monthly: new Currency(195, 'DKK'),
             trn(o) {
