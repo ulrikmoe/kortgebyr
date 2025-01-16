@@ -35,7 +35,6 @@ body {
 
 a {
     color: #2b579f; //#36b;
-    text-decoration: none;
 
     &:hover {
         color: #0a58ca;
@@ -400,6 +399,10 @@ td {
 
 .td--acq {
     position: relative;
+
+    a {
+        text-decoration: none;
+    }
 }
 
 .td--acq-list {
@@ -407,17 +410,8 @@ td {
     list-style: none;
     padding: 0;
     font-size: 0.85rem;
-    line-height: 1.65;
+    line-height: 1.75;
 }
-
-/*
-.td--acq-info {
-    position: absolute;
-    top: 50%;
-    margin-top: -9px;
-    right: 1em;
-}
-*/
 
 .td--cards {
     padding: 6px 10px 0;
@@ -431,6 +425,10 @@ td {
     font-size: 0.82rem;
     padding: 3px 0 0 16px;
     text-align: left;
+
+    > a {
+        text-decoration: none;
+    }
 }
 
 .td--psp--img {
