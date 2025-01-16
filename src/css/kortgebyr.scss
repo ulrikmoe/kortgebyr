@@ -552,8 +552,48 @@ td {
     width: 8em;
 }
 
+.term-long {
+    color: #520202;
+}
+
 .term-warn {
-    color: #670000;
+    color: #2b579f;
+    text-decoration: underline;
+    font-size: 0.85em;
+    cursor: pointer;
+
+    &:hover {
+        color: #003688;
+    }
+}
+
+.term-box {
+    display: block;
+    list-style: none;
+    position: absolute;
+    margin: 0;
+    width: auto;
+    max-width: 24em;
+    transform: translate(-50%, 0);
+    padding: 0.9em 1em 0.8em;
+    box-sizing: border-box;
+    border-radius: 3px;
+    font-size: 0.9em;
+    line-height: 1.55;
+    background: rgba(51, 51, 51, 0.98);
+    color: #fff;
+    z-index: 10;
+
+    &:after {
+        content: '';
+        position: absolute;
+        right: 50%;
+        margin-right: -7px;
+        bottom: -14px;
+        width: 0;
+        border: 7px solid transparent;
+        border-top-color: rgba(51, 51, 51, 0.95);
+    }
 }
 
 @media (max-width: 800px) {

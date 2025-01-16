@@ -326,6 +326,7 @@ const PSPs = [
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         term: 36,
+        term_warning: 'Hvis din årlige kortomsætning er under 500.000 kr, eller hvis du opsiger din aftale, pålægges et månedligt gebyr på 399 kr. for resten af bindingsperioden. Det kan samlet beløbe sig til 14.364 kr, hvis du opsiger med 36 måneder tilbage.',
         fees: {
             trn(o) {
                 o.trn['Indløsning (0.99%)'] = $revenue.scale(0.99 / 100);

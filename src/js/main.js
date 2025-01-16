@@ -106,6 +106,26 @@ function acqSort(qty) {
     return arr;
 }
 
+let activeTermWarning = null;
+function showTermWarning(e) {
+    if (activeTermWarning) activeTermWarning.remove();
+    e.stopPropagation();
+    const infobox = document.createElement('div');
+    infobox.className = 'term-box';
+    infobox.style.left = e.clientX + 'px';
+    infobox.style.bottom = (15 + window.innerHeight - window.scrollY - e.clientY) + 'px';
+    infobox.innerHTML = '<b>Bemærk:</b> ' + this.dataset.warn;
+    activeTermWarning = infobox;
+    document.body.appendChild(infobox);
+
+    document.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        infobox.remove();
+        activeTermWarning = null;
+    }, { once: true });
+}
+
 
 function build() {
     // 1) Calculate acquirer costs and sort by total cost.
@@ -247,8 +267,16 @@ function build() {
                 termCell.innerHTML = '1 md.';
                 break;
             default:
-                termCell.innerHTML = (psp.term > 12) ? `<span class="term-warn">${psp.term} mdr.</span>` : `${psp.term} mdr.`;
+                termCell.innerHTML = (psp.term > 12) ? `<span class="term-long">${psp.term} mdr.</span>` : `${psp.term} mdr.`;
                 break;
+        }
+        if (psp.term_warning) {
+            const div = document.createElement('div');
+            div.className = 'term-warn';
+            div.dataset.warn = psp.term_warning;
+            div.textContent = 'Bemærk';
+            div.addEventListener('click', showTermWarning);
+            termCell.appendChild(div);
         }
 
         // Monthly fees
