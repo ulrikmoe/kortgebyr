@@ -10,7 +10,7 @@ function form2obj(form) {
             if (!obj[name]) { obj[name] = {}; }
             if (e.checked) { obj[name][e.value] = 1; }
         } else {
-            obj[e.name] = (e.type === 'number') ? e.value | 0 : e.value;
+            obj[e.name] = (e.type === 'number' || e.type === 'range') ? e.value | 0 : e.value;
         }
     }
     return obj;

@@ -5,12 +5,14 @@ let opts = {
     module: '',
     currency: 'DKK',
     qty: 200,
+    dankort: 60,
+    mobilepay: 70,
     avgvalue: 715,
     cards: {},
     features: {},
     shopify: 'Basic'
 };
-const $dankortscale = 0.60;
+let $dankortscale;
 let $avgvalue;
 let $revenue;
 let $revenueIntl;
@@ -21,6 +23,13 @@ let $qtyMobilepay; // https://quickpay.net/quickpay-index/
 let $trnfeeDankort;
 
 function settings(o) {
+    $qty = o.qty || 0;
+    $dankortscale = o.dankort / 100;
+    document.getElementById('dankortScaleValue').textContent = o.dankort + '%';
+    document.getElementById('mobilepayScaleValue').textContent = o.mobilepay + '%';
+    o.features.mobilepay = !!o.mobilepay;
+    $qtyMobilepay = (o.mobilepay) ? Math.ceil(o.mobilepay / 100 * $qty) : 0;
+
     document.getElementById('shopify-field').classList.toggle('hide', o.module !== 'shopify');
     document.getElementById('shopify-infobox').classList.toggle('hide', o.module !== 'shopify');
     if (o.module === 'shopify') {
@@ -28,10 +37,10 @@ function settings(o) {
         document.getElementById('shopify-tier').textContent = tier.toString().replace('.', ',') + '%';
         document.getElementById('shopify-subscription').textContent = 'Shopify ' + opts.shopify;
     }
-    $qty = o.qty || 0;
+
     $qtyDankort = Math.ceil($dankortscale * $qty);
     $qtyIntl = $qty - $qtyDankort;
-    $qtyMobilepay = (o.features.mobilepay) ? Math.ceil(0.6 * $qty) : 0;
+
     $avgvalue = new Currency(o.avgvalue, $currency);
     $revenue = $avgvalue.scale($qty);
     $revenueIntl = $revenue.scale(1 - $dankortscale);
