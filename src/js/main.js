@@ -270,17 +270,27 @@ function build() {
                 termCell.innerHTML = (psp.term > 12) ? `<span class="term-long">${psp.term} mdr.</span>` : `${psp.term} mdr.`;
                 break;
         }
-        if (psp.term_warning) {
+        if (psp.notice?.term) {
             const div = document.createElement('div');
             div.className = 'term-warn';
-            div.dataset.warn = psp.term_warning;
+            div.dataset.warn = psp.notice.term;
             div.textContent = 'Bemærk';
             div.addEventListener('click', showTermWarning);
             termCell.appendChild(div);
         }
 
         // Monthly fees
-        tr.insertCell(-1).appendChild(sumTxt(psp.calc.monthly));
+        const monthlyCell = tr.insertCell(-1);
+        monthlyCell.appendChild(sumTxt(psp.calc.monthly));
+        if (psp.notice?.monthly) {
+            const div = document.createElement('div');
+            div.className = 'term-warn';
+            div.dataset.warn = psp.notice.monthly;
+            div.textContent = 'Bemærk';
+            div.addEventListener('click', showTermWarning);
+            monthlyCell.appendChild(div);
+        }
+
 
         // Transaction fees
         tr.insertCell(-1).appendChild(sumTxt(psp.calc.trn));

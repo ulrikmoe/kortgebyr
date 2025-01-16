@@ -326,8 +326,17 @@ const PSPs = [
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         term: 36,
-        term_warning: 'Hvis din årlige kortomsætning er under 500.000 kr, eller hvis du opsiger din aftale, pålægges et månedligt gebyr på 399 kr. for resten af bindingsperioden. Det kan samlet beløbe sig til 14.364 kr, hvis du opsiger med 36 måneder tilbage.',
+        notice: {
+            term: 'Ved opsigelse af din aftale skal du betale et månedligt gebyr på 399 kr. for resten af bindingsperioden. Hvis der eksempelvis er 36 måneder tilbage, vil det samlede beløb udgøre 14.364 kr.',
+            monthly: 'Hvis din årlige kortomsætning er under 500.000 kr, skal du betale et fast månedligt gebyr på 399 kr.'
+        },
         fees: {
+            monthly(o) {
+                if ($revenue.order('DKK') < (500000 / 12)) {
+                    return new Currency(399, 'DKK');
+                }
+                return;
+            },
             trn(o) {
                 o.trn['Indløsning (0.99%)'] = $revenue.scale(0.99 / 100);
                 if (opts.features.mobilepay) {
