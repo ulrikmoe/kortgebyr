@@ -52,6 +52,20 @@ const ACQs = {
             }
         }
     },
+    /*
+    This needs to be verified.
+    shift4: {
+        name: 'Shift4',
+        logo: ['shift4.svg', 76.66, 13],
+        link: 'https://www.shift4.com/',
+        cards: new Set(['visa', 'mastercard', 'maestro']),
+        fees: {
+            trn() {
+                return $avgvalue.scale(0.99 / 100).min(0.60, 'DKK');
+            }
+        }
+    },
+    */
     swedbank: {
         name: 'Swedbank',
         logo: ['swedbank.png', 75, 12],
@@ -70,6 +84,20 @@ const ACQs = {
             }
         }
     },
+    /*
+    This needs to be verified.
+    trust: {
+        name: 'Trust',
+        logo: ['trust.svg', 76.66, 13],
+        link: 'https://www.trustpayments.com/products/acquiring/',
+        cards: new Set(['visa', 'mastercard', 'maestro']),
+        fees: {
+            trn() {
+                return $avgvalue.scale(0.99 / 100).min(0.60, 'DKK');
+            }
+        }
+    },
+    */
     worldline: {
         name: 'Worldline',
         logo: ['worldline.svg', 81.8, 11],
@@ -305,7 +333,7 @@ const PSPs = [
         logo: ['freepay.svg', 107.8, 22],
         link: 'https://freepay.dk/da/betalingsgateway/priser',
         dankort: true,
-        acqs: new Set(['nets', 'clearhaus', 'nets']),
+        acqs: new Set(['nets', 'clearhaus', 'nets', 'shift4', 'trust']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
         fees: {
@@ -320,6 +348,9 @@ const PSPs = [
                 if (opts.features.mobilepay) {
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
                     o.monthly['MobilePay'] = new Currency(49, 'DKK');
+                }
+                if (o.trn['Shift4'] || o.trn['Trust']) {
+                    o.trn['3D Secure gebyr (0,8 kr.)'] = new Currency(0.8 * $qtyIntl, 'DKK');
                 }
                 return;
             }
