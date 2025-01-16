@@ -644,13 +644,17 @@ const PSPs = [
         logo: ['stripe.svg', 72.1, 30],
         link: 'https://stripe.com/en-dk/pricing',
         cards: new Set(['visa', 'mastercard', 'amex']),
-        features: new Set(['subscriptions', 'applepay']),
+        features: new Set(['subscriptions', 'applepay', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees']),
         term: 0,
         fees: {
             trn(o) {
                 o.trn[`Indløsning (1,5%)`] = $revenue.scale(1.5 / 100);
                 o.trn[`Transaktionsgebyr (1,8 kr.)`] = new Currency(1.8 * $qty, 'DKK');
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(35, 'DKK');
+                }
                 return;
             }
         }
@@ -693,6 +697,7 @@ const PSPs = [
                 o.trn['Indløsning (1,45%)'] = $revenueIntl.scale(1.45 / 100);
                 if (opts.features.mobilepay) {
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency($qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
             }
         }
