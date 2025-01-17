@@ -295,7 +295,6 @@ function build() {
             monthlyCell.appendChild(div);
         }
 
-
         // Transaction fees
         tr.insertCell(-1).appendChild(sumTxt(psp.calc.trn));
 
@@ -322,6 +321,23 @@ function addCard(name) {
     img.src = '/img/betalingskort/' + name + '.svg';
     return img;
 }
+
+function showSettingsTooltip(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const infobox = e.target.nextElementSibling;
+    infobox.classList.toggle('hide');
+    infobox.style.left = e.clientX + 'px';
+    infobox.style.bottom = (15 + window.innerHeight - window.scrollY - e.clientY) + 'px';
+
+    document.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        infobox.classList.toggle('hide');
+    }, { once: true });
+}
+
 
 function showTooltip(e) {
     const infobox = document.createElement('ul');
@@ -355,12 +371,16 @@ function formEvent(evt) {
     form.addEventListener('input', formEvent);
 
     document.body.addEventListener('click', (e) => {
+        // Improve (expensive)
         const elems = document.querySelectorAll('.info--ul');
         for (const elem of elems) {
             elem.remove();
         }
+
         if (e.target.className === 'info') {
             showTooltip(e);
+        } else if (e.target.className === 'tooltip-icon') {
+            showSettingsTooltip(e);
         }
     });
 

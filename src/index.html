@@ -61,7 +61,18 @@
               </div>
 
               <div class="field">
-                <label class="label" for="module">Shopsystem</label>
+                <div class="flex-label">
+                  <label class="label" for="module">Webshop</label>
+                  <button
+                    class="tooltip-icon"
+                    aria-label="Information om valg af webshop-system"
+                    aria-describedby="shopsystem-tooltip"
+                  ></button>
+                  <div class="tooltip-content hide" id="shopsystem-tooltip" role="tooltip">
+                    Vælg hvilket shopsystem din webshop bruger.
+                  </div>
+                </div>
+
                 <select name="module" id="module" class="form-select">
                   <option value="">Vælg shopsystem</option>
                   <option value="woocommerce">WooCommerce</option>
@@ -110,7 +121,20 @@
                 </div>
 
                 <div class="field">
-                  <label for="dankortScale" class="label">Visa/Dankort</label>
+                  <div class="flex-label">
+                    <label class="label" for="dankortScale">Dankort</label>
+                    <button
+                      class="tooltip-icon"
+                      aria-label="Information om andel af Dankort ift. andre betalingskort"
+                      aria-describedby="dankort-tooltip"
+                    ></button>
+                    <div class="tooltip-content hide" id="dankort-tooltip" role="tooltip">
+                      Andelen af Dankort, Visa/Dankort og Mastercard/Dankort i forhold til andre betalingskort. For en
+                      typisk dansk webshop vil det være omkring 60%, men ved meget salg til udlandet kan det være
+                      lavere.
+                    </div>
+                  </div>
+
                   <div class="range">
                     <input
                       type="range"
@@ -125,8 +149,22 @@
                     <div class="range-value" id="dankortScaleValue">60%</div>
                   </div>
                 </div>
+
                 <div class="field">
-                  <label for="mobilepayScale" class="label">MobilePay</label>
+                  <div class="flex-label">
+                    <label class="label" for="mobilepayScale">MobilePay</label>
+                    <button
+                      class="tooltip-icon"
+                      aria-label="Information om andel af MobilePay"
+                      aria-describedby="mobilepay-tooltip"
+                    ></button>
+                    <div class="tooltip-content hide" id="mobilepay-tooltip" role="tooltip">
+                      Andelen af MobilePay-betalinger udgør typisk 60-80% i danske webshops, men kan variere afhængigt
+                      af marked. Bemærk, at MobilePay Online anvender betalingskort og derfor ikke er en selvstændig
+                      betalingsmetode.
+                    </div>
+                  </div>
+
                   <div class="range">
                     <input
                       type="range"
