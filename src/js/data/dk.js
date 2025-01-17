@@ -7,7 +7,7 @@ const DankortFees = {
 };
 
 // Only PrestaShop 1.7 support. PrestaShop and OpenCart are paid modules ($73.65)
-const billwerkModules = new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'dandomain', 'shopify']);
+const billwerkModules = new Set(['woocommerce', 'magento', 'prestashop-1', 'opencart', 'dandomain', 'shopify']);
 
 const ACQs = {
     clearhaus: {
@@ -123,7 +123,7 @@ const PSPs = [
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set([]),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'shopify']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'shopify']),
         term: 0,
         fees: {
             trn(o) {
@@ -140,7 +140,7 @@ const PSPs = [
         link: 'https://www.2checkout.com/pricing/',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'opencart', 'shopify']),
         term: 0,
         fees: {
             trn(o) {
@@ -183,7 +183,7 @@ const PSPs = [
         link: 'https://www.paypal.com/dk/enterprise/paypal-braintree-fees',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'shopify']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'opencart', 'shopify']),
         term: 0,
         fees: {
             trn(o) {
@@ -201,7 +201,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
-        modules: new Set(['woocommerce', 'thirtybees', 'prestashop', 'dandomain', 'magento', 'shoporama']),
+        modules: new Set(['woocommerce', 'thirtybees', 'prestashop-1', 'dandomain', 'magento', 'shoporama']),
         term: 6,
         fees: {
             monthly(o) {
@@ -230,7 +230,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'worldline', 'swedbank']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
-        modules: new Set(['woocommerce', 'thirtybees', 'prestashop', 'dandomain', 'magento', 'shoporama']),
+        modules: new Set(['woocommerce', 'thirtybees', 'prestashop-1', 'dandomain', 'magento', 'shoporama']),
         term: 6,
         fees: {
             monthly(o) {
@@ -261,7 +261,7 @@ const PSPs = [
         link: 'https://epay.dk/priser',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'prestashop-1']),
         term: 3,
         fees: {
             monthly: new Currency(99, 'DKK'),
@@ -284,7 +284,7 @@ const PSPs = [
         dankort: true,
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'prestashop-1']),
         term: 3,
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -308,7 +308,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['worldline']),
         features: new Set(['subscriptions', 'mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'prestashop-1']),
         term: 3,
         fees: {
             monthly: new Currency(249, 'DKK'),
@@ -364,7 +364,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['nets', 'clearhaus', 'nets', 'shift4', 'trust']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'opencart']),
         term: 0,
         fees: {
             monthly(o) {
@@ -393,7 +393,7 @@ const PSPs = [
         link: 'https://www.mollie.com/pricing',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex']),
         features: new Set(['subscriptions', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'shopify']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'shopify']),
         term: 0,
         fees: {
             trn(o) {
@@ -410,7 +410,7 @@ const PSPs = [
         link: 'https://www.paypal.com/dk/business/paypal-business-fees',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart', 'shopify']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'thirtybees', 'opencart', 'shopify']),
         term: 0,
         fees: {
             trn(o) {
@@ -433,7 +433,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
         term: 1,
         fees: {
             trn(o) {
@@ -458,7 +458,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
         term: 1,
         fees: {
             monthly: new Currency(49, 'DKK'),
@@ -484,7 +484,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
         term: 1,
         fees: {
             monthly: new Currency(99, 'DKK'),
@@ -512,7 +512,7 @@ const PSPs = [
         cards: new Set(['visa', 'mastercard', 'maestro']),
         dankort: true,
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'thirtybees', 'shopify', 'dandomain', 'ideal.shop']),
         term: 1,
         fees: {
             monthly: new Currency(149, 'DKK'),
@@ -540,7 +540,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain',
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'prestashop-1', 'thirtybees', 'shopify', 'dandomain',
             'shoporama', 'ideal.shop']),
         term: 1,
         fees: {
@@ -578,7 +578,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['nets', 'clearhaus']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'opencart']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'prestashop-1', 'thirtybees', 'opencart']),
         term: 0,
         fees: {
             trn(o) {
@@ -657,7 +657,7 @@ const PSPs = [
         link: 'https://stripe.com/en-dk/pricing',
         cards: new Set(['visa', 'mastercard', 'amex']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'prestashop-1', 'thirtybees', 'shopify']),
         term: 0,
         fees: {
             trn(o) {
@@ -678,7 +678,7 @@ const PSPs = [
         link: 'https://www.viva.com/da-dk/pricing',
         cards: new Set(['visa', 'mastercard', 'maestro', 'amex', 'jcb', 'diners']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
-        modules: new Set(['woocommerce', 'prestashop']),
+        modules: new Set(['woocommerce', 'prestashop-1']),
         term: 0,
         fees: {
             trn(o) {
@@ -700,7 +700,7 @@ const PSPs = [
         dankort: true,
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'opencart']),
         term: 1,
         fees: {
             monthly: new Currency(195, 'DKK'),
