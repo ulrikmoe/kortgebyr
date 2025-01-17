@@ -86,57 +86,59 @@
               </div>
             </div>
 
-            <div class="settings-mid">
-              <div class="field">
-                <label class="label" for="avgvalue">Typisk ordreværdi</label>
-                <div class="input-group">
-                  <div class="input-group-text">kr.</div>
-                  <input
-                    id="avgvalue"
-                    name="avgvalue"
-                    type="number"
-                    min="0"
-                    class="form-control input-group-input"
-                    value="715"
-                  />
+            <div>
+              <div class="settings-mid">
+                <div class="field">
+                  <label class="label" for="avgvalue">Typisk ordreværdi</label>
+                  <div class="input-group">
+                    <div class="input-group-text">kr.</div>
+                    <input
+                      id="avgvalue"
+                      name="avgvalue"
+                      type="number"
+                      min="0"
+                      class="form-control input-group-input"
+                      value="715"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div class="field">
-                <label class="label" for="qty">Betalinger pr. md.</label>
-                <input id="qty" name="qty" type="number" min="0" class="form-control" value="200" />
-              </div>
-
-              <div class="field">
-                <label for="dankortScale" class="label">Visa/Dankort</label>
-                <div class="range">
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="60"
-                    step="1"
-                    name="dankort"
-                    class="form-range"
-                    id="dankortScale"
-                  />
-                  <div class="range-value" id="dankortScaleValue">60%</div>
+                <div class="field">
+                  <label class="label" for="qty">Betalinger pr. md.</label>
+                  <input id="qty" name="qty" type="number" min="0" class="form-control" value="200" />
                 </div>
-              </div>
-              <div class="field">
-                <label for="mobilepayScale" class="label">MobilePay</label>
-                <div class="range">
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="70"
-                    step="1"
-                    name="mobilepay"
-                    class="form-range"
-                    id="mobilepayScale"
-                  />
-                  <div class="range-value" id="mobilepayScaleValue">70%</div>
+
+                <div class="field">
+                  <label for="dankortScale" class="label">Visa/Dankort</label>
+                  <div class="range">
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="60"
+                      step="1"
+                      name="dankort"
+                      class="form-range"
+                      id="dankortScale"
+                    />
+                    <div class="range-value" id="dankortScaleValue">60%</div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="mobilepayScale" class="label">MobilePay</label>
+                  <div class="range">
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="70"
+                      step="1"
+                      name="mobilepay"
+                      class="form-range"
+                      id="mobilepayScale"
+                    />
+                    <div class="range-value" id="mobilepayScaleValue">70%</div>
+                  </div>
                 </div>
               </div>
             </div>
