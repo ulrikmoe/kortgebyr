@@ -328,11 +328,11 @@ const PSPs = [
         term: 36,
         notice: {
             term: 'Ved opsigelse af din aftale skal du betale et månedligt gebyr på 399 kr. for resten af bindingsperioden. Hvis der eksempelvis er 36 måneder tilbage, vil det samlede beløb udgøre 14.364 kr.',
-            monthly: 'Hvis din årlige kortomsætning er under 500.000 kr, skal du betale et fast månedligt gebyr på 399 kr.'
+            monthly: 'Hvis din månedlige kortomsætning er under 10.000 kr, skal du betale et fast månedligt gebyr på 399 kr.'
         },
         fees: {
             monthly(o) {
-                if ($revenue.order('DKK') < (500000 / 12)) {
+                if ($revenue.order('DKK') < (10000)) {
                     return new Currency(399, 'DKK');
                 }
                 return;
