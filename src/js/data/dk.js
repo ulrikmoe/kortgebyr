@@ -408,7 +408,7 @@ const PSPs = [
         title: 'Nets Easy',
         logo: ['nets-easy.svg', 82, 24],
         link: 'https://payments.nets.eu/da-DK/checkout',
-        cards: new Set(['dankort', 'visa', 'mastercard', 'maestro', 'amex']),
+        cards: new Set(['dankort', 'visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'shopify']),
         term: 12,
