@@ -404,6 +404,28 @@ const PSPs = [
         }
     },
     {
+        name: 'Nets Easy',
+        title: 'Nets Easy',
+        logo: ['nets-easy.svg', 82, 24],
+        link: 'https://payments.nets.eu/da-DK/checkout',
+        cards: new Set(['dankort', 'visa', 'mastercard', 'maestro', 'amex']),
+        features: new Set(['subscriptions', 'applepay', 'mobilepay']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'shopify']),
+        term: 12,
+        fees: {
+            monthly: new Currency(199, 'DKK'),
+            trn(o) {
+                if ($qtyDankort) o.trn['Dankortaftale (0,54 kr. + 0,35%)'] = $revenueDankort.scale(0.35 / 100).add(new Currency(0.54, 'DKK').scale($qtyDankort));
+                o.trn['Indløsning (0,50 kr. + 1,35%)'] = $revenueIntl.scale(1.35 / 100).add(new Currency(0.50, 'DKK').scale($qtyIntl));
+                if (opts.features.mobilepay) {
+                    o.trn['MobilePay (' + $qtyMobilepay + ' * 1,03 kr.)'] = new Currency(1.03 * $qtyMobilepay, 'DKK');
+                    o.monthly['MobilePay'] = new Currency(49, 'DKK');
+                }
+                return;
+            }
+        }
+    },
+    {
         name: 'PayPal',
         title: 'PayPal',
         logo: ['paypal.svg', 123.6, 30],

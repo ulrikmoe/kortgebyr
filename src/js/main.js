@@ -46,7 +46,8 @@ function settings(o) {
     $avgvalue = new Currency(o.avgvalue, $currency);
     $revenue = $avgvalue.scale($qty);
     $revenueIntl = $revenue.scale(1 - $dankortscale);
-    $trnfeeDankort = $revenue.scale($dankortscale).scale(0.32 / 100);
+    $revenueDankort = $revenue.scale($dankortscale);
+    $trnfeeDankort = $revenueDankort.scale(0.32 / 100);
     build();
 }
 
@@ -271,7 +272,7 @@ function build() {
                 termCell.innerHTML = '1 md.';
                 break;
             default:
-                termCell.innerHTML = (psp.term > 12) ? `<span class="term-long">${psp.term} mdr.</span>` : `${psp.term} mdr.`;
+                termCell.innerHTML = (psp.term >= 12) ? `<span class="term-long">${psp.term} mdr.</span>` : `${psp.term} mdr.`;
                 break;
         }
         if (psp.notice?.term) {
