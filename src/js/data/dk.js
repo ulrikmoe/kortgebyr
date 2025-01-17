@@ -6,6 +6,9 @@ const DankortFees = {
     }
 };
 
+// Only PrestaShop 1.7 support. PrestaShop and OpenCart are paid modules ($73.65)
+const billwerkModules = new Set(['woocommerce', 'magento', 'prestashop', 'opencart', 'dandomain', 'shopify']);
+
 const ACQs = {
     clearhaus: {
         name: 'Clearhaus',
@@ -155,7 +158,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['clearhaus', 'swedbank']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'dandomain']),
+        modules: billwerkModules,
         term: 3,
         fees: {
             monthly: new Currency(139, 'DKK'),
@@ -166,6 +169,9 @@ const PSPs = [
                 if (opts.features.mobilepay) {
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1,02 kr.)'] = new Currency(1.02 * $qtyMobilepay, 'DKK');
                     o.monthly['MobilePay'] = new Currency(49, 'DKK');
+                }
+                if (opts.module === 'shopify') {
+                    o.trn['Billwerk shopify-gebyr (0,25%)'] = $revenueIntl.scale(0.25 / 100);
                 }
             }
         }
@@ -324,7 +330,7 @@ const PSPs = [
         link: 'https://www.flatpay.com/da/produkter/online-betalinger',
         cards: new Set(['visa', 'mastercard', 'maestro']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'opencart']),
+        modules: billwerkModules,
         term: 36,
         notice: {
             term: 'Ved opsigelse af din aftale skal du betale et månedligt gebyr på 399 kr. for resten af bindingsperioden. Hvis der eksempelvis er 36 måneder tilbage, vil det samlede beløb udgøre 14.364 kr.',
@@ -342,6 +348,9 @@ const PSPs = [
                 if (opts.features.mobilepay) {
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 0,99 kr.)'] = new Currency(0.99 * $qtyMobilepay, 'DKK');
                     o.monthly['MobilePay'] = new Currency(49, 'DKK');
+                }
+                if (opts.module === 'shopify') {
+                    o.trn['Flatpay shopify-gebyr (0,25%)'] = $revenueIntl.scale(0.25 / 100);
                 }
                 return;
             }
@@ -428,7 +437,7 @@ const PSPs = [
         term: 1,
         fees: {
             trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
+                if ($qtyDankort) o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
                 o.trn['Indløsning (1,25%)'] = $revenueIntl.scale(1.25 / 100);
                 o.trn['Transaktionsgebyr (4 kr.)'] = new Currency(4 * $qty, 'DKK');
                 o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
@@ -454,7 +463,7 @@ const PSPs = [
         fees: {
             monthly: new Currency(49, 'DKK'),
             trn(o) {
-                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
+                if ($qtyDankort) o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
                 o.trn['Indløsning (1,25%)'] = $revenueIntl.scale(1.25 / 100);
                 o.trn['Transaktionsgebyr (1 kr.)'] = new Currency($qty, 'DKK');
                 o.trn['Autorisationsgebyr (0,22 kr.)'] = new Currency(0.22 * $qtyIntl, 'DKK');
@@ -481,7 +490,7 @@ const PSPs = [
             monthly: new Currency(99, 'DKK'),
             trn(o) {
                 const freeTrns = Math.min($qty, 100);
-                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
+                if ($qtyDankort) o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
                 o.trn['Indløsning (1,25%)'] = $revenueIntl.scale(1.25 / 100);
                 o.trn['Transaktionsgebyr (0,35 kr.)'] = new Currency(0.35 * $qty, 'DKK');
                 o.trn[freeTrns + ' gratis transaktioner'] = new Currency(-0.35 * freeTrns, 'DKK');
@@ -509,7 +518,7 @@ const PSPs = [
             monthly: new Currency(149, 'DKK'),
             trn(o) {
                 const freeTrns = Math.min($qty, 250);
-                o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
+                if ($qtyDankort) o.trn['Dankortaftale (0,32%)'] = $trnfeeDankort;
                 o.trn['Indløsning (1,25%)'] = $revenueIntl.scale(1.25 / 100);
                 o.trn['Transaktionsgebyr (0,25 kr.)'] = new Currency(0.25 * $qty, 'DKK');
                 o.trn[freeTrns + ' gratis transaktioner'] = new Currency(-0.25 * freeTrns, 'DKK');
@@ -554,6 +563,9 @@ const PSPs = [
                     o.trn['MobilePay (' + $qtyMobilepay + ' * 1 kr.)'] = new Currency(1 * $qtyMobilepay, 'DKK');
                     o.monthly['MobilePay'] = new Currency(49, 'DKK');
                 }
+                if (opts.module === 'shopify') {
+                    o.trn['QuickPay integrationsgebyr (' + $qty + ' * 0.95 kr.)'] = new Currency(0.95 * $qty, 'DKK');
+                }
                 return;
             }
         }
@@ -589,7 +601,7 @@ const PSPs = [
         dankort: true,
         acqs: new Set(['worldline', 'valitor']),
         features: new Set(['mobilepay', 'applepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify', 'dandomain', 'shoporama']),
+        modules: billwerkModules,
         fees: {
             trn(o) {
                 let num = Math.min($qty, 25);
@@ -645,7 +657,7 @@ const PSPs = [
         link: 'https://stripe.com/en-dk/pricing',
         cards: new Set(['visa', 'mastercard', 'amex']),
         features: new Set(['subscriptions', 'applepay', 'mobilepay']),
-        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees']),
+        modules: new Set(['woocommerce', 'magento', 'prestashop', 'thirtybees', 'shopify']),
         term: 0,
         fees: {
             trn(o) {

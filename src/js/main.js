@@ -28,16 +28,18 @@ function settings(o) {
     document.getElementById('dankortScaleValue').textContent = o.dankort + '%';
     document.getElementById('mobilepayScaleValue').textContent = o.mobilepay + '%';
     o.features.mobilepay = !!o.mobilepay;
+    console.log(o.features);
     $qtyMobilepay = (o.mobilepay) ? Math.ceil(o.mobilepay / 100 * $qty) : 0;
 
     document.getElementById('shopify-field').classList.toggle('hide', o.module !== 'shopify');
     document.getElementById('shopify-infobox').classList.toggle('hide', o.module !== 'shopify');
+
     if (o.module === 'shopify') {
+        $dankortscale = 0;
         const tier = (opts.shopify === 'Basic') ? 2 : (opts.shopify === 'Shopify') ? 1 : 0.6;
         document.getElementById('shopify-tier').textContent = tier.toString().replace('.', ',') + '%';
         document.getElementById('shopify-subscription').textContent = 'Shopify ' + opts.shopify;
     }
-
     $qtyDankort = Math.ceil($dankortscale * $qty);
     $qtyIntl = $qty - $qtyDankort;
 
@@ -151,7 +153,7 @@ function build() {
 
         // Skip if PSP does not support all features
         for (const feature in opts.features) {
-            if (!psp.features.has(feature)) return false;
+            if (opts.features[feature] === true && !psp.features.has(feature)) return false;
         }
 
         if (psp.acqs) {
@@ -189,7 +191,7 @@ function build() {
             }, calc, `Shopify gebyr (${tier}%)`);
         }
         if (psp.acq) {
-            if (psp.dankort) {
+            if ($qtyDankort && psp.dankort) {
                 cost2obj({
                     trn: dankortFees
                 }, calc, 'Dankortaftale');
@@ -234,7 +236,7 @@ function build() {
         // Acquirer
         const ol = document.createElement('ol');
         ol.classList.add('td--acq-list');
-        if (psp.dankort) {
+        if ($qtyDankort && psp.dankort) {
             ol.classList.add('td--acq-list-plus');
             ol.innerHTML += `<li><a target="_blank" href="https://www.dankort.dk/dk/betaling-i-webshop/" title="Tag imod Dankort med en Dankortaftale">Dankort</a></li>`;
         }
@@ -247,18 +249,11 @@ function build() {
         acqCell.className = 'td--acq';
         acqCell.appendChild(ol);
 
-        /*
-        const img = new Image(18, 18);
-        img.src = '/img/info.svg';
-        img.className = 'info1 td--acq-info';
-        acqCell.appendChild(img);
-        */
-
         // Card icons
         const cardCell = tr.insertCell(-1);
         const cardsArr = (psp.acq) ? acq.ref.cards : psp.cards;
         cardCell.className = 'td--cards';
-        if (psp.dankort) cardCell.appendChild(addCard('dankort'));
+        if ($qtyDankort && psp.dankort) cardCell.appendChild(addCard('dankort'));
         for (const card of cardsArr) {
             cardCell.appendChild(addCard(card));
         }
