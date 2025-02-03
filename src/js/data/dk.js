@@ -365,9 +365,10 @@ const PSPs = [
         acqs: new Set(['nets', 'clearhaus', 'nets', 'shift4', 'trust']),
         features: new Set(['subscriptions', 'mobilepay', 'applepay']),
         modules: new Set(['woocommerce', 'magento', 'prestashop-1', 'opencart']),
-        term: 0,
+        term: 1, // Have been unable to verify this. We'll need to call them.
         fees: {
             monthly(o) {
+                o.monthly['Abonnement'] = new Currency(99, 'DKK');
                 o.monthly['Freepay Nets-abonnement'] = new Currency(49, 'DKK');
                 return;
             },
